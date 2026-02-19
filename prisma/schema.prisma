@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------------------------
+// 1. AUTH & STAFF
+// ------------------------------------------------------
+enum Role {
+  OWNER
+  MANAGER
+  CASHIER
+  WAITER
+  KITCHEN
+}
+
+model User {
+  id           String    @id @default(uuid())
+  pin          String    @unique // Hashed PIN for terminal login
+  role         Role      @default(WAITER)
+  fullName     String    @map("full_name")
+  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
+  isActive     Boolean   @default(true) @map("is_active")
+  
+  // Relations
+  orders       Order[]
+  
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at") // Soft delete
+
+  @@map("users")
+}
+
+// ------------------------------------------------------
+// 2. MENU & PRODUCTS (Server is source of truth)
+// ------------------------------------------------------
+model Category {
+  id           String    @id @default(uuid())
+  name         String
+  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
+  sortOrder    Int       @default(0) @map("sort_order")
+  
+  products     Product[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id           String    @id @default(uuid())
+  categoryId   String    @map("category_id")
+  name         String
+  price        Decimal   @db.Decimal(10, 2)
+  isAvailable  Boolean   @default(true) @map("is_available")
+
+  category     Category  @relation(fields: [categoryId], references: [id])
+  orderItems   OrderItem[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("products")
+}
+
+// ------------------------------------------------------
+// 3. ORDERS (Terminals are source of truth, pushed to server)
+// ------------------------------------------------------
+enum OrderStatus {
+  OPEN
+  KITCHEN
+  SERVED
+  CLOSED
+  VOIDED
+}
+
+model Order {
+  id            String      @id @default(uuid()) // Terminals generate this UUID
+  receiptNumber String      @map("receipt_number") // e.g., ORD-0001
+  userId        String      @map("user_id") // Waiter who took the order
+  tableId       String?     @map("table_id") // Nullable for takeaway
+  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
+  status        OrderStatus @default(OPEN)
+  
+  user          User        @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                  String   @id @default(uuid())
+  orderId             String   @map("order_id")
+  productId           String   @map("product_id")
+  quantity            Int
+  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
+  notes               String?  // e.g. "Extra spicy"
+  
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product             Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
