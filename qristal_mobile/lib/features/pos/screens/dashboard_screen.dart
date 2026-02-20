@@ -264,7 +264,7 @@ class CartView extends ConsumerWidget {
                           // 1. Get current user (you might need a UserProvider to store the logged-in ID)
                           // For MVP, we can grab it from SecureStorage or pass it down.
                           // Let's assume we have a simple provider for current user ID:
-                          final userId =
+                          const userId =
                               "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
 
                           // 2. Save to Local DB (Instant)
