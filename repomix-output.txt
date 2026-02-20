@@ -1,0 +1,1162 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+================================================================
+File Summary
+================================================================
+
+Purpose:
+--------
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+File Format:
+------------
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  a. A separator line (================)
+  b. The file path (File: path/to/file)
+  c. Another separator line
+  d. The full contents of the file
+  e. A blank line
+
+Usage Guidelines:
+-----------------
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+Notes:
+------
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+
+
+================================================================
+Directory Structure
+================================================================
+.idx/
+  dev.nix
+qristal-api/
+  .git/
+    config
+    HEAD
+  prisma/
+    migrations/
+      20260219201451_init/
+        migration.sql
+      migration_lock.toml
+    schema.prisma
+  src/
+    prisma/
+      prisma.module.ts
+      prisma.service.ts
+    sync/
+      sync.controller.spec.ts
+      sync.controller.ts
+      sync.module.ts
+      sync.service.spec.ts
+      sync.service.ts
+    app.controller.spec.ts
+    app.controller.ts
+    app.module.ts
+    app.service.ts
+    main.ts
+  test/
+    app.e2e-spec.ts
+    jest-e2e.json
+  .gitignore
+  .prettierrc
+  docker-compose.yaml
+  eslint.config.mjs
+  nest-cli.json
+  package.json
+  prisma.config.ts
+  README.md
+  tsconfig.build.json
+  tsconfig.json
+README.md
+repomix.config.json
+
+================================================================
+Files
+================================================================
+
+================
+File: qristal-api/.git/config
+================
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+
+================
+File: qristal-api/.git/HEAD
+================
+ref: refs/heads/main
+
+================
+File: qristal-api/prisma/migrations/20260219201451_init/migration.sql
+================
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('OWNER', 'MANAGER', 'CASHIER', 'WAITER', 'KITCHEN');
+
+-- CreateEnum
+CREATE TYPE "OrderStatus" AS ENUM ('OPEN', 'KITCHEN', 'SERVED', 'CLOSED', 'VOIDED');
+
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "pin" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'WAITER',
+    "full_name" TEXT NOT NULL,
+    "branch_id" TEXT NOT NULL,
+    "is_active" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "color_hex" TEXT,
+    "sort_order" INTEGER NOT NULL DEFAULT 0,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "products" (
+    "id" TEXT NOT NULL,
+    "category_id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "price" DECIMAL(10,2) NOT NULL,
+    "is_available" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "products_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "orders" (
+    "id" TEXT NOT NULL,
+    "receipt_number" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "table_id" TEXT,
+    "total_amount" DECIMAL(10,2) NOT NULL,
+    "status" "OrderStatus" NOT NULL DEFAULT 'OPEN',
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "order_items" (
+    "id" TEXT NOT NULL,
+    "order_id" TEXT NOT NULL,
+    "product_id" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "price_at_time_of_order" DECIMAL(10,2) NOT NULL,
+    "notes" TEXT,
+
+    CONSTRAINT "order_items_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_pin_key" ON "users"("pin");
+
+-- AddForeignKey
+ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "orders" ADD CONSTRAINT "orders_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+================
+File: qristal-api/prisma/migrations/migration_lock.toml
+================
+# Please do not edit this file manually
+# It should be added in your version-control system (i.e. Git)
+provider = "postgresql"
+
+================
+File: qristal-api/prisma/schema.prisma
+================
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------------------------
+// 1. AUTH & STAFF
+// ------------------------------------------------------
+enum Role {
+  OWNER
+  MANAGER
+  CASHIER
+  WAITER
+  KITCHEN
+}
+
+model User {
+  id           String    @id @default(uuid())
+  pin          String    @unique // Hashed PIN for terminal login
+  role         Role      @default(WAITER)
+  fullName     String    @map("full_name")
+  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
+  isActive     Boolean   @default(true) @map("is_active")
+  
+  // Relations
+  orders       Order[]
+  
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at") // Soft delete
+
+  @@map("users")
+}
+
+// ------------------------------------------------------
+// 2. MENU & PRODUCTS (Server is source of truth)
+// ------------------------------------------------------
+model Category {
+  id           String    @id @default(uuid())
+  name         String
+  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
+  sortOrder    Int       @default(0) @map("sort_order")
+  
+  products     Product[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id           String    @id @default(uuid())
+  categoryId   String    @map("category_id")
+  name         String
+  price        Decimal   @db.Decimal(10, 2)
+  isAvailable  Boolean   @default(true) @map("is_available")
+
+  category     Category  @relation(fields: [categoryId], references: [id])
+  orderItems   OrderItem[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("products")
+}
+
+// ------------------------------------------------------
+// 3. ORDERS (Terminals are source of truth, pushed to server)
+// ------------------------------------------------------
+enum OrderStatus {
+  OPEN
+  KITCHEN
+  SERVED
+  CLOSED
+  VOIDED
+}
+
+model Order {
+  id            String      @id @default(uuid()) // Terminals generate this UUID
+  receiptNumber String      @map("receipt_number") // e.g., ORD-0001
+  userId        String      @map("user_id") // Waiter who took the order
+  tableId       String?     @map("table_id") // Nullable for takeaway
+  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
+  status        OrderStatus @default(OPEN)
+  
+  user          User        @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                  String   @id @default(uuid())
+  orderId             String   @map("order_id")
+  productId           String   @map("product_id")
+  quantity            Int
+  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
+  notes               String?  // e.g. "Extra spicy"
+  
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product             Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+================
+File: qristal-api/src/prisma/prisma.module.ts
+================
+import { Global, Module } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
+
+@Global() // Makes PrismaService available everywhere without importing the module
+@Module({
+  providers:,
+  exports:,
+})
+export class PrismaModule {}
+
+================
+File: qristal-api/src/prisma/prisma.service.ts
+================
+import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+
+@Injectable()
+export class PrismaService extends PrismaClient implements OnModuleInit {
+  async onModuleInit() {
+    await this.$connect();
+  }
+}
+
+================
+File: qristal-api/src/sync/sync.controller.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { SyncController } from './sync.controller';
+
+describe('SyncController', () => {
+  let controller: SyncController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [SyncController],
+    }).compile();
+
+    controller = module.get<SyncController>(SyncController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
+
+================
+File: qristal-api/src/sync/sync.controller.ts
+================
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { SyncService } from './sync.service';
+
+@Controller('sync')
+export class SyncController {
+  constructor(private readonly syncService: SyncService) {}
+
+  // GET /sync/pull?lastSyncTimestamp=2026-02-19T10:00:00.000Z
+  @Get('pull')
+  async pull(@Query('lastSyncTimestamp') lastSyncTimestamp: string) {
+    return this.syncService.pullChanges(lastSyncTimestamp);
+  }
+
+  // POST /sync/push
+  @Post('push')
+  async push(@Body() payload: any) {
+    return this.syncService.pushChanges(payload);
+  }
+}
+
+================
+File: qristal-api/src/sync/sync.module.ts
+================
+import { Module } from '@nestjs/common';
+import { SyncService } from './sync.service';
+import { SyncController } from './sync.controller';
+
+@Module({
+  providers: [SyncService],
+  controllers: [SyncController]
+})
+export class SyncModule {}
+
+================
+File: qristal-api/src/sync/sync.service.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { SyncService } from './sync.service';
+
+describe('SyncService', () => {
+  let service: SyncService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [SyncService],
+    }).compile();
+
+    service = module.get<SyncService>(SyncService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+
+================
+File: qristal-api/src/sync/sync.service.ts
+================
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service'; // Assuming you generated a Prisma module
+
+@Injectable()
+export class SyncService {
+  constructor(private prisma: PrismaService) {}
+
+  /**
+   * PULL: Client requests data that has changed since `lastSyncTimestamp`.
+   * The client sends a timestamp (ISO string), and the server returns
+   * all records where `updatedAt > lastSyncTimestamp`.
+   */
+  async pullChanges(lastSyncTimestamp: string) {
+    let lastSyncDate: Date;
+
+    if (!lastSyncTimestamp) {
+      // If no timestamp provided, do a full initial sync (return all data)
+      lastSyncDate = new Date(0); // 1970-01-01
+    } else {
+      lastSyncDate = new Date(lastSyncTimestamp);
+      if (isNaN(lastSyncDate.getTime())) {
+        throw new BadRequestException('Invalid lastSyncTimestamp format.');
+      }
+    }
+
+    // Fetch all updated records
+    const = await Promise.all();
+
+    return {
+      timestamp: new Date().toISOString(), // The client will save this for the next sync
+      changes: {
+        categories,
+        products,
+        users,
+      },
+    };
+  }
+
+  /**
+   * PUSH: Client sends new/updated data (orders, transactions) to the server.
+   * Since orders are generated on the POS, the server needs to upsert them.
+   */
+  async pushChanges(payload: any) {
+    const { orders, orderItems } = payload;
+    const errors =[];
+    let processedOrders = 0;
+
+    // We use a transaction to ensure data integrity
+    try {
+      await this.prisma.$transaction(async (tx) => {
+        
+        // 1. Process Orders
+        if (orders && Array.isArray(orders)) {
+          for (const order of orders) {
+            try {
+              await tx.order.upsert({
+                where: { id: order.id },
+                update: {
+                  status: order.status,
+                  totalAmount: order.totalAmount,
+                  updatedAt: new Date(), // Force server timestamp
+                },
+                create: {
+                  id: order.id,
+                  receiptNumber: order.receiptNumber,
+                  userId: order.userId,
+                  tableId: order.tableId,
+                  totalAmount: order.totalAmount,
+                  status: order.status,
+                  createdAt: new Date(order.createdAt), // Keep original creation time
+                },
+              });
+              processedOrders++;
+            } catch (err) {
+              errors.push({ id: order.id, error: err.message });
+            }
+          }
+        }
+
+        // 2. Process Order Items
+        if (orderItems && Array.isArray(orderItems)) {
+          for (const item of orderItems) {
+            try {
+              await tx.orderItem.upsert({
+                where: { id: item.id },
+                update: {
+                  quantity: item.quantity,
+                  notes: item.notes,
+                },
+                create: {
+                  id: item.id,
+                  orderId: item.orderId,
+                  productId: item.productId,
+                  quantity: item.quantity,
+                  priceAtTimeOfOrder: item.priceAtTimeOfOrder,
+                  notes: item.notes,
+                },
+              });
+            } catch (err) {
+              errors.push({ id: item.id, error: err.message });
+            }
+          }
+        }
+      });
+
+      return {
+        success: true,
+        processedOrders,
+        errors: errors.length > 0 ? errors : undefined,
+      };
+
+    } catch (error) {
+      // Transaction failed
+      throw new BadRequestException(`Push sync failed: ${error.message}`);
+    }
+  }
+}
+
+================
+File: qristal-api/src/app.controller.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+describe('AppController', () => {
+  let appController: AppController;
+
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [AppController],
+      providers: [AppService],
+    }).compile();
+
+    appController = app.get<AppController>(AppController);
+  });
+
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(appController.getHello()).toBe('Hello World!');
+    });
+  });
+});
+
+================
+File: qristal-api/src/app.controller.ts
+================
+import { Controller, Get } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
+  }
+}
+
+================
+File: qristal-api/src/app.module.ts
+================
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { SyncModule } from './sync/sync.module';
+
+@Module({
+  imports: [SyncModule],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+================
+File: qristal-api/src/app.service.ts
+================
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  getHello(): string {
+    return 'Hello World!';
+  }
+}
+
+================
+File: qristal-api/src/main.ts
+================
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
+
+================
+File: qristal-api/test/app.e2e-spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import request from 'supertest';
+import { App } from 'supertest/types';
+import { AppModule } from './../src/app.module';
+
+describe('AppController (e2e)', () => {
+  let app: INestApplication<App>;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/ (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!');
+  });
+});
+
+================
+File: qristal-api/test/jest-e2e.json
+================
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}
+
+================
+File: qristal-api/.gitignore
+================
+# compiled output
+/dist
+/node_modules
+/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+/generated/prisma
+
+================
+File: qristal-api/.prettierrc
+================
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+
+================
+File: qristal-api/docker-compose.yaml
+================
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: qristal_user
+      POSTGRES_PASSWORD: qristal_password
+      POSTGRES_DB: qristal_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+================
+File: qristal-api/eslint.config.mjs
+================
+// @ts-check
+import eslint from '@eslint/js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+  {
+    ignores: ['eslint.config.mjs'],
+  },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  eslintPluginPrettierRecommended,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      sourceType: 'commonjs',
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
+    },
+  },
+);
+
+================
+File: qristal-api/nest-cli.json
+================
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true
+  }
+}
+
+================
+File: qristal-api/package.json
+================
+{
+  "name": "qristal-api",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.2.6",
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^6.0.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@prisma/config": "^7.4.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.10.7",
+    "@types/supertest": "^6.0.2",
+    "dotenv": "^17.3.1",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^16.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "prisma": "^5.22.0",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
+
+================
+File: qristal-api/prisma.config.ts
+================
+import "dotenv/config";
+import { defineConfig, env } from "@prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  datasource: {
+    url: env("DATABASE_URL"),
+  },
+});
+
+================
+File: qristal-api/README.md
+================
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
+
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Project setup
+
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Run tests
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Deployment
+
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
+```
+
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
+## Resources
+
+Check out a few resources that may come in handy when working with NestJS:
+
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+================
+File: qristal-api/tsconfig.build.json
+================
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
+
+================
+File: qristal-api/tsconfig.json
+================
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false
+  }
+}
+
+================
+File: repomix.config.json
+================
+{
+  "$schema": "https://repomix.com/schemas/latest/schema.json",
+  "input": {
+    "maxFileSize": 52428800
+  },
+  "output": {
+    "filePath": "repomix-output.txt",
+    "style": "plain",
+    "parsableStyle": false,
+    "fileSummary": true,
+    "directoryStructure": true,
+    "files": true,
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "compress": false,
+    "topFilesLength": 5,
+    "showLineNumbers": false,
+    "truncateBase64": false,
+    "copyToClipboard": false,
+    "includeFullDirectoryStructure": false,
+    "tokenCountTree": false,
+    "git": {
+      "sortByChanges": true,
+      "sortByChangesMaxCommits": 100,
+      "includeDiffs": false,
+      "includeLogs": false,
+      "includeLogsCount": 50
+    }
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useDotIgnore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": []
+  },
+  "security": {
+    "enableSecurityCheck": true
+  },
+  "tokenCount": {
+    "encoding": "o200k_base"
+  }
+}
+
+================
+File: .idx/dev.nix
+================
+{ pkgs, ... }: {
+  # Which nixpkgs channel to use.
+  channel = "stable-24.05"; 
+  
+  # Use https://search.nixos.org/packages to find packages
+  packages = [
+    pkgs.docker
+    pkgs.docker-compose # Added for convenience
+    pkgs.openssl
+    pkgs.nodejs_20
+  ];
+
+  # Enable the Docker daemon service
+  services.docker.enable = true;
+
+  # Sets environment variables in the workspace
+  env = {};
+  
+  idx = {
+    extensions = [
+      "google.gemini-cli-vscode-ide-companion"
+    ];
+    previews = {
+      enable = true;
+      previews = {
+        # web = {
+        #   command = ["npm" "run" "dev"];
+        #   manager = "web";
+        #   env = {
+        #     PORT = "$PORT";
+        #   };
+        # };
+      };
+    };
+    workspace = {
+      onCreate = {
+        default.openFiles = [ ".idx/dev.nix" "README.md" ];
+      };
+      onStart = {
+      };
+    };
+  };
+}
+
+================
+File: README.md
+================
+Get started by customizing your environment (defined in the .idx/dev.nix file) with the tools and IDE extensions you'll need for your project!
+
+Learn more at https://developers.google.com/idx/guides/customize-idx-env
+
+
+
+
+
+================================================================
+End of Codebase
+================================================================
