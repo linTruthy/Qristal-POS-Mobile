@@ -260,11 +260,30 @@ class CartView extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(8))),
                   onPressed: cartItems.isEmpty
                       ? null
-                      : () {
-                          // TODO: IMPLEMENT PAYMENTS
+                      : () async {
+                          // 1. Get current user (you might need a UserProvider to store the logged-in ID)
+                          // For MVP, we can grab it from SecureStorage or pass it down.
+                          // Let's assume we have a simple provider for current user ID:
+                          final userId =
+                              "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
+
+                          // 2. Save to Local DB (Instant)
+                          await ref
+                              .read(orderServiceProvider)
+                              .placeOrder(cartItems: cartItems, userId: userId);
+
+                          // 3. Clear UI
+                          ref.read(cartProvider.notifier).clearCart();
+
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text("Processing Payment...")));
+                                  content: Text("Order Saved Locally! 🚀")));
+
+                          // 4. Trigger Background Sync to Cloud
+                          // We don't await this because we want the UI to be unblocked immediately
+                          ref
+                              .read(syncControllerProvider.notifier)
+                              .performSync();
                         },
                   child: const Text("CHARGE", style: TextStyle(fontSize: 24)),
                 ),

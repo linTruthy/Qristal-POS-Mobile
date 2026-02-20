@@ -1,13 +1,12 @@
-import 'dart:io';
+
 
 class ApiConstants {
   // Use 10.0.2.2 for Android Emulator, localhost for iOS/Web
-  static String get baseUrl {
-    if (Platform.isAndroid) {
-      return 'http://10.0.2.2:3000';
-    }
-    return 'http://localhost:3000';
+static String get baseUrl {
+    // Return your Railway URL (HTTPS is standard)
+    return 'https://api.truthysystems.com'; 
   }
 
   static const String loginEndpoint = '/auth/login';
+  static const String syncPushEndpoint = '/sync/push';
 }
