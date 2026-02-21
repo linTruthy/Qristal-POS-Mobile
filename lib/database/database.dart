@@ -3,6 +3,8 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 part 'database.g.dart';
 
@@ -12,7 +14,7 @@ class Categories extends Table {
   TextColumn get name => text()();
   TextColumn get colorHex => text().nullable()();
   // Fixed: .defaultValue -> .withDefault
-  IntColumn get sortOrder => integer().withDefault(const Constant(0))(); 
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
   DateTimeColumn get updatedAt => dateTime().nullable()();
 
   @override
@@ -39,10 +41,10 @@ class Orders extends Table {
   TextColumn get userId => text()();
   TextColumn get tableId => text().nullable()();
   RealColumn get totalAmount => real()();
-  TextColumn get status => text()(); 
+  TextColumn get status => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
-  
+
   // Local-only flag to track what needs to be uploaded
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
 
@@ -71,7 +73,7 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-   Stream<List<Order>> watchKitchenOrders() {
+  Stream<List<Order>> watchKitchenOrders() {
     return (select(orders)
           ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
           ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
@@ -81,12 +83,11 @@ class AppDatabase extends _$AppDatabase {
   // 2. Get Items for a specific Order (Joined with Product info)
   Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
     final query = select(orderItems).join([
-      innerJoin(products, products.id.equalsExp(orderItems.productId))
-    ])
-      ..where(orderItems.orderId.equals(orderId));
+      innerJoin(products, products.id.equalsExp(orderItems.productId)),
+    ])..where(orderItems.orderId.equals(orderId));
 
     final rows = await query.get();
-    
+
     return rows.map((row) {
       return TypedOrderItem(
         item: row.readTable(orderItems),
@@ -94,15 +95,15 @@ class AppDatabase extends _$AppDatabase {
       );
     }).toList();
   }
-  
+
   // 3. Update Order Status
   Future<void> updateOrderStatus(String id, String newStatus) async {
     await (update(orders)..where((t) => t.id.equals(id))).write(
       OrdersCompanion(
-        status: Value(newStatus), 
+        status: Value(newStatus),
         updatedAt: Value(DateTime.now()), // Important for Sync!
-        isSynced: const Value(false) // Mark as dirty so it syncs up
-      )
+        isSynced: const Value(false), // Mark as dirty so it syncs up
+      ),
     );
   }
 }
@@ -111,13 +112,34 @@ class AppDatabase extends _$AppDatabase {
 class TypedOrderItem {
   final OrderItem item;
   final Product product;
-  TypedOrderItem({required this.item, required this.product});}
+  TypedOrderItem({required this.item, required this.product});
+}
 
+//LazyDatabase _openConnection() {
+//return LazyDatabase(() async {
+// final dbFolder = await getApplicationDocumentsDirectory();
+//final file = File(p.join(dbFolder.path, 'db.sqlite'));
+//return NativeDatabase(file);
+//});
+//}
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
+    // 1. Get the folder
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
-    return NativeDatabase(file);
+
+    // 2. FOR ANDROID: Load the native library specifically
+    if (Platform.isAndroid) {
+      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
+
+      // Optional: Explicitly tell sqlite3 where to look if the workaround fails,
+      // though the line above usually fixes it.
+      final cachebase = (await getTemporaryDirectory()).path;
+      sqlite3.tempDirectory = cachebase;
+    }
+
+    // 3. Create the database
+    return NativeDatabase.createInBackground(file);
   });
 }
