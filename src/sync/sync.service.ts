@@ -3,7 +3,7 @@ import { PrismaService } from '../prisma/prisma.service'; // Assuming you genera
 
 @Injectable()
 export class SyncService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   /**
    * PULL: Client requests data that has changed since `lastSyncTimestamp`.
@@ -25,16 +25,16 @@ export class SyncService {
 
     // Fetch all updated records
     const [categories, products, users] = await Promise.all([
-        this.prisma.category.findMany({
-          where: { updatedAt: { gt: lastSyncDate } },
-        }),
-        this.prisma.product.findMany({
-          where: { updatedAt: { gt: lastSyncDate } },
-        }),
-        this.prisma.user.findMany({
-          where: { updatedAt: { gt: lastSyncDate } },
-        }),
-      ]);
+      this.prisma.category.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.product.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.user.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+    ]);
 
     return {
       timestamp: new Date().toISOString(), // The client will save this for the next sync
@@ -51,14 +51,14 @@ export class SyncService {
    * Since orders are generated on the POS, the server needs to upsert them.
    */
   async pushChanges(payload: any) {
-    const { orders, orderItems } = payload;
+    const { orders, orderItems, payments } = payload;
     const errors: { id: any; error: any }[] = [];
     let processedOrders = 0;
 
     // We use a transaction to ensure data integrity
     try {
       await this.prisma.$transaction(async (tx) => {
-        
+
         // 1. Process Orders
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
@@ -108,6 +108,29 @@ export class SyncService {
               });
             } catch (err) {
               errors.push({ id: item.id, error: err.message });
+            }
+          }
+        }
+
+        // 3. Process Payments
+        if (payments && Array.isArray(payments)) {
+          for (const pay of payments) {
+            try {
+              await tx.payment.create({ // We usually only create payments, not update them
+                data: {
+                  id: pay.id,
+                  orderId: pay.orderId,
+                  method: pay.method, // Ensure Enum mapping matches
+                  amount: pay.amount,
+                  reference: pay.reference,
+                  createdAt: new Date(pay.createdAt),
+                }
+              });
+            } catch (err) {
+              // If it exists, ignore (idempotency), otherwise log error
+              if (!err.message.includes('Unique constraint')) {
+                errors.push({ id: pay.id, error: err.message });
+              }
             }
           }
         }
