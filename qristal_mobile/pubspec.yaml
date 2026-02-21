@@ -26,6 +26,9 @@ dependencies:
   shared_preferences: ^2.3.3
   sqlite3_flutter_libs: ^0.5.41
   sqlite3: ^2.9.4
+  blue_thermal_printer: ^1.2.3
+  intl: ^0.20.2
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:
