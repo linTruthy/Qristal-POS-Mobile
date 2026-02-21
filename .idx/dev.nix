@@ -9,6 +9,7 @@
     pkgs.openssl
     pkgs.nodejs_20
     pkgs.flutter
+    pkgs.openssh
   ];
 
   # Enable the Docker daemon service
