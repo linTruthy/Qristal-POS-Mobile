@@ -3,6 +3,7 @@
   packages = [
     pkgs.jdk17
     pkgs.unzip
+    pkgs.openssh
   ];
   idx.extensions = [
     

@@ -41,6 +41,7 @@ class Orders extends Table {
   RealColumn get totalAmount => real()();
   TextColumn get status => text()(); 
   DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
   
   // Local-only flag to track what needs to be uploaded
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
@@ -69,7 +70,49 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
+
+   Stream<List<Order>> watchKitchenOrders() {
+    return (select(orders)
+          ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
+          ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
+        .watch();
+  }
+
+  // 2. Get Items for a specific Order (Joined with Product info)
+  Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
+    final query = select(orderItems).join([
+      innerJoin(products, products.id.equalsExp(orderItems.productId))
+    ])
+      ..where(orderItems.orderId.equals(orderId));
+
+    final rows = await query.get();
+    
+    return rows.map((row) {
+      return TypedOrderItem(
+        item: row.readTable(orderItems),
+        product: row.readTable(products),
+      );
+    }).toList();
+  }
+  
+  // 3. Update Order Status
+  Future<void> updateOrderStatus(String id, String newStatus) async {
+    await (update(orders)..where((t) => t.id.equals(id))).write(
+      OrdersCompanion(
+        status: Value(newStatus), 
+        updatedAt: Value(DateTime.now()), // Important for Sync!
+        isSynced: const Value(false) // Mark as dirty so it syncs up
+      )
+    );
+  }
 }
+
+// Helper class to hold joined data
+class TypedOrderItem {
+  final OrderItem item;
+  final Product product;
+  TypedOrderItem({required this.item, required this.product});}
+
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {

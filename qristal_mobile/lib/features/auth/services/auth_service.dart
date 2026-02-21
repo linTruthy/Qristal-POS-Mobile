@@ -13,16 +13,19 @@ class AuthService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'id': userId, 'pin': pin}),
       );
-
+      print(pin);
+      print(userId);
+     
       if (response.statusCode == 201 || response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        
+        print('Response body: ${response.body}');
+
         // Save Token Securely
         await _storage.write(key: 'jwt_token', value: data['access_token']);
-        
+
         // Save User Data (optional, for offline reference)
         await _storage.write(key: 'user_data', value: jsonEncode(data['user']));
-        
+
         return data;
       } else {
         throw Exception('Invalid PIN or User ID');
@@ -35,7 +38,7 @@ class AuthService {
   Future<void> logout() async {
     await _storage.deleteAll();
   }
-  
+
   Future<String?> getToken() async {
     return await _storage.read(key: 'jwt_token');
   }
