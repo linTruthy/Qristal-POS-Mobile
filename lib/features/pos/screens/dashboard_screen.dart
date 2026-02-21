@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../kitchen/screens/kitchen_screen.dart';
 import '../../sync/providers/sync_provider.dart';
 import '../providers/menu_provider.dart';
 import '../providers/cart_provider.dart';
@@ -17,6 +18,15 @@ class DashboardScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text("Qristal POS"),
         actions: [
+          //KDS fo testing purpuses
+          IconButton(
+            icon: const Icon(Icons.soup_kitchen),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const KitchenScreen()),
+              );
+            },
+          ),
           // Manual Sync Button
           IconButton(
             icon: syncState.isLoading
@@ -24,7 +34,10 @@ class DashboardScreen extends ConsumerWidget {
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(
-                        color: Colors.white, strokeWidth: 2))
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
                 : const Icon(Icons.sync),
             onPressed: () {
               ref.read(syncControllerProvider.notifier).performSync();
@@ -57,10 +70,7 @@ class DashboardScreen extends ConsumerWidget {
           // 3. RIGHT COLUMN: Cart / Ticket
           Expanded(
             flex: 3,
-            child: Container(
-              color: Colors.white,
-              child: const CartView(),
-            ),
+            child: Container(color: Colors.white, child: const CartView()),
           ),
         ],
       ),
@@ -96,9 +106,10 @@ class CategoryList extends ConsumerWidget {
               child: Row(
                 children: [
                   Container(
-                      width: 6,
-                      height: 80,
-                      color: hexToColor(cat.colorHex) ?? Colors.grey),
+                    width: 6,
+                    height: 80,
+                    color: hexToColor(cat.colorHex) ?? Colors.grey,
+                  ),
                   const SizedBox(width: 12),
                   Text(
                     cat.name,
@@ -157,14 +168,18 @@ class ProductGrid extends ConsumerWidget {
                   Text(
                     product.name,
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 8),
                   Text(
                     "\$${product.price.toStringAsFixed(2)}",
-                    style:
-                        const TextStyle(color: AppTheme.emerald, fontSize: 16),
+                    style: const TextStyle(
+                      color: AppTheme.emerald,
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
@@ -196,7 +211,10 @@ class CartView extends ConsumerWidget {
           child: const Text(
             "Current Order",
             style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
 
@@ -209,14 +227,20 @@ class CartView extends ConsumerWidget {
             itemBuilder: (context, index) {
               final item = cartItems[index];
               return ListTile(
-                title: Text(item.product.name,
-                    style: const TextStyle(color: Colors.black)),
-                subtitle: Text("x${item.quantity}",
-                    style: const TextStyle(color: Colors.grey)),
+                title: Text(
+                  item.product.name,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                subtitle: Text(
+                  "x${item.quantity}",
+                  style: const TextStyle(color: Colors.grey),
+                ),
                 trailing: Text(
                   "\$${item.total.toStringAsFixed(2)}",
                   style: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 onLongPress: () {
                   ref.read(cartProvider.notifier).removeFromCart(item.product);
@@ -235,17 +259,21 @@ class CartView extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("TOTAL",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold)),
+                  const Text(
+                    "TOTAL",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Text(
                     "\$${total.toStringAsFixed(2)}",
                     style: const TextStyle(
-                        color: AppTheme.emerald,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold),
+                      color: AppTheme.emerald,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -255,29 +283,33 @@ class CartView extends ConsumerWidget {
                 height: 60,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.emerald,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8))),
+                    backgroundColor: AppTheme.emerald,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                   onPressed: cartItems.isEmpty
                       ? null
                       : () async {
                           // 1. Get current user (you might need a UserProvider to store the logged-in ID)
                           // For MVP, we can grab it from SecureStorage or pass it down.
                           // Let's assume we have a simple provider for current user ID:
-                          const userId =
-                              "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
+                          //  const userId =
+                          //      "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
 
                           // 2. Save to Local DB (Instant)
-                          await ref
-                              .read(orderServiceProvider)
-                              .placeOrder(cartItems: cartItems, userId: userId);
-
+                          // await ref
+                          //     .read(orderServiceProvider)
+                          //     .placeOrder(cartItems: cartItems, userId: userId);
+                          await ref.read(cartProvider.notifier).placeOrder();
                           // 3. Clear UI
                           ref.read(cartProvider.notifier).clearCart();
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("Order Saved Locally! 🚀")));
+                            const SnackBar(
+                              content: Text("Order Saved Locally! 🚀"),
+                            ),
+                          );
 
                           // 4. Trigger Background Sync to Cloud
                           // We don't await this because we want the UI to be unblocked immediately
@@ -287,10 +319,10 @@ class CartView extends ConsumerWidget {
                         },
                   child: const Text("CHARGE", style: TextStyle(fontSize: 24)),
                 ),
-              )
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

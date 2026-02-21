@@ -44,8 +44,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _handleLogin() {
-    final userId = _userController.text.trim();
-    final pin = _pinController.text.trim();
+    final userId ='aed64de9-6597-42ae-8900-95d0a5016b9f';// _userController.text.trim();
+    final pin ='1234';// _pinController.text.trim();
 
     if (userId.isEmpty || pin.isEmpty) return;
 
