@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qristal_mobile/core/theme/app_theme.dart';
 import '../../sync/providers/sync_provider.dart';
+import '../../tables/screens/floor_plan_screen.dart';
 import '../providers/auth_provider.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -20,32 +21,36 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen(authControllerProvider, (previous, next) async {
       if (next.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(next.error!),
-            backgroundColor: AppTheme.error,
-          ),
+          SnackBar(content: Text(next.error!), backgroundColor: AppTheme.error),
         );
       }
 
       if (next.isAuthenticated) {
         // --- ADD THIS BLOCK ---
         // Trigger initial sync before moving to dashboard
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Authentication successful. Syncing data...")));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Authentication successful. Syncing data..."),
+          ),
+        );
 
         await ref.read(syncControllerProvider.notifier).performSync();
         // ----------------------
 
         if (context.mounted) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const FloorPlanScreen()),
+          );
         }
       }
     });
   }
 
   void _handleLogin() {
-    final userId ='aed64de9-6597-42ae-8900-95d0a5016b9f';// _userController.text.trim();
-    final pin ='1234';// _pinController.text.trim();
+    final userId =
+        'aed64de9-6597-42ae-8900-95d0a5016b9f'; // _userController.text.trim();
+    final pin = '1234'; // _pinController.text.trim();
 
     if (userId.isEmpty || pin.isEmpty) return;
 
@@ -69,8 +74,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.point_of_sale,
-                        size: 100, color: AppTheme.qristalBlue),
+                    Icon(
+                      Icons.point_of_sale,
+                      size: 100,
+                      color: AppTheme.qristalBlue,
+                    ),
                     SizedBox(height: 20),
                     Text(
                       "Qristal POS",
@@ -99,9 +107,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text("Staff Access",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
+                  const Text(
+                    "Staff Access",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                  ),
                   const SizedBox(height: 30),
 
                   // User ID Input (Paste your seeded UUID here)

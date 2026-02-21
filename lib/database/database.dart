@@ -77,27 +77,36 @@ class Payments extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class SeatingTables extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get status => text().withDefault(const Constant('FREE'))();
+  TextColumn get floor => text().withDefault(const Constant('Main'))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 // Database Registry
-@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments])
+@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3; // Bump version
 
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
-      onCreate: (Migrator m) async {
-        await m.createAll();
-      },
       onUpgrade: (Migrator m, int from, int to) async {
-        if (from < 2) {
-          await m.createTable(payments);
+        if (from < 3) {
+          await m.createTable(seatingTables);
         }
       },
     );
   }
+
 
   Stream<List<Order>> watchKitchenOrders() {
     return (select(orders)
@@ -141,13 +150,7 @@ class TypedOrderItem {
   TypedOrderItem({required this.item, required this.product});
 }
 
-//LazyDatabase _openConnection() {
-//return LazyDatabase(() async {
-// final dbFolder = await getApplicationDocumentsDirectory();
-//final file = File(p.join(dbFolder.path, 'db.sqlite'));
-//return NativeDatabase(file);
-//});
-//}
+
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {

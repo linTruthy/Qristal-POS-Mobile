@@ -95,6 +95,23 @@ class SyncService {
 
         // --- Users (Optional, for offline login check later) ---
         // You would handle users similarly here
+        // --- Tables ---
+        if (changes['seatingTables'] != null) {
+          // Ensure your backend API returns this key
+          for (var item in changes['seatingTables']) {
+            batch.insert(
+              db.seatingTables,
+              SeatingTablesCompanion(
+                id: drift.Value(item['id']),
+                name: drift.Value(item['name']),
+                status: drift.Value(item['status']),
+                floor: drift.Value(item['floor']),
+                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
       });
 
       // 4. Save new timestamp
@@ -112,9 +129,9 @@ class SyncService {
 
   Future<void> _pushToWeb(String token) async {
     // 1. Find unsynced orders
-    final unsyncedOrders = await (db.select(db.orders)
-          ..where((t) => t.isSynced.equals(false)))
-        .get();
+    final unsyncedOrders = await (db.select(
+      db.orders,
+    )..where((t) => t.isSynced.equals(false))).get();
 
     if (unsyncedOrders.isEmpty) return;
 
@@ -138,9 +155,9 @@ class SyncService {
       });
 
       // Fetch related items (NOW WORKING because OrderItems table exists)
-      final items = await (db.select(db.orderItems)
-            ..where((t) => t.orderId.equals(order.id)))
-          .get();
+      final items = await (db.select(
+        db.orderItems,
+      )..where((t) => t.orderId.equals(order.id))).get();
 
       for (final item in items) {
         itemsPayload.add({
@@ -162,10 +179,7 @@ class SyncService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({
-          'orders': ordersPayload,
-          'orderItems': itemsPayload,
-        }),
+        body: jsonEncode({'orders': ordersPayload, 'orderItems': itemsPayload}),
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {

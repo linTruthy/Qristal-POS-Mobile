@@ -1,10 +1,13 @@
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/providers/database_provider.dart';
 import '../../../database/database.dart';
+import '../../hardware/services/printer_service.dart';
 import '../../sync/providers/sync_provider.dart';
+import '../../tables/screens/floor_plan_screen.dart';
 import '../models/cart_item.dart';
 import '../services/order_service.dart';
 import '../widgets/payment_modal.dart';
@@ -12,9 +15,17 @@ import '../widgets/payment_modal.dart';
 class CartNotifier extends StateNotifier<List<CartItem>> {
   final AppDatabase db;
   final String? userId;
-  final Ref ref; // To trigger sync
+  final String userName;
+  final PrinterService printerService; // <--- ADD THIS
+  final Ref ref;
 
-  CartNotifier(this.db, this.userId, this.ref) : super([]);
+  CartNotifier(
+    this.db,
+    this.userId,
+    this.userName,
+    this.printerService,
+    this.ref,
+  ) : super([]);
 
   void addToCart(Product product) {
     final existingIndex = state.indexWhere(
@@ -108,72 +119,113 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
     // Show the Dialog
     showDialog(
-        context: context,
-        builder: (_) => PaymentModal(
-              totalAmount: total,
-              onConfirmed: (method, tendered, refCode) async {
-                await _finalizeOrder(total, method, tendered, refCode);
-              },
-            ));
+      context: context,
+      builder: (_) => PaymentModal(
+        totalAmount: total,
+        onConfirmed: (method, tendered, refCode) async {
+          await _finalizeOrder(total, method, tendered, refCode);
+        },
+      ),
+    );
   }
 
   Future<void> _finalizeOrder(
-      double total, String method, double tendered, String? refCode) async {
+    double total,
+    String method,
+    double tendered,
+    String? refCode,
+  ) async {
     final orderId = const Uuid().v4();
     final now = DateTime.now();
+    final tableId = ref.read(activeTableIdProvider);
 
     await db.transaction(() async {
       // 1. Order
-      await db.into(db.orders).insert(OrdersCompanion(
-            id: Value(orderId),
-            receiptNumber:
-                Value(orderId.substring(0, 4).toUpperCase()), // Short code
-            userId: Value(userId!),
-            totalAmount: Value(total),
-            status: const Value('CLOSED'), // Closed because it is paid
-            isSynced: const Value(false),
-            createdAt: Value(now),
-            updatedAt: Value(now),
-          ));
-
+      await db
+          .into(db.orders)
+          .insert(
+            OrdersCompanion(
+              id: Value(orderId),
+              receiptNumber: Value(
+                orderId.substring(0, 4).toUpperCase(),
+              ), // Short code
+              userId: Value(userId!),
+              tableId: Value(tableId),
+              totalAmount: Value(total),
+              status: const Value('CLOSED'), // Closed because it is paid
+              isSynced: const Value(false),
+              createdAt: Value(now),
+              updatedAt: Value(now),
+            ),
+          );
+      //If a table was selected, update its status to OCCUPIED locally
+      if (tableId != null) {
+        await (db.update(db.seatingTables)..where((t) => t.id.equals(tableId)))
+            .write(SeatingTablesCompanion(status: const Value('OCCUPIED')));
+      }
       // 2. Items
       for (var cartItem in state) {
-        await db.into(db.orderItems).insert(OrderItemsCompanion(
-              id: Value(const Uuid().v4()),
-              orderId: Value(orderId),
-              productId: Value(cartItem.product.id),
-              quantity: Value(cartItem.quantity),
-              priceAtTimeOfOrder: Value(cartItem.product.price),
-            ));
+        await db
+            .into(db.orderItems)
+            .insert(
+              OrderItemsCompanion(
+                id: Value(const Uuid().v4()),
+                orderId: Value(orderId),
+                productId: Value(cartItem.product.id),
+                quantity: Value(cartItem.quantity),
+                priceAtTimeOfOrder: Value(cartItem.product.price),
+              ),
+            );
       }
 
       // 3. Payment
-      await db.into(db.payments).insert(PaymentsCompanion(
-            id: Value(const Uuid().v4()),
-            orderId: Value(orderId),
-            method: Value(method),
-            amount: Value(total), // We record the bill amount, not tendered
-            reference: Value(refCode),
-            createdAt: Value(now),
-          ));
+      await db
+          .into(db.payments)
+          .insert(
+            PaymentsCompanion(
+              id: Value(const Uuid().v4()),
+              orderId: Value(orderId),
+              method: Value(method),
+              amount: Value(total), // We record the bill amount, not tendered
+              reference: Value(refCode),
+              createdAt: Value(now),
+            ),
+          );
     });
 
-    state = []; // Clear Cart
+    // 2. Trigger Print
+    try {
+      await printerService.printReceipt(
+        orderId: orderId,
+        items: state, // The current cart items
+        total: total,
+        tendered: tendered,
+        paymentMethod: method,
+        cashierName: userName,
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print("Printing failed (Device might not be connected): $e");
+      }
+    }
 
-    // Trigger Sync to send to Server
+    // 3. Clear State & Sync
+    state = [];
     ref.read(syncControllerProvider.notifier).performSync();
   }
 }
 
 final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
   final db = ref.watch(databaseProvider);
+  final printerService = ref.watch(
+    printerServiceProvider,
+  ); // <--- INJECT PRINTER SERVICE
 
-  // In a real app, store the user ID in a dedicated UserProvider upon login
-  // For now, we will grab it from storage or assume a static one if logged in
-  // Ideally: final user = ref.watch(currentUserProvider);
-  const tempUserId = "temp-user-id"; // Replace this with actual logic later
+  // Assuming a temporary user ID for MVP
+  const tempUserId = "USER-123";
+  const tempUserName = "Admin";
 
-  return CartNotifier(db, tempUserId, ref);
+  return CartNotifier(db, tempUserId, tempUserName, printerService, ref);
 });
 // Add a Provider for OrderService
 final orderServiceProvider = Provider(
