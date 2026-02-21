@@ -63,6 +63,16 @@ async function main() {
       },
     ],
   });
+  
+  console.log('Seeding Tables...');
+  await prisma.seatingTable.createMany({
+    data: [
+      { name: 'T-01', status: 'FREE', floor: 'Main', x: 0, y: 0 },
+      { name: 'T-02', status: 'FREE', floor: 'Main', x: 1, y: 0 },
+      { name: 'T-03', status: 'OCCUPIED', floor: 'Main', x: 2, y: 0 }, // Mocking an active table
+      { name: 'VIP-1', status: 'FREE', floor: 'VIP', x: 0, y: 1 },
+    ]
+  });
 
   console.log('Seed data created successfully!');
 }

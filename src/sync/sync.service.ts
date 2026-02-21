@@ -24,7 +24,7 @@ export class SyncService {
     }
 
     // Fetch all updated records
-    const [categories, products, users] = await Promise.all([
+    const [categories, products, users, seatingTables] = await Promise.all([
       this.prisma.category.findMany({
         where: { updatedAt: { gt: lastSyncDate } },
       }),
@@ -32,6 +32,9 @@ export class SyncService {
         where: { updatedAt: { gt: lastSyncDate } },
       }),
       this.prisma.user.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.seatingTable.findMany({
         where: { updatedAt: { gt: lastSyncDate } },
       }),
     ]);
@@ -42,6 +45,7 @@ export class SyncService {
         categories,
         products,
         users,
+        seatingTables,
       },
     };
   }

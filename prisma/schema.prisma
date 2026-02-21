@@ -97,6 +97,8 @@ model Order {
 
   payments      Payment[]
 
+  table         SeatingTable? @relation(fields: [tableId], references: [id])
+
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
 
@@ -135,4 +137,24 @@ model Payment {
   order         Order         @relation(fields: [orderId], references: [id])
 
   @@map("payments")
+}
+
+model SeatingTable {
+  id        String   @id @default(uuid())
+  name      String   // e.g., "T-1", "Bar-2"
+  status    String   @default("FREE") // FREE, OCCUPIED, RESERVED
+  capacity  Int      @default(4)
+  floor     String   @default("Main") // Main, Terrace, VIP
+  
+  // Coordinates for future Drag-n-Drop UI
+  x         Int      @default(0) 
+  y         Int      @default(0)
+
+  orders    Order[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("seating_tables")
 }
