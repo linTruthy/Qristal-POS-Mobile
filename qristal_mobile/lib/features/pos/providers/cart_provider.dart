@@ -1,4 +1,5 @@
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/providers/database_provider.dart';
@@ -6,6 +7,7 @@ import '../../../database/database.dart';
 import '../../sync/providers/sync_provider.dart';
 import '../models/cart_item.dart';
 import '../services/order_service.dart';
+import '../widgets/payment_modal.dart';
 
 class CartNotifier extends StateNotifier<List<CartItem>> {
   final AppDatabase db;
@@ -48,54 +50,117 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
   double get totalAmount => state.fold(0, (sum, item) => sum + item.total);
 
-  Future<void> placeOrder() async {
+  // Future<void> placeOrder() async {
+  //   if (state.isEmpty || userId == null) return;
+
+  //   final orderId = const Uuid().v4();
+  //   final total = totalAmount; // using the getter
+  //   final now = DateTime.now();
+
+  //   // 1. Transaction to save Order + Items safely
+  //   await db.transaction(() async {
+  //     // Create Header
+  //     await db
+  //         .into(db.orders)
+  //         .insert(
+  //           OrdersCompanion(
+  //             id: Value(orderId),
+  //             receiptNumber: Value(
+  //               orderId.substring(0, 8).toUpperCase(),
+  //             ), // Simple receipt #
+  //             userId: Value(userId!),
+  //             totalAmount: Value(total),
+  //             status: const Value('KITCHEN'), // Send straight to kitchen
+  //             createdAt: Value(now),
+  //             updatedAt: Value(now),
+  //             isSynced: const Value(false),
+  //           ),
+  //         );
+
+  //     // Create Items
+  //     for (var cartItem in state) {
+  //       await db
+  //           .into(db.orderItems)
+  //           .insert(
+  //             OrderItemsCompanion(
+  //               id: Value(const Uuid().v4()),
+  //               orderId: Value(orderId),
+  //               productId: Value(cartItem.product.id),
+  //               quantity: Value(cartItem.quantity),
+  //               priceAtTimeOfOrder: Value(cartItem.product.price),
+  //               notes: Value(cartItem.notes),
+  //             ),
+  //           );
+  //     }
+  //   });
+
+  //   // 2. Clear UI
+  //   state = [];
+
+  //   // 3. Trigger Background Sync immediately so Kitchen sees it
+  //   ref.read(syncControllerProvider.notifier).performSync();
+  // }
+
+  Future<void> checkout(BuildContext context) async {
     if (state.isEmpty || userId == null) return;
 
+    final total = totalAmount;
+
+    // Show the Dialog
+    showDialog(
+        context: context,
+        builder: (_) => PaymentModal(
+              totalAmount: total,
+              onConfirmed: (method, tendered, refCode) async {
+                await _finalizeOrder(total, method, tendered, refCode);
+              },
+            ));
+  }
+
+  Future<void> _finalizeOrder(
+      double total, String method, double tendered, String? refCode) async {
     final orderId = const Uuid().v4();
-    final total = totalAmount; // using the getter
     final now = DateTime.now();
 
-    // 1. Transaction to save Order + Items safely
     await db.transaction(() async {
-      // Create Header
-      await db
-          .into(db.orders)
-          .insert(
-            OrdersCompanion(
-              id: Value(orderId),
-              receiptNumber: Value(
-                orderId.substring(0, 8).toUpperCase(),
-              ), // Simple receipt #
-              userId: Value(userId!),
-              totalAmount: Value(total),
-              status: const Value('KITCHEN'), // Send straight to kitchen
-              createdAt: Value(now),
-              updatedAt: Value(now),
-              isSynced: const Value(false),
-            ),
-          );
+      // 1. Order
+      await db.into(db.orders).insert(OrdersCompanion(
+            id: Value(orderId),
+            receiptNumber:
+                Value(orderId.substring(0, 4).toUpperCase()), // Short code
+            userId: Value(userId!),
+            totalAmount: Value(total),
+            status: const Value('CLOSED'), // Closed because it is paid
+            isSynced: const Value(false),
+            createdAt: Value(now),
+            updatedAt: Value(now),
+          ));
 
-      // Create Items
+      // 2. Items
       for (var cartItem in state) {
-        await db
-            .into(db.orderItems)
-            .insert(
-              OrderItemsCompanion(
-                id: Value(const Uuid().v4()),
-                orderId: Value(orderId),
-                productId: Value(cartItem.product.id),
-                quantity: Value(cartItem.quantity),
-                priceAtTimeOfOrder: Value(cartItem.product.price),
-                notes: Value(cartItem.notes),
-              ),
-            );
+        await db.into(db.orderItems).insert(OrderItemsCompanion(
+              id: Value(const Uuid().v4()),
+              orderId: Value(orderId),
+              productId: Value(cartItem.product.id),
+              quantity: Value(cartItem.quantity),
+              priceAtTimeOfOrder: Value(cartItem.product.price),
+            ));
       }
+
+      // 3. Payment
+      await db.into(db.payments).insert(PaymentsCompanion(
+            id: Value(const Uuid().v4()),
+            orderId: Value(orderId),
+            method: Value(method),
+            amount: Value(total), // We record the bill amount, not tendered
+            reference: Value(refCode),
+            createdAt: Value(now),
+          ));
     });
 
-    // 2. Clear UI
-    state = [];
+    state = []; // Clear Cart
 
-    // 3. Trigger Background Sync immediately so Kitchen sees it
+    // Trigger Sync to send to Server
     ref.read(syncControllerProvider.notifier).performSync();
   }
 }
