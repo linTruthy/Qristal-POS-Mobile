@@ -301,7 +301,7 @@ class CartView extends ConsumerWidget {
                           // await ref
                           //     .read(orderServiceProvider)
                           //     .placeOrder(cartItems: cartItems, userId: userId);
-                          await ref.read(cartProvider.notifier).placeOrder();
+                          ref.read(cartProvider.notifier).checkout(context);
                           // 3. Clear UI
                           ref.read(cartProvider.notifier).clearCart();
 

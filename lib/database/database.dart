@@ -12,7 +12,7 @@ class Categories extends Table {
   TextColumn get name => text()();
   TextColumn get colorHex => text().nullable()();
   // Fixed: .defaultValue -> .withDefault
-  IntColumn get sortOrder => integer().withDefault(const Constant(0))(); 
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
   DateTimeColumn get updatedAt => dateTime().nullable()();
 
   @override
@@ -39,10 +39,10 @@ class Orders extends Table {
   TextColumn get userId => text()();
   TextColumn get tableId => text().nullable()();
   RealColumn get totalAmount => real()();
-  TextColumn get status => text()(); 
+  TextColumn get status => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
-  
+
   // Local-only flag to track what needs to be uploaded
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
 
@@ -63,15 +63,41 @@ class OrderItems extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class Payments extends Table {
+  TextColumn get id => text()();
+  TextColumn get orderId => text().references(Orders, #id)();
+  TextColumn get method => text()(); // 'CASH', 'MOBILE_MONEY', etc.
+  RealColumn get amount => real()();
+  TextColumn get reference => text().nullable()(); // Trans ID
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 // Database Registry
-@DriftDatabase(tables: [Categories, Products, Orders, OrderItems])
+@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
-   Stream<List<Order>> watchKitchenOrders() {
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (Migrator m) async {
+        await m.createAll();
+      },
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 2) {
+          await m.createTable(payments);
+        }
+      },
+    );
+  }
+
+  Stream<List<Order>> watchKitchenOrders() {
     return (select(orders)
           ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
           ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
@@ -80,13 +106,12 @@ class AppDatabase extends _$AppDatabase {
 
   // 2. Get Items for a specific Order (Joined with Product info)
   Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
-    final query = select(orderItems).join([
-      innerJoin(products, products.id.equalsExp(orderItems.productId))
-    ])
+    final query = select(orderItems).join(
+        [innerJoin(products, products.id.equalsExp(orderItems.productId))])
       ..where(orderItems.orderId.equals(orderId));
 
     final rows = await query.get();
-    
+
     return rows.map((row) {
       return TypedOrderItem(
         item: row.readTable(orderItems),
@@ -94,16 +119,14 @@ class AppDatabase extends _$AppDatabase {
       );
     }).toList();
   }
-  
+
   // 3. Update Order Status
   Future<void> updateOrderStatus(String id, String newStatus) async {
-    await (update(orders)..where((t) => t.id.equals(id))).write(
-      OrdersCompanion(
-        status: Value(newStatus), 
+    await (update(orders)..where((t) => t.id.equals(id))).write(OrdersCompanion(
+        status: Value(newStatus),
         updatedAt: Value(DateTime.now()), // Important for Sync!
         isSynced: const Value(false) // Mark as dirty so it syncs up
-      )
-    );
+        ));
   }
 }
 
@@ -111,8 +134,8 @@ class AppDatabase extends _$AppDatabase {
 class TypedOrderItem {
   final OrderItem item;
   final Product product;
-  TypedOrderItem({required this.item, required this.product});}
-
+  TypedOrderItem({required this.item, required this.product});
+}
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
