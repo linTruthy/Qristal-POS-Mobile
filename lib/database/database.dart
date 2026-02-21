@@ -3,6 +3,8 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 
 part 'database.g.dart';
 
@@ -83,6 +85,7 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 2;
 
+<<<<<<< HEAD
   @override
   MigrationStrategy get migration {
     return MigrationStrategy(
@@ -97,6 +100,8 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
+=======
+>>>>>>> b9ccbe70af97c9d8b78c64c2c53b70636b18f7b5
   Stream<List<Order>> watchKitchenOrders() {
     return (select(orders)
           ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
@@ -106,9 +111,15 @@ class AppDatabase extends _$AppDatabase {
 
   // 2. Get Items for a specific Order (Joined with Product info)
   Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
+<<<<<<< HEAD
     final query = select(orderItems).join(
         [innerJoin(products, products.id.equalsExp(orderItems.productId))])
       ..where(orderItems.orderId.equals(orderId));
+=======
+    final query = select(orderItems).join([
+      innerJoin(products, products.id.equalsExp(orderItems.productId)),
+    ])..where(orderItems.orderId.equals(orderId));
+>>>>>>> b9ccbe70af97c9d8b78c64c2c53b70636b18f7b5
 
     final rows = await query.get();
 
@@ -122,11 +133,21 @@ class AppDatabase extends _$AppDatabase {
 
   // 3. Update Order Status
   Future<void> updateOrderStatus(String id, String newStatus) async {
+<<<<<<< HEAD
     await (update(orders)..where((t) => t.id.equals(id))).write(OrdersCompanion(
         status: Value(newStatus),
         updatedAt: Value(DateTime.now()), // Important for Sync!
         isSynced: const Value(false) // Mark as dirty so it syncs up
         ));
+=======
+    await (update(orders)..where((t) => t.id.equals(id))).write(
+      OrdersCompanion(
+        status: Value(newStatus),
+        updatedAt: Value(DateTime.now()), // Important for Sync!
+        isSynced: const Value(false), // Mark as dirty so it syncs up
+      ),
+    );
+>>>>>>> b9ccbe70af97c9d8b78c64c2c53b70636b18f7b5
   }
 }
 
@@ -136,11 +157,35 @@ class TypedOrderItem {
   final Product product;
   TypedOrderItem({required this.item, required this.product});
 }
+<<<<<<< HEAD
+=======
+
+//LazyDatabase _openConnection() {
+//return LazyDatabase(() async {
+// final dbFolder = await getApplicationDocumentsDirectory();
+//final file = File(p.join(dbFolder.path, 'db.sqlite'));
+//return NativeDatabase(file);
+//});
+//}
+>>>>>>> b9ccbe70af97c9d8b78c64c2c53b70636b18f7b5
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
+    // 1. Get the folder
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
-    return NativeDatabase(file);
+
+    // 2. FOR ANDROID: Load the native library specifically
+    if (Platform.isAndroid) {
+      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
+
+      // Optional: Explicitly tell sqlite3 where to look if the workaround fails,
+      // though the line above usually fixes it.
+      final cachebase = (await getTemporaryDirectory()).path;
+      sqlite3.tempDirectory = cachebase;
+    }
+
+    // 3. Create the database
+    return NativeDatabase.createInBackground(file);
   });
 }
