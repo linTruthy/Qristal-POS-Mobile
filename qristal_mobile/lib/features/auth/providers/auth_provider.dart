@@ -9,8 +9,14 @@ class LoginState {
   final bool isLoading;
   final String? error;
   final bool isAuthenticated;
+  final String? userId;
 
-  LoginState({this.isLoading = false, this.error, this.isAuthenticated = false});
+  LoginState({
+    this.isLoading = false,
+    this.error,
+    this.isAuthenticated = false,
+    this.userId,
+  });
 }
 
 class AuthController extends StateNotifier<LoginState> {
@@ -22,7 +28,7 @@ class AuthController extends StateNotifier<LoginState> {
     state = LoginState(isLoading: true);
     try {
       await _authService.login(userId, pin);
-      state = LoginState(isAuthenticated: true);
+      state = LoginState(isAuthenticated: true, userId: userId);
     } catch (e) {
       state = LoginState(error: e.toString().replaceAll('Exception: ', ''));
     }

@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/providers/database_provider.dart';
 import '../../../database/database.dart';
 import '../../hardware/services/printer_service.dart';
+import '../../auth/providers/auth_provider.dart';
 import '../../sync/providers/sync_provider.dart';
 import '../../tables/screens/floor_plan_screen.dart';
 import '../models/cart_item.dart';
@@ -220,12 +221,12 @@ final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
   final printerService = ref.watch(
     printerServiceProvider,
   ); // <--- INJECT PRINTER SERVICE
+  final authState = ref.watch(authControllerProvider);
 
-  // Assuming a temporary user ID for MVP
-  const tempUserId = "USER-123";
-  const tempUserName = "Admin";
+  final currentUserId = authState.userId;
+  final currentUserName = authState.userId ?? 'Cashier';
 
-  return CartNotifier(db, tempUserId, tempUserName, printerService, ref);
+  return CartNotifier(db, currentUserId, currentUserName, printerService, ref);
 });
 // Add a Provider for OrderService
 final orderServiceProvider = Provider(
