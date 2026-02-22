@@ -1,0 +1,2009 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+================================================================
+File Summary
+================================================================
+
+Purpose:
+--------
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+
+File Format:
+------------
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  a. A separator line (================)
+  b. The file path (File: path/to/file)
+  c. Another separator line
+  d. The full contents of the file
+  e. A blank line
+
+Usage Guidelines:
+-----------------
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+
+Notes:
+------
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+
+
+================================================================
+Directory Structure
+================================================================
+prisma/
+  migrations/
+    20260219201451_init/
+      migration.sql
+    20260221192920_add_payments/
+      migration.sql
+    20260221210510_add_tables/
+      migration.sql
+    20260222111806_add_inventory/
+      migration.sql
+    migration_lock.toml
+  schema.prisma
+  schema.prisma.save
+  seed.ts
+scripts/
+  create-main-entry.cjs
+src/
+  auth/
+    auth.controller.spec.ts
+    auth.controller.ts
+    auth.module.ts
+    auth.service.spec.ts
+    auth.service.ts
+    jwt.strategy.ts
+  events/
+    events.gateway.spec.ts
+    events.gateway.ts
+  inventory/
+    inventory.controller.spec.ts
+    inventory.controller.ts
+    inventory.module.ts
+    inventory.service.spec.ts
+    inventory.service.ts
+  prisma/
+    prisma.module.ts
+    prisma.service.ts
+  sync/
+    sync.controller.spec.ts
+    sync.controller.ts
+    sync.module.ts
+    sync.service.spec.ts
+    sync.service.ts
+  app.controller.spec.ts
+  app.controller.ts
+  app.module.ts
+  app.service.ts
+  main.ts
+test/
+  app.e2e-spec.ts
+  jest-e2e.json
+.gitignore
+.prettierrc
+.repomixignore
+docker-compose.yaml
+eslint.config.mjs
+nest-cli.json
+package.json
+prisma.config.ts
+README.md
+repomix.config.json
+tsconfig.build.json
+tsconfig.json
+
+================================================================
+Files
+================================================================
+
+================
+File: .repomixignore
+================
+# Add patterns to ignore here, one per line
+# Example:
+# *.log
+# tmp/
+
+================
+File: repomix.config.json
+================
+{
+  "$schema": "https://repomix.com/schemas/latest/schema.json",
+  "input": {
+    "maxFileSize": 52428800
+  },
+  "output": {
+    "filePath": "repomix-output.txt",
+    "style": "plain",
+    "parsableStyle": false,
+    "fileSummary": true,
+    "directoryStructure": true,
+    "files": true,
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "compress": false,
+    "topFilesLength": 5,
+    "showLineNumbers": false,
+    "truncateBase64": false,
+    "copyToClipboard": false,
+    "includeFullDirectoryStructure": false,
+    "tokenCountTree": false,
+    "git": {
+      "sortByChanges": true,
+      "sortByChangesMaxCommits": 100,
+      "includeDiffs": false,
+      "includeLogs": false,
+      "includeLogsCount": 50
+    }
+  },
+  "include": [],
+  "ignore": {
+    "useGitignore": true,
+    "useDotIgnore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": []
+  },
+  "security": {
+    "enableSecurityCheck": true
+  },
+  "tokenCount": {
+    "encoding": "o200k_base"
+  }
+}
+
+================
+File: prisma/migrations/20260219201451_init/migration.sql
+================
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('OWNER', 'MANAGER', 'CASHIER', 'WAITER', 'KITCHEN');
+
+-- CreateEnum
+CREATE TYPE "OrderStatus" AS ENUM ('OPEN', 'KITCHEN', 'SERVED', 'CLOSED', 'VOIDED');
+
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "pin" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'WAITER',
+    "full_name" TEXT NOT NULL,
+    "branch_id" TEXT NOT NULL,
+    "is_active" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "categories" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "color_hex" TEXT,
+    "sort_order" INTEGER NOT NULL DEFAULT 0,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "products" (
+    "id" TEXT NOT NULL,
+    "category_id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "price" DECIMAL(10,2) NOT NULL,
+    "is_available" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "products_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "orders" (
+    "id" TEXT NOT NULL,
+    "receipt_number" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "table_id" TEXT,
+    "total_amount" DECIMAL(10,2) NOT NULL,
+    "status" "OrderStatus" NOT NULL DEFAULT 'OPEN',
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "order_items" (
+    "id" TEXT NOT NULL,
+    "order_id" TEXT NOT NULL,
+    "product_id" TEXT NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "price_at_time_of_order" DECIMAL(10,2) NOT NULL,
+    "notes" TEXT,
+
+    CONSTRAINT "order_items_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_pin_key" ON "users"("pin");
+
+-- AddForeignKey
+ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "orders" ADD CONSTRAINT "orders_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "order_items" ADD CONSTRAINT "order_items_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+================
+File: prisma/migrations/20260221192920_add_payments/migration.sql
+================
+-- CreateEnum
+CREATE TYPE "PaymentMethod" AS ENUM ('CASH', 'CARD', 'MOBILE_MONEY', 'OTHER');
+
+-- CreateTable
+CREATE TABLE "payments" (
+    "id" TEXT NOT NULL,
+    "order_id" TEXT NOT NULL,
+    "method" "PaymentMethod" NOT NULL,
+    "amount" DECIMAL(10,2) NOT NULL,
+    "reference" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "payments" ADD CONSTRAINT "payments_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+================
+File: prisma/migrations/20260221210510_add_tables/migration.sql
+================
+-- CreateTable
+CREATE TABLE "seating_tables" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'FREE',
+    "capacity" INTEGER NOT NULL DEFAULT 4,
+    "floor" TEXT NOT NULL DEFAULT 'Main',
+    "x" INTEGER NOT NULL DEFAULT 0,
+    "y" INTEGER NOT NULL DEFAULT 0,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+
+    CONSTRAINT "seating_tables_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "orders" ADD CONSTRAINT "orders_table_id_fkey" FOREIGN KEY ("table_id") REFERENCES "seating_tables"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+================
+File: prisma/migrations/20260222111806_add_inventory/migration.sql
+================
+-- CreateTable
+CREATE TABLE "inventory_items" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "sku" TEXT,
+    "unitOfMeasure" TEXT NOT NULL,
+    "currentStock" DECIMAL(10,4) NOT NULL DEFAULT 0,
+    "minimumStock" DECIMAL(10,4) NOT NULL DEFAULT 0,
+    "costPerUnit" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "inventory_items_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "recipe_ingredients" (
+    "id" TEXT NOT NULL,
+    "product_id" TEXT NOT NULL,
+    "inventory_item_id" TEXT NOT NULL,
+    "amount" DECIMAL(10,4) NOT NULL,
+
+    CONSTRAINT "recipe_ingredients_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "inventory_items_sku_key" ON "inventory_items"("sku");
+
+-- AddForeignKey
+ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_inventory_item_id_fkey" FOREIGN KEY ("inventory_item_id") REFERENCES "inventory_items"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+================
+File: prisma/migrations/migration_lock.toml
+================
+# Please do not edit this file manually
+# It should be added in your version-control system (i.e. Git)
+provider = "postgresql"
+
+================
+File: prisma/schema.prisma.save
+================
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------------------------------------
+// 1. AUTH & STAFF
+// ------------------------------------------------------
+enum Role {
+  OWNER
+  MANAGER
+  CASHIER
+  WAITER
+  KITCHEN
+}
+
+model User {
+  id           String    @id @default(uuid())
+  pin          String    @unique // Hashed PIN for terminal login
+  role         Role      @default(WAITER)
+  fullName     String    @map("full_name")
+  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
+  isActive     Boolean   @default(true) @map("is_active")
+  
+  // Relations
+  orders       Order[]
+  
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at") // Soft delete
+
+  @@map("users")
+}
+
+// ------------------------------------------------------
+// 2. MENU & PRODUCTS (Server is source of truth)
+// ------------------------------------------------------
+model Category {
+  id           String    @id @default(uuid())
+  name         String
+  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
+  sortOrder    Int       @default(0) @map("sort_order")
+  
+  products     Product[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id           String    @id @default(uuid())
+  categoryId   String    @map("category_id")
+  name         String
+  price        Decimal   @db.Decimal(10, 2)
+  isAvailable  Boolean   @default(true) @map("is_available")
+
+  category     Category  @relation(fields: [categoryId], references: [id])
+  orderItems   OrderItem[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("products")
+}
+
+// ------------------------------------------------------
+// 3. ORDERS (Terminals are source of truth, pushed to server)
+// ------------------------------------------------------
+enum OrderStatus {
+  OPEN
+  KITCHEN
+  SERVED
+  CLOSED
+  VOIDED
+}
+
+model Order {
+  id            String      @id @default(uuid()) // Terminals generate this UUID
+  receiptNumber String      @map("receipt_number") // e.g., ORD-0001
+  userId        String      @map("user_id") // Waiter who took the order
+  tableId       String?     @map("table_id") // Nullable for takeaway
+  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
+  status        OrderStatus @default(OPEN)
+  
+  user          User        @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                  String   @id @default(uuid())
+  orderId             String   @map("order_id")
+  productId           String   @map("product_id")
+  quantity            Int
+  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
+  notes               String?  // e.g. "Extra spicy"
+  
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product             Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+x
+
+================
+File: scripts/create-main-entry.cjs
+================
+const { writeFileSync } = require('node:fs');
+const { join } = require('node:path');
+
+const entrypointPath = join(__dirname, '..', 'dist', 'main.js');
+writeFileSync(entrypointPath, "require('./src/main.js');\n", 'utf8');
+console.log(`Created ${entrypointPath}`);
+
+================
+File: src/auth/auth.controller.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { AuthController } from './auth.controller';
+
+describe('AuthController', () => {
+  let controller: AuthController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [AuthController],
+    }).compile();
+
+    controller = module.get<AuthController>(AuthController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
+
+================
+File: src/auth/auth.controller.ts
+================
+// src/auth/auth.controller.ts
+import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
+import { AuthService } from './auth.service';
+
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}
+
+  @Post('login')
+  async login(@Body() body: { id: string; pin: string }) {
+    const user = await this.authService.validateUser(body.id, body.pin);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    return this.authService.login(user);
+  }
+}
+
+================
+File: src/auth/auth.module.ts
+================
+// src/auth/auth.module.ts
+import { Module } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
+
+@Module({
+  imports: [
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '24h' },
+    }),
+  ],
+  providers: [AuthService, JwtStrategy],
+  controllers: [AuthController],
+})
+export class AuthModule {}
+
+================
+File: src/auth/auth.service.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { AuthService } from './auth.service';
+
+describe('AuthService', () => {
+  let service: AuthService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [AuthService],
+    }).compile();
+
+    service = module.get<AuthService>(AuthService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+
+================
+File: src/auth/auth.service.ts
+================
+// src/auth/auth.service.ts
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from '../prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private prisma: PrismaService,
+    private jwtService: JwtService
+  ) {}
+
+  async validateUser(userId: string, pin: string): Promise<any> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (user && (await bcrypt.compare(pin, user.pin))) {
+      const { pin, ...result } = user;
+      return result;
+    }
+    return null;
+  }
+
+  async login(user: any) {
+    const payload = { sub: user.id, role: user.role, branchId: user.branchId };
+    return {
+      access_token: this.jwtService.sign(payload),
+      user: user
+    };
+  }
+}
+
+================
+File: src/auth/jwt.strategy.ts
+================
+// src/auth/jwt.strategy.ts
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { PassportStrategy } from '@nestjs/passport';
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: process.env.JWT_SECRET,
+    });
+  }
+
+  async validate(payload: any) {
+    // This return value is added to Request object (req.user)
+    return { userId: payload.sub, role: payload.role, branchId: payload.branchId };
+  }
+}
+
+================
+File: src/events/events.gateway.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { EventsGateway } from './events.gateway';
+
+describe('EventsGateway', () => {
+  let gateway: EventsGateway;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [EventsGateway],
+    }).compile();
+
+    gateway = module.get<EventsGateway>(EventsGateway);
+  });
+
+  it('should be defined', () => {
+    expect(gateway).toBeDefined();
+  });
+});
+
+================
+File: src/events/events.gateway.ts
+================
+import {
+  WebSocketGateway,
+  WebSocketServer,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
+import { Logger } from '@nestjs/common';
+
+// Allow any origin for now to avoid CORS issues during dev/testing across devices
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer()
+  server: Server;
+
+  private logger: Logger = new Logger('EventsGateway');
+
+  handleConnection(client: Socket) {
+    this.logger.log(`Client connected: ${client.id}`);
+  }
+
+  handleDisconnect(client: Socket) {
+    this.logger.log(`Client disconnected: ${client.id}`);
+  }
+
+  // --- Methods to emit events from other services ---
+
+  // Call this when an order is received from the POS
+  emitNewOrder(orderData: any) {
+    this.server.emit('newOrder', orderData);
+  }
+
+  // Call this when inventory is updated
+  emitInventoryUpdate(inventoryData: any) {
+    this.server.emit('inventoryUpdate', inventoryData);
+  }
+}
+
+================
+File: src/inventory/inventory.controller.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { InventoryController } from './inventory.controller';
+
+describe('InventoryController', () => {
+  let controller: InventoryController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [InventoryController],
+    }).compile();
+
+    controller = module.get<InventoryController>(InventoryController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
+
+================
+File: src/inventory/inventory.controller.ts
+================
+import { Controller, Get } from '@nestjs/common';
+import { InventoryService } from './inventory.service';
+
+@Controller('inventory')
+export class InventoryController {
+  constructor(private readonly inventoryService: InventoryService) {}
+
+  @Get()
+  async getInventory() {
+    return this.inventoryService.getInventoryStatus();
+  }
+}
+
+================
+File: src/inventory/inventory.module.ts
+================
+import { Module } from '@nestjs/common';
+import { InventoryService } from './inventory.service';
+import { InventoryController } from './inventory.controller';
+
+@Module({
+  providers: [InventoryService],
+  controllers: [InventoryController]
+})
+export class InventoryModule {}
+
+================
+File: src/inventory/inventory.service.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { InventoryService } from './inventory.service';
+
+describe('InventoryService', () => {
+  let service: InventoryService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [InventoryService],
+    }).compile();
+
+    service = module.get<InventoryService>(InventoryService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+
+================
+File: src/inventory/inventory.service.ts
+================
+import { Injectable, Logger } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+
+@Injectable()
+export class InventoryService {
+  private readonly logger = new Logger(InventoryService.name);
+
+  constructor(private prisma: PrismaService) {}
+
+  /**
+   * Processes inventory deductions for a given order.
+   * This should be called after an order is successfully synced from the POS.
+   */
+  async deductStockForOrder(orderId: string) {
+    try {
+      // 1. Fetch the order and its items
+      const order = await this.prisma.order.findUnique({
+        where: { id: orderId },
+        include: { items: true },
+      });
+
+      if (!order) {
+        this.logger.error(`Order ${orderId} not found for inventory deduction.`);
+        return;
+      }
+
+      this.logger.log(`Processing inventory for Order: ${order.receiptNumber}`);
+
+      // 2. Loop through each item in the order
+      for (const orderItem of order.items) {
+        
+        // 3. Find the recipe for this product
+        const recipeIngredients = await this.prisma.recipeIngredient.findMany({
+          where: { productId: orderItem.productId },
+        });
+
+        if (recipeIngredients.length === 0) {
+            // It's a product without a recipe (maybe a retail item), skip deduction or handle retail logic.
+            continue; 
+        }
+
+        // 4. Calculate total deduction and update inventory
+        for (const ingredient of recipeIngredients) {
+            // quantity ordered * amount needed per item
+            const totalDeduction = Number(orderItem.quantity) * Number(ingredient.amount);
+
+            await this.prisma.inventoryItem.update({
+                where: { id: ingredient.inventoryItemId },
+                data: {
+                    currentStock: {
+                        decrement: totalDeduction
+                    }
+                }
+            });
+
+            this.logger.debug(`Deducted ${totalDeduction} from InventoryItem ${ingredient.inventoryItemId}`);
+        }
+      }
+    } catch (error) {
+        this.logger.error(`Failed to deduct inventory for order ${orderId}: ${error.message}`);
+    }
+  }
+
+  async getInventoryStatus() {
+    return this.prisma.inventoryItem.findMany({
+      orderBy: { currentStock: 'asc' }, // Order by lowest stock first
+    });
+  }
+}
+
+================
+File: src/prisma/prisma.module.ts
+================
+import { Global, Module } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
+
+@Global() // Makes PrismaService available everywhere without importing the module
+@Module({
+    providers: [PrismaService],
+    exports: [PrismaService],
+})
+export class PrismaModule {}
+
+================
+File: src/prisma/prisma.service.ts
+================
+import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+
+@Injectable()
+export class PrismaService extends PrismaClient implements OnModuleInit {
+  async onModuleInit() {
+    await this.$connect();
+  }
+}
+
+================
+File: src/sync/sync.controller.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { SyncController } from './sync.controller';
+
+describe('SyncController', () => {
+  let controller: SyncController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [SyncController],
+    }).compile();
+
+    controller = module.get<SyncController>(SyncController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
+
+================
+File: src/sync/sync.controller.ts
+================
+// src/sync/sync.controller.ts
+import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport'; // Built-in guard
+import { SyncService } from './sync.service';
+
+@Controller('sync')
+@UseGuards(AuthGuard('jwt')) // This protects all routes in this controller
+export class SyncController {
+    constructor(private readonly syncService: SyncService) { }
+
+    @Get('pull')
+    async pull(@Query('lastSyncTimestamp') lastSyncTimestamp: string) {
+        return this.syncService.pullChanges(lastSyncTimestamp);
+    }
+
+    @Post('push')
+    async push(@Body() payload: any) {
+        return this.syncService.pushChanges(payload);
+    }
+}
+
+================
+File: src/sync/sync.module.ts
+================
+import { Module } from '@nestjs/common';
+import { SyncService } from './sync.service';
+import { SyncController } from './sync.controller';
+
+@Module({
+  providers: [SyncService],
+  controllers: [SyncController]
+})
+export class SyncModule {}
+
+================
+File: src/sync/sync.service.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { SyncService } from './sync.service';
+
+describe('SyncService', () => {
+  let service: SyncService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [SyncService],
+    }).compile();
+
+    service = module.get<SyncService>(SyncService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+
+================
+File: src/app.controller.spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+describe('AppController', () => {
+  let appController: AppController;
+
+  beforeEach(async () => {
+    const app: TestingModule = await Test.createTestingModule({
+      controllers: [AppController],
+      providers: [AppService],
+    }).compile();
+
+    appController = app.get<AppController>(AppController);
+  });
+
+  describe('root', () => {
+    it('should return "Hello World!"', () => {
+      expect(appController.getHello()).toBe('Hello World!');
+    });
+  });
+});
+
+================
+File: src/app.controller.ts
+================
+import { Controller, Get } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get()
+  getHello(): string {
+    return this.appService.getHello();
+  }
+}
+
+================
+File: src/app.service.ts
+================
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AppService {
+  getHello(): string {
+    return 'Hello World!';
+  }
+}
+
+================
+File: test/app.e2e-spec.ts
+================
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import request from 'supertest';
+import { App } from 'supertest/types';
+import { AppModule } from './../src/app.module';
+
+describe('AppController (e2e)', () => {
+  let app: INestApplication<App>;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/ (GET)', () => {
+    return request(app.getHttpServer())
+      .get('/')
+      .expect(200)
+      .expect('Hello World!');
+  });
+});
+
+================
+File: test/jest-e2e.json
+================
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  }
+}
+
+================
+File: .gitignore
+================
+# compiled output
+/dist
+/node_modules
+/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+/generated/prisma
+
+================
+File: .prettierrc
+================
+{
+  "singleQuote": true,
+  "trailingComma": "all"
+}
+
+================
+File: docker-compose.yaml
+================
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: qristal_user
+      POSTGRES_PASSWORD: qristal_password
+      POSTGRES_DB: qristal_db
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+================
+File: eslint.config.mjs
+================
+// @ts-check
+import eslint from '@eslint/js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config(
+  {
+    ignores: ['eslint.config.mjs'],
+  },
+  eslint.configs.recommended,
+  ...tseslint.configs.recommendedTypeChecked,
+  eslintPluginPrettierRecommended,
+  {
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.jest,
+      },
+      sourceType: 'commonjs',
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
+    },
+  },
+);
+
+================
+File: nest-cli.json
+================
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true
+  }
+}
+
+================
+File: prisma.config.ts
+================
+import "dotenv/config";
+import { defineConfig, env } from "@prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  datasource: {
+    url: env("DATABASE_URL"),
+  },
+});
+
+================
+File: README.md
+================
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
+
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
+
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+
+## Description
+
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+
+## Project setup
+
+```bash
+$ npm install
+```
+
+## Compile and run the project
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+## Run tests
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+
+# test coverage
+$ npm run test:cov
+```
+
+## Deployment
+
+When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+
+If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+
+```bash
+$ npm install -g @nestjs/mau
+$ mau deploy
+```
+
+With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+
+## Resources
+
+Check out a few resources that may come in handy when working with NestJS:
+
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+
+## Support
+
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+## Stay in touch
+
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+## License
+
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+================
+File: tsconfig.build.json
+================
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
+
+================
+File: tsconfig.json
+================
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2023",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false
+  }
+}
+
+================
+File: src/main.ts
+================
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  
+  // Enable CORS so your Flutter Web/Mobile can talk to it
+  app.enableCors(); 
+  
+  // Listen on 0.0.0.0 to accept external connections in Docker/Railway
+  await app.listen(process.env.PORT || 3000, '0.0.0.0');
+  
+  console.log(`Application is running on: ${await app.getUrl()}`);
+}
+bootstrap();
+
+================
+File: prisma/seed.ts
+================
+import { PrismaClient } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  console.log('Clearing database...');
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.category.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.inventoryItem.deleteMany();
+  await prisma.recipeIngredient.deleteMany();
+  await prisma.seatingTable.deleteMany();
+
+
+  console.log('Seeding data...');
+
+  // 1. Create a User
+  const hashedPin = await bcrypt.hash('1234', 10);
+  const admin = await prisma.user.create({
+    data: {
+      fullName: 'Admin User',
+      pin: hashedPin,
+      role: 'OWNER',
+      branchId: 'BRANCH-01',
+      isActive: true,
+    },
+  });
+
+  // 2. Create Categories
+  const catDrinks = await prisma.category.create({
+    data: { name: 'Drinks', colorHex: '#3498db', sortOrder: 1 },
+  });
+
+  const catFood = await prisma.category.create({
+    data: { name: 'Food', colorHex: '#e67e22', sortOrder: 2 },
+  });
+
+  // 3. Create Products
+  await prisma.product.createMany({
+    data: [
+      {
+        categoryId: catDrinks.id,
+        name: 'Coffee',
+        price: 2.50,
+        isAvailable: true,
+      },
+      {
+        categoryId: catDrinks.id,
+        name: 'Soda',
+        price: 1.50,
+        isAvailable: true,
+      },
+      {
+        categoryId: catFood.id,
+        name: 'Burger',
+        price: 8.50,
+        isAvailable: true,
+      },
+      {
+        categoryId: catFood.id,
+        name: 'Fries',
+        price: 3.00,
+        isAvailable: true,
+      },
+    ],
+  });
+
+  console.log('Seeding Inventory...');
+  
+  const coffeeBeans = await prisma.inventoryItem.create({
+    data: { name: 'Espresso Beans', unitOfMeasure: 'Grams', currentStock: 5000, costPerUnit: 0.05 }
+  });
+
+  const milk = await prisma.inventoryItem.create({
+     data: { name: 'Whole Milk', unitOfMeasure: 'Liters', currentStock: 20, costPerUnit: 2000 }
+  });
+
+  const bun = await prisma.inventoryItem.create({
+    data: { name: 'Brioche Bun', unitOfMeasure: 'Pieces', currentStock: 100, costPerUnit: 500 }
+  });
+
+  const beefPatty = await prisma.inventoryItem.create({
+    data: { name: 'Beef Patty 150g', unitOfMeasure: 'Pieces', currentStock: 100, costPerUnit: 2500 }
+  });
+
+  console.log('Creating Recipes...');
+  
+  // Find the Coffee product we created earlier
+  const coffee = await prisma.product.findFirst({ where: { name: 'Coffee' }});
+  if (coffee) {
+    await prisma.recipeIngredient.createMany({
+        data: [
+            { productId: coffee.id, inventoryItemId: coffeeBeans.id, amount: 18 }, // 18 grams of beans
+            { productId: coffee.id, inventoryItemId: milk.id, amount: 0.2 },       // 200ml milk
+        ]
+    });
+  }
+
+  // Find the Burger product
+  const burger = await prisma.product.findFirst({ where: { name: 'Burger' }});
+  if (burger) {
+    await prisma.recipeIngredient.createMany({
+        data: [
+            { productId: burger.id, inventoryItemId: bun.id, amount: 1 }, 
+            { productId: burger.id, inventoryItemId: beefPatty.id, amount: 1 },
+        ]
+    });
+  }
+  
+  console.log('Seeding Tables...');
+  await prisma.seatingTable.createMany({
+    data: [
+      { name: 'T-01', status: 'FREE', floor: 'Main', x: 0, y: 0 },
+      { name: 'T-02', status: 'FREE', floor: 'Main', x: 1, y: 0 },
+      { name: 'T-03', status: 'OCCUPIED', floor: 'Main', x: 2, y: 0 }, // Mocking an active table
+      { name: 'VIP-1', status: 'FREE', floor: 'VIP', x: 0, y: 1 },
+    ]
+  });
+
+  console.log('Seed data created successfully!');
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+
+================
+File: src/app.module.ts
+================
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { SyncModule } from './sync/sync.module';
+import { AuthModule } from './auth/auth.module';
+import { InventoryModule } from './inventory/inventory.module';
+import { EventsGateway } from './events/events.gateway';
+
+@Module({
+  imports: [PrismaModule, SyncModule, AuthModule, InventoryModule],  // Add PrismaModule here
+  controllers: [AppController],
+  providers: [AppService, EventsGateway],
+})
+export class AppModule {}
+
+================
+File: prisma/schema.prisma
+================
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ------------------------------------------------------
+// 1. AUTH & STAFF
+// ------------------------------------------------------
+enum Role {
+  OWNER
+  MANAGER
+  CASHIER
+  WAITER
+  KITCHEN
+}
+
+model User {
+  id           String    @id @default(uuid())
+  pin          String    @unique // Hashed PIN for terminal login
+  role         Role      @default(WAITER)
+  fullName     String    @map("full_name")
+  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
+  isActive     Boolean   @default(true) @map("is_active")
+  
+  // Relations
+  orders       Order[]
+  
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at") // Soft delete
+
+  @@map("users")
+}
+
+// ------------------------------------------------------
+// 2. MENU & PRODUCTS (Server is source of truth)
+// ------------------------------------------------------
+model Category {
+  id           String    @id @default(uuid())
+  name         String
+  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
+  sortOrder    Int       @default(0) @map("sort_order")
+  
+  products     Product[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
+  deletedAt    DateTime? @map("deleted_at")
+
+  @@map("categories")
+}
+
+model Product {
+  id           String    @id @default(uuid())
+  categoryId   String    @map("category_id")
+  name         String
+  price        Decimal   @db.Decimal(10, 2)
+  isAvailable  Boolean   @default(true) @map("is_available")
+
+  category     Category  @relation(fields: [categoryId], references: [id])
+  orderItems   OrderItem[]
+
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
+  deletedAt    DateTime? @map("deleted_at")
+
+  recipe          RecipeIngredient[]
+
+  @@map("products")
+}
+
+// ------------------------------------------------------
+// 3. ORDERS (Terminals are source of truth, pushed to server)
+// ------------------------------------------------------
+enum OrderStatus {
+  OPEN
+  KITCHEN
+  SERVED
+  CLOSED
+  VOIDED
+}
+
+model Order {
+  id            String      @id @default(uuid()) // Terminals generate this UUID
+  receiptNumber String      @map("receipt_number") // e.g., ORD-0001
+  userId        String      @map("user_id") // Waiter who took the order
+  tableId       String?     @map("table_id") // Nullable for takeaway
+  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
+  status        OrderStatus @default(OPEN)
+  
+  user          User        @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+
+  payments      Payment[]
+
+  table         SeatingTable? @relation(fields: [tableId], references: [id])
+
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                  String   @id @default(uuid())
+  orderId             String   @map("order_id")
+  productId           String   @map("product_id")
+  quantity            Int
+  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
+  notes               String?  // e.g. "Extra spicy"
+  
+  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product             Product  @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  MOBILE_MONEY
+  OTHER
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  orderId       String        @map("order_id")
+  method        PaymentMethod
+  amount        Decimal       @db.Decimal(10, 2)
+  reference     String?       // For Mobile Money Ref / Card Auth Code
+  createdAt     DateTime      @default(now()) @map("created_at")
+
+  order         Order         @relation(fields: [orderId], references: [id])
+
+  @@map("payments")
+}
+
+model SeatingTable {
+  id        String   @id @default(uuid())
+  name      String   // e.g., "T-1", "Bar-2"
+  status    String   @default("FREE") // FREE, OCCUPIED, RESERVED
+  capacity  Int      @default(4)
+  floor     String   @default("Main") // Main, Terrace, VIP
+  
+  // Coordinates for future Drag-n-Drop UI
+  x         Int      @default(0) 
+  y         Int      @default(0)
+
+  orders    Order[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@map("seating_tables")
+}
+
+// ------------------------------------------------------
+// 4. INVENTORY & RECIPES
+// ------------------------------------------------------
+
+model InventoryItem {
+  id              String   @id @default(uuid())
+  name            String   // e.g., "Coffee Beans", "Milk", "Burger Bun"
+  sku             String?  @unique
+  unitOfMeasure   String   // e.g., "Kg", "Liters", "Pieces", "Grams"
+  currentStock    Decimal  @default(0) @db.Decimal(10, 4)
+  minimumStock    Decimal  @default(0) @db.Decimal(10, 4) // For low stock alerts
+  costPerUnit     Decimal  @default(0) @db.Decimal(10, 2)
+  
+  recipeIngredients RecipeIngredient[]
+
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("inventory_items")
+}
+
+// A Recipe links a Product (what you sell) to InventoryItems (what you use)
+model RecipeIngredient {
+  id              String   @id @default(uuid())
+  productId       String   @map("product_id")
+  inventoryItemId String   @map("inventory_item_id")
+  
+  // How much of the inventory item is used to make ONE of the product
+  // e.g., 1 Cappuccino uses 15 (amount) Grams (from InventoryItem unit) of Coffee Beans
+  amount          Decimal  @db.Decimal(10, 4) 
+
+  product         Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  inventoryItem   InventoryItem @relation(fields: [inventoryItemId], references: [id], onDelete: Restrict)
+
+  @@map("recipe_ingredients")
+}
+
+================
+File: src/sync/sync.service.ts
+================
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service'; // Assuming you generated a Prisma module
+import { EventsGateway } from '../events/events.gateway';
+import { InventoryService } from '../inventory/inventory.service';
+
+@Injectable()
+export class SyncService {
+  constructor(private prisma: PrismaService,
+    private inventoryService: InventoryService,
+    private eventsGateway: EventsGateway
+  ) { }
+
+  /**
+   * PULL: Client requests data that has changed since `lastSyncTimestamp`.
+   * The client sends a timestamp (ISO string), and the server returns
+   * all records where `updatedAt > lastSyncTimestamp`.
+   */
+  async pullChanges(lastSyncTimestamp: string) {
+    let lastSyncDate: Date;
+
+    if (!lastSyncTimestamp) {
+      // If no timestamp provided, do a full initial sync (return all data)
+      lastSyncDate = new Date(0); // 1970-01-01
+    } else {
+      lastSyncDate = new Date(lastSyncTimestamp);
+      if (isNaN(lastSyncDate.getTime())) {
+        throw new BadRequestException('Invalid lastSyncTimestamp format.');
+      }
+    }
+
+    // Fetch all updated records
+    const [categories, products, users, seatingTables, orders] = await Promise.all([
+      this.prisma.category.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.product.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.user.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.seatingTable.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+      this.prisma.order.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
+    ]);
+
+    return {
+      timestamp: new Date().toISOString(), // The client will save this for the next sync
+      changes: {
+        categories,
+        products,
+        users,
+        seatingTables,
+        orders,
+      },
+    };
+  }
+
+  /**
+   * PUSH: Client sends new/updated data (orders, transactions) to the server.
+   * Since orders are generated on the POS, the server needs to upsert them.
+   */
+  async pushChanges(payload: any) {
+    const { orders, orderItems, payments } = payload;
+    const errors: { id: any; error: any }[] = [];
+    let processedOrders = 0;
+
+    const newOrderIdsToDeduct: string[] = [];
+
+    const newlyCreatedOrdersForKDS = [];
+    // We use a transaction to ensure data integrity
+    try {
+      await this.prisma.$transaction(async (tx) => {
+
+        // 1. Process Orders
+        if (orders && Array.isArray(orders)) {
+          for (const order of orders) {
+            try {
+              const existing = await tx.order.findUnique({ where: { id: order.id } });
+              const savedOrder = await tx.order.upsert({
+                where: { id: order.id },
+                update: {
+                  status: order.status,
+                  totalAmount: order.totalAmount,
+                  updatedAt: new Date(), // Force server timestamp
+                },
+                create: {
+                  id: order.id,
+                  receiptNumber: order.receiptNumber,
+                  userId: order.userId,
+                  tableId: order.tableId,
+                  totalAmount: order.totalAmount,
+                  status: order.status,
+                  createdAt: new Date(order.createdAt), // Keep original creation time
+                },
+              });
+              processedOrders++;
+              if (!existing) {
+                newOrderIdsToDeduct.push(order.id);
+                newlyCreatedOrdersForKDS.push(savedOrder); // Save for WebSocket
+              }
+
+            } catch (err) {
+              errors.push({ id: order.id, error: err.message });
+            }
+          }
+        }
+
+        // 2. Process Order Items
+        if (orderItems && Array.isArray(orderItems)) {
+          for (const item of orderItems) {
+            try {
+              await tx.orderItem.upsert({
+                where: { id: item.id },
+                update: {
+                  quantity: item.quantity,
+                  notes: item.notes,
+                },
+                create: {
+                  id: item.id,
+                  orderId: item.orderId,
+                  productId: item.productId,
+                  quantity: item.quantity,
+                  priceAtTimeOfOrder: item.priceAtTimeOfOrder,
+                  notes: item.notes,
+                },
+              });
+            } catch (err) {
+              errors.push({ id: item.id, error: err.message });
+            }
+          }
+        }
+
+        // 3. Process Payments
+        if (payments && Array.isArray(payments)) {
+          for (const pay of payments) {
+            try {
+              await tx.payment.create({ // We usually only create payments, not update them
+                data: {
+                  id: pay.id,
+                  orderId: pay.orderId,
+                  method: pay.method, // Ensure Enum mapping matches
+                  amount: pay.amount,
+                  reference: pay.reference,
+                  createdAt: new Date(pay.createdAt),
+                }
+              });
+            } catch (err) {
+              // If it exists, ignore (idempotency), otherwise log error
+              if (!err.message.includes('Unique constraint')) {
+                errors.push({ id: pay.id, error: err.message });
+              }
+            }
+          }
+        }
+      });
+
+      for (const orderId of newOrderIdsToDeduct) {
+        // Fire and forget - don't await this so the POS gets a fast response
+        this.inventoryService.deductStockForOrder(orderId).catch(e =>
+          console.error(`Inventory deduction failed async: ${e}`)
+        );
+      }
+      if (newlyCreatedOrdersForKDS.length > 0) {
+        // In a real app we'd fetch the items too, but sending the signal is enough 
+        // for the KDS to know it needs to pull. Let's send the data.
+        this.eventsGateway.emitNewOrder({ message: 'New orders arrived!' });
+      }
+
+      // 2. Trigger Inventory Deduction (Non-blocking)
+      for (const orderId of newOrderIdsToDeduct) {
+        this.inventoryService.deductStockForOrder(orderId).then(async () => {
+          // After deduction, fetch latest inventory and broadcast to Dashboard
+          const latestInventory = await this.inventoryService.getInventoryStatus();
+          this.eventsGateway.emitInventoryUpdate(latestInventory);
+        }).catch(e => console.error(e));
+      }
+      return {
+        success: true,
+        processedOrders,
+        errors: errors.length > 0 ? errors : undefined,
+      };
+
+    } catch (error) {
+      // Transaction failed
+      throw new BadRequestException(`Push sync failed: ${error.message}`);
+    }
+  }
+}
+
+================
+File: package.json
+================
+{
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "name": "qristal-api",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build && node scripts/create-main-entry.cjs",
+    "postinstall": "npx prisma generate",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
+  },
+  "dependencies": {
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-socket.io": "^11.1.14",
+    "@nestjs/swagger": "^11.2.6",
+    "@nestjs/websockets": "^11.1.14",
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^6.0.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@prisma/config": "^7.4.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.10.7",
+    "@types/supertest": "^6.0.2",
+    "dotenv": "^17.3.1",
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
+    "globals": "^16.0.0",
+    "jest": "^30.0.0",
+    "prettier": "^3.4.2",
+    "prisma": "^5.22.0",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.20.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
+  }
+}
+
+
+
+
+
+================================================================
+End of Codebase
+================================================================

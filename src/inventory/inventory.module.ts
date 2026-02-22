@@ -3,7 +3,8 @@ import { InventoryService } from './inventory.service';
 import { InventoryController } from './inventory.controller';
 
 @Module({
+  controllers: [InventoryController],
   providers: [InventoryService],
-  controllers: [InventoryController]
+  exports: [InventoryService], // <-- Crucial: Export so SyncModule can use it
 })
 export class InventoryModule {}

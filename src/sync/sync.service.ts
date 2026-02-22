@@ -2,6 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service'; // Assuming you generated a Prisma module
 import { EventsGateway } from '../events/events.gateway';
 import { InventoryService } from '../inventory/inventory.service';
+import { Order } from '@prisma/client';
 
 @Injectable()
 export class SyncService {
@@ -70,7 +71,7 @@ export class SyncService {
 
     const newOrderIdsToDeduct: string[] = [];
 
-    const newlyCreatedOrdersForKDS = [];
+    const newlyCreatedOrdersForKDS: Order[] = [];
     // We use a transaction to ensure data integrity
     try {
       await this.prisma.$transaction(async (tx) => {

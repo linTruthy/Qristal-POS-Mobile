@@ -5,11 +5,11 @@ import { PrismaModule } from './prisma/prisma.module';
 import { SyncModule } from './sync/sync.module';
 import { AuthModule } from './auth/auth.module';
 import { InventoryModule } from './inventory/inventory.module';
-import { EventsGateway } from './events/events.gateway';
+import { EventsModule } from './events/events.module';
 
 @Module({
-  imports: [PrismaModule, SyncModule, AuthModule, InventoryModule],  // Add PrismaModule here
+  imports: [PrismaModule, SyncModule, AuthModule, InventoryModule, EventsModule],  // Add PrismaModule here
   controllers: [AppController],
-  providers: [AppService, EventsGateway],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
