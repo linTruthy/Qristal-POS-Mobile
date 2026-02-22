@@ -17,13 +17,15 @@ class KitchenScreen extends ConsumerWidget {
         title: const Text("Kitchen Display System"),
         backgroundColor: AppTheme.surface,
         actions: [
-         // Optional: A button to manually trigger a sync if needed
+          // Optional: A button to manually trigger a sync if needed
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: "Force Sync",
             onPressed: () {
-               // ref.read(syncControllerProvider.notifier).performSync();
-               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Syncing...")));
+              // ref.read(syncControllerProvider.notifier).performSync();
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text("Syncing...")));
             },
           ),
           const SizedBox(width: 16),
@@ -32,27 +34,40 @@ class KitchenScreen extends ConsumerWidget {
       body: StreamBuilder<List<Order>>(
         stream: db.watchKitchenOrders(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-          
- if (snapshot.hasError) {
-             return Center(child: Text('Error loading orders: ${snapshot.error}', style: const TextStyle(color: Colors.red)));
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
           }
 
-           final orders = snapshot.data ?? [];
-          
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                'Error loading orders: ${snapshot.error}',
+                style: const TextStyle(color: Colors.red),
+              ),
+            );
+          }
+
+          final orders = snapshot.data ?? [];
+
           if (orders.isEmpty) {
             return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.check_circle_outline, size: 80, color: Colors.green),
+                  Icon(
+                    Icons.check_circle_outline,
+                    size: 80,
+                    color: Colors.green,
+                  ),
                   SizedBox(height: 16),
-                  Text("No pending orders. Good job!", style: TextStyle(color: Colors.grey, fontSize: 24)),
+                  Text(
+                    "No pending orders. Good job!",
+                    style: TextStyle(color: Colors.grey, fontSize: 24),
+                  ),
                 ],
-              )
+              ),
             );
           }
-
 
           return ListView.builder(
             scrollDirection: Axis.horizontal, // KDS usually scrolls sideways
@@ -102,16 +117,16 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isPreparing ? Colors.orange : AppTheme.qristalBlue, 
-          width: 3
+          color: isPreparing ? Colors.orange : AppTheme.qristalBlue,
+          width: 3,
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.3),
             blurRadius: 8,
             offset: const Offset(4, 4),
-          )
-        ]
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -119,29 +134,39 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
           // Header
           Container(
             padding: const EdgeInsets.all(12),
-            color: isPreparing ? Colors.orange.withOpacity(0.2) : AppTheme.qristalBlue.withOpacity(0.2),
+            color: isPreparing
+                ? Colors.orange.withOpacity(0.2)
+                : AppTheme.qristalBlue.withOpacity(0.2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "#${widget.order.receiptNumber}",
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
                 Text(
-                  widget.order.createdAt.toLocal().toString().split(' ')[1].substring(0, 5), // Time HH:MM
+                  widget.order.createdAt
+                      .toLocal()
+                      .toString()
+                      .split(' ')[1]
+                      .substring(0, 5), // Time HH:MM
                   style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
           ),
-          
+
           // Items List
           Expanded(
             child: FutureBuilder<List<TypedOrderItem>>(
               future: _itemsFuture,
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-                
+                if (!snapshot.hasData)
+                  return const Center(child: CircularProgressIndicator());
+
                 return ListView.separated(
                   padding: const EdgeInsets.all(12),
                   itemCount: snapshot.data!.length,
@@ -152,12 +177,18 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.grey[800],
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text("${itemData.item.quantity}x", style: const TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text(
+                            "${itemData.item.quantity}x",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
@@ -168,10 +199,14 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
                                 itemData.product.name,
                                 style: const TextStyle(fontSize: 16),
                               ),
-                              if (itemData.item.notes != null && itemData.item.notes!.isNotEmpty)
+                              if (itemData.item.notes != null &&
+                                  itemData.item.notes!.isNotEmpty)
                                 Text(
                                   "Note: ${itemData.item.notes}",
-                                  style: const TextStyle(color: AppTheme.error, fontSize: 12),
+                                  style: const TextStyle(
+                                    color: AppTheme.error,
+                                    fontSize: 12,
+                                  ),
                                 ),
                             ],
                           ),
@@ -192,19 +227,21 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isPreparing ? AppTheme.emerald : Colors.orange,
+                  backgroundColor: isPreparing
+                      ? AppTheme.emerald
+                      : Colors.orange,
                 ),
                 onPressed: () async {
                   String newStatus = isPreparing ? 'READY' : 'PREPARING';
                   await db.updateOrderStatus(widget.order.id, newStatus);
-                  
+
                   // Trigger sync to let server/cashiers know
                   ref.read(syncControllerProvider.notifier).performSync();
                 },
                 child: Text(isPreparing ? "MARK DONE" : "START COOKING"),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

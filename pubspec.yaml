@@ -32,6 +32,7 @@ dependencies:
   print_bluetooth_thermal: ^1.1.9
   esc_pos_utils_plus: ^2.0.4
   connectivity_plus: ^7.0.0
+  socket_io_client: ^3.1.4
 
 
 dev_dependencies:
