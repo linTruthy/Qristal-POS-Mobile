@@ -23,10 +23,9 @@ class OrderService {
         id: Value(orderId),
         userId: Value(userId),
         tableId: Value(tableId),
-        receiptNumber: Value(orderId.substring(0, 8).toUpperCase()), // Simple receipt ID for now
+        receiptNumber: Value(orderId.substring(0, 4).toUpperCase()), // Simple receipt ID
         totalAmount: Value(totalAmount),
-        // Orders should be visible on the KDS immediately after placement.
-        status: const Value('KITCHEN'),
+        status: const Value('KITCHEN'), // Default status
         isSynced: const Value(false), // Mark as unsynced!
         createdAt: Value(DateTime.now()),
         updatedAt: Value(DateTime.now()),
@@ -42,6 +41,24 @@ class OrderService {
           priceAtTimeOfOrder: Value(item.product.price),
           notes: Value(item.notes),
         ));
+      }
+    });
+  }
+
+  Future<void> closeOrder(String orderId, double totalAmount, List<Payment> payments) async {
+    await db.transaction(() async {
+      // 1. Update order status
+      await (db.update(db.orders)..where((t) => t.id.equals(orderId)))
+          .write(OrdersCompanion(
+        status: const Value('CLOSED'),
+        totalAmount: Value(totalAmount),
+        isSynced: const Value(false), // Mark for sync again!
+        updatedAt: Value(DateTime.now()),
+      ));
+
+      // 2. Insert payments
+      for (final payment in payments) {
+        await db.into(db.payments).insert(payment.toCompanion(true));
       }
     });
   }
