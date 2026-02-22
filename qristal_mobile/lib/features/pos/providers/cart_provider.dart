@@ -1,6 +1,5 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/providers/database_provider.dart';
@@ -11,7 +10,6 @@ import '../../sync/providers/sync_provider.dart';
 import '../../tables/screens/floor_plan_screen.dart';
 import '../models/cart_item.dart';
 import '../services/order_service.dart';
-import '../widgets/payment_modal.dart';
 
 class CartNotifier extends StateNotifier<List<CartItem>> {
   final AppDatabase db;
@@ -113,29 +111,11 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
   //   ref.read(syncControllerProvider.notifier).performSync();
   // }
 
-  Future<void> checkout(BuildContext context) async {
+  Future<void> sendToKitchen() async {
     if (state.isEmpty || userId == null) return;
 
     final total = totalAmount;
 
-    // Show the Dialog
-    showDialog(
-      context: context,
-      builder: (_) => PaymentModal(
-        totalAmount: total,
-        onConfirmed: (method, tendered, refCode) async {
-          await _finalizeOrder(total, method, tendered, refCode);
-        },
-      ),
-    );
-  }
-
-  Future<void> _finalizeOrder(
-    double total,
-    String method,
-    double tendered,
-    String? refCode,
-  ) async {
     final orderId = const Uuid().v4();
     final now = DateTime.now();
     final tableId = ref.read(activeTableIdProvider);
@@ -147,13 +127,11 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
           .insert(
             OrdersCompanion(
               id: Value(orderId),
-              receiptNumber: Value(
-                orderId.substring(0, 4).toUpperCase(),
-              ), // Short code
+              receiptNumber: Value(_buildOrderNumber(tableId, now)),
               userId: Value(userId!),
               tableId: Value(tableId),
               totalAmount: Value(total),
-              status: const Value('CLOSED'), // Closed because it is paid
+              status: const Value('KITCHEN'), // Send to kitchen so KDS can display it
               isSynced: const Value(false),
               createdAt: Value(now),
               updatedAt: Value(now),
@@ -179,29 +157,16 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             );
       }
 
-      // 3. Payment
-      await db
-          .into(db.payments)
-          .insert(
-            PaymentsCompanion(
-              id: Value(const Uuid().v4()),
-              orderId: Value(orderId),
-              method: Value(method),
-              amount: Value(total), // We record the bill amount, not tendered
-              reference: Value(refCode),
-              createdAt: Value(now),
-            ),
-          );
     });
 
-    // 2. Trigger Print
+    // 2. Trigger Print (kitchen ticket)
     try {
       await printerService.printReceipt(
         orderId: orderId,
-        items: state, // The current cart items
+        items: state,
         total: total,
-        tendered: tendered,
-        paymentMethod: method,
+        tendered: total,
+        paymentMethod: 'PENDING',
         cashierName: userName,
       );
     } catch (e) {
@@ -213,6 +178,16 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     // 3. Clear State & Sync
     state = [];
     ref.read(syncControllerProvider.notifier).performSync();
+  }
+
+  String _buildOrderNumber(String? tableId, DateTime now) {
+    if (tableId != null && tableId.isNotEmpty) {
+      return tableId.substring(0, 4).toUpperCase();
+    }
+
+    final suffix =
+        (now.millisecondsSinceEpoch % 10000).toString().padLeft(4, '0');
+    return 'TK$suffix';
   }
 }
 
