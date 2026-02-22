@@ -16,6 +16,7 @@ import { io, Socket } from "socket.io-client";
 
 const SERVER_URL = "https://qristal-pos-api.onrender.com";
 const REFRESH_INTERVAL_MS = 10000;
+const ORDER_ENDPOINTS = ["/orders", "/orders/kitchen", "/sync/pull?lastSyncTimestamp=1970-01-01T00:00:00.000Z"];
 
 type InventoryItem = {
   id: string;
@@ -38,6 +39,32 @@ type KitchenOrder = {
 
 type DashboardTab = "inventory" | "kds";
 
+function normalizeKitchenOrders(payload: unknown): KitchenOrder[] {
+  const body = payload as Record<string, unknown>;
+  const list = Array.isArray(payload)
+    ? payload
+    : Array.isArray(body?.orders)
+    ? body.orders
+    : Array.isArray((body?.changes as Record<string, unknown> | undefined)?.orders)
+    ? ((body?.changes as Record<string, unknown>).orders as unknown[])
+    : [];
+
+  return list
+    .map((raw) => {
+      const item = raw as Record<string, unknown>;
+      return {
+        id: String(item.id ?? ""),
+        receiptNumber: String(item.receiptNumber ?? item.receipt_number ?? ""),
+        status: String(item.status ?? ""),
+        tableId: item.tableId ? String(item.tableId) : item.table_id ? String(item.table_id) : null,
+        createdAt: String(item.createdAt ?? item.created_at ?? new Date().toISOString()),
+        totalAmount: Number(item.totalAmount ?? item.total_amount ?? 0),
+      } as KitchenOrder;
+    })
+    .filter((order) => order.id && ["KITCHEN", "PREPARING"].includes(order.status))
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}
+
 export default function Dashboard() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [kitchenOrders, setKitchenOrders] = useState<KitchenOrder[]>([]);
@@ -58,17 +85,19 @@ export default function Dashboard() {
 
   const fetchKitchenOrders = useCallback(async () => {
     try {
-      const response = await fetch(`${SERVER_URL}/orders`, {
-        cache: "no-store",
-      });
-      const data: KitchenOrder[] = await response.json();
-      const filtered = (Array.isArray(data) ? data : [])
-        .filter((order) => ["KITCHEN", "PREPARING"].includes(order.status))
-        .sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-        );
-      setKitchenOrders(filtered);
+      for (const endpoint of ORDER_ENDPOINTS) {
+        const response = await fetch(`${SERVER_URL}${endpoint}`, {
+          cache: "no-store",
+        });
+        if (!response.ok) continue;
+
+        const data = await response.json();
+        const normalized = normalizeKitchenOrders(data);
+        if (normalized.length > 0 || endpoint === ORDER_ENDPOINTS[ORDER_ENDPOINTS.length - 1]) {
+          setKitchenOrders(normalized);
+          break;
+        }
+      }
     } catch (error) {
       console.error("Error fetching kitchen orders:", error);
       setKitchenOrders([]);
