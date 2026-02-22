@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
-
+import { io, Socket } from 'socket.io-client';
+const SERVER_URL = 'https://qristal-pos-api.onrender.com';
 export default function Dashboard() {
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch inventory data from the NestJS backend
+    // 1. Initial Fetch
     const fetchInventory = async () => {
       try {
-        const response = await fetch('https://qristal-pos-api.onrender.com/inventory');
+        const response = await fetch(`${SERVER_URL}/inventory`);
         const data = await response.json();
         setInventory(data);
       } catch (error) {
@@ -22,16 +23,34 @@ export default function Dashboard() {
     };
 
     fetchInventory();
+
+    // 2. Setup WebSockets for Real-Time Updates
+    const socket: Socket = io(SERVER_URL, {
+      transports: ['websocket'],
+    });
+
+    socket.on('connect', () => {
+      console.log('Dashboard connected to live server!');
+    });
+
+    // Listen for the event emitted by NestJS
+    socket.on('inventoryUpdate', (updatedInventoryData) => {
+      console.log("⚡ Real-time inventory update received!");
+      setInventory(updatedInventoryData);
+    });
+
+    // Cleanup on unmount
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  if (loading) {
-    return <div className="flex h-screen items-center justify-center text-2xl font-bold">Loading Qristal Dashboard...</div>;
-  }
+  if (loading) return <div className="p-8">Loading live data...</div>;
 
   return (
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        
+
         {/* Header */}
         <header className="flex justify-between items-center mb-8">
           <div>
@@ -52,7 +71,7 @@ export default function Dashboard() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="name" axisLine={false} tickLine={false} />
                 <YAxis axisLine={false} tickLine={false} />
-                <Tooltip cursor={{fill: '#f3f4f6'}} />
+                <Tooltip cursor={{ fill: '#f3f4f6' }} />
                 <Legend />
                 {/* Red line showing minimum safe stock level at 20 */}
                 <ReferenceLine y={20} label="Low Stock Warning" stroke="red" strokeDasharray="3 3" />
