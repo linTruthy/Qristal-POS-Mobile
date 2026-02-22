@@ -95,6 +95,72 @@ class SyncService {
 
         // --- Users (Optional, for offline login check later) ---
         // You would handle users similarly here
+
+        // --- Orders ---
+        if (changes['orders'] != null) {
+          for (var item in changes['orders']) {
+            batch.insert(
+              db.orders,
+              OrdersCompanion(
+                id: drift.Value(item['id']),
+                receiptNumber: drift.Value(item['receiptNumber']),
+                userId: drift.Value(item['userId']),
+                tableId: drift.Value(item['tableId']),
+                totalAmount: drift.Value(
+                  double.tryParse(item['totalAmount'].toString()) ?? 0.0,
+                ),
+                status: drift.Value(item['status']),
+                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
+                updatedAt: drift.Value(
+                  DateTime.parse(item['updatedAt'] ?? item['createdAt']),
+                ),
+                isSynced: const drift.Value(true),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Order Items ---
+        if (changes['orderItems'] != null) {
+          for (var item in changes['orderItems']) {
+            batch.insert(
+              db.orderItems,
+              OrderItemsCompanion(
+                id: drift.Value(item['id']),
+                orderId: drift.Value(item['orderId']),
+                productId: drift.Value(item['productId']),
+                quantity: drift.Value(item['quantity']),
+                priceAtTimeOfOrder: drift.Value(
+                  double.tryParse(item['priceAtTimeOfOrder'].toString()) ?? 0.0,
+                ),
+                notes: drift.Value(item['notes']),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Payments ---
+        if (changes['payments'] != null) {
+          for (var item in changes['payments']) {
+            batch.insert(
+              db.payments,
+              PaymentsCompanion(
+                id: drift.Value(item['id']),
+                orderId: drift.Value(item['orderId']),
+                method: drift.Value(item['method']),
+                amount: drift.Value(
+                  double.tryParse(item['amount'].toString()) ?? 0.0,
+                ),
+                reference: drift.Value(item['reference']),
+                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
         // --- Tables ---
         if (changes['seatingTables'] != null) {
           // Ensure your backend API returns this key
