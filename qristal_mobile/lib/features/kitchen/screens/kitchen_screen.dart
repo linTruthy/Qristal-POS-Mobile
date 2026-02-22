@@ -17,10 +17,16 @@ class KitchenScreen extends ConsumerWidget {
         title: const Text("Kitchen Display System"),
         backgroundColor: AppTheme.surface,
         actions: [
+         // Optional: A button to manually trigger a sync if needed
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(syncControllerProvider.notifier).performSync(),
-          )
+            tooltip: "Force Sync",
+            onPressed: () {
+               // ref.read(syncControllerProvider.notifier).performSync();
+               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Syncing...")));
+            },
+          ),
+          const SizedBox(width: 16),
         ],
       ),
       body: StreamBuilder<List<Order>>(
@@ -28,10 +34,25 @@ class KitchenScreen extends ConsumerWidget {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
           
-          final orders = snapshot.data!;
-          if (orders.isEmpty) {
-            return const Center(child: Text("No Pending Orders", style: TextStyle(color: Colors.grey)));
+ if (snapshot.hasError) {
+             return Center(child: Text('Error loading orders: ${snapshot.error}', style: const TextStyle(color: Colors.red)));
           }
+
+           final orders = snapshot.data ?? [];
+          
+          if (orders.isEmpty) {
+            return const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.check_circle_outline, size: 80, color: Colors.green),
+                  SizedBox(height: 16),
+                  Text("No pending orders. Good job!", style: TextStyle(color: Colors.grey, fontSize: 24)),
+                ],
+              )
+            );
+          }
+
 
           return ListView.builder(
             scrollDirection: Axis.horizontal, // KDS usually scrolls sideways
@@ -82,10 +103,18 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: isPreparing ? Colors.orange : AppTheme.qristalBlue, 
-          width: 2
+          width: 3
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 8,
+            offset: const Offset(4, 4),
+          )
+        ]
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Header
           Container(
