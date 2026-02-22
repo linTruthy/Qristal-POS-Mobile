@@ -1,9 +1,13 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service'; // Assuming you generated a Prisma module
+import { InventoryService } from 'src/inventory/inventory.service';
 
 @Injectable()
 export class SyncService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService,
+    private inventoryService: InventoryService
+
+  ) { }
 
   /**
    * PULL: Client requests data that has changed since `lastSyncTimestamp`.
@@ -24,7 +28,7 @@ export class SyncService {
     }
 
     // Fetch all updated records
-    const [categories, products, users, seatingTables] = await Promise.all([
+    const [categories, products, users, seatingTables, orders] = await Promise.all([
       this.prisma.category.findMany({
         where: { updatedAt: { gt: lastSyncDate } },
       }),
@@ -37,6 +41,9 @@ export class SyncService {
       this.prisma.seatingTable.findMany({
         where: { updatedAt: { gt: lastSyncDate } },
       }),
+      this.prisma.order.findMany({
+        where: { updatedAt: { gt: lastSyncDate } },
+      }),
     ]);
 
     return {
@@ -46,6 +53,7 @@ export class SyncService {
         products,
         users,
         seatingTables,
+        orders,
       },
     };
   }
@@ -59,6 +67,8 @@ export class SyncService {
     const errors: { id: any; error: any }[] = [];
     let processedOrders = 0;
 
+    const newOrderIdsToDeduct: string[] = [];
+
     // We use a transaction to ensure data integrity
     try {
       await this.prisma.$transaction(async (tx) => {
@@ -67,6 +77,7 @@ export class SyncService {
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
             try {
+              const existing = await tx.order.findUnique({where: {id: order.id}});
               await tx.order.upsert({
                 where: { id: order.id },
                 update: {
@@ -85,6 +96,10 @@ export class SyncService {
                 },
               });
               processedOrders++;
+              if (!existing) {
+                newOrderIdsToDeduct.push(order.id);
+             }
+
             } catch (err) {
               errors.push({ id: order.id, error: err.message });
             }
@@ -139,6 +154,13 @@ export class SyncService {
           }
         }
       });
+
+      for (const orderId of newOrderIdsToDeduct) {
+        // Fire and forget - don't await this so the POS gets a fast response
+        this.inventoryService.deductStockForOrder(orderId).catch(e => 
+           console.error(`Inventory deduction failed async: ${e}`)
+        );
+      }
 
       return {
         success: true,

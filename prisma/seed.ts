@@ -10,6 +10,10 @@ async function main() {
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.inventoryItem.deleteMany();
+  await prisma.recipeIngredient.deleteMany();
+  await prisma.seatingTable.deleteMany();
+
 
   console.log('Seeding data...');
 
@@ -63,6 +67,48 @@ async function main() {
       },
     ],
   });
+
+  console.log('Seeding Inventory...');
+  
+  const coffeeBeans = await prisma.inventoryItem.create({
+    data: { name: 'Espresso Beans', unitOfMeasure: 'Grams', currentStock: 5000, costPerUnit: 0.05 }
+  });
+
+  const milk = await prisma.inventoryItem.create({
+     data: { name: 'Whole Milk', unitOfMeasure: 'Liters', currentStock: 20, costPerUnit: 2000 }
+  });
+
+  const bun = await prisma.inventoryItem.create({
+    data: { name: 'Brioche Bun', unitOfMeasure: 'Pieces', currentStock: 100, costPerUnit: 500 }
+  });
+
+  const beefPatty = await prisma.inventoryItem.create({
+    data: { name: 'Beef Patty 150g', unitOfMeasure: 'Pieces', currentStock: 100, costPerUnit: 2500 }
+  });
+
+  console.log('Creating Recipes...');
+  
+  // Find the Coffee product we created earlier
+  const coffee = await prisma.product.findFirst({ where: { name: 'Coffee' }});
+  if (coffee) {
+    await prisma.recipeIngredient.createMany({
+        data: [
+            { productId: coffee.id, inventoryItemId: coffeeBeans.id, amount: 18 }, // 18 grams of beans
+            { productId: coffee.id, inventoryItemId: milk.id, amount: 0.2 },       // 200ml milk
+        ]
+    });
+  }
+
+  // Find the Burger product
+  const burger = await prisma.product.findFirst({ where: { name: 'Burger' }});
+  if (burger) {
+    await prisma.recipeIngredient.createMany({
+        data: [
+            { productId: burger.id, inventoryItemId: bun.id, amount: 1 }, 
+            { productId: burger.id, inventoryItemId: beefPatty.id, amount: 1 },
+        ]
+    });
+  }
   
   console.log('Seeding Tables...');
   await prisma.seatingTable.createMany({
