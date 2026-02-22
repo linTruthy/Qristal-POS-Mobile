@@ -1,56 +1,90 @@
-"use client"; // Marks this as a Client Component to use React hooks
+"use client";
 
-import { useEffect, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from 'recharts';
 import { io, Socket } from 'socket.io-client';
+
 const SERVER_URL = 'https://qristal-pos-api.onrender.com';
+const REFRESH_INTERVAL_MS = 10000;
+
+type InventoryItem = {
+  id: string;
+  name: string;
+  sku?: string;
+  unitOfMeasure: string;
+  currentStock: number;
+  minimumStock: number;
+  costPerUnit: number;
+};
+
 export default function Dashboard() {
-  const [inventory, setInventory] = useState([]);
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchInventory = useCallback(async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/inventory`, {
+        cache: 'no-store',
+      });
+      const data = await response.json();
+      setInventory(data);
+    } catch (error) {
+      console.error('Error fetching inventory:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    // 1. Initial Fetch
-    const fetchInventory = async () => {
-      try {
-        const response = await fetch(`${SERVER_URL}/inventory`);
-        const data = await response.json();
-        setInventory(data);
-      } catch (error) {
-        console.error("Error fetching inventory:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    void fetchInventory();
 
-    fetchInventory();
-
-    // 2. Setup WebSockets for Real-Time Updates
     const socket: Socket = io(SERVER_URL, {
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
+      reconnection: true,
     });
 
     socket.on('connect', () => {
       console.log('Dashboard connected to live server!');
     });
 
-    // Listen for the event emitted by NestJS
-    socket.on('inventoryUpdate', (updatedInventoryData) => {
-      console.log("⚡ Real-time inventory update received!");
-      setInventory(updatedInventoryData);
+    socket.on('connect_error', (error) => {
+      console.error('Socket connection error, relying on polling fallback:', error.message);
     });
 
-    // Cleanup on unmount
+    const handleInventoryUpdate = (updatedInventoryData: InventoryItem[]) => {
+      console.log('⚡ Real-time inventory update received!');
+      setInventory(updatedInventoryData);
+    };
+
+    // Support both common event names to avoid missing updates because of naming mismatch.
+    socket.on('inventoryUpdate', handleInventoryUpdate);
+    socket.on('inventoryUpdated', handleInventoryUpdate);
+
+    const refreshTimer = setInterval(() => {
+      void fetchInventory();
+    }, REFRESH_INTERVAL_MS);
+
     return () => {
+      clearInterval(refreshTimer);
       socket.disconnect();
     };
-  }, []);
+  }, [fetchInventory]);
 
   if (loading) return <div className="p-8">Loading live data...</div>;
 
   return (
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-
         {/* Header */}
         <header className="flex justify-between items-center mb-8">
           <div>
@@ -95,7 +129,7 @@ export default function Dashboard() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {inventory.map((item: any) => (
+              {inventory.map((item) => (
                 <tr key={item.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{item.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-gray-500">{item.sku || 'N/A'}</td>
@@ -118,7 +152,6 @@ export default function Dashboard() {
             </tbody>
           </table>
         </div>
-
       </div>
     </main>
   );

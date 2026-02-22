@@ -252,7 +252,8 @@ class SyncService {
     }
 
     try {
-      final response = await http.post(
+      final response = await http
+          .post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +265,8 @@ class SyncService {
           'orderItems': itemsPayload,
           'payments': paymentsPayload,
         }),
-      );
+          )
+          .timeout(const Duration(seconds: 20));
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         await db.transaction(() async {
@@ -278,9 +280,11 @@ class SyncService {
         if (kDebugMode) {
           print("❌ Push failed: ${response.statusCode} - ${response.body}");
         }
+        throw Exception('Push failed: ${response.statusCode} - ${response.body}');
       }
     } catch (e) {
       if (kDebugMode) print("❌ Connection error during push: $e");
+      rethrow;
     }
   }
 }
