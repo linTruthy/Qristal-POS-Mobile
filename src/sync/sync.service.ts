@@ -1,12 +1,13 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service'; // Assuming you generated a Prisma module
-import { InventoryService } from 'src/inventory/inventory.service';
+import { EventsGateway } from '../events/events.gateway';
+import { InventoryService } from '../inventory/inventory.service';
 
 @Injectable()
 export class SyncService {
   constructor(private prisma: PrismaService,
-    private inventoryService: InventoryService
-
+    private inventoryService: InventoryService,
+    private eventsGateway: EventsGateway
   ) { }
 
   /**
@@ -69,6 +70,7 @@ export class SyncService {
 
     const newOrderIdsToDeduct: string[] = [];
 
+    const newlyCreatedOrdersForKDS = [];
     // We use a transaction to ensure data integrity
     try {
       await this.prisma.$transaction(async (tx) => {
@@ -77,8 +79,8 @@ export class SyncService {
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
             try {
-              const existing = await tx.order.findUnique({where: {id: order.id}});
-              await tx.order.upsert({
+              const existing = await tx.order.findUnique({ where: { id: order.id } });
+              const savedOrder = await tx.order.upsert({
                 where: { id: order.id },
                 update: {
                   status: order.status,
@@ -98,7 +100,8 @@ export class SyncService {
               processedOrders++;
               if (!existing) {
                 newOrderIdsToDeduct.push(order.id);
-             }
+                newlyCreatedOrdersForKDS.push(savedOrder); // Save for WebSocket
+              }
 
             } catch (err) {
               errors.push({ id: order.id, error: err.message });
@@ -157,11 +160,24 @@ export class SyncService {
 
       for (const orderId of newOrderIdsToDeduct) {
         // Fire and forget - don't await this so the POS gets a fast response
-        this.inventoryService.deductStockForOrder(orderId).catch(e => 
-           console.error(`Inventory deduction failed async: ${e}`)
+        this.inventoryService.deductStockForOrder(orderId).catch(e =>
+          console.error(`Inventory deduction failed async: ${e}`)
         );
       }
+      if (newlyCreatedOrdersForKDS.length > 0) {
+        // In a real app we'd fetch the items too, but sending the signal is enough 
+        // for the KDS to know it needs to pull. Let's send the data.
+        this.eventsGateway.emitNewOrder({ message: 'New orders arrived!' });
+      }
 
+      // 2. Trigger Inventory Deduction (Non-blocking)
+      for (const orderId of newOrderIdsToDeduct) {
+        this.inventoryService.deductStockForOrder(orderId).then(async () => {
+          // After deduction, fetch latest inventory and broadcast to Dashboard
+          const latestInventory = await this.inventoryService.getInventoryStatus();
+          this.eventsGateway.emitInventoryUpdate(latestInventory);
+        }).catch(e => console.error(e));
+      }
       return {
         success: true,
         processedOrders,
