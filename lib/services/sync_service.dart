@@ -139,9 +139,9 @@ class SyncService {
       print("Found ${unsyncedOrders.length} orders to push.");
     }
 
-    // 2. Prepare Payload
     List<Map<String, dynamic>> ordersPayload = [];
     List<Map<String, dynamic>> itemsPayload = [];
+    List<Map<String, dynamic>> paymentsPayload = []; // -> ADDED FOR PAYMENTS
 
     for (final order in unsyncedOrders) {
       ordersPayload.add({
@@ -154,11 +154,10 @@ class SyncService {
         'createdAt': order.createdAt.toIso8601String(),
       });
 
-      // Fetch related items (NOW WORKING because OrderItems table exists)
+      // Fetch related items
       final items = await (db.select(
         db.orderItems,
       )..where((t) => t.orderId.equals(order.id))).get();
-
       for (final item in items) {
         itemsPayload.add({
           'id': item.id,
@@ -169,9 +168,23 @@ class SyncService {
           'notes': item.notes,
         });
       }
+
+      // Fetch related payments -> ADDED FOR PAYMENTS
+      final payments = await (db.select(
+        db.payments,
+      )..where((t) => t.orderId.equals(order.id))).get();
+      for (final pay in payments) {
+        paymentsPayload.add({
+          'id': pay.id,
+          'orderId': pay.orderId,
+          'method': pay.method,
+          'amount': pay.amount,
+          'reference': pay.reference,
+          'createdAt': pay.createdAt.toIso8601String(),
+        });
+      }
     }
 
-    // 3. Send to API
     try {
       final response = await http.post(
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
@@ -179,29 +192,29 @@ class SyncService {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({'orders': ordersPayload, 'orderItems': itemsPayload}),
+        // Include payments in the payload!
+        body: jsonEncode({
+          'orders': ordersPayload,
+          'orderItems': itemsPayload,
+          'payments': paymentsPayload,
+        }),
       );
 
       if (response.statusCode == 201 || response.statusCode == 200) {
-        // 4. Mark local orders as synced
         await db.transaction(() async {
           for (final order in unsyncedOrders) {
             await (db.update(db.orders)..where((t) => t.id.equals(order.id)))
                 .write(const OrdersCompanion(isSynced: Value(true)));
           }
         });
-        if (kDebugMode) {
-          print("✅ Sync Push Successful!");
-        }
+        if (kDebugMode) print("✅ Sync Push Successful!");
       } else {
         if (kDebugMode) {
           print("❌ Push failed: ${response.statusCode} - ${response.body}");
         }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print("❌ Connection error during push: $e");
-      }
+      if (kDebugMode) print("❌ Connection error during push: $e");
     }
   }
 }

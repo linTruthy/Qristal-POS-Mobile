@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../hardware/screens/printer_settings_screen.dart';
 import '../../kitchen/screens/kitchen_screen.dart';
 import '../../sync/providers/sync_provider.dart';
+import '../../sync/providers/sync_queue_provider.dart';
 import '../providers/menu_provider.dart';
 import '../providers/cart_provider.dart';
 
@@ -12,37 +14,62 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch sync state to show loading indicator if needed
-    final syncState = ref.watch(syncControllerProvider);
 
+    final syncQueue = ref.watch(syncQueueProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Qristal POS"),
+        title: const Text("Qristal POS - Cashier"),
+        backgroundColor: AppTheme.surface,
         actions: [
-          //KDS fo testing purpuses
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                if (syncQueue.pendingOrders > 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      "${syncQueue.pendingOrders} Pending",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                const SizedBox(width: 8),
+                _buildSyncIcon(syncQueue.status),
+              ],
+            ),
+          ),
+          // Navigation to Kitchen Display System
           IconButton(
             icon: const Icon(Icons.soup_kitchen),
+            tooltip: 'Kitchen Display',
             onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const KitchenScreen()),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const KitchenScreen()),
               );
             },
           ),
-          // Manual Sync Button
+          // Navigation to Printer Settings
           IconButton(
-            icon: syncState.isLoading
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      color: Colors.white,
-                      strokeWidth: 2,
-                    ),
-                  )
-                : const Icon(Icons.sync),
+            icon: const Icon(Icons.print),
+            tooltip: 'Printer Settings',
             onPressed: () {
-              ref.read(syncControllerProvider.notifier).performSync();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PrinterSettingsScreen(),
+                ),
+              );
             },
           ),
+
           const SizedBox(width: 20),
         ],
       ),
@@ -79,6 +106,26 @@ class DashboardScreen extends ConsumerWidget {
 }
 
 // --- WIDGETS ---
+
+Widget _buildSyncIcon(ConnectionStatus status) {
+  switch (status) {
+    case ConnectionStatus.syncing:
+      return const SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          color: AppTheme.qristalBlue,
+          strokeWidth: 2,
+        ),
+      );
+    case ConnectionStatus.offline:
+      return const Icon(Icons.cloud_off, color: Colors.grey);
+    case ConnectionStatus.error:
+      return const Icon(Icons.error_outline, color: AppTheme.error);
+    case ConnectionStatus.online:
+      return const Icon(Icons.cloud_done, color: AppTheme.emerald);
+  }
+}
 
 class CategoryList extends ConsumerWidget {
   const CategoryList({super.key});
@@ -172,13 +219,16 @@ class ProductGrid extends ConsumerWidget {
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "\$${product.price.toStringAsFixed(2)}",
+                    "UGX ${product.price.toStringAsFixed(0)}",
                     style: const TextStyle(
+                      fontSize: 14,
                       color: AppTheme.emerald,
-                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -199,7 +249,7 @@ class CartView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cartItems = ref.watch(cartProvider);
-    final total = ref.read(cartProvider.notifier).totalAmount;
+    final cartNotifier = ref.read(cartProvider.notifier);
 
     return Column(
       children: [
@@ -208,46 +258,75 @@ class CartView extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           color: Colors.grey[100],
           width: double.infinity,
-          child: const Text(
-            "Current Order",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+          child: Row(
+            children: [
+              const Text(
+                "Current Order",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete_sweep, color: Colors.red),
+                onPressed: () {
+                  // Clear Cart
+                  cartNotifier.clearCart();
+                },
+              ),
+            ],
           ),
         ),
 
         // Cart List
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.all(8),
-            itemCount: cartItems.length,
-            separatorBuilder: (ctx, i) => const Divider(),
-            itemBuilder: (context, index) {
-              final item = cartItems[index];
-              return ListTile(
-                title: Text(
-                  item.product.name,
-                  style: const TextStyle(color: Colors.black),
-                ),
-                subtitle: Text(
-                  "x${item.quantity}",
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                trailing: Text(
-                  "\$${item.total.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+          child: cartItems.isEmpty
+              ? const Center(
+                  child: Text(
+                    "Cart is empty",
+                    style: TextStyle(color: Colors.grey),
                   ),
+                )
+              : ListView.separated(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: cartItems.length,
+                  separatorBuilder: (ctx, i) => const Divider(),
+                  itemBuilder: (context, index) {
+                    final item = cartItems[index];
+                    return ListTile(
+                      title: Text(
+                        item.product.name,
+                        style: const TextStyle(color: Colors.black87),
+                      ),
+                      subtitle: Text(
+                        "UGX ${item.product.price.toStringAsFixed(0)} x ${item.quantity}",
+                        style: const TextStyle(color: Colors.black54),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "UGX ${item.total.toStringAsFixed(0)}",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              cartNotifier.removeFromCart(item.product);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-                onLongPress: () {
-                  ref.read(cartProvider.notifier).removeFromCart(item.product);
-                },
-              );
-            },
-          ),
         ),
 
         // Total & Checkout
@@ -268,7 +347,7 @@ class CartView extends ConsumerWidget {
                     ),
                   ),
                   Text(
-                    "\$${total.toStringAsFixed(2)}",
+                    "UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
                     style: const TextStyle(
                       color: AppTheme.emerald,
                       fontSize: 28,
@@ -306,9 +385,7 @@ class CartView extends ConsumerWidget {
                           ref.read(cartProvider.notifier).clearCart();
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Order Saved Locally! 🚀"),
-                            ),
+                            const SnackBar(content: Text("Order Saved ! 🚀")),
                           );
 
                           // 4. Trigger Background Sync to Cloud
