@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../hardware/screens/printer_settings_screen.dart';
 import '../../kitchen/screens/kitchen_screen.dart';
-import '../../sync/providers/sync_provider.dart';
 import '../../sync/providers/sync_queue_provider.dart';
 import '../providers/menu_provider.dart';
 import '../providers/cart_provider.dart';
@@ -380,21 +379,13 @@ class CartView extends ConsumerWidget {
                           // await ref
                           //     .read(orderServiceProvider)
                           //     .placeOrder(cartItems: cartItems, userId: userId);
-                          ref.read(cartProvider.notifier).checkout(context);
-                          // 3. Clear UI
-                          ref.read(cartProvider.notifier).clearCart();
+                          await ref.read(cartProvider.notifier).sendToKitchen();
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Order Saved ! 🚀")),
+                            const SnackBar(content: Text("Order sent to kitchen! 🍽️")),
                           );
-
-                          // 4. Trigger Background Sync to Cloud
-                          // We don't await this because we want the UI to be unblocked immediately
-                          ref
-                              .read(syncControllerProvider.notifier)
-                              .performSync();
                         },
-                  child: const Text("CHARGE", style: TextStyle(fontSize: 24)),
+                  child: const Text("SEND TO KITCHEN", style: TextStyle(fontSize: 20)),
                 ),
               ),
             ],
