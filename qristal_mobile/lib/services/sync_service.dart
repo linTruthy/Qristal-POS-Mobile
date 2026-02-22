@@ -209,6 +209,22 @@ class SyncService {
     List<Map<String, dynamic>> itemsPayload = [];
     List<Map<String, dynamic>> paymentsPayload = []; // -> ADDED FOR PAYMENTS
 
+    final orderIds = unsyncedOrders.map((order) => order.id).toList();
+    final relatedItems = await (db.select(
+      db.orderItems,
+    )..where((t) => t.orderId.isIn(orderIds))).get();
+
+    for (final item in relatedItems) {
+      itemsPayload.add({
+        'id': item.id,
+        'orderId': item.orderId,
+        'productId': item.productId,
+        'quantity': item.quantity,
+        'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
+        'notes': item.notes,
+      });
+    }
+
     for (final order in unsyncedOrders) {
       ordersPayload.add({
         'id': order.id,
@@ -219,21 +235,6 @@ class SyncService {
         'status': order.status,
         'createdAt': order.createdAt.toIso8601String(),
       });
-
-      // Fetch related items
-      final items = await (db.select(
-        db.orderItems,
-      )..where((t) => t.orderId.equals(order.id))).get();
-      for (final item in items) {
-        itemsPayload.add({
-          'id': item.id,
-          'orderId': item.orderId,
-          'productId': item.productId,
-          'quantity': item.quantity,
-          'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
-          'notes': item.notes,
-        });
-      }
 
       // Fetch related payments -> ADDED FOR PAYMENTS
       final payments = await (db.select(
@@ -249,6 +250,15 @@ class SyncService {
           'createdAt': pay.createdAt.toIso8601String(),
         });
       }
+    }
+
+    if (kDebugMode) {
+      print(
+        'Prepared sync payload: '
+        '${ordersPayload.length} orders, '
+        '${itemsPayload.length} orderItems, '
+        '${paymentsPayload.length} payments.',
+      );
     }
 
     try {
