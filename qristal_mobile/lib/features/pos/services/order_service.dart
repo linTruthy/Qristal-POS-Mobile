@@ -25,9 +25,11 @@ class OrderService {
         tableId: Value(tableId),
         receiptNumber: Value(orderId.substring(0, 8).toUpperCase()), // Simple receipt ID for now
         totalAmount: Value(totalAmount),
-        status: const Value('OPEN'),
+        // Orders should be visible on the KDS immediately after placement.
+        status: const Value('KITCHEN'),
         isSynced: const Value(false), // Mark as unsynced!
         createdAt: Value(DateTime.now()),
+        updatedAt: Value(DateTime.now()),
       ));
 
       // 2. Create Order Items
