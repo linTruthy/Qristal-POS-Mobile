@@ -1,4 +1,6 @@
-import { Injectable, BadRequestException, Logger } from '@nestjs/common'; // Import Logger
+// qristal-api/src/sync/sync.service.ts
+
+import { Injectable, BadRequestException, Logger } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EventsGateway } from '../events/events.gateway';
 import { InventoryService } from '../inventory/inventory.service';
@@ -6,15 +8,15 @@ import { Order } from '@prisma/client';
 
 @Injectable()
 export class SyncService {
-  private readonly logger = new Logger(SyncService.name); // Instantiate Logger
+  private readonly logger = new Logger(SyncService.name);
 
-  constructor(private prisma: PrismaService,
+  constructor(
+    private prisma: PrismaService,
     private inventoryService: InventoryService,
-    private eventsGateway: EventsGateway
-  ) { }
+    private eventsGateway: EventsGateway,
+  ) {}
 
   async pullChanges(lastSyncTimestamp: string) {
-    // ... (omitted for brevity)
     let lastSyncDate: Date;
 
     if (!lastSyncTimestamp) {
@@ -57,20 +59,54 @@ export class SyncService {
   }
 
   async pushChanges(payload: any) {
-    // ---- START OF DIAGNOSTIC LOGGING ----
-    this.logger.log('Received pushChanges payload:');
-    this.logger.log(JSON.stringify(payload, null, 2));
-    // ---- END OF DIAGNOSTIC LOGGING ----
-
-    const { orders, orderItems, payments } = payload;
+    this.logger.log('Received pushChanges payload');
+    // Extract all entities including shifts
+    const { orders, orderItems, payments, shifts } = payload;
     const errors: { id: any; error: any }[] = [];
     let processedOrders = 0;
+    let processedShifts = 0;
 
     const newOrderIdsToDeduct: string[] = [];
     const newlyCreatedOrdersForKDS: Order[] = [];
 
     try {
       await this.prisma.$transaction(async (tx) => {
+        
+        // --- 1. Process Shifts ---
+        // Shifts must be processed before orders if orders reference new shifts,
+        // but since we use UUIDs generated on client, order doesn't matter much 
+        // unless we have strict foreign key constraints that Prisma enforces immediately.
+        // It's safer to do shifts first.
+        if (shifts && Array.isArray(shifts)) {
+          for (const shift of shifts) {
+            try {
+              await tx.shift.upsert({
+                where: { id: shift.id },
+                update: {
+                  closingTime: shift.closingTime ? new Date(shift.closingTime) : null,
+                  expectedCash: shift.expectedCash,
+                  actualCash: shift.actualCash,
+                  notes: shift.notes,
+                },
+                create: {
+                  id: shift.id,
+                  userId: shift.userId,
+                  openingTime: new Date(shift.openingTime),
+                  closingTime: shift.closingTime ? new Date(shift.closingTime) : null,
+                  startingCash: shift.startingCash,
+                  expectedCash: shift.expectedCash,
+                  actualCash: shift.actualCash,
+                  notes: shift.notes,
+                },
+              });
+              processedShifts++;
+            } catch (err) {
+              errors.push({ id: shift.id, error: `Shift error: ${err.message}` });
+            }
+          }
+        }
+
+        // --- 2. Process Orders ---
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
             try {
@@ -87,6 +123,7 @@ export class SyncService {
                   receiptNumber: order.receiptNumber,
                   userId: order.userId,
                   tableId: order.tableId,
+                  shiftId: order.shiftId, // Mapping the shift relation
                   totalAmount: order.totalAmount,
                   status: order.status,
                   createdAt: new Date(order.createdAt),
@@ -97,13 +134,13 @@ export class SyncService {
                 newOrderIdsToDeduct.push(order.id);
                 newlyCreatedOrdersForKDS.push(savedOrder);
               }
-
             } catch (err) {
-              errors.push({ id: order.id, error: err.message });
+              errors.push({ id: order.id, error: `Order error: ${err.message}` });
             }
           }
         }
 
+        // --- 3. Process Order Items ---
         if (orderItems && Array.isArray(orderItems)) {
           for (const item of orderItems) {
             try {
@@ -123,11 +160,12 @@ export class SyncService {
                 },
               });
             } catch (err) {
-              errors.push({ id: item.id, error: err.message });
+              errors.push({ id: item.id, error: `Item error: ${err.message}` });
             }
           }
         }
 
+        // --- 4. Process Payments ---
         if (payments && Array.isArray(payments)) {
           for (const pay of payments) {
             try {
@@ -142,32 +180,46 @@ export class SyncService {
                 }
               });
             } catch (err) {
+              // Ignore unique constraint violations (idempotency)
               if (!err.message.includes('Unique constraint')) {
-                errors.push({ id: pay.id, error: err.message });
+                errors.push({ id: pay.id, error: `Payment error: ${err.message}` });
               }
             }
           }
         }
       });
 
+      // --- Post-Transaction Actions (Non-blocking) ---
+      
+      // 1. Inventory Deduction
       for (const orderId of newOrderIdsToDeduct) {
         this.inventoryService.deductStockForOrder(orderId).catch(e =>
           console.error(`Inventory deduction failed async: ${e}`)
         );
       }
+
+      // 2. KDS Notification
       if (newlyCreatedOrdersForKDS.length > 0) {
         this.eventsGateway.emitNewOrder({ message: 'New orders arrived!' });
       }
 
-      for (const orderId of newOrderIdsToDeduct) {
-        this.inventoryService.deductStockForOrder(orderId).then(async () => {
-          const latestInventory = await this.inventoryService.getInventoryStatus();
-          this.eventsGateway.emitInventoryUpdate(latestInventory);
-        }).catch(e => console.error(e));
+      // 3. Dashboard Inventory Update
+      if (newOrderIdsToDeduct.length > 0) {
+          // Wait briefly for deductions to commit/process before fetching status
+          setTimeout(async () => {
+            try {
+                const latestInventory = await this.inventoryService.getInventoryStatus();
+                this.eventsGateway.emitInventoryUpdate(latestInventory);
+            } catch (e) {
+                this.logger.error('Failed to emit inventory update', e);
+            }
+          }, 1000);
       }
+
       return {
         success: true,
         processedOrders,
+        processedShifts,
         errors: errors.length > 0 ? errors : undefined,
       };
 
