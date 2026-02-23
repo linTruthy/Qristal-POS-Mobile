@@ -85,4 +85,89 @@ class ReceiptGenerator {
 
     return bytes;
   }
+// Add this method to the ReceiptGenerator class
+
+  Future<List<int>> generateZReport({
+    required String shiftId,
+    required String cashierName,
+    required DateTime openingTime,
+    required DateTime closingTime,
+    required double openingCash,
+    required double totalSales,
+    required double cashSales,
+    required double digitalSales,
+    required double expectedCash,
+    required double actualCash,
+  }) async {
+    final profile = await CapabilityProfile.load();
+    final generator = Generator(PaperSize.mm58, profile);
+    final fmt = NumberFormat("#,##0", "en_US");
+    
+    List<int> bytes = [];
+
+    // Header
+    bytes += generator.text('Z-REPORT (END OF DAY)',
+        styles: const PosStyles(align: PosAlign.center, bold: true, height: PosTextSize.size2));
+    bytes += generator.text('QRISTAL POS', styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.text('Shift ID: ${shiftId.substring(0, 8)}', styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.hr();
+
+    // Time Info
+    bytes += generator.text('Staff: $cashierName');
+    bytes += generator.text('Open: ${DateFormat('dd/MM HH:mm').format(openingTime)}');
+    bytes += generator.text('Close: ${DateFormat('dd/MM HH:mm').format(closingTime)}');
+    bytes += generator.hr();
+
+    // Financials
+    bytes += generator.row([
+      PosColumn(text: 'Opening Float:', width: 7),
+      PosColumn(text: fmt.format(openingCash), width: 5, styles: const PosStyles(align: PosAlign.right)),
+    ]);
+    
+    bytes += generator.row([
+      PosColumn(text: 'Total Sales:', width: 7, styles: const PosStyles(bold: true)),
+      PosColumn(text: fmt.format(totalSales), width: 5, styles: const PosStyles(align: PosAlign.right, bold: true)),
+    ]);
+    
+    bytes += generator.hr();
+    
+    // Payment Breakdown
+    bytes += generator.text('Payment Breakdown:', styles: const PosStyles(bold: true));
+    bytes += generator.row([
+      PosColumn(text: '- Cash:', width: 7),
+      PosColumn(text: fmt.format(cashSales), width: 5, styles: const PosStyles(align: PosAlign.right)),
+    ]);
+    bytes += generator.row([
+      PosColumn(text: '- Digital/Mobile:', width: 7),
+      PosColumn(text: fmt.format(digitalSales), width: 5, styles: const PosStyles(align: PosAlign.right)),
+    ]);
+
+    bytes += generator.hr();
+
+    // Cash Reconciliation
+    bytes += generator.text('Cash Reconciliation:', styles: const PosStyles(bold: true));
+    bytes += generator.row([
+      PosColumn(text: 'Expected Cash:', width: 7),
+      PosColumn(text: fmt.format(expectedCash), width: 5, styles: const PosStyles(align: PosAlign.right)),
+    ]);
+    bytes += generator.row([
+      PosColumn(text: 'Actual Cash:', width: 7),
+      PosColumn(text: fmt.format(actualCash), width: 5, styles: const PosStyles(align: PosAlign.right)),
+    ]);
+
+    final double variance = actualCash - expectedCash;
+    bytes += generator.row([
+      PosColumn(text: 'Variance:', width: 7),
+      PosColumn(
+        text: fmt.format(variance), 
+        width: 5, 
+        styles: PosStyles(align: PosAlign.right, bold: true, reverse: variance < 0), // Highlight negatives
+      ),
+    ]);
+
+    bytes += generator.feed(2);
+    bytes += generator.cut();
+    
+    return bytes;
+  }
 }
