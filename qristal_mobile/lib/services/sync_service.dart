@@ -53,12 +53,34 @@ class SyncService {
       final changes = data['changes'];
       final newTimestamp = data['timestamp'];
 
+      List<dynamic> _readChangeList(List<String> keys) {
+        for (final key in keys) {
+          final value = changes[key];
+          if (value is List) return value;
+        }
+        return const [];
+      }
+
+      String? _readString(Map<String, dynamic> item, List<String> keys) {
+        for (final key in keys) {
+          final value = item[key];
+          if (value != null) return value.toString();
+        }
+        return null;
+      }
+
+      double _readDouble(Map<String, dynamic> item, List<String> keys,
+          {double fallback = 0.0}) {
+        final raw = _readString(item, keys);
+        return double.tryParse(raw ?? '') ?? fallback;
+      }
+
       // 3. Insert into SQLite (Batch Transaction for Performance)
       await db.batch((batch) {
         // --- Categories ---
         if (changes['categories'] != null) {
           for (var item in changes['categories']) {
-            batch.insert(
+          batch.insert(
               db.categories,
               CategoriesCompanion(
                 id: drift.Value(item['id']),
@@ -78,7 +100,7 @@ class SyncService {
             // Ensure price is treated as double
             double price = double.tryParse(item['price'].toString()) ?? 0.0;
 
-            batch.insert(
+          batch.insert(
               db.products,
               ProductsCompanion(
                 id: drift.Value(item['id']),
@@ -97,34 +119,53 @@ class SyncService {
         // You would handle users similarly here
 
         // --- Orders ---
-        if (changes['orders'] != null) {
-          for (var item in changes['orders']) {
-            batch.insert(
+        final orders = _readChangeList(['orders']);
+        for (final raw in orders) {
+          final item = Map<String, dynamic>.from(raw as Map);
+          final orderId = _readString(item, ['id']);
+          final receiptNumber =
+              _readString(item, ['receiptNumber', 'receipt_number']);
+          final userId = _readString(item, ['userId', 'user_id']);
+          final createdAt = _readString(item, ['createdAt', 'created_at']);
+          final shiftId = _readString(item, ['shiftId', 'shift_id']);
+          if (orderId == null ||
+              receiptNumber == null ||
+              userId == null ||
+              createdAt == null ||
+              shiftId == null ||
+              shiftId.isEmpty) {
+            continue;
+          }
+
+          batch.insert(
               db.orders,
               OrdersCompanion(
-                id: drift.Value(item['id']),
-                receiptNumber: drift.Value(item['receiptNumber']),
-                userId: drift.Value(item['userId']),
-                tableId: drift.Value(item['tableId']),
-                totalAmount: drift.Value(
-                  double.tryParse(item['totalAmount'].toString()) ?? 0.0,
-                ),
-                status: drift.Value(item['status']),
-                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
+                id: drift.Value(orderId),
+                receiptNumber: drift.Value(receiptNumber),
+                userId: drift.Value(userId),
+                tableId:
+                    drift.Value(_readString(item, ['tableId', 'table_id'])),
+                totalAmount:
+                    drift.Value(_readDouble(item, ['totalAmount', 'total_amount'])),
+                status: drift.Value(
+                    _readString(item, ['status']) ?? 'KITCHEN'),
+                shiftId: drift.Value(shiftId),
+                createdAt: drift.Value(DateTime.parse(createdAt)),
                 updatedAt: drift.Value(
-                  DateTime.parse(item['updatedAt'] ?? item['createdAt']),
+                  DateTime.parse(
+                    _readString(item, ['updatedAt', 'updated_at']) ?? createdAt,
+                  ),
                 ),
                 isSynced: const drift.Value(true),
               ),
               mode: drift.InsertMode.insertOrReplace,
             );
           }
-        }
 
         // --- Order Items ---
         if (changes['orderItems'] != null) {
           for (var item in changes['orderItems']) {
-            batch.insert(
+          batch.insert(
               db.orderItems,
               OrderItemsCompanion(
                 id: drift.Value(item['id']),
@@ -144,7 +185,7 @@ class SyncService {
         // --- Payments ---
         if (changes['payments'] != null) {
           for (var item in changes['payments']) {
-            batch.insert(
+          batch.insert(
               db.payments,
               PaymentsCompanion(
                 id: drift.Value(item['id']),
@@ -162,22 +203,31 @@ class SyncService {
         }
 
         // --- Tables ---
-        if (changes['seatingTables'] != null) {
-          // Ensure your backend API returns this key
-          for (var item in changes['seatingTables']) {
-            batch.insert(
+        final seatingTables =
+            _readChangeList(['seatingTables', 'seating_tables', 'tables']);
+        for (final raw in seatingTables) {
+          final item = Map<String, dynamic>.from(raw as Map);
+          final tableId = _readString(item, ['id']);
+          final tableName = _readString(item, ['name']);
+          final updatedAt = _readString(item, ['updatedAt', 'updated_at']);
+
+          if (tableId == null || tableName == null || updatedAt == null) {
+            continue;
+          }
+
+          batch.insert(
               db.seatingTables,
               SeatingTablesCompanion(
-                id: drift.Value(item['id']),
-                name: drift.Value(item['name']),
-                status: drift.Value(item['status']),
-                floor: drift.Value(item['floor']),
-                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
+                id: drift.Value(tableId),
+                name: drift.Value(tableName),
+                status:
+                    drift.Value(_readString(item, ['status']) ?? 'FREE'),
+                floor: drift.Value(_readString(item, ['floor']) ?? 'Main'),
+                updatedAt: drift.Value(DateTime.parse(updatedAt)),
               ),
               mode: drift.InsertMode.insertOrReplace,
             );
           }
-        }
       });
 
       // 4. Save new timestamp

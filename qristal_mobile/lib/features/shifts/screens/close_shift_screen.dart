@@ -27,14 +27,22 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
 
   Future<void> _loadData() async {
     final shiftId = ref.read(activeShiftIdProvider);
-    if (shiftId != null) {
-      final summary =
-          await ref.read(shiftServiceProvider).getShiftSummary(shiftId);
+
+    if (shiftId == null) {
+      if (!mounted) return;
       setState(() {
-        _summary = summary;
         _isLoading = false;
       });
+      return;
     }
+
+    final summary = await ref.read(shiftServiceProvider).getShiftSummary(shiftId);
+    if (!mounted) return;
+
+    setState(() {
+      _summary = summary;
+      _isLoading = false;
+    });
   }
 
   Future<void> _handleCloseShift() async {
@@ -88,6 +96,15 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (_summary == null) {
+      return Scaffold(
+        appBar: AppBar(title: const Text("End of Day - Z Report")),
+        body: const Center(
+          child: Text("No active shift found. Open a shift before closing."),
+        ),
+      );
     }
 
     return Scaffold(
