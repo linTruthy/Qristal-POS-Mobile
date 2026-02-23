@@ -57,6 +57,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userRole = ref.watch(authControllerProvider).role;
+    final isAdmin = userRole == 'OWNER' || userRole == 'MANAGER';
+
     // Watch sync state to show loading indicator if needed
 
     final syncQueue = ref.watch(syncQueueProvider);
@@ -92,16 +95,17 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             },
             itemBuilder: (BuildContext context) {
               return [
-                const PopupMenuItem(
-                  value: 'close_shift',
-                  child: Row(
-                    children: [
-                      Icon(Icons.assignment_turned_in, color: Colors.black),
-                      SizedBox(width: 8),
-                      Text('End Shift / Z-Report'),
-                    ],
+                if (isAdmin)
+                  const PopupMenuItem(
+                    value: 'close_shift',
+                    child: Row(
+                      children: [
+                        Icon(Icons.assignment_turned_in, color: Colors.black),
+                        SizedBox(width: 8),
+                        Text('End Shift / Z-Report'),
+                      ],
+                    ),
                   ),
-                ),
               ];
             },
           ),
@@ -142,18 +146,19 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             },
           ),
           // Navigation to Printer Settings
-          IconButton(
-            icon: const Icon(Icons.print),
-            tooltip: 'Printer Settings',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const PrinterSettingsScreen(),
-                ),
-              );
-            },
-          ),
+          if (isAdmin)
+            IconButton(
+              icon: const Icon(Icons.print),
+              tooltip: 'Printer Settings',
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const PrinterSettingsScreen(),
+                  ),
+                );
+              },
+            ),
 
           const SizedBox(width: 20),
         ],

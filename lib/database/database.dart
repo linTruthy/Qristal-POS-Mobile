@@ -11,6 +11,7 @@ part 'database.g.dart';
 // 1. Categories Table
 class Categories extends Table {
   TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
   TextColumn get name => text()();
   TextColumn get colorHex => text().nullable()();
   // Fixed: .defaultValue -> .withDefault
@@ -24,6 +25,7 @@ class Categories extends Table {
 // 2. Products Table
 class Products extends Table {
   TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
   TextColumn get categoryId => text().references(Categories, #id)();
   TextColumn get name => text()();
   RealColumn get price => real()();
@@ -37,6 +39,7 @@ class Products extends Table {
 // 3. Orders Table
 class Orders extends Table {
   TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
   TextColumn get receiptNumber => text()();
   TextColumn get userId => text()();
   TextColumn get tableId => text().nullable()();
@@ -80,6 +83,7 @@ class Payments extends Table {
 
 class SeatingTables extends Table {
   TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
   TextColumn get name => text()();
   TextColumn get status => text().withDefault(const Constant('FREE'))();
   TextColumn get floor => text().withDefault(const Constant('Main'))();
@@ -91,6 +95,7 @@ class SeatingTables extends Table {
 
 class Shifts extends Table {
   TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
   TextColumn get userId => text()();
   DateTimeColumn get openingTime => dateTime()();
   DateTimeColumn get closingTime => dateTime().nullable()();

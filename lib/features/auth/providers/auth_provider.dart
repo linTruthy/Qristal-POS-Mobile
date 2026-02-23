@@ -10,12 +10,14 @@ class LoginState {
   final String? error;
   final bool isAuthenticated;
   final String? userId;
+  final String? role;
 
   LoginState({
     this.isLoading = false,
     this.error,
     this.isAuthenticated = false,
     this.userId,
+    this.role,
   });
 }
 
@@ -27,13 +29,15 @@ class AuthController extends StateNotifier<LoginState> {
   Future<void> login(String userId, String pin) async {
     state = LoginState(isLoading: true);
     try {
-      await _authService.login(userId, pin);
-      state = LoginState(isAuthenticated: true, userId: userId);
+      var data = await _authService.login(userId, pin);
+      final role = data['user']['role'];
+      //state = LoginState(isAuthenticated: true, userId: userId);
+      state = LoginState(isAuthenticated: true, userId: userId, role: role);
     } catch (e) {
       state = LoginState(error: e.toString().replaceAll('Exception: ', ''));
     }
   }
-  
+
   Future<void> logout() async {
     await _authService.logout();
     state = LoginState(isAuthenticated: false);
@@ -41,6 +45,7 @@ class AuthController extends StateNotifier<LoginState> {
 }
 
 // 3. Provider for the Controller
-final authControllerProvider = StateNotifierProvider<AuthController, LoginState>((ref) {
+final authControllerProvider =
+    StateNotifierProvider<AuthController, LoginState>((ref) {
   return AuthController(ref.watch(authServiceProvider));
 });
