@@ -1,5 +1,7 @@
 "use client";
 
+import withAuth from "@/components/withAuth";
+import { useAuth } from "@/context/AuthContext";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   BarChart,
@@ -44,10 +46,10 @@ function normalizeKitchenOrders(payload: unknown): KitchenOrder[] {
   const list = Array.isArray(payload)
     ? payload
     : Array.isArray(body?.orders)
-    ? body.orders
-    : Array.isArray((body?.changes as Record<string, unknown> | undefined)?.orders)
-    ? ((body?.changes as Record<string, unknown>).orders as unknown[])
-    : [];
+      ? body.orders
+      : Array.isArray((body?.changes as Record<string, unknown> | undefined)?.orders)
+        ? ((body?.changes as Record<string, unknown>).orders as unknown[])
+        : [];
 
   return list
     .map((raw) => {
@@ -65,30 +67,43 @@ function normalizeKitchenOrders(payload: unknown): KitchenOrder[] {
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
-export default function Dashboard() {
+function Dashboard() { // Note: Removed 'export default' here
+  const { token, logout, user } = useAuth();
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
   const [kitchenOrders, setKitchenOrders] = useState<KitchenOrder[]>([]);
   const [activeTab, setActiveTab] = useState<DashboardTab>("inventory");
   const [loading, setLoading] = useState(true);
 
   const fetchInventory = useCallback(async () => {
+    if (!token) return;
     try {
       const response = await fetch(`${SERVER_URL}/inventory`, {
         cache: "no-store",
+        headers: {
+          // Attach Token!
+          "Authorization": `Bearer ${token}`
+        }
       });
+      if (response.status === 401) { logout(); return; }
       const data = await response.json();
       setInventory(data);
     } catch (error) {
       console.error("Error fetching inventory:", error);
     }
-  }, []);
+  }, [token, logout]);
 
   const fetchKitchenOrders = useCallback(async () => {
+    if (!token) return;
     try {
       for (const endpoint of ORDER_ENDPOINTS) {
         const response = await fetch(`${SERVER_URL}${endpoint}`, {
           cache: "no-store",
+          headers: {
+            // Attach Token!
+            "Authorization": `Bearer ${token}`
+          }
         });
+        if (response.status === 401) { logout(); return; }
         if (!response.ok) continue;
 
         const data = await response.json();
@@ -104,13 +119,16 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [token, logout]);
+
 
   useEffect(() => {
+    if (!token) return;
     void Promise.all([fetchInventory(), fetchKitchenOrders()]);
 
     const socket: Socket = io(SERVER_URL, {
       transports: ["websocket", "polling"],
+      auth: { token: token },
       reconnection: true,
     });
 
@@ -147,7 +165,7 @@ export default function Dashboard() {
       clearInterval(refreshTimer);
       socket.disconnect();
     };
-  }, [fetchInventory, fetchKitchenOrders]);
+  }, [fetchInventory, fetchKitchenOrders, token]);
 
   const kdsCounts = useMemo(() => {
     return {
@@ -169,26 +187,28 @@ export default function Dashboard() {
           <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow">
             Owner Portal
           </div>
+          <div className="flex items-center gap-4">
+            <span className="text-gray-700">Welcome, {user?.fullName}</span>
+            <button onClick={logout} className="text-red-600 font-semibold text-sm">Logout</button>
+          </div>
         </header>
 
         <div className="mb-6 border-b border-gray-200">
           <nav className="-mb-px flex gap-6" aria-label="Dashboard sections">
             <button
-              className={`pb-3 text-sm font-semibold border-b-2 ${
-                activeTab === "inventory"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
+              className={`pb-3 text-sm font-semibold border-b-2 ${activeTab === "inventory"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
               onClick={() => setActiveTab("inventory")}
             >
               Inventory
             </button>
             <button
-              className={`pb-3 text-sm font-semibold border-b-2 ${
-                activeTab === "kds"
-                  ? "border-blue-600 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
+              className={`pb-3 text-sm font-semibold border-b-2 ${activeTab === "kds"
+                ? "border-blue-600 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700"
+                }`}
               onClick={() => setActiveTab("kds")}
             >
               Web KDS
@@ -294,11 +314,10 @@ export default function Dashboard() {
                         <td className="px-6 py-4 whitespace-nowrap text-gray-500">{order.tableId || "Takeaway/Retail"}</td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
-                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              order.status === "PREPARING"
-                                ? "bg-amber-100 text-amber-800"
-                                : "bg-blue-100 text-blue-800"
-                            }`}
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status === "PREPARING"
+                              ? "bg-amber-100 text-amber-800"
+                              : "bg-blue-100 text-blue-800"
+                              }`}
                           >
                             {order.status}
                           </span>
@@ -319,3 +338,4 @@ export default function Dashboard() {
     </main>
   );
 }
+export default withAuth(Dashboard);
