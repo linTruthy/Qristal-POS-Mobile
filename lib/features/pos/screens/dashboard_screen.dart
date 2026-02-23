@@ -58,11 +58,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final userRole = ref.watch(authControllerProvider).role;
-    final isAdmin = userRole == 'OWNER' || userRole == 'MANAGER';
 
-    // Watch sync state to show loading indicator if needed
+    // UI GUARDRAILS
+    final isAdmin = userRole == 'OWNER' || userRole == 'MANAGER';
+    final canManageCash = isAdmin || userRole == 'CASHIER';
 
     final syncQueue = ref.watch(syncQueueProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Qristal POS - Cashier"),
@@ -84,31 +86,32 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ));
           }),
 
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'close_shift') {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const CloseShiftScreen()));
-              }
-            },
-            itemBuilder: (BuildContext context) {
-              return [
-                if (isAdmin)
+          if (canManageCash)
+            PopupMenuButton<String>(
+              onSelected: (value) {
+                if (value == 'close_shift') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const CloseShiftScreen()));
+                }
+              },
+              itemBuilder: (BuildContext context) {
+                return [
                   const PopupMenuItem(
                     value: 'close_shift',
                     child: Row(
                       children: [
                         Icon(Icons.assignment_turned_in, color: Colors.black),
                         SizedBox(width: 8),
-                        Text('End Shift / Z-Report'),
+                        Text('End Shift / Z-Report',
+                            style: TextStyle(color: Colors.black)),
                       ],
                     ),
                   ),
-              ];
-            },
-          ),
+                ];
+              },
+            ),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -341,43 +344,37 @@ class CartWidget extends ConsumerWidget {
     final cartItems = ref.watch(cartProvider);
     final cartNotifier = ref.read(cartProvider.notifier);
 
+    // Check role for Checkout Button Guardrails
+    final userRole = ref.watch(authControllerProvider).role;
+    final canCheckout =
+        userRole == 'OWNER' || userRole == 'MANAGER' || userRole == 'CASHIER';
+
     return Column(
       children: [
-        // Ticket Header
         Container(
           padding: const EdgeInsets.all(16),
           color: Colors.grey[100],
           width: double.infinity,
           child: Row(
             children: [
-              const Text(
-                "Current Order",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              const Text("Current Order",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+              const Spacer(),
               IconButton(
                 icon: const Icon(Icons.delete_sweep, color: Colors.red),
-                onPressed: () {
-                  // Clear Cart
-                  cartNotifier.clearCart();
-                },
+                onPressed: () => cartNotifier.clearCart(),
               ),
             ],
           ),
         ),
-
-        // Cart List
         Expanded(
           child: cartItems.isEmpty
               ? const Center(
-                  child: Text(
-                    "Cart is empty",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                )
+                  child: Text("Cart is empty",
+                      style: TextStyle(color: Colors.grey)))
               : ListView.separated(
                   padding: const EdgeInsets.all(8),
                   itemCount: cartItems.length,
@@ -385,32 +382,23 @@ class CartWidget extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final item = cartItems[index];
                     return ListTile(
-                      title: Text(
-                        item.product.name,
-                        style: const TextStyle(color: Colors.black87),
-                      ),
+                      title: Text(item.product.name,
+                          style: const TextStyle(color: Colors.black87)),
                       subtitle: Text(
-                        "UGX ${item.product.price.toStringAsFixed(0)} x ${item.quantity}",
-                        style: const TextStyle(color: Colors.black54),
-                      ),
+                          "UGX ${item.product.price.toStringAsFixed(0)} x ${item.quantity}",
+                          style: const TextStyle(color: Colors.black54)),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            "UGX ${item.total.toStringAsFixed(0)}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          Text("UGX ${item.total.toStringAsFixed(0)}",
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold)),
                           IconButton(
-                            icon: const Icon(
-                              Icons.remove_circle_outline,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              cartNotifier.removeFromCart(item.product);
-                            },
+                            icon: const Icon(Icons.remove_circle_outline,
+                                color: Colors.red),
+                            onPressed: () =>
+                                cartNotifier.removeFromCart(item.product),
                           ),
                         ],
                       ),
@@ -418,8 +406,6 @@ class CartWidget extends ConsumerWidget {
                   },
                 ),
         ),
-
-        // Total & Checkout
         Container(
           padding: const EdgeInsets.all(16),
           color: Colors.grey[200],
@@ -428,58 +414,81 @@ class CartWidget extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "TOTAL",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
-                    style: const TextStyle(
-                      color: AppTheme.emerald,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  const Text("TOTAL",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold)),
+                  Text("UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
+                      style: const TextStyle(
+                          color: AppTheme.emerald,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold)),
                 ],
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.emerald,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              Row(
+                children: [
+                  // FIRE TO KITCHEN BUTTON (Available to all, mostly Waiters)
+                  Expanded(
+                    child: SizedBox(
+                      height: 60,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: cartItems.isEmpty
+                            ? null
+                            : () async {
+                                await cartNotifier.sendToKitchen();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("Order sent to kitchen! 🍽️")),
+                                );
+                              },
+                        child: const Text(
+                          "SEND TO KITCHEN",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
                   ),
-                  onPressed: cartItems.isEmpty
-                      ? null
-                      : () async {
-                          // 1. Get current user (you might need a UserProvider to store the logged-in ID)
-                          // For MVP, we can grab it from SecureStorage or pass it down.
-                          // Let's assume we have a simple provider for current user ID:
-                          //  const userId =
-                          //      "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
 
-                          // 2. Save to Local DB (Instant)
-                          // await ref
-                          //     .read(orderServiceProvider)
-                          //     .placeOrder(cartItems: cartItems, userId: userId);
-                          await ref.read(cartProvider.notifier).sendToKitchen();
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("Order sent to kitchen! 🍽️")),
-                          );
-                        },
-                  child: const Text("SEND TO KITCHEN",
-                      style: TextStyle(fontSize: 20)),
-                ),
+                  // PAY/CHECKOUT BUTTON (Only Cashiers/Managers/Owners)
+                  if (canCheckout) ...[
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: SizedBox(
+                        height: 60,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppTheme.emerald,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                          ),
+                          onPressed: cartItems.isEmpty
+                              ? null
+                              : () async {
+                                  await cartNotifier.checkout(context);
+                                },
+                          child: const Text("PAY & CLOSE",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center),
+                        ),
+                      ),
+                    ),
+                  ]
+                ],
               ),
             ],
           ),
