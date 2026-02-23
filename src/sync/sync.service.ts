@@ -260,9 +260,8 @@ export class SyncService {
               });
               processedAuditLogs++;
             } catch (err) {
-              const errorMessage = this.getErrorMessage(err);
-              if (!errorMessage.includes('Unique constraint')) {
-                errors.push({ id: log.id, error: `Audit log error: ${errorMessage}` });
+              if (!err.message.includes('Unique constraint')) {
+                errors.push({ id: log.id, error: `Audit log error: ${err.message}` });
               }
             }
           }
