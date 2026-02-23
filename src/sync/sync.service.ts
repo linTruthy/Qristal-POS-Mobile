@@ -26,6 +26,14 @@ export class SyncService {
     return 'Unknown error';
   }
 
+  private isUniqueConstraintError(error: unknown): boolean {
+    if (!error || typeof error !== 'object') {
+      return false;
+    }
+
+    return 'code' in error && (error as { code?: string }).code === 'P2002';
+  }
+
   async pullChanges(lastSyncTimestamp: string, branchId: string) {
     let lastSyncDate: Date;
 
@@ -236,8 +244,8 @@ export class SyncService {
                 },
               });
             } catch (err) {
-              const errorMessage = this.getErrorMessage(err);
-              if (!errorMessage.includes('Unique constraint')) {
+              if (!this.isUniqueConstraintError(err)) {
+                const errorMessage = this.getErrorMessage(err);
                 errors.push({ id: pay.id, error: `Payment error: ${errorMessage}` });
               }
             }
@@ -260,8 +268,9 @@ export class SyncService {
               });
               processedAuditLogs++;
             } catch (err) {
-              if (!err.message.includes('Unique constraint')) {
-                errors.push({ id: log.id, error: `Audit log error: ${err.message}` });
+              if (!this.isUniqueConstraintError(err)) {
+                const errorMessage = this.getErrorMessage(err);
+                errors.push({ id: log.id, error: `Audit log error: ${errorMessage}` });
               }
             }
           }
@@ -286,7 +295,9 @@ export class SyncService {
             );
             this.eventsGateway.emitInventoryUpdate(latestInventory);
           } catch (e) {
-            this.logger.error('Failed to emit inventory update', e);
+            this.logger.error(
+              `Failed to emit inventory update: ${this.getErrorMessage(e)}`,
+            );
           }
         }, 1000);
       }

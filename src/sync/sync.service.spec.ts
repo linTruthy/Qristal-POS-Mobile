@@ -146,4 +146,69 @@ describe('SyncService', () => {
       }),
     );
   });
+
+
+  it('ignores duplicate payment and audit log records without failing push', async () => {
+    prisma.$transaction.mockImplementationOnce(async (handler: any) => {
+      const tx = {
+        shift: { upsert: jest.fn() },
+        order: {
+          findUnique: jest.fn().mockResolvedValue({ id: 'order-1' }),
+          upsert: jest.fn().mockResolvedValue({ id: 'order-1' }),
+        },
+        orderItem: { upsert: jest.fn() },
+        payment: { create: jest.fn().mockRejectedValue({ code: 'P2002' }) },
+        auditLog: { create: jest.fn().mockRejectedValue({ code: 'P2002' }) },
+      };
+
+      await handler(tx);
+    });
+
+    const result = await service.pushChanges(
+      {
+        orders: [
+          {
+            id: 'order-1',
+            receiptNumber: 'ORD-1',
+            userId: 'user-1',
+            tableId: null,
+            shiftId: null,
+            totalAmount: 40,
+            status: 'OPEN',
+            createdAt: new Date().toISOString(),
+          },
+        ],
+        payments: [
+          {
+            id: 'payment-1',
+            orderId: 'order-1',
+            method: 'CASH',
+            amount: 40,
+            createdAt: new Date().toISOString(),
+          },
+        ],
+        auditLogs: [
+          {
+            id: 'audit-1',
+            userId: 'user-1',
+            action: 'VOID',
+          },
+        ],
+      },
+      'BRANCH-01',
+    );
+
+    expect(result.success).toBe(true);
+    expect(result.errors).toBeUndefined();
+    expect(prisma.syncLog.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          direction: SyncDirection.PUSH,
+          status: SyncStatus.SUCCESS,
+          branchId: 'BRANCH-01',
+          recordsPushed: 1,
+        }),
+      }),
+    );
+  });
 });
