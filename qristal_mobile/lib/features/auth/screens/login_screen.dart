@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qristal_mobile/core/theme/app_theme.dart';
+import '../../kitchen/screens/kitchen_screen.dart';
 import '../../sync/providers/sync_provider.dart';
 import '../../tables/screens/floor_plan_screen.dart';
 import '../providers/auth_provider.dart';
@@ -28,8 +29,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
 
       if (next.isAuthenticated) {
-        // --- ADD THIS BLOCK ---
-        // Trigger initial sync before moving to dashboard
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Authentication successful. Syncing data..."),
@@ -37,18 +36,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         );
 
         await ref.read(syncControllerProvider.notifier).performSync();
-        // ----------------------
 
         if (context.mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const FloorPlanScreen()),
-          );
+          // --- ROLE-BASED ROUTING ---
+          if (next.role == 'KITCHEN') {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const KitchenScreen()),
+            );
+          } else {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const FloorPlanScreen()),
+            );
+          }
         }
       }
     });
   }
-
+  
   void _handleLogin() {
     final userId =
         '20e712c3-e030-4bc5-ac2b-cafd92dc055f'; // _userController.text.trim();

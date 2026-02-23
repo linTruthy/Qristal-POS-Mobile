@@ -979,7 +979,6 @@ qristal_mobile/
   .metadata
   .repomixignore
   analysis_options.yaml
-  pubspec.lock
   pubspec.yaml
   README.md
   repomix.config.json
@@ -1394,6 +1393,8 @@ qristal-dashboard/
         de6d229b74ea8ff5115264534c642a10a2511d
       09/
         d57bcde0ea070b03d3c24f3b493e67da5e74de
+      0e/
+        d2e9e4e934f712df832160e142680da8211e16
       14/
         090c4d8a875b5ac4117921ee70f0619e1b99d8
       1b/
@@ -1405,6 +1406,8 @@ qristal-dashboard/
         ff1a9f1ee9cae7de2e511f397858f263ac3ff8
       37/
         75e2e2762e724aa255b8fa1539dacaf5c6d2c0
+      3e/
+        ec9ddf1745ad745267a4ac6932b3f00f5a2ad7
       43/
         e39c6d031d5cbaf624c40b8d21fd45d4aa83cf
       4f/
@@ -1417,8 +1420,12 @@ qristal-dashboard/
         fc6837e066e335cb2eb24572a8a64b8ee3c142
       61/
         e36849cf7cfa9f1f71b4a3964a4953e3e243d3
+      62/
+        e71333fc082f81915af6295418f87f5e19c346
       65/
         015d061677aa2e8f7d148be2a184b8e426d4d9
+      6e/
+        d42c76118181ae1311670a50ac5dadff1244d9
       71/
         2463d6718e145f259002251dffbfc713faa347
       73/
@@ -1453,7 +1460,10 @@ qristal-dashboard/
         e694768c551ac3d889bc12cee8e573a3d12cd7
       b7/
         a45f3b4dc4d8835ccd776c4959db49feef9220
+      bd/
+        006c558b33ec478707205dfebdf4fc408b1657
       c4/
+        2b9ca16cb3b04e5628bae1d42037c30e1305d8
         9d11194049a8afc58cc0228b5ac0d117ac701a
       ce/
         f8b4d40185846f74dfc3b3be1d8e1e3b919666
@@ -1479,6 +1489,8 @@ qristal-dashboard/
         a5b5ed3589c0225135e20d3d064bbe97bce476
       fa/
         f649957a35634b08a0d0c9dda4f678209a1a58
+      fb/
+        d480075bdfcee35ade97150c4687aabeadef20
     refs/
       heads/
         main
@@ -1553,6 +1565,7 @@ ee572040e58ee86165e5d71618b8526d777d7229 332fb7dc9c38a2a80b183a5da7edddc965997aa
 a157c7141133aa726f4c844d62fa85c4d2b59474 82647260623942252d1aa4c50ce87c9bf39f4089 truthysys <truthysys@gmail.com> 1771855094 +0000	pull --tags origin main: Merge made by the 'ort' strategy.
 82647260623942252d1aa4c50ce87c9bf39f4089 7dae35a54db17a26d55e45926e1a0d64b859e214 truthysys <truthysys@gmail.com> 1771859356 +0000	commit: branch
 7dae35a54db17a26d55e45926e1a0d64b859e214 fcb61c193df3d6036c4a575b0f809ec585b39506 truthysys <truthysys@gmail.com> 1771859988 +0000	pull --tags origin main: Fast-forward
+fcb61c193df3d6036c4a575b0f809ec585b39506 bb4fb9f661452d4a2e2d8328cc3fc36cc8d520c9 truthysys <truthysys@gmail.com> 1771878257 +0000	pull --tags origin main: Fast-forward
 
 ================
 File: qristal_mobile/.git/logs/refs/remotes/origin/main
@@ -1621,11 +1634,12 @@ ee572040e58ee86165e5d71618b8526d777d7229 332fb7dc9c38a2a80b183a5da7edddc965997aa
 a157c7141133aa726f4c844d62fa85c4d2b59474 82647260623942252d1aa4c50ce87c9bf39f4089 truthysys <truthysys@gmail.com> 1771855094 +0000	pull --tags origin main: Merge made by the 'ort' strategy.
 82647260623942252d1aa4c50ce87c9bf39f4089 7dae35a54db17a26d55e45926e1a0d64b859e214 truthysys <truthysys@gmail.com> 1771859356 +0000	commit: branch
 7dae35a54db17a26d55e45926e1a0d64b859e214 fcb61c193df3d6036c4a575b0f809ec585b39506 truthysys <truthysys@gmail.com> 1771859988 +0000	pull --tags origin main: Fast-forward
+fcb61c193df3d6036c4a575b0f809ec585b39506 bb4fb9f661452d4a2e2d8328cc3fc36cc8d520c9 truthysys <truthysys@gmail.com> 1771878257 +0000	pull --tags origin main: Fast-forward
 
 ================
 File: qristal_mobile/.git/refs/heads/main
 ================
-fcb61c193df3d6036c4a575b0f809ec585b39506
+bb4fb9f661452d4a2e2d8328cc3fc36cc8d520c9
 
 ================
 File: qristal_mobile/.git/refs/remotes/origin/main
@@ -1667,7 +1681,7 @@ ref: refs/heads/main
 ================
 File: qristal_mobile/.git/ORIG_HEAD
 ================
-7dae35a54db17a26d55e45926e1a0d64b859e214
+fcb61c193df3d6036c4a575b0f809ec585b39506
 
 ================
 File: qristal-api/.git/refs/heads/main
@@ -4016,6 +4030,7 @@ ac3b427c8c0bc2624128c3ff6374c66766471d85 842881313bcadaa86fcf20980dfc41531782f2e
 842881313bcadaa86fcf20980dfc41531782f2e1 7acee85667d1f7d0c3917040d3d7efb48cf0333d truthysys <truthysys@gmail.com> 1771785725 +0000	commit: Kds
 7acee85667d1f7d0c3917040d3d7efb48cf0333d 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf truthysys <truthysys@gmail.com> 1771788655 +0000	commit: Fix kds
 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf 966a27db3ae6403af64538c4c670dfb91f07671b truthysys <truthysys@gmail.com> 1771861816 +0000	commit: auth, reports
+966a27db3ae6403af64538c4c670dfb91f07671b 6ed42c76118181ae1311670a50ac5dadff1244d9 truthysys <truthysys@gmail.com> 1771878241 +0000	commit: nv
 
 ================
 File: qristal-dashboard/.git/logs/refs/remotes/origin/main
@@ -4034,11 +4049,12 @@ ac3b427c8c0bc2624128c3ff6374c66766471d85 842881313bcadaa86fcf20980dfc41531782f2e
 842881313bcadaa86fcf20980dfc41531782f2e1 7acee85667d1f7d0c3917040d3d7efb48cf0333d truthysys <truthysys@gmail.com> 1771785725 +0000	commit: Kds
 7acee85667d1f7d0c3917040d3d7efb48cf0333d 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf truthysys <truthysys@gmail.com> 1771788655 +0000	commit: Fix kds
 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf 966a27db3ae6403af64538c4c670dfb91f07671b truthysys <truthysys@gmail.com> 1771861816 +0000	commit: auth, reports
+966a27db3ae6403af64538c4c670dfb91f07671b 6ed42c76118181ae1311670a50ac5dadff1244d9 truthysys <truthysys@gmail.com> 1771878241 +0000	commit: nv
 
 ================
 File: qristal-dashboard/.git/refs/heads/main
 ================
-966a27db3ae6403af64538c4c670dfb91f07671b
+6ed42c76118181ae1311670a50ac5dadff1244d9
 
 ================
 File: qristal-dashboard/.git/refs/remotes/origin/main
@@ -4048,7 +4064,7 @@ File: qristal-dashboard/.git/refs/remotes/origin/main
 ================
 File: qristal-dashboard/.git/COMMIT_EDITMSG
 ================
-auth, reports
+nv
 
 ================
 File: qristal-dashboard/.git/config
@@ -6012,53 +6028,6 @@ install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   COMPONENT Runtime)
 
 ================
-File: qristal_mobile/.gitignore
-================
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-
-================
 File: qristal_mobile/.repomixignore
 ================
 # Add patterns to ignore here, one per line
@@ -6226,134 +6195,6 @@ export default function LoginPage() {
     </div>
   );
 }
-
-================
-File: qristal-dashboard/src/app/reports/page.tsx
-================
-"use client";
-
-import { useEffect, useState } from 'react';
-import {
-    LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell
-} from 'recharts';
-import { useAuth } from "@/context/AuthContext";
-import withAuth from "@/components/withAuth";
-
-const SERVER_URL = "https://qristal-pos-api.onrender.com";
-
-function ReportsPage() {
-    const { token, logout } = useAuth();
-    const [salesData, setSalesData] = useState([]);
-    const [topItems, setTopItems] = useState([]);
-    const [paymentData, setPaymentData] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        if (!token) return;
-
-        const fetchData = async () => {
-            try {
-                const headers = { 'Authorization': `Bearer ${token}` };
-
-                // 1. Sales
-                const salesRes = await fetch(`${SERVER_URL}/reports/sales`, { headers });
-                if (salesRes.status === 401) { logout(); return; }
-                const salesJson = await salesRes.json();
-                setSalesData(salesJson.map((d: any) => ({ ...d, date: new Date(d.date).toLocaleDateString() })));
-
-                // 2. Top Items
-                const itemsRes = await fetch(`${SERVER_URL}/reports/top-items`, { headers });
-                setTopItems(await itemsRes.json());
-
-                // 3. Payments
-                const payRes = await fetch(`${SERVER_URL}/reports/payments`, { headers });
-                setPaymentData(await payRes.json());
-            } catch (error) {
-                console.error("Error fetching report data", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [token, logout]);
-
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
-
-    if (loading) return <div className="min-h-screen flex items-center justify-center">Loading Analytics...</div>;
-
-    return (
-        <div className="min-h-screen bg-gray-50 p-8">
-            <h1 className="text-3xl font-bold mb-8 text-gray-800">Business Analytics</h1>
-
-            {/* Grid Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-                {/* 1. Sales Trends (Line Chart) */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 col-span-2">
-                    <h2 className="text-lg font-semibold mb-4">Sales Performance (Last 30 Days)</h2>
-                    <div className="h-80">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <LineChart data={salesData}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                <XAxis dataKey="date" />
-                                <YAxis />
-                                <Tooltip />
-                                <Line type="monotone" dataKey="total" stroke="#0EA5E9" strokeWidth={3} dot={{ r: 4 }} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
-                {/* 2. Top Selling Items (Bar Chart) */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h2 className="text-lg font-semibold mb-4">Top 5 Products</h2>
-                    <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={topItems} layout="vertical" margin={{ left: 20 }}>
-                                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
-                                <XAxis type="number" />
-                                <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12 }} />
-                                <Tooltip />
-                                <Bar dataKey="quantity" fill="#10B981" radius={[0, 4, 4, 0]} barSize={20} />
-                            </BarChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
-                {/* 3. Payment Methods (Pie Chart) */}
-                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h2 className="text-lg font-semibold mb-4">Revenue by Payment Type</h2>
-                    <div className="h-64">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                                <Pie
-                                    data={paymentData}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    paddingAngle={5}
-                                    dataKey="_sum.amount"
-                                    nameKey="method"
-                                >
-                                    {paymentData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                                <Legend />
-                            </PieChart>
-                        </ResponsiveContainer>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    );
-}
-
-export default withAuth(ReportsPage);
 
 ================
 File: qristal-dashboard/src/app/globals.css
@@ -7609,6 +7450,55 @@ void main() {
 }
 
 ================
+File: qristal_mobile/.gitignore
+================
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+sentry.properties
+
+================
 File: qristal_mobile/.metadata
 ================
 # This file tracks properties of this Flutter project.
@@ -7677,6 +7567,134 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # Qristal-POS-Mobile
+
+================
+File: qristal-dashboard/src/app/reports/page.tsx
+================
+"use client";
+
+import { useEffect, useState } from 'react';
+import {
+    LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell
+} from 'recharts';
+import { useAuth } from "@/context/AuthContext";
+import withAuth from "@/components/withAuth";
+
+const SERVER_URL = "https://qristal-pos-api.onrender.com";
+
+function ReportsPage() {
+    const { token, logout } = useAuth();
+    const [salesData, setSalesData] = useState([]);
+    const [topItems, setTopItems] = useState([]);
+    const [paymentData, setPaymentData] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!token) return;
+
+        const fetchData = async () => {
+            try {
+                const headers = { 'Authorization': `Bearer ${token}` };
+
+                // 1. Sales
+                const salesRes = await fetch(`${SERVER_URL}/reports/sales`, { headers });
+                if (salesRes.status === 401) { logout(); return; }
+                const salesJson = await salesRes.json();
+                setSalesData(salesJson.map((d: any) => ({ ...d, date: new Date(d.date).toLocaleDateString() })));
+
+                // 2. Top Items
+                const itemsRes = await fetch(`${SERVER_URL}/reports/top-items`, { headers });
+                setTopItems(await itemsRes.json());
+
+                // 3. Payments
+                const payRes = await fetch(`${SERVER_URL}/reports/payments`, { headers });
+                setPaymentData(await payRes.json());
+            } catch (error) {
+                console.error("Error fetching report data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [token, logout]);
+
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center">Loading Analytics...</div>;
+
+    return (
+        <div className="min-h-screen bg-gray-50 p-8">
+            <h1 className="text-3xl font-bold mb-8 text-gray-800">Business Analytics</h1>
+
+            {/* Grid Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+                {/* 1. Sales Trends (Line Chart) */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 col-span-2">
+                    <h2 className="text-lg font-semibold mb-4">Sales Performance (Last 30 Days)</h2>
+                    <div className="h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={salesData}>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                                <XAxis dataKey="date" />
+                                <YAxis />
+                                <Tooltip />
+                                <Line type="monotone" dataKey="total" stroke="#0EA5E9" strokeWidth={3} dot={{ r: 4 }} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
+                {/* 2. Top Selling Items (Bar Chart) */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h2 className="text-lg font-semibold mb-4">Top 5 Products</h2>
+                    <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart data={topItems} layout="vertical" margin={{ left: 20 }}>
+                                <CartesianGrid strokeDasharray="3 3" horizontal={false} />
+                                <XAxis type="number" />
+                                <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12 }} />
+                                <Tooltip />
+                                <Bar dataKey="quantity" fill="#10B981" radius={[0, 4, 4, 0]} barSize={20} />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
+                {/* 3. Payment Methods (Pie Chart) */}
+                <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h2 className="text-lg font-semibold mb-4">Revenue by Payment Type</h2>
+                    <div className="h-64">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                                <Pie
+                                    data={paymentData}
+                                    cx="50%"
+                                    cy="50%"
+                                    innerRadius={60}
+                                    outerRadius={80}
+                                    paddingAngle={5}
+                                    dataKey="_sum.amount"
+                                    nameKey="method"
+                                >
+                                    {paymentData.map((entry, index) => (
+                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                    ))}
+                                </Pie>
+                                <Tooltip />
+                                <Legend />
+                            </PieChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    );
+}
+
+export default withAuth(ReportsPage);
 
 ================
 File: qristal-dashboard/src/app/layout.tsx
@@ -7796,51 +7814,6 @@ File: .idx/dev.nix
       };
       onStart = {
       };
-    };
-  };
-}
-
-================
-File: qristal_mobile/.idx/dev.nix
-================
-{pkgs}: {
-  channel = "stable-24.05";
-  packages = [
-    pkgs.jdk17
-    pkgs.unzip
-    pkgs.openssh
-  ];
-  idx.extensions = [
-    
-  ];
-  idx.previews = {
-    previews = {
-      # web = {
-      #   command = [
-      #     "flutter"
-      #     "run"
-      #     "--machine"
-      #     "-d"
-      #     "web-server"
-      #     "--web-hostname"
-      #     "0.0.0.0"
-      #     "--web-port"
-      #     "$PORT"
-      #   ];
-      #   manager = "flutter";
-      # };
-      android = {
-       command = [
-         "flutter"
-       "run"
-          "--machine"
-        "-d"
-          "android"
-          "-d"
-          "localhost:5555"
-         ];
-        manager = "flutter";
-       };
     };
   };
 }
@@ -8238,6 +8211,51 @@ class OrderService {
 }
 
 ================
+File: qristal_mobile/.idx/dev.nix
+================
+{pkgs}: {
+  channel = "stable-24.05";
+  packages = [
+    pkgs.jdk17
+    pkgs.unzip
+    pkgs.openssh
+  ];
+  idx.extensions = [
+    
+  ];
+  idx.previews = {
+    previews = {
+      # web = {
+      #   command = [
+      #     "flutter"
+      #     "run"
+      #     "--machine"
+      #     "-d"
+      #     "web-server"
+      #     "--web-hostname"
+      #     "0.0.0.0"
+      #     "--web-port"
+      #     "$PORT"
+      #   ];
+      #   manager = "flutter";
+      # };
+      # android = {
+      #  command = [
+      #    "flutter"
+      #  "run"
+      #     "--machine"
+      #   "-d"
+      #     "android"
+      #     "-d"
+      #     "localhost:5555"
+      #    ];
+      #   manager = "flutter";
+      #  };
+    };
+  };
+}
+
+================
 File: qristal_mobile/android/app/src/main/AndroidManifest.xml
 ================
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
@@ -8592,9 +8610,27 @@ import 'core/theme/app_theme.dart';
 import 'features/auth/screens/login_screen.dart';
 import 'features/tables/screens/floor_plan_screen.dart';
 import 'services/websocket_service.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
-void main() {
-  runApp(const ProviderScope(child: QristalApp()));
+Future<void> main() async {
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = 'https://04c7b6ac5293308f78c72bb89a9996e7@o4510936622891008.ingest.us.sentry.io/4510936624660480';
+      // Adds request headers and IP for users, for more info visit:
+      // https://docs.sentry.io/platforms/dart/guides/flutter/data-management/data-collected/
+      options.sendDefaultPii = true;
+      options.enableLogs = true;
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
+      // We recommend adjusting this value in production.
+      options.tracesSampleRate = 1.0;
+      // Configure Session Replay
+      options.replay.sessionSampleRate = 0.1;
+      options.replay.onErrorSampleRate = 1.0;
+    },
+    appRunner: () => runApp(SentryWidget(child: const ProviderScope(child: QristalApp()))),
+  );
+  // TODO: Remove this line after sending the first sample event to sentry.
+  await Sentry.captureException(StateError('This is a sample exception.'));
 }
 
 class QristalApp extends ConsumerWidget { // Change to ConsumerWidget
@@ -8605,6 +8641,9 @@ class QristalApp extends ConsumerWidget { // Change to ConsumerWidget
     ref.read(webSocketProvider); 
     return MaterialApp(
       title: 'Qristal POS',
+      navigatorObservers: [
+        SentryNavigatorObserver(),
+      ],
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       home: const LoginScreen(),
@@ -8612,230 +8651,6 @@ class QristalApp extends ConsumerWidget { // Change to ConsumerWidget
     );
   }
 }
-
-================
-File: qristal_mobile/lib/features/auth/screens/login_screen.dart
-================
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qristal_mobile/core/theme/app_theme.dart';
-import '../../sync/providers/sync_provider.dart';
-import '../../tables/screens/floor_plan_screen.dart';
-import '../providers/auth_provider.dart';
-
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final TextEditingController _userController = TextEditingController();
-  final TextEditingController _pinController = TextEditingController();
-
-  // Listen to state changes
-  void _listenToAuthChanges() {
-    ref.listen(authControllerProvider, (previous, next) async {
-      if (next.error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.error!), backgroundColor: AppTheme.error),
-        );
-      }
-
-      if (next.isAuthenticated) {
-        // --- ADD THIS BLOCK ---
-        // Trigger initial sync before moving to dashboard
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Authentication successful. Syncing data..."),
-          ),
-        );
-
-        await ref.read(syncControllerProvider.notifier).performSync();
-        // ----------------------
-
-        if (context.mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const FloorPlanScreen()),
-          );
-        }
-      }
-    });
-  }
-
-  void _handleLogin() {
-    final userId =
-        '20e712c3-e030-4bc5-ac2b-cafd92dc055f'; // _userController.text.trim();
-    final pin =
-        _pinController.text.trim(); // '1234'; // _pinController.text.trim();
-
-    if (userId.isEmpty || pin.isEmpty) return;
-
-    ref.read(authControllerProvider.notifier).login(userId, pin);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    _listenToAuthChanges();
-    final authState = ref.watch(authControllerProvider);
-
-    return Scaffold(
-      body: Row(
-        children: [
-          // LEFT SIDE: Branding / Art
-          Expanded(
-            flex: 2,
-            child: Container(
-              color: AppTheme.surface,
-              child: const Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.point_of_sale,
-                      size: 100,
-                      color: AppTheme.qristalBlue,
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      "Qristal POS",
-                      style: TextStyle(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    Text(
-                      "Enterprise Grade. Startup Ready.",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-
-          // RIGHT SIDE: Login Form
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(40.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    "Staff Access",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 30),
-
-                  // User ID Input (Paste your seeded UUID here)
-                  TextField(
-                    controller: _userController,
-                    decoration: const InputDecoration(
-                      labelText: "Operator ID",
-                      prefixIcon: Icon(Icons.badge),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // PIN Input
-                  TextField(
-                    controller: _pinController,
-                    obscureText: true,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: "Access PIN",
-                      prefixIcon: Icon(Icons.lock),
-                    ),
-                    onSubmitted: (_) => _handleLogin(),
-                  ),
-                  const SizedBox(height: 40),
-
-                  // Login Button
-                  SizedBox(
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: authState.isLoading ? null : _handleLogin,
-                      child: authState.isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
-                          : const Text("UNLOCK TERMINAL"),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-================
-File: qristal_mobile/windows/flutter/generated_plugin_registrant.cc
-================
-//
-//  Generated file. Do not edit.
-//
-
-// clang-format off
-
-#include "generated_plugin_registrant.h"
-
-#include <connectivity_plus/connectivity_plus_windows_plugin.h>
-#include <flutter_secure_storage_windows/flutter_secure_storage_windows_plugin.h>
-#include <permission_handler_windows/permission_handler_windows_plugin.h>
-#include <print_bluetooth_thermal/print_bluetooth_thermal_plugin_c_api.h>
-#include <sqlite3_flutter_libs/sqlite3_flutter_libs_plugin.h>
-
-void RegisterPlugins(flutter::PluginRegistry* registry) {
-  ConnectivityPlusWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
-  FlutterSecureStorageWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("FlutterSecureStorageWindowsPlugin"));
-  PermissionHandlerWindowsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
-  PrintBluetoothThermalPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("PrintBluetoothThermalPluginCApi"));
-  Sqlite3FlutterLibsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("Sqlite3FlutterLibsPlugin"));
-}
-
-================
-File: qristal_mobile/windows/flutter/generated_plugins.cmake
-================
-#
-# Generated file, do not edit.
-#
-
-list(APPEND FLUTTER_PLUGIN_LIST
-  connectivity_plus
-  flutter_secure_storage_windows
-  permission_handler_windows
-  print_bluetooth_thermal
-  sqlite3_flutter_libs
-)
-
-list(APPEND FLUTTER_FFI_PLUGIN_LIST
-)
-
-set(PLUGIN_BUNDLED_LIBRARIES)
-
-foreach(plugin ${FLUTTER_PLUGIN_LIST})
-  add_subdirectory(flutter/ephemeral/.plugin_symlinks/${plugin}/windows plugins/${plugin})
-  target_link_libraries(${BINARY_NAME} PRIVATE ${plugin}_plugin)
-  list(APPEND PLUGIN_BUNDLED_LIBRARIES $<TARGET_FILE:${plugin}_plugin>)
-  list(APPEND PLUGIN_BUNDLED_LIBRARIES ${${plugin}_bundled_libraries})
-endforeach(plugin)
-
-foreach(ffi_plugin ${FLUTTER_FFI_PLUGIN_LIST})
-  add_subdirectory(flutter/ephemeral/.plugin_symlinks/${ffi_plugin}/windows plugins/${ffi_plugin})
-  list(APPEND PLUGIN_BUNDLED_LIBRARIES ${${ffi_plugin}_bundled_libraries})
-endforeach(ffi_plugin)
 
 ================
 File: qristal_mobile/lib/database/database.g.dart
@@ -15066,6 +14881,443 @@ class $AppDatabaseManager {
 }
 
 ================
+File: qristal_mobile/lib/features/auth/screens/login_screen.dart
+================
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qristal_mobile/core/theme/app_theme.dart';
+import '../../sync/providers/sync_provider.dart';
+import '../../tables/screens/floor_plan_screen.dart';
+import '../providers/auth_provider.dart';
+import 'package:sentry/sentry.dart';
+
+
+class LoginScreen extends ConsumerStatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _pinController = TextEditingController();
+
+  // Listen to state changes
+  void _listenToAuthChanges() {
+    ref.listen(authControllerProvider, (previous, next) async {
+      if (next.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.error!), backgroundColor: AppTheme.error),
+        );
+      }
+
+      if (next.isAuthenticated) {
+        // --- ADD THIS BLOCK ---
+        // Trigger initial sync before moving to dashboard
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Authentication successful. Syncing data..."),
+          ),
+        );
+
+        await ref.read(syncControllerProvider.notifier).performSync();
+        // ----------------------
+
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const FloorPlanScreen()),
+          );
+        }
+      }
+    });
+  }
+
+  void _handleLogin() {
+    final userId =
+        '20e712c3-e030-4bc5-ac2b-cafd92dc055f'; // _userController.text.trim();
+    final pin = _pinController.text
+        .trim(); // '1234'; // _pinController.text.trim();
+
+    if (userId.isEmpty || pin.isEmpty) return;
+
+    ref.read(authControllerProvider.notifier).login(userId, pin);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _listenToAuthChanges();
+    final authState = ref.watch(authControllerProvider);
+
+    return Scaffold(
+      body: Row(
+        children: [
+          // LEFT SIDE: Branding / Art
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: AppTheme.surface,
+              child: const Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.point_of_sale,
+                      size: 100,
+                      color: AppTheme.qristalBlue,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Qristal POS",
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "Enterprise Grade. Startup Ready.",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // RIGHT SIDE: Login Form
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    "Staff Access",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 30),
+
+                  // User ID Input (Paste your seeded UUID here)
+                  TextField(
+                    controller: _userController,
+                    decoration: const InputDecoration(
+                      labelText: "Operator ID",
+                      prefixIcon: Icon(Icons.badge),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // PIN Input
+                  TextField(
+                    controller: _pinController,
+                    obscureText: true,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: "Access PIN",
+                      prefixIcon: Icon(Icons.lock),
+                    ),
+                    onSubmitted: (_) => _handleLogin(),
+                  ),
+                  const SizedBox(height: 40),
+                  ElevatedButton(
+                    onPressed: () {
+                      throw StateError('This is test exception');
+                    },
+                    child: const Text('Verify Sentry Setup'),
+                  ),
+                  // Login Button
+                  SizedBox(
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: authState.isLoading ? null : _handleLogin,
+                      child: authState.isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text("UNLOCK TERMINAL"),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+================
+File: qristal_mobile/windows/flutter/generated_plugin_registrant.cc
+================
+//
+//  Generated file. Do not edit.
+//
+
+// clang-format off
+
+#include "generated_plugin_registrant.h"
+
+#include <connectivity_plus/connectivity_plus_windows_plugin.h>
+#include <flutter_secure_storage_windows/flutter_secure_storage_windows_plugin.h>
+#include <permission_handler_windows/permission_handler_windows_plugin.h>
+#include <print_bluetooth_thermal/print_bluetooth_thermal_plugin_c_api.h>
+#include <sentry_flutter/sentry_flutter_plugin.h>
+#include <sqlite3_flutter_libs/sqlite3_flutter_libs_plugin.h>
+
+void RegisterPlugins(flutter::PluginRegistry* registry) {
+  ConnectivityPlusWindowsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
+  FlutterSecureStorageWindowsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterSecureStorageWindowsPlugin"));
+  PermissionHandlerWindowsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("PermissionHandlerWindowsPlugin"));
+  PrintBluetoothThermalPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("PrintBluetoothThermalPluginCApi"));
+  SentryFlutterPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("SentryFlutterPlugin"));
+  Sqlite3FlutterLibsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("Sqlite3FlutterLibsPlugin"));
+}
+
+================
+File: qristal_mobile/windows/flutter/generated_plugins.cmake
+================
+#
+# Generated file, do not edit.
+#
+
+list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus
+  flutter_secure_storage_windows
+  permission_handler_windows
+  print_bluetooth_thermal
+  sentry_flutter
+  sqlite3_flutter_libs
+)
+
+list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  jni
+)
+
+set(PLUGIN_BUNDLED_LIBRARIES)
+
+foreach(plugin ${FLUTTER_PLUGIN_LIST})
+  add_subdirectory(flutter/ephemeral/.plugin_symlinks/${plugin}/windows plugins/${plugin})
+  target_link_libraries(${BINARY_NAME} PRIVATE ${plugin}_plugin)
+  list(APPEND PLUGIN_BUNDLED_LIBRARIES $<TARGET_FILE:${plugin}_plugin>)
+  list(APPEND PLUGIN_BUNDLED_LIBRARIES ${${plugin}_bundled_libraries})
+endforeach(plugin)
+
+foreach(ffi_plugin ${FLUTTER_FFI_PLUGIN_LIST})
+  add_subdirectory(flutter/ephemeral/.plugin_symlinks/${ffi_plugin}/windows plugins/${ffi_plugin})
+  list(APPEND PLUGIN_BUNDLED_LIBRARIES ${${ffi_plugin}_bundled_libraries})
+endforeach(ffi_plugin)
+
+================
+File: qristal_mobile/lib/database/database.dart
+================
+import 'dart:io';
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
+
+part 'database.g.dart';
+
+// 1. Categories Table
+class Categories extends Table {
+  TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
+  TextColumn get name => text()();
+  TextColumn get colorHex => text().nullable()();
+  // Fixed: .defaultValue -> .withDefault
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// 2. Products Table
+class Products extends Table {
+  TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
+  TextColumn get categoryId => text().references(Categories, #id)();
+  TextColumn get name => text()();
+  RealColumn get price => real()();
+  BoolColumn get isAvailable => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// 3. Orders Table
+class Orders extends Table {
+  TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
+  TextColumn get receiptNumber => text()();
+  TextColumn get userId => text()();
+  TextColumn get tableId => text().nullable()();
+  RealColumn get totalAmount => real()();
+  TextColumn get status => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get shiftId => text().references(Shifts, #id)(); 
+
+  // Local-only flag to track what needs to be uploaded
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// 4. OrderItems Table (This was missing!)
+class OrderItems extends Table {
+  TextColumn get id => text()();
+  TextColumn get orderId => text().references(Orders, #id)();
+  TextColumn get productId => text().references(Products, #id)();
+  IntColumn get quantity => integer()();
+  RealColumn get priceAtTimeOfOrder => real()();
+  TextColumn get notes => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class Payments extends Table {
+  TextColumn get id => text()();
+  TextColumn get orderId => text().references(Orders, #id)();
+  TextColumn get method => text()(); // 'CASH', 'MOBILE_MONEY', etc.
+  RealColumn get amount => real()();
+  TextColumn get reference => text().nullable()(); // Trans ID
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class SeatingTables extends Table {
+  TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
+  TextColumn get name => text()();
+  TextColumn get status => text().withDefault(const Constant('FREE'))();
+  TextColumn get floor => text().withDefault(const Constant('Main'))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class Shifts extends Table {
+  TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
+  TextColumn get userId => text()();
+  DateTimeColumn get openingTime => dateTime()();
+  DateTimeColumn get closingTime => dateTime().nullable()();
+  
+  RealColumn get startingCash => real().withDefault(const Constant(0.0))();
+  RealColumn get expectedCash => real().nullable()();
+  RealColumn get actualCash => real().nullable()();
+  
+  TextColumn get notes => text().nullable()();
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// Database Registry
+@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
+class AppDatabase extends _$AppDatabase {
+  AppDatabase() : super(_openConnection());
+
+  @override
+  int get schemaVersion => 4; // Bump version
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 3) {
+          await m.createTable(seatingTables);
+        }
+      },
+    );
+  }
+
+
+  Stream<List<Order>> watchKitchenOrders() {
+    return (select(orders)
+          ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
+          ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
+        .watch();
+  }
+
+  // 2. Get Items for a specific Order (Joined with Product info)
+  Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
+    final query = select(orderItems).join([
+      innerJoin(products, products.id.equalsExp(orderItems.productId)),
+    ])..where(orderItems.orderId.equals(orderId));
+
+    final rows = await query.get();
+
+    return rows.map((row) {
+      return TypedOrderItem(
+        item: row.readTable(orderItems),
+        product: row.readTable(products),
+      );
+    }).toList();
+  }
+
+  // 3. Update Order Status
+  Future<void> updateOrderStatus(String id, String newStatus) async {
+    await (update(orders)..where((t) => t.id.equals(id))).write(
+      OrdersCompanion(
+        status: Value(newStatus),
+        updatedAt: Value(DateTime.now()), // Important for Sync!
+        isSynced: const Value(false), // Mark as dirty so it syncs up
+      ),
+    );
+  }
+}
+
+// Helper class to hold joined data
+class TypedOrderItem {
+  final OrderItem item;
+  final Product product;
+  TypedOrderItem({required this.item, required this.product});
+}
+
+
+
+LazyDatabase _openConnection() {
+  return LazyDatabase(() async {
+    // 1. Get the folder
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+
+    // 2. FOR ANDROID: Load the native library specifically
+    if (Platform.isAndroid) {
+      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
+
+      // Optional: Explicitly tell sqlite3 where to look if the workaround fails,
+      // though the line above usually fixes it.
+      final cachebase = (await getTemporaryDirectory()).path;
+      sqlite3.tempDirectory = cachebase;
+    }
+
+    // 3. Create the database
+    return NativeDatabase.createInBackground(file);
+  });
+}
+
+================
 File: qristal-dashboard/src/app/page.tsx
 ================
 "use client";
@@ -15413,1318 +15665,6 @@ function Dashboard() { // Note: Removed 'export default' here
   );
 }
 export default withAuth(Dashboard);
-
-================
-File: qristal_mobile/lib/database/database.dart
-================
-import 'dart:io';
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
-
-part 'database.g.dart';
-
-// 1. Categories Table
-class Categories extends Table {
-  TextColumn get id => text()();
-  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
-  TextColumn get name => text()();
-  TextColumn get colorHex => text().nullable()();
-  // Fixed: .defaultValue -> .withDefault
-  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
-  DateTimeColumn get updatedAt => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// 2. Products Table
-class Products extends Table {
-  TextColumn get id => text()();
-  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
-  TextColumn get categoryId => text().references(Categories, #id)();
-  TextColumn get name => text()();
-  RealColumn get price => real()();
-  BoolColumn get isAvailable => boolean().withDefault(const Constant(true))();
-  DateTimeColumn get updatedAt => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// 3. Orders Table
-class Orders extends Table {
-  TextColumn get id => text()();
-  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
-  TextColumn get receiptNumber => text()();
-  TextColumn get userId => text()();
-  TextColumn get tableId => text().nullable()();
-  RealColumn get totalAmount => real()();
-  TextColumn get status => text()();
-  DateTimeColumn get createdAt => dateTime()();
-  DateTimeColumn get updatedAt => dateTime()();
-  TextColumn get shiftId => text().references(Shifts, #id)(); 
-
-  // Local-only flag to track what needs to be uploaded
-  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// 4. OrderItems Table (This was missing!)
-class OrderItems extends Table {
-  TextColumn get id => text()();
-  TextColumn get orderId => text().references(Orders, #id)();
-  TextColumn get productId => text().references(Products, #id)();
-  IntColumn get quantity => integer()();
-  RealColumn get priceAtTimeOfOrder => real()();
-  TextColumn get notes => text().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-class Payments extends Table {
-  TextColumn get id => text()();
-  TextColumn get orderId => text().references(Orders, #id)();
-  TextColumn get method => text()(); // 'CASH', 'MOBILE_MONEY', etc.
-  RealColumn get amount => real()();
-  TextColumn get reference => text().nullable()(); // Trans ID
-  DateTimeColumn get createdAt => dateTime()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-class SeatingTables extends Table {
-  TextColumn get id => text()();
-  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
-  TextColumn get name => text()();
-  TextColumn get status => text().withDefault(const Constant('FREE'))();
-  TextColumn get floor => text().withDefault(const Constant('Main'))();
-  DateTimeColumn get updatedAt => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-class Shifts extends Table {
-  TextColumn get id => text()();
-  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
-  TextColumn get userId => text()();
-  DateTimeColumn get openingTime => dateTime()();
-  DateTimeColumn get closingTime => dateTime().nullable()();
-  
-  RealColumn get startingCash => real().withDefault(const Constant(0.0))();
-  RealColumn get expectedCash => real().nullable()();
-  RealColumn get actualCash => real().nullable()();
-  
-  TextColumn get notes => text().nullable()();
-  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// Database Registry
-@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
-class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
-
-  @override
-  int get schemaVersion => 4; // Bump version
-
-  @override
-  MigrationStrategy get migration {
-    return MigrationStrategy(
-      onUpgrade: (Migrator m, int from, int to) async {
-        if (from < 3) {
-          await m.createTable(seatingTables);
-        }
-      },
-    );
-  }
-
-
-  Stream<List<Order>> watchKitchenOrders() {
-    return (select(orders)
-          ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
-          ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
-        .watch();
-  }
-
-  // 2. Get Items for a specific Order (Joined with Product info)
-  Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
-    final query = select(orderItems).join([
-      innerJoin(products, products.id.equalsExp(orderItems.productId)),
-    ])..where(orderItems.orderId.equals(orderId));
-
-    final rows = await query.get();
-
-    return rows.map((row) {
-      return TypedOrderItem(
-        item: row.readTable(orderItems),
-        product: row.readTable(products),
-      );
-    }).toList();
-  }
-
-  // 3. Update Order Status
-  Future<void> updateOrderStatus(String id, String newStatus) async {
-    await (update(orders)..where((t) => t.id.equals(id))).write(
-      OrdersCompanion(
-        status: Value(newStatus),
-        updatedAt: Value(DateTime.now()), // Important for Sync!
-        isSynced: const Value(false), // Mark as dirty so it syncs up
-      ),
-    );
-  }
-}
-
-// Helper class to hold joined data
-class TypedOrderItem {
-  final OrderItem item;
-  final Product product;
-  TypedOrderItem({required this.item, required this.product});
-}
-
-
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    // 1. Get the folder
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
-
-    // 2. FOR ANDROID: Load the native library specifically
-    if (Platform.isAndroid) {
-      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
-
-      // Optional: Explicitly tell sqlite3 where to look if the workaround fails,
-      // though the line above usually fixes it.
-      final cachebase = (await getTemporaryDirectory()).path;
-      sqlite3.tempDirectory = cachebase;
-    }
-
-    // 3. Create the database
-    return NativeDatabase.createInBackground(file);
-  });
-}
-
-================
-File: qristal_mobile/pubspec.lock
-================
-# Generated by pub
-# See https://dart.dev/tools/pub/glossary#lockfile
-packages:
-  _fe_analyzer_shared:
-    dependency: transitive
-    description:
-      name: _fe_analyzer_shared
-      sha256: "8d7ff3948166b8ec5da0fbb5962000926b8e02f2ed9b3e51d1738905fbd4c98d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "93.0.0"
-  analyzer:
-    dependency: transitive
-    description:
-      name: analyzer
-      sha256: de7148ed2fcec579b19f122c1800933dfa028f6d9fd38a152b04b1516cec120b
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.0.1"
-  archive:
-    dependency: transitive
-    description:
-      name: archive
-      sha256: a96e8b390886ee8abb49b7bd3ac8df6f451c621619f52a26e815fdcf568959ff
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.9"
-  args:
-    dependency: transitive
-    description:
-      name: args
-      sha256: d0481093c50b1da8910eb0bb301626d4d8eb7284aa739614d2b394ee09e3ea04
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.7.0"
-  async:
-    dependency: transitive
-    description:
-      name: async
-      sha256: "758e6d74e971c3e5aceb4110bfd6698efc7f501675bcfe0c775459a8140750eb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.13.0"
-  boolean_selector:
-    dependency: transitive
-    description:
-      name: boolean_selector
-      sha256: "8aab1771e1243a5063b8b0ff68042d67334e3feab9e95b9490f9a6ebf73b42ea"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.2"
-  build:
-    dependency: transitive
-    description:
-      name: build
-      sha256: "275bf6bb2a00a9852c28d4e0b410da1d833a734d57d39d44f94bfc895a484ec3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.4"
-  build_config:
-    dependency: transitive
-    description:
-      name: build_config
-      sha256: "4f64382b97504dc2fcdf487d5aae33418e08b4703fc21249e4db6d804a4d0187"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
-  build_daemon:
-    dependency: transitive
-    description:
-      name: build_daemon
-      sha256: bf05f6e12cfea92d3c09308d7bcdab1906cd8a179b023269eed00c071004b957
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.1"
-  build_runner:
-    dependency: "direct dev"
-    description:
-      name: build_runner
-      sha256: "39ad4ca8a2876779737c60e4228b4bcd35d4352ef7e14e47514093edc012c734"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.11.1"
-  built_collection:
-    dependency: transitive
-    description:
-      name: built_collection
-      sha256: "376e3dd27b51ea877c28d525560790aee2e6fbb5f20e2f85d5081027d94e2100"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.1"
-  built_value:
-    dependency: transitive
-    description:
-      name: built_value
-      sha256: "6ae8a6435a8c6520c7077b107e77f1fb4ba7009633259a4d49a8afd8e7efc5e9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "8.12.4"
-  characters:
-    dependency: transitive
-    description:
-      name: characters
-      sha256: f71061c654a3380576a52b451dd5532377954cf9dbd272a78fc8479606670803
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
-  charcode:
-    dependency: transitive
-    description:
-      name: charcode
-      sha256: fb0f1107cac15a5ea6ef0a6ef71a807b9e4267c713bb93e00e92d737cc8dbd8a
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
-  checked_yaml:
-    dependency: transitive
-    description:
-      name: checked_yaml
-      sha256: "959525d3162f249993882720d52b7e0c833978df229be20702b33d48d91de70f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.4"
-  cli_util:
-    dependency: transitive
-    description:
-      name: cli_util
-      sha256: ff6785f7e9e3c38ac98b2fb035701789de90154024a75b6cb926445e83197d1c
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.2"
-  clock:
-    dependency: transitive
-    description:
-      name: clock
-      sha256: fddb70d9b5277016c77a80201021d40a2247104d9f4aa7bab7157b7e3f05b84b
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
-  code_builder:
-    dependency: transitive
-    description:
-      name: code_builder
-      sha256: "6a6cab2ba4680d6423f34a9b972a4c9a94ebe1b62ecec4e1a1f2cba91fd1319d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.11.1"
-  collection:
-    dependency: transitive
-    description:
-      name: collection
-      sha256: "2f5709ae4d3d59dd8f7cd309b4e023046b57d8a6c82130785d2b0e5868084e76"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.19.1"
-  connectivity_plus:
-    dependency: "direct main"
-    description:
-      name: connectivity_plus
-      sha256: "33bae12a398f841c6cda09d1064212957265869104c478e5ad51e2fb26c3973c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.0"
-  connectivity_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: connectivity_plus_platform_interface
-      sha256: "42657c1715d48b167930d5f34d00222ac100475f73d10162ddf43e714932f204"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
-  convert:
-    dependency: transitive
-    description:
-      name: convert
-      sha256: b30acd5944035672bc15c6b7a8b47d773e41e2f17de064350988c5d02adb1c68
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.2"
-  crypto:
-    dependency: transitive
-    description:
-      name: crypto
-      sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.7"
-  csslib:
-    dependency: transitive
-    description:
-      name: csslib
-      sha256: "09bad715f418841f976c77db72d5398dc1253c21fb9c0c7f0b0b985860b2d58e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.2"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.8"
-  dart_style:
-    dependency: transitive
-    description:
-      name: dart_style
-      sha256: "15a7db352c8fc6a4d2bc475ba901c25b39fe7157541da4c16eacce6f8be83e49"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.5"
-  dbus:
-    dependency: transitive
-    description:
-      name: dbus
-      sha256: d0c98dcd4f5169878b6cf8f6e0a52403a9dff371a3e2f019697accbf6f44a270
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.12"
-  drift:
-    dependency: "direct main"
-    description:
-      name: drift
-      sha256: "970cd188fddb111b26ea6a9b07a62bf5c2432d74147b8122c67044ae3b97e99e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.31.0"
-  drift_dev:
-    dependency: "direct dev"
-    description:
-      name: drift_dev
-      sha256: "917184b2fb867b70a548a83bf0d36268423b38d39968c06cce4905683da49587"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.31.0"
-  esc_pos_utils_plus:
-    dependency: "direct main"
-    description:
-      name: esc_pos_utils_plus
-      sha256: "2a22d281cb6f04600ba3ebd607ad8df03a4b2446d814007d22525bab4d50c2ff"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.4"
-  fake_async:
-    dependency: transitive
-    description:
-      name: fake_async
-      sha256: "5368f224a74523e8d2e7399ea1638b37aecfca824a3cc4dfdf77bf1fa905ac44"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.3"
-  ffi:
-    dependency: transitive
-    description:
-      name: ffi
-      sha256: "6d7fd89431262d8f3125e81b50d3847a091d846eafcd4fdb88dd06f36d705a45"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  file:
-    dependency: transitive
-    description:
-      name: file
-      sha256: a3b4f84adafef897088c160faf7dfffb7696046cb13ae90b508c2cbc95d3b8d4
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.1"
-  fixnum:
-    dependency: transitive
-    description:
-      name: fixnum
-      sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
-  flutter:
-    dependency: "direct main"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  flutter_lints:
-    dependency: "direct dev"
-    description:
-      name: flutter_lints
-      sha256: "5398f14efa795ffb7a33e9b6a08798b26a180edac4ad7db3f231e40f82ce11e1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0"
-  flutter_riverpod:
-    dependency: "direct main"
-    description:
-      name: flutter_riverpod
-      sha256: "9532ee6db4a943a1ed8383072a2e3eeda041db5657cdf6d2acecf3c21ecbe7e1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.1"
-  flutter_secure_storage:
-    dependency: "direct main"
-    description:
-      name: flutter_secure_storage
-      sha256: da922f2aab2d733db7e011a6bcc4a825b844892d4edd6df83ff156b09a9b2e40
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.0.0"
-  flutter_secure_storage_darwin:
-    dependency: transitive
-    description:
-      name: flutter_secure_storage_darwin
-      sha256: "8878c25136a79def1668c75985e8e193d9d7d095453ec28730da0315dc69aee3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
-  flutter_secure_storage_linux:
-    dependency: transitive
-    description:
-      name: flutter_secure_storage_linux
-      sha256: "2b5c76dce569ab752d55a1cee6a2242bcc11fdba927078fb88c503f150767cda"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  flutter_secure_storage_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_secure_storage_platform_interface
-      sha256: "8ceea1223bee3c6ac1a22dabd8feefc550e4729b3675de4b5900f55afcb435d6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
-  flutter_secure_storage_web:
-    dependency: transitive
-    description:
-      name: flutter_secure_storage_web
-      sha256: "6a1137df62b84b54261dca582c1c09ea72f4f9a4b2fcee21b025964132d5d0c3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
-  flutter_secure_storage_windows:
-    dependency: transitive
-    description:
-      name: flutter_secure_storage_windows
-      sha256: "3b7c8e068875dfd46719ff57c90d8c459c87f2302ed6b00ff006b3c9fcad1613"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.0"
-  flutter_test:
-    dependency: "direct dev"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  glob:
-    dependency: transitive
-    description:
-      name: glob
-      sha256: c3f1ee72c96f8f78935e18aa8cecced9ab132419e8625dc187e1c2408efc20de
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.3"
-  graphs:
-    dependency: transitive
-    description:
-      name: graphs
-      sha256: "741bbf84165310a68ff28fe9e727332eef1407342fca52759cb21ad8177bb8d0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.2"
-  html:
-    dependency: transitive
-    description:
-      name: html
-      sha256: "6d1264f2dffa1b1101c25a91dff0dc2daee4c18e87cd8538729773c073dbf602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.15.6"
-  http:
-    dependency: "direct main"
-    description:
-      name: http
-      sha256: "87721a4a50b19c7f1d49001e51409bddc46303966ce89a65af4f4e6004896412"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.6.0"
-  http_multi_server:
-    dependency: transitive
-    description:
-      name: http_multi_server
-      sha256: aa6199f908078bb1c5efb8d8638d4ae191aac11b311132c3ef48ce352fb52ef8
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.2"
-  http_parser:
-    dependency: transitive
-    description:
-      name: http_parser
-      sha256: "178d74305e7866013777bab2c3d8726205dc5a4dd935297175b19a23a2e66571"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.2"
-  image:
-    dependency: transitive
-    description:
-      name: image
-      sha256: f9881ff4998044947ec38d098bc7c8316ae1186fa786eddffdb867b9bc94dfce
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.0"
-  intl:
-    dependency: "direct main"
-    description:
-      name: intl
-      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.20.2"
-  io:
-    dependency: transitive
-    description:
-      name: io
-      sha256: dfd5a80599cf0165756e3181807ed3e77daf6dd4137caaad72d0b7931597650b
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.5"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: cb09e7dac6210041fad964ed7fbee004f14258b4eca4040f72d1234062ace4c8
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.11.0"
-  json_serializable:
-    dependency: "direct dev"
-    description:
-      name: json_serializable
-      sha256: "44729f5c45748e6748f6b9a57ab8f7e4336edc8ae41fc295070e3814e616a6c0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.13.0"
-  leak_tracker:
-    dependency: transitive
-    description:
-      name: leak_tracker
-      sha256: "33e2e26bdd85a0112ec15400c8cbffea70d0f9c3407491f672a2fad47915e2de"
-      url: "https://pub.dev"
-    source: hosted
-    version: "11.0.2"
-  leak_tracker_flutter_testing:
-    dependency: transitive
-    description:
-      name: leak_tracker_flutter_testing
-      sha256: "1dbc140bb5a23c75ea9c4811222756104fbcd1a27173f0c34ca01e16bea473c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.10"
-  leak_tracker_testing:
-    dependency: transitive
-    description:
-      name: leak_tracker_testing
-      sha256: "8d5a2d49f4a66b49744b23b018848400d23e54caf9463f4eb20df3eb8acb2eb1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
-  lints:
-    dependency: transitive
-    description:
-      name: lints
-      sha256: c35bb79562d980e9a453fc715854e1ed39e24e7d0297a880ef54e17f9874a9d7
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.1.1"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
-  matcher:
-    dependency: transitive
-    description:
-      name: matcher
-      sha256: dc58c723c3c24bf8d3e2d3ad3f2f9d7bd9cf43ec6feaa64181775e60190153f2
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.12.17"
-  material_color_utilities:
-    dependency: transitive
-    description:
-      name: material_color_utilities
-      sha256: f7142bb1154231d7ea5f96bc7bde4bda2a0945d2806bb11670e30b850d56bdec
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.11.1"
-  meta:
-    dependency: transitive
-    description:
-      name: meta
-      sha256: e3641ec5d63ebf0d9b41bd43201a66e3fc79a65db5f61fc181f04cd27aab950c
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.16.0"
-  mime:
-    dependency: transitive
-    description:
-      name: mime
-      sha256: "41a20518f0cb1256669420fdba0cd90d21561e560ac240f26ef8322e45bb7ed6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
-  nm:
-    dependency: transitive
-    description:
-      name: nm
-      sha256: "2c9aae4127bdc8993206464fcc063611e0e36e72018696cd9631023a31b24254"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
-  package_config:
-    dependency: transitive
-    description:
-      name: package_config
-      sha256: f096c55ebb7deb7e384101542bfba8c52696c1b56fca2eb62827989ef2353bbc
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  path:
-    dependency: "direct main"
-    description:
-      name: path
-      sha256: "75cca69d1490965be98c73ceaea117e8a04dd21217b37b292c9ddbec0d955bc5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.9.1"
-  path_provider:
-    dependency: "direct main"
-    description:
-      name: path_provider
-      sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.5"
-  path_provider_android:
-    dependency: transitive
-    description:
-      name: path_provider_android
-      sha256: f2c65e21139ce2c3dad46922be8272bb5963516045659e71bb16e151c93b580e
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.22"
-  path_provider_foundation:
-    dependency: transitive
-    description:
-      name: path_provider_foundation
-      sha256: "6d13aece7b3f5c5a9731eaf553ff9dcbc2eff41087fd2df587fd0fed9a3eb0c4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.1"
-  path_provider_linux:
-    dependency: transitive
-    description:
-      name: path_provider_linux
-      sha256: f7a1fe3a634fe7734c8d3f2766ad746ae2a2884abe22e241a8b301bf5cac3279
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.1"
-  path_provider_platform_interface:
-    dependency: transitive
-    description:
-      name: path_provider_platform_interface
-      sha256: "88f5779f72ba699763fa3a3b06aa4bf6de76c8e5de842cf6f29e2e06476c2334"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.2"
-  path_provider_windows:
-    dependency: transitive
-    description:
-      name: path_provider_windows
-      sha256: bd6f00dbd873bfb70d0761682da2b3a2c2fccc2b9e84c495821639601d81afe7
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
-  permission_handler:
-    dependency: "direct main"
-    description:
-      name: permission_handler
-      sha256: bc917da36261b00137bbc8896bf1482169cd76f866282368948f032c8c1caae1
-      url: "https://pub.dev"
-    source: hosted
-    version: "12.0.1"
-  permission_handler_android:
-    dependency: transitive
-    description:
-      name: permission_handler_android
-      sha256: "1e3bc410ca1bf84662104b100eb126e066cb55791b7451307f9708d4007350e6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "13.0.1"
-  permission_handler_apple:
-    dependency: transitive
-    description:
-      name: permission_handler_apple
-      sha256: f000131e755c54cf4d84a5d8bd6e4149e262cc31c5a8b1d698de1ac85fa41023
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.4.7"
-  permission_handler_html:
-    dependency: transitive
-    description:
-      name: permission_handler_html
-      sha256: "38f000e83355abb3392140f6bc3030660cfaef189e1f87824facb76300b4ff24"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.3+5"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      sha256: eb99b295153abce5d683cac8c02e22faab63e50679b937fa1bf67d58bb282878
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.3.0"
-  permission_handler_windows:
-    dependency: transitive
-    description:
-      name: permission_handler_windows
-      sha256: "1a790728016f79a41216d88672dbc5df30e686e811ad4e698bfc51f76ad91f1e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1"
-  petitparser:
-    dependency: transitive
-    description:
-      name: petitparser
-      sha256: "91bd59303e9f769f108f8df05e371341b15d59e995e6806aefab827b58336675"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.2"
-  platform:
-    dependency: transitive
-    description:
-      name: platform
-      sha256: "5d6b1b0036a5f331ebc77c850ebc8506cbc1e9416c27e59b439f917a902a4984"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.6"
-  plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: plugin_platform_interface
-      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.8"
-  pool:
-    dependency: transitive
-    description:
-      name: pool
-      sha256: "978783255c543aa3586a1b3c21f6e9d720eb315376a915872c61ef8b5c20177d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.2"
-  posix:
-    dependency: transitive
-    description:
-      name: posix
-      sha256: "6323a5b0fa688b6a010df4905a56b00181479e6d10534cecfecede2aa55add61"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.0.3"
-  print_bluetooth_thermal:
-    dependency: "direct main"
-    description:
-      name: print_bluetooth_thermal
-      sha256: "17b204a5340174c02acf5f6caf7279b5000344f1f1e1bcd01dbdbf912bce6e46"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.9"
-  pub_semver:
-    dependency: transitive
-    description:
-      name: pub_semver
-      sha256: "5bfcf68ca79ef689f8990d1160781b4bad40a3bd5e5218ad4076ddb7f4081585"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  pubspec_parse:
-    dependency: transitive
-    description:
-      name: pubspec_parse
-      sha256: "0560ba233314abbed0a48a2956f7f022cce7c3e1e73df540277da7544cad4082"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0"
-  recase:
-    dependency: transitive
-    description:
-      name: recase
-      sha256: e4eb4ec2dcdee52dcf99cb4ceabaffc631d7424ee55e56f280bc039737f89213
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.1.0"
-  riverpod:
-    dependency: transitive
-    description:
-      name: riverpod
-      sha256: "59062512288d3056b2321804332a13ffdd1bf16df70dcc8e506e411280a72959"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.1"
-  shared_preferences:
-    dependency: "direct main"
-    description:
-      name: shared_preferences
-      sha256: "2939ae520c9024cb197fc20dee269cd8cdbf564c8b5746374ec6cacdc5169e64"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.4"
-  shared_preferences_android:
-    dependency: transitive
-    description:
-      name: shared_preferences_android
-      sha256: cbc40be9be1c5af4dab4d6e0de4d5d3729e6f3d65b89d21e1815d57705644a6f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.20"
-  shared_preferences_foundation:
-    dependency: transitive
-    description:
-      name: shared_preferences_foundation
-      sha256: "4e7eaffc2b17ba398759f1151415869a34771ba11ebbccd1b0145472a619a64f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.6"
-  shared_preferences_linux:
-    dependency: transitive
-    description:
-      name: shared_preferences_linux
-      sha256: "580abfd40f415611503cae30adf626e6656dfb2f0cee8f465ece7b6defb40f2f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      sha256: "57cbf196c486bc2cf1f02b85784932c6094376284b3ad5779d1b1c6c6a816b80"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      sha256: c49bd060261c9a3f0ff445892695d6212ff603ef3115edbb448509d407600019
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.3"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      name: shared_preferences_windows
-      sha256: "94ef0f72b2d71bc3e700e025db3710911bd51a71cefb65cc609dd0d9a982e3c1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  shelf:
-    dependency: transitive
-    description:
-      name: shelf
-      sha256: e7dd780a7ffb623c57850b33f43309312fc863fb6aa3d276a754bb299839ef12
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.2"
-  shelf_web_socket:
-    dependency: transitive
-    description:
-      name: shelf_web_socket
-      sha256: "3632775c8e90d6c9712f883e633716432a27758216dfb61bd86a8321c0580925"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
-  sky_engine:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  socket_io_client:
-    dependency: "direct main"
-    description:
-      name: socket_io_client
-      sha256: ef6c989e5eee8d04baf18482ec3d7699b91bc41e279794a99d8e3bef897b074a
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.4"
-  socket_io_common:
-    dependency: transitive
-    description:
-      name: socket_io_common
-      sha256: "162fbaecbf4bf9a9372a62a341b3550b51dcef2f02f3e5830a297fd48203d45b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1"
-  source_gen:
-    dependency: transitive
-    description:
-      name: source_gen
-      sha256: "1d562a3c1f713904ebbed50d2760217fd8a51ca170ac4b05b0db490699dbac17"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.0"
-  source_helper:
-    dependency: transitive
-    description:
-      name: source_helper
-      sha256: "4a85e90b50694e652075cbe4575665539d253e6ec10e46e76b45368ab5e3caae"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.10"
-  source_span:
-    dependency: transitive
-    description:
-      name: source_span
-      sha256: "56a02f1f4cd1a2d96303c0144c93bd6d909eea6bee6bf5a0e0b685edbd4c47ab"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.10.2"
-  sqlite3:
-    dependency: "direct main"
-    description:
-      name: sqlite3
-      sha256: "3145bd74dcdb4fd6f5c6dda4d4e4490a8087d7f286a14dee5d37087290f0f8a2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.9.4"
-  sqlite3_flutter_libs:
-    dependency: "direct main"
-    description:
-      name: sqlite3_flutter_libs
-      sha256: "1e800ebe7f85a80a66adacaa6febe4d5f4d8b75f244e9838a27cb2ffc7aec08d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.41"
-  sqlparser:
-    dependency: transitive
-    description:
-      name: sqlparser
-      sha256: "337e9997f7141ffdd054259128553c348635fa318f7ca492f07a4ab76f850d19"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.43.1"
-  stack_trace:
-    dependency: transitive
-    description:
-      name: stack_trace
-      sha256: "8b27215b45d22309b5cddda1aa2b19bdfec9df0e765f2de506401c071d38d1b1"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.12.1"
-  state_notifier:
-    dependency: transitive
-    description:
-      name: state_notifier
-      sha256: b8677376aa54f2d7c58280d5a007f9e8774f1968d1fb1c096adcb4792fba29bb
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
-  stream_channel:
-    dependency: transitive
-    description:
-      name: stream_channel
-      sha256: "969e04c80b8bcdf826f8f16579c7b14d780458bd97f56d107d3950fdbeef059d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.4"
-  stream_transform:
-    dependency: transitive
-    description:
-      name: stream_transform
-      sha256: ad47125e588cfd37a9a7f86c7d6356dde8dfe89d071d293f80ca9e9273a33871
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
-  string_scanner:
-    dependency: transitive
-    description:
-      name: string_scanner
-      sha256: "921cd31725b72fe181906c6a94d987c78e3b98c2e205b397ea399d4054872b43"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.1"
-  term_glyph:
-    dependency: transitive
-    description:
-      name: term_glyph
-      sha256: "7f554798625ea768a7518313e58f83891c7f5024f88e46e7182a4558850a4b8e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.2"
-  test_api:
-    dependency: transitive
-    description:
-      name: test_api
-      sha256: "522f00f556e73044315fa4585ec3270f1808a4b186c936e612cab0b565ff1e00"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.6"
-  typed_data:
-    dependency: transitive
-    description:
-      name: typed_data
-      sha256: f9049c039ebfeb4cf7a7104a675823cd72dba8297f264b6637062516699fa006
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
-  uuid:
-    dependency: "direct main"
-    description:
-      name: uuid
-      sha256: a11b666489b1954e01d992f3d601b1804a33937b5a8fe677bd26b8a9f96f96e8
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.5.2"
-  vector_math:
-    dependency: transitive
-    description:
-      name: vector_math
-      sha256: d530bd74fea330e6e364cda7a85019c434070188383e1cd8d9777ee586914c5b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  vm_service:
-    dependency: transitive
-    description:
-      name: vm_service
-      sha256: "45caa6c5917fa127b5dbcfbd1fa60b14e583afdc08bfc96dda38886ca252eb60"
-      url: "https://pub.dev"
-    source: hosted
-    version: "15.0.2"
-  watcher:
-    dependency: transitive
-    description:
-      name: watcher
-      sha256: "1398c9f081a753f9226febe8900fce8f7d0a67163334e1c94a2438339d79d635"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
-  web:
-    dependency: transitive
-    description:
-      name: web
-      sha256: "868d88a33d8a87b18ffc05f9f030ba328ffefba92d6c127917a2ba740f9cfe4a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
-  web_socket:
-    dependency: transitive
-    description:
-      name: web_socket
-      sha256: "34d64019aa8e36bf9842ac014bb5d2f5586ca73df5e4d9bf5c936975cae6982c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
-  web_socket_channel:
-    dependency: transitive
-    description:
-      name: web_socket_channel
-      sha256: d645757fb0f4773d602444000a8131ff5d48c9e47adfe9772652dd1a4f2d45c8
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
-  win32:
-    dependency: transitive
-    description:
-      name: win32
-      sha256: d7cb55e04cd34096cd3a79b3330245f54cb96a370a1c27adb3c84b917de8b08e
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.15.0"
-  win_ble:
-    dependency: transitive
-    description:
-      name: win_ble
-      sha256: "2a867e13c4b355b101fc2c6e2ac85eeebf965db34eca46856f8b478e93b41e96"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
-  xdg_directories:
-    dependency: transitive
-    description:
-      name: xdg_directories
-      sha256: "7a3f37b05d989967cdddcbb571f1ea834867ae2faa29725fd085180e0883aa15"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
-  xml:
-    dependency: transitive
-    description:
-      name: xml
-      sha256: "971043b3a0d3da28727e40ed3e0b5d18b742fa5a68665cca88e74b7876d5e025"
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.6.1"
-  yaml:
-    dependency: transitive
-    description:
-      name: yaml
-      sha256: b9da305ac7c39faa3f030eccd175340f968459dae4af175130b3fc47e40d76ce
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.3"
-sdks:
-  dart: ">=3.9.0 <4.0.0"
-  flutter: ">=3.35.0"
-
-================
-File: qristal_mobile/pubspec.yaml
-================
-name: qristal_mobile
-description: "Qristal POS Mobile App."
-
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
-
-version: 1.0.1+2
-
-environment:
-  sdk: ^3.9.0
-
-
-dependencies:
-  flutter:
-    sdk: flutter
-
-
-  cupertino_icons: ^1.0.6
-  path_provider: ^2.1.5
-  path: ^1.9.0
-  drift: ^2.21.0
-  http: ^1.6.0
-  flutter_secure_storage: ^10.0.0
-  flutter_riverpod: ^2.6.1
-  uuid: ^4.5.2
-  shared_preferences: ^2.3.3
-  sqlite3_flutter_libs: ^0.5.41
-  sqlite3: ^2.9.4
-  
-  intl: ^0.20.2
-  permission_handler: ^12.0.1
-  print_bluetooth_thermal: ^1.1.9
-  esc_pos_utils_plus: ^2.0.4
-  connectivity_plus: ^7.0.0
-  socket_io_client: ^3.1.4
-
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
-  flutter_lints: ^5.0.0
-  drift_dev: ^2.14.1
-  build_runner: ^2.4.8
-  json_serializable: ^6.7.1
-
-
-# The following section is specific to Flutter packages.
-flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
-  uses-material-design: true
-
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
 
 ================
 File: qristal_mobile/lib/features/pos/providers/cart_provider.dart
@@ -17101,6 +16041,104 @@ final checkoutProvider =
 
   ref.read(cartProvider.notifier).clearCart();
 });
+
+================
+File: qristal_mobile/pubspec.yaml
+================
+name: qristal_mobile
+description: "Qristal POS Mobile App."
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+
+version: 1.0.1+2
+
+environment:
+  sdk: ^3.9.0
+
+
+dependencies:
+  sentry_flutter: ^9.14.0
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.6
+  path_provider: ^2.1.5
+  path: ^1.9.0
+  drift: ^2.21.0
+  http: ^1.6.0
+  flutter_secure_storage: ^10.0.0
+  flutter_riverpod: ^2.6.1
+  uuid: ^4.5.2
+  shared_preferences: ^2.3.3
+  sqlite3_flutter_libs: ^0.5.41
+  sqlite3: ^2.9.4
+  
+  intl: ^0.20.2
+  permission_handler: ^12.0.1
+  print_bluetooth_thermal: ^1.1.9
+  esc_pos_utils_plus: ^2.0.4
+  connectivity_plus: ^7.0.0
+  socket_io_client: ^3.1.4
+
+
+
+dev_dependencies:
+  sentry_dart_plugin: ^3.2.1
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  drift_dev: ^2.14.1
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
+
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: flutter
+  org: truthysystems
 
 ================
 File: qristal_mobile/lib/features/pos/screens/dashboard_screen.dart
@@ -17604,6 +16642,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:drift/drift.dart' as drift;
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/constants/api_constants.dart';
@@ -17670,8 +16709,11 @@ class SyncService {
         return null;
       }
 
-      double _readDouble(Map<String, dynamic> item, List<String> keys,
-          {double fallback = 0.0}) {
+      double _readDouble(
+        Map<String, dynamic> item,
+        List<String> keys, {
+        double fallback = 0.0,
+      }) {
         final raw = _readString(item, keys);
         return double.tryParse(raw ?? '') ?? fallback;
       }
@@ -17681,7 +16723,7 @@ class SyncService {
         // --- Categories ---
         if (changes['categories'] != null) {
           for (var item in changes['categories']) {
-          batch.insert(
+            batch.insert(
               db.categories,
               CategoriesCompanion(
                 id: drift.Value(item['id']),
@@ -17701,7 +16743,7 @@ class SyncService {
             // Ensure price is treated as double
             double price = double.tryParse(item['price'].toString()) ?? 0.0;
 
-          batch.insert(
+            batch.insert(
               db.products,
               ProductsCompanion(
                 id: drift.Value(item['id']),
@@ -17724,8 +16766,10 @@ class SyncService {
         for (final raw in orders) {
           final item = Map<String, dynamic>.from(raw as Map);
           final orderId = _readString(item, ['id']);
-          final receiptNumber =
-              _readString(item, ['receiptNumber', 'receipt_number']);
+          final receiptNumber = _readString(item, [
+            'receiptNumber',
+            'receipt_number',
+          ]);
           final userId = _readString(item, ['userId', 'user_id']);
           final createdAt = _readString(item, ['createdAt', 'created_at']);
           final shiftId = _readString(item, ['shiftId', 'shift_id']);
@@ -17739,34 +16783,33 @@ class SyncService {
           }
 
           batch.insert(
-              db.orders,
-              OrdersCompanion(
-                id: drift.Value(orderId),
-                receiptNumber: drift.Value(receiptNumber),
-                userId: drift.Value(userId),
-                tableId:
-                    drift.Value(_readString(item, ['tableId', 'table_id'])),
-                totalAmount:
-                    drift.Value(_readDouble(item, ['totalAmount', 'total_amount'])),
-                status: drift.Value(
-                    _readString(item, ['status']) ?? 'KITCHEN'),
-                shiftId: drift.Value(shiftId),
-                createdAt: drift.Value(DateTime.parse(createdAt)),
-                updatedAt: drift.Value(
-                  DateTime.parse(
-                    _readString(item, ['updatedAt', 'updated_at']) ?? createdAt,
-                  ),
-                ),
-                isSynced: const drift.Value(true),
+            db.orders,
+            OrdersCompanion(
+              id: drift.Value(orderId),
+              receiptNumber: drift.Value(receiptNumber),
+              userId: drift.Value(userId),
+              tableId: drift.Value(_readString(item, ['tableId', 'table_id'])),
+              totalAmount: drift.Value(
+                _readDouble(item, ['totalAmount', 'total_amount']),
               ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
+              status: drift.Value(_readString(item, ['status']) ?? 'KITCHEN'),
+              shiftId: drift.Value(shiftId),
+              createdAt: drift.Value(DateTime.parse(createdAt)),
+              updatedAt: drift.Value(
+                DateTime.parse(
+                  _readString(item, ['updatedAt', 'updated_at']) ?? createdAt,
+                ),
+              ),
+              isSynced: const drift.Value(true),
+            ),
+            mode: drift.InsertMode.insertOrReplace,
+          );
+        }
 
         // --- Order Items ---
         if (changes['orderItems'] != null) {
           for (var item in changes['orderItems']) {
-          batch.insert(
+            batch.insert(
               db.orderItems,
               OrderItemsCompanion(
                 id: drift.Value(item['id']),
@@ -17786,7 +16829,7 @@ class SyncService {
         // --- Payments ---
         if (changes['payments'] != null) {
           for (var item in changes['payments']) {
-          batch.insert(
+            batch.insert(
               db.payments,
               PaymentsCompanion(
                 id: drift.Value(item['id']),
@@ -17804,8 +16847,11 @@ class SyncService {
         }
 
         // --- Tables ---
-        final seatingTables =
-            _readChangeList(['seatingTables', 'seating_tables', 'tables']);
+        final seatingTables = _readChangeList([
+          'seatingTables',
+          'seating_tables',
+          'tables',
+        ]);
         for (final raw in seatingTables) {
           final item = Map<String, dynamic>.from(raw as Map);
           final tableId = _readString(item, ['id']);
@@ -17817,18 +16863,17 @@ class SyncService {
           }
 
           batch.insert(
-              db.seatingTables,
-              SeatingTablesCompanion(
-                id: drift.Value(tableId),
-                name: drift.Value(tableName),
-                status:
-                    drift.Value(_readString(item, ['status']) ?? 'FREE'),
-                floor: drift.Value(_readString(item, ['floor']) ?? 'Main'),
-                updatedAt: drift.Value(DateTime.parse(updatedAt)),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
+            db.seatingTables,
+            SeatingTablesCompanion(
+              id: drift.Value(tableId),
+              name: drift.Value(tableName),
+              status: drift.Value(_readString(item, ['status']) ?? 'FREE'),
+              floor: drift.Value(_readString(item, ['floor']) ?? 'Main'),
+              updatedAt: drift.Value(DateTime.parse(updatedAt)),
+            ),
+            mode: drift.InsertMode.insertOrReplace,
+          );
+        }
       });
 
       // 4. Save new timestamp
@@ -17836,9 +16881,10 @@ class SyncService {
       if (kDebugMode) {
         print("Sync Completed Successfully. Timestamp: $newTimestamp");
       }
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
       if (kDebugMode) {
-        print("Sync Error: $e");
+        print("Sync Error: $exception");
       }
       rethrow;
     }
@@ -17848,8 +16894,7 @@ class SyncService {
     // 1. Find unsynced orders
     final unsyncedOrders = await (db.select(
       db.orders,
-    )..where((t) => t.isSynced.equals(false)))
-        .get();
+    )..where((t) => t.isSynced.equals(false))).get();
 
     if (unsyncedOrders.isEmpty) return;
 
@@ -17864,8 +16909,7 @@ class SyncService {
     final orderIds = unsyncedOrders.map((order) => order.id).toList();
     final relatedItems = await (db.select(
       db.orderItems,
-    )..where((t) => t.orderId.isIn(orderIds)))
-        .get();
+    )..where((t) => t.orderId.isIn(orderIds))).get();
 
     for (final item in relatedItems) {
       itemsPayload.add({
@@ -17892,8 +16936,7 @@ class SyncService {
       // Fetch related payments -> ADDED FOR PAYMENTS
       final payments = await (db.select(
         db.payments,
-      )..where((t) => t.orderId.equals(order.id)))
-          .get();
+      )..where((t) => t.orderId.equals(order.id))).get();
       for (final pay in payments) {
         paymentsPayload.add({
           'id': pay.id,
@@ -17905,9 +16948,9 @@ class SyncService {
         });
       }
     }
-    final unsyncedShifts = await (db.select(db.shifts)
-          ..where((t) => t.isSynced.equals(false)))
-        .get();
+    final unsyncedShifts = await (db.select(
+      db.shifts,
+    )..where((t) => t.isSynced.equals(false))).get();
     List<Map<String, dynamic>> shiftsPayload = [];
 
     for (final shift in unsyncedShifts) {
@@ -17936,7 +16979,8 @@ class SyncService {
       final response = await http
           .post(
             Uri.parse(
-                '${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
+              '${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}',
+            ),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer $token',
@@ -17946,7 +16990,7 @@ class SyncService {
               'orders': ordersPayload,
               'orderItems': itemsPayload,
               'payments': paymentsPayload,
-              'shifts': shiftsPayload
+              'shifts': shiftsPayload,
             }),
           )
           .timeout(const Duration(seconds: 20));
@@ -17964,9 +17008,11 @@ class SyncService {
           print("❌ Push failed: ${response.statusCode} - ${response.body}");
         }
         throw Exception(
-            'Push failed: ${response.statusCode} - ${response.body}');
+          'Push failed: ${response.statusCode} - ${response.body}',
+        );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace);
       if (kDebugMode) print("❌ Connection error during push: $e");
       rethrow;
     }

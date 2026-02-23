@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/providers/database_provider.dart';
 import '../../../database/database.dart';
+import '../../auth/providers/auth_provider.dart';
+import '../../auth/screens/login_screen.dart';
 import '../../sync/providers/sync_provider.dart';
 
 class KitchenScreen extends ConsumerWidget {
@@ -17,15 +19,29 @@ class KitchenScreen extends ConsumerWidget {
         title: const Text("Kitchen Display System"),
         backgroundColor: AppTheme.surface,
         actions: [
-          // Optional: A button to manually trigger a sync if needed
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: "Force Sync",
             onPressed: () {
-              // ref.read(syncControllerProvider.notifier).performSync();
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text("Syncing...")));
+              ref.read(syncControllerProvider.notifier).performSync();
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("Syncing...")));
+            },
+          ),
+          const SizedBox(width: 16),
+          // ADD LOGOUT BUTTON HERE
+          TextButton.icon(
+            icon: const Icon(Icons.logout, color: AppTheme.error),
+            label:
+                const Text("LOGOUT", style: TextStyle(color: AppTheme.error)),
+            onPressed: () async {
+              await ref.read(authControllerProvider.notifier).logout();
+              if (context.mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => const LoginScreen()),
+                  (route) => false,
+                );
+              }
             },
           ),
           const SizedBox(width: 16),
@@ -227,9 +243,8 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isPreparing
-                      ? AppTheme.emerald
-                      : Colors.orange,
+                  backgroundColor:
+                      isPreparing ? AppTheme.emerald : Colors.orange,
                 ),
                 onPressed: () async {
                   String newStatus = isPreparing ? 'READY' : 'PREPARING';
