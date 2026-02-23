@@ -15,6 +15,7 @@ import {
   ReferenceLine,
 } from "recharts";
 import { io, Socket } from "socket.io-client";
+import Link from "next/link";
 
 const SERVER_URL = "https://qristal-pos-api.onrender.com";
 const REFRESH_INTERVAL_MS = 10000;
@@ -39,7 +40,7 @@ type KitchenOrder = {
   totalAmount: number;
 };
 
-type DashboardTab = "inventory" | "kds";
+type DashboardTab = "inventory" | "kds" | "reports";
 
 function normalizeKitchenOrders(payload: unknown): KitchenOrder[] {
   const body = payload as Record<string, unknown>;
@@ -213,6 +214,9 @@ function Dashboard() { // Note: Removed 'export default' here
             >
               Web KDS
             </button>
+            <Link href="/reports" className="pb-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+              Reports
+            </Link>
           </nav>
         </div>
 
@@ -272,7 +276,7 @@ function Dashboard() { // Note: Removed 'export default' here
               </table>
             </div>
           </>
-        ) : (
+        ) : activeTab === 'kds' ? (
           <section className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
@@ -333,7 +337,7 @@ function Dashboard() { // Note: Removed 'export default' here
               )}
             </div>
           </section>
-        )}
+        ) : null}
       </div>
     </main>
   );

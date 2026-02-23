@@ -1,40 +1,55 @@
+
 "use client";
 
 import { useEffect, useState } from 'react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import {
+    LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell
+} from 'recharts';
+import { useAuth } from "@/context/AuthContext";
+import withAuth from "@/components/withAuth";
 
-// Mock token for dev (In real app, manage auth context)
-const TOKEN = "YOUR_JWT_TOKEN_HERE";
 const SERVER_URL = "https://qristal-pos-api.onrender.com";
 
-export default function ReportsPage() {
+function ReportsPage() {
+    const { token, logout } = useAuth();
     const [salesData, setSalesData] = useState([]);
     const [topItems, setTopItems] = useState([]);
     const [paymentData, setPaymentData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!token) return;
+
         const fetchData = async () => {
-            const headers = { 'Authorization': `Bearer ${TOKEN}` };
+            try {
+                const headers = { 'Authorization': `Bearer ${token}` };
 
-            // 1. Sales
-            const salesRes = await fetch(`${SERVER_URL}/reports/sales`, { headers });
-            const salesJson = await salesRes.json();
-            // Format date for chart
-            setSalesData(salesJson.map((d: any) => ({ ...d, date: new Date(d.date).toLocaleDateString() })));
+                // 1. Sales
+                const salesRes = await fetch(`${SERVER_URL}/reports/sales`, { headers });
+                if (salesRes.status === 401) { logout(); return; }
+                const salesJson = await salesRes.json();
+                setSalesData(salesJson.map((d: any) => ({ ...d, date: new Date(d.date).toLocaleDateString() })));
 
-            // 2. Top Items
-            const itemsRes = await fetch(`${SERVER_URL}/reports/top-items`, { headers });
-            setTopItems(await itemsRes.json());
+                // 2. Top Items
+                const itemsRes = await fetch(`${SERVER_URL}/reports/top-items`, { headers });
+                setTopItems(await itemsRes.json());
 
-            // 3. Payments
-            const payRes = await fetch(`${SERVER_URL}/reports/payments`, { headers });
-            setPaymentData(await payRes.json());
+                // 3. Payments
+                const payRes = await fetch(`${SERVER_URL}/reports/payments`, { headers });
+                setPaymentData(await payRes.json());
+            } catch (error) {
+                console.error("Error fetching report data", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchData();
-    }, []);
+    }, [token, logout]);
 
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF'];
+
+    if (loading) return <div className="min-h-screen flex items-center justify-center">Loading Analytics...</div>;
 
     return (
         <div className="min-h-screen bg-gray-50 p-8">
@@ -53,7 +68,7 @@ export default function ReportsPage() {
                                 <XAxis dataKey="date" />
                                 <YAxis />
                                 <Tooltip />
-                                <Line type="monotone" dataKey="total" stroke="#0EA5E9" strokeWidth={3} />
+                                <Line type="monotone" dataKey="total" stroke="#0EA5E9" strokeWidth={3} dot={{ r: 4 }} />
                             </LineChart>
                         </ResponsiveContainer>
                     </div>
@@ -64,12 +79,12 @@ export default function ReportsPage() {
                     <h2 className="text-lg font-semibold mb-4">Top 5 Products</h2>
                     <div className="h-64">
                         <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={topItems} layout="vertical">
+                            <BarChart data={topItems} layout="vertical" margin={{ left: 20 }}>
                                 <CartesianGrid strokeDasharray="3 3" horizontal={false} />
                                 <XAxis type="number" />
-                                <YAxis dataKey="name" type="category" width={100} />
+                                <YAxis dataKey="name" type="category" width={100} tick={{ fontSize: 12 }} />
                                 <Tooltip />
-                                <Bar dataKey="quantity" fill="#10B981" radius={[0, 4, 4, 0]} />
+                                <Bar dataKey="quantity" fill="#10B981" radius={[0, 4, 4, 0]} barSize={20} />
                             </BarChart>
                         </ResponsiveContainer>
                     </div>
@@ -106,3 +121,5 @@ export default function ReportsPage() {
         </div>
     );
 }
+
+export default withAuth(ReportsPage);
