@@ -44,6 +44,7 @@ model User {
 // ------------------------------------------------------
 model Category {
   id        String  @id @default(uuid())
+  branchId     String    @default("BRANCH-01") @map("branch_id")
   name      String
   colorHex  String? @map("color_hex") // For the POS UI (e.g., #FF5733)
   sortOrder Int     @default(0) @map("sort_order")
@@ -67,6 +68,8 @@ model Product {
   category   Category    @relation(fields: [categoryId], references: [id])
   orderItems OrderItem[]
 
+  branchId     String    @default("BRANCH-01") @map("branch_id")
+
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
   deletedAt DateTime? @map("deleted_at")
@@ -89,6 +92,7 @@ enum OrderStatus {
 
 model Order {
   id            String      @id @default(uuid()) // Terminals generate this UUID
+  branchId      String      @default("BRANCH-01") @map("branch_id")
   receiptNumber String      @map("receipt_number") // e.g., ORD-0001
   userId        String      @map("user_id") // Waiter who took the order
   tableId       String?     @map("table_id") // Nullable for takeaway
@@ -145,6 +149,7 @@ model Payment {
 
 model SeatingTable {
   id       String @id @default(uuid())
+  branchId     String    @default("BRANCH-01") @map("branch_id")
   name     String // e.g., "T-1", "Bar-2"
   status   String @default("FREE") // FREE, OCCUPIED, RESERVED
   capacity Int    @default(4)
@@ -169,8 +174,9 @@ model SeatingTable {
 
 model InventoryItem {
   id            String  @id @default(uuid())
+  branchId     String    @default("BRANCH-01") @map("branch_id")
   name          String // e.g., "Coffee Beans", "Milk", "Burger Bun"
-  sku           String? @unique
+  sku           String?
   unitOfMeasure String // e.g., "Kg", "Liters", "Pieces", "Grams"
   currentStock  Decimal @default(0) @db.Decimal(10, 4)
   minimumStock  Decimal @default(0) @db.Decimal(10, 4) // For low stock alerts
@@ -202,6 +208,7 @@ model RecipeIngredient {
 
 model Shift {
   id          String    @id @default(uuid())
+  branchId     String    @default("BRANCH-01") @map("branch_id")
   userId      String    @map("user_id")
   openingTime DateTime  @default(now()) @map("opening_time")
   closingTime DateTime? @map("closing_time")

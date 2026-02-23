@@ -14,9 +14,9 @@ export class SyncService {
     private prisma: PrismaService,
     private inventoryService: InventoryService,
     private eventsGateway: EventsGateway,
-  ) {}
+  ) { }
 
-  async pullChanges(lastSyncTimestamp: string) {
+  async pullChanges(lastSyncTimestamp: string, branchId: string) {
     let lastSyncDate: Date;
 
     if (!lastSyncTimestamp) {
@@ -30,19 +30,37 @@ export class SyncService {
 
     const [categories, products, users, seatingTables, orders] = await Promise.all([
       this.prisma.category.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
+        where: {
+          updatedAt: { gt: lastSyncDate },
+          branchId: branchId // <--- FILTER
+        },
       }),
       this.prisma.product.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
+        where: {
+          updatedAt: { gt: lastSyncDate },
+          branchId: branchId // <--- FILTER
+        },
       }),
+      // Users usually belong to a branch, assume user table has branchId already
       this.prisma.user.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
+        where: {
+          updatedAt: { gt: lastSyncDate },
+          branchId: branchId
+        },
+        select: { id: true, fullName: true, role: true, branchId: true, isActive: true }
       }),
       this.prisma.seatingTable.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
+        where: {
+          updatedAt: { gt: lastSyncDate },
+          branchId: branchId // <--- FILTER
+        },
       }),
+      // For orders, usually you only pull OPEN orders or recent history, but for MVP:
       this.prisma.order.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
+        where: {
+          updatedAt: { gt: lastSyncDate },
+          branchId: branchId
+        },
       }),
     ]);
 
@@ -58,7 +76,7 @@ export class SyncService {
     };
   }
 
-  async pushChanges(payload: any) {
+  async pushChanges(payload: any, userBranchId: string) {
     this.logger.log('Received pushChanges payload');
     // Extract all entities including shifts
     const { orders, orderItems, payments, shifts } = payload;
@@ -71,7 +89,7 @@ export class SyncService {
 
     try {
       await this.prisma.$transaction(async (tx) => {
-        
+
         // --- 1. Process Shifts ---
         // Shifts must be processed before orders if orders reference new shifts,
         // but since we use UUIDs generated on client, order doesn't matter much 
@@ -97,6 +115,7 @@ export class SyncService {
                   expectedCash: shift.expectedCash,
                   actualCash: shift.actualCash,
                   notes: shift.notes,
+                  branchId: userBranchId,
                 },
               });
               processedShifts++;
@@ -127,6 +146,7 @@ export class SyncService {
                   totalAmount: order.totalAmount,
                   status: order.status,
                   createdAt: new Date(order.createdAt),
+                  branchId: userBranchId,
                 },
               });
               processedOrders++;
@@ -190,7 +210,7 @@ export class SyncService {
       });
 
       // --- Post-Transaction Actions (Non-blocking) ---
-      
+
       // 1. Inventory Deduction
       for (const orderId of newOrderIdsToDeduct) {
         this.inventoryService.deductStockForOrder(orderId).catch(e =>
@@ -205,15 +225,15 @@ export class SyncService {
 
       // 3. Dashboard Inventory Update
       if (newOrderIdsToDeduct.length > 0) {
-          // Wait briefly for deductions to commit/process before fetching status
-          setTimeout(async () => {
-            try {
-                const latestInventory = await this.inventoryService.getInventoryStatus();
-                this.eventsGateway.emitInventoryUpdate(latestInventory);
-            } catch (e) {
-                this.logger.error('Failed to emit inventory update', e);
-            }
-          }, 1000);
+        // Wait briefly for deductions to commit/process before fetching status
+        setTimeout(async () => {
+          try {
+            const latestInventory = await this.inventoryService.getInventoryStatus();
+            this.eventsGateway.emitInventoryUpdate(latestInventory);
+          } catch (e) {
+            this.logger.error('Failed to emit inventory update', e);
+          }
+        }, 1000);
       }
 
       return {
