@@ -14,6 +14,18 @@ export class SyncService {
     private eventsGateway: EventsGateway,
   ) {}
 
+  private getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    if (typeof error === 'string') {
+      return error;
+    }
+
+    return 'Unknown error';
+  }
+
   async pullChanges(lastSyncTimestamp: string, branchId: string) {
     let lastSyncDate: Date;
 
@@ -100,7 +112,7 @@ export class SyncService {
           branchId,
           direction: SyncDirection.PULL,
           status: SyncStatus.FAILED,
-          errorMessage: error.message,
+          errorMessage: this.getErrorMessage(error),
           finishedAt: new Date(),
         },
       });
@@ -147,7 +159,7 @@ export class SyncService {
               });
               processedShifts++;
             } catch (err) {
-              errors.push({ id: shift.id, error: `Shift error: ${err.message}` });
+              errors.push({ id: shift.id, error: `Shift error: ${this.getErrorMessage(err)}` });
             }
           }
         }
@@ -181,7 +193,7 @@ export class SyncService {
                 newlyCreatedOrdersForKDS.push(savedOrder);
               }
             } catch (err) {
-              errors.push({ id: order.id, error: `Order error: ${err.message}` });
+              errors.push({ id: order.id, error: `Order error: ${this.getErrorMessage(err)}` });
             }
           }
         }
@@ -205,7 +217,7 @@ export class SyncService {
                 },
               });
             } catch (err) {
-              errors.push({ id: item.id, error: `Item error: ${err.message}` });
+              errors.push({ id: item.id, error: `Item error: ${this.getErrorMessage(err)}` });
             }
           }
         }
@@ -224,8 +236,9 @@ export class SyncService {
                 },
               });
             } catch (err) {
-              if (!err.message.includes('Unique constraint')) {
-                errors.push({ id: pay.id, error: `Payment error: ${err.message}` });
+              const errorMessage = this.getErrorMessage(err);
+              if (!errorMessage.includes('Unique constraint')) {
+                errors.push({ id: pay.id, error: `Payment error: ${errorMessage}` });
               }
             }
           }
@@ -256,8 +269,8 @@ export class SyncService {
       });
 
       for (const orderId of newOrderIdsToDeduct) {
-        this.inventoryService.deductStockForOrder(orderId).catch((e) =>
-          this.logger.error(`Inventory deduction failed async: ${e.message}`),
+        this.inventoryService.deductStockForOrder(orderId).catch((e: unknown) =>
+          this.logger.error(`Inventory deduction failed async: ${this.getErrorMessage(e)}`),
         );
       }
 
@@ -279,20 +292,21 @@ export class SyncService {
       }
 
       const recordsPushed = processedOrders + processedShifts + processedAuditLogs;
+      const wasSuccessful = errors.length === 0;
 
       await this.prisma.syncLog.create({
         data: {
           branchId: userBranchId,
           direction: SyncDirection.PUSH,
-          status: errors.length > 0 ? SyncStatus.FAILED : SyncStatus.SUCCESS,
+          status: wasSuccessful ? SyncStatus.SUCCESS : SyncStatus.FAILED,
           recordsPushed,
-          errorMessage: errors.length > 0 ? JSON.stringify(errors) : null,
+          errorMessage: wasSuccessful ? null : JSON.stringify(errors),
           finishedAt: new Date(),
         },
       });
 
       return {
-        success: true,
+        success: wasSuccessful,
         processedOrders,
         processedShifts,
         processedAuditLogs,
@@ -304,12 +318,12 @@ export class SyncService {
           branchId: userBranchId,
           direction: SyncDirection.PUSH,
           status: SyncStatus.FAILED,
-          errorMessage: error.message,
+          errorMessage: this.getErrorMessage(error),
           finishedAt: new Date(),
         },
       });
 
-      throw new BadRequestException(`Push sync failed: ${error.message}`);
+      throw new BadRequestException(`Push sync failed: ${this.getErrorMessage(error)}`);
     }
   }
 }
