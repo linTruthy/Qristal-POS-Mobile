@@ -1,10 +1,8 @@
-// qristal-api/src/sync/sync.service.ts
-
 import { Injectable, BadRequestException, Logger } from '@nestjs/common';
+import { Order, Prisma, SyncDirection, SyncStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { EventsGateway } from '../events/events.gateway';
 import { InventoryService } from '../inventory/inventory.service';
-import { Order } from '@prisma/client';
 
 @Injectable()
 export class SyncService {
@@ -14,7 +12,27 @@ export class SyncService {
     private prisma: PrismaService,
     private inventoryService: InventoryService,
     private eventsGateway: EventsGateway,
-  ) { }
+  ) {}
+
+  private getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      return error.message;
+    }
+
+    if (typeof error === 'string') {
+      return error;
+    }
+
+    return 'Unknown error';
+  }
+
+  private isUniqueConstraintError(error: unknown): boolean {
+    if (!error || typeof error !== 'object') {
+      return false;
+    }
+
+    return 'code' in error && (error as { code?: string }).code === 'P2002';
+  }
 
   async pullChanges(lastSyncTimestamp: string, branchId: string) {
     let lastSyncDate: Date;
@@ -28,73 +46,102 @@ export class SyncService {
       }
     }
 
-    const [categories, products, users, seatingTables, orders] = await Promise.all([
-      this.prisma.category.findMany({
-        where: {
-          updatedAt: { gt: lastSyncDate },
-          branchId: branchId // <--- FILTER
-        },
-      }),
-      this.prisma.product.findMany({
-        where: {
-          updatedAt: { gt: lastSyncDate },
-          branchId: branchId // <--- FILTER
-        },
-      }),
-      // Users usually belong to a branch, assume user table has branchId already
-      this.prisma.user.findMany({
-        where: {
-          updatedAt: { gt: lastSyncDate },
-          branchId: branchId
-        },
-        select: { id: true, fullName: true, role: true, branchId: true, isActive: true }
-      }),
-      this.prisma.seatingTable.findMany({
-        where: {
-          updatedAt: { gt: lastSyncDate },
-          branchId: branchId // <--- FILTER
-        },
-      }),
-      // For orders, usually you only pull OPEN orders or recent history, but for MVP:
-      this.prisma.order.findMany({
-        where: {
-          updatedAt: { gt: lastSyncDate },
-          branchId: branchId
-        },
-      }),
-    ]);
+    try {
+      const [categories, products, users, seatingTables, orders] = await Promise.all([
+        this.prisma.category.findMany({
+          where: {
+            updatedAt: { gt: lastSyncDate },
+            branchId,
+          },
+        }),
+        this.prisma.product.findMany({
+          where: {
+            updatedAt: { gt: lastSyncDate },
+            branchId,
+          },
+        }),
+        this.prisma.user.findMany({
+          where: {
+            updatedAt: { gt: lastSyncDate },
+            branchId,
+          },
+          select: {
+            id: true,
+            fullName: true,
+            role: true,
+            branchId: true,
+            isActive: true,
+          },
+        }),
+        this.prisma.seatingTable.findMany({
+          where: {
+            updatedAt: { gt: lastSyncDate },
+            branchId,
+          },
+        }),
+        this.prisma.order.findMany({
+          where: {
+            updatedAt: { gt: lastSyncDate },
+            branchId,
+          },
+        }),
+      ]);
 
-    return {
-      timestamp: new Date().toISOString(),
-      changes: {
-        categories,
-        products,
-        users,
-        seatingTables,
-        orders,
-      },
-    };
+      const recordsPulled =
+        categories.length +
+        products.length +
+        users.length +
+        seatingTables.length +
+        orders.length;
+
+      await this.prisma.syncLog.create({
+        data: {
+          branchId,
+          direction: SyncDirection.PULL,
+          status: SyncStatus.SUCCESS,
+          recordsPulled,
+          finishedAt: new Date(),
+        },
+      });
+
+      return {
+        timestamp: new Date().toISOString(),
+        changes: {
+          categories,
+          products,
+          users,
+          seatingTables,
+          orders,
+        },
+      };
+    } catch (error) {
+      await this.prisma.syncLog.create({
+        data: {
+          branchId,
+          direction: SyncDirection.PULL,
+          status: SyncStatus.FAILED,
+          errorMessage: this.getErrorMessage(error),
+          finishedAt: new Date(),
+        },
+      });
+      throw error;
+    }
   }
 
   async pushChanges(payload: any, userBranchId: string) {
     this.logger.log('Received pushChanges payload');
-    // Extract all entities including shifts
-    const { orders, orderItems, payments, shifts } = payload;
-    const errors: { id: any; error: any }[] = [];
+    const { orders, orderItems, payments, shifts, auditLogs } = payload;
+    const errors: { id: any; error: string }[] = [];
+
     let processedOrders = 0;
     let processedShifts = 0;
+    let processedAuditLogs = 0;
 
     const newOrderIdsToDeduct: string[] = [];
     const newlyCreatedOrdersForKDS: Order[] = [];
 
     try {
       await this.prisma.$transaction(async (tx) => {
-
-        // --- 1. Process Shifts ---
-        // Shifts must be processed before orders if orders reference new shifts,
-        // but since we use UUIDs generated on client, order doesn't matter much 
-        // unless we have strict foreign key constraints that Prisma enforces immediately.
-        // It's safer to do shifts first.
         if (shifts && Array.isArray(shifts)) {
           for (const shift of shifts) {
             try {
@@ -120,12 +167,11 @@ export class SyncService {
               });
               processedShifts++;
             } catch (err) {
-              errors.push({ id: shift.id, error: `Shift error: ${err.message}` });
+              errors.push({ id: shift.id, error: `Shift error: ${this.getErrorMessage(err)}` });
             }
           }
         }
 
-        // --- 2. Process Orders ---
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
             try {
@@ -142,7 +188,7 @@ export class SyncService {
                   receiptNumber: order.receiptNumber,
                   userId: order.userId,
                   tableId: order.tableId,
-                  shiftId: order.shiftId, // Mapping the shift relation
+                  shiftId: order.shiftId,
                   totalAmount: order.totalAmount,
                   status: order.status,
                   createdAt: new Date(order.createdAt),
@@ -155,12 +201,11 @@ export class SyncService {
                 newlyCreatedOrdersForKDS.push(savedOrder);
               }
             } catch (err) {
-              errors.push({ id: order.id, error: `Order error: ${err.message}` });
+              errors.push({ id: order.id, error: `Order error: ${this.getErrorMessage(err)}` });
             }
           }
         }
 
-        // --- 3. Process Order Items ---
         if (orderItems && Array.isArray(orderItems)) {
           for (const item of orderItems) {
             try {
@@ -180,12 +225,11 @@ export class SyncService {
                 },
               });
             } catch (err) {
-              errors.push({ id: item.id, error: `Item error: ${err.message}` });
+              errors.push({ id: item.id, error: `Item error: ${this.getErrorMessage(err)}` });
             }
           }
         }
 
-        // --- 4. Process Payments ---
         if (payments && Array.isArray(payments)) {
           for (const pay of payments) {
             try {
@@ -197,54 +241,100 @@ export class SyncService {
                   amount: pay.amount,
                   reference: pay.reference,
                   createdAt: new Date(pay.createdAt),
-                }
+                },
               });
             } catch (err) {
-              // Ignore unique constraint violations (idempotency)
-              if (!err.message.includes('Unique constraint')) {
-                errors.push({ id: pay.id, error: `Payment error: ${err.message}` });
+              if (!this.isUniqueConstraintError(err)) {
+                const errorMessage = this.getErrorMessage(err);
+                errors.push({ id: pay.id, error: `Payment error: ${errorMessage}` });
+              }
+            }
+          }
+        }
+
+        if (auditLogs && Array.isArray(auditLogs)) {
+          for (const log of auditLogs) {
+            try {
+              await tx.auditLog.create({
+                data: {
+                  id: log.id,
+                  branchId: userBranchId,
+                  userId: log.userId,
+                  action: log.action,
+                  orderId: log.orderId,
+                  metadata: (log.metadata ?? undefined) as Prisma.InputJsonValue,
+                  createdAt: log.createdAt ? new Date(log.createdAt) : new Date(),
+                },
+              });
+              processedAuditLogs++;
+            } catch (err) {
+              if (!this.isUniqueConstraintError(err)) {
+                const errorMessage = this.getErrorMessage(err);
+                errors.push({ id: log.id, error: `Audit log error: ${errorMessage}` });
               }
             }
           }
         }
       });
 
-      // --- Post-Transaction Actions (Non-blocking) ---
-
-      // 1. Inventory Deduction
       for (const orderId of newOrderIdsToDeduct) {
-        this.inventoryService.deductStockForOrder(orderId).catch(e =>
-          console.error(`Inventory deduction failed async: ${e}`)
+        this.inventoryService.deductStockForOrder(orderId).catch((e: unknown) =>
+          this.logger.error(`Inventory deduction failed async: ${this.getErrorMessage(e)}`),
         );
       }
 
-      // 2. KDS Notification
       if (newlyCreatedOrdersForKDS.length > 0) {
         this.eventsGateway.emitNewOrder({ message: 'New orders arrived!' });
       }
 
-      // 3. Dashboard Inventory Update
       if (newOrderIdsToDeduct.length > 0) {
-        // Wait briefly for deductions to commit/process before fetching status
         setTimeout(async () => {
           try {
-            const latestInventory = await this.inventoryService.getInventoryStatus();
+            const latestInventory = await this.inventoryService.getInventoryStatus(
+              userBranchId,
+            );
             this.eventsGateway.emitInventoryUpdate(latestInventory);
           } catch (e) {
-            this.logger.error('Failed to emit inventory update', e);
+            this.logger.error(
+              `Failed to emit inventory update: ${this.getErrorMessage(e)}`,
+            );
           }
         }, 1000);
       }
 
+      const recordsPushed = processedOrders + processedShifts + processedAuditLogs;
+      const wasSuccessful = errors.length === 0;
+
+      await this.prisma.syncLog.create({
+        data: {
+          branchId: userBranchId,
+          direction: SyncDirection.PUSH,
+          status: wasSuccessful ? SyncStatus.SUCCESS : SyncStatus.FAILED,
+          recordsPushed,
+          errorMessage: wasSuccessful ? null : JSON.stringify(errors),
+          finishedAt: new Date(),
+        },
+      });
+
       return {
-        success: true,
+        success: wasSuccessful,
         processedOrders,
         processedShifts,
+        processedAuditLogs,
         errors: errors.length > 0 ? errors : undefined,
       };
-
     } catch (error) {
-      throw new BadRequestException(`Push sync failed: ${error.message}`);
+      await this.prisma.syncLog.create({
+        data: {
+          branchId: userBranchId,
+          direction: SyncDirection.PUSH,
+          status: SyncStatus.FAILED,
+          errorMessage: this.getErrorMessage(error),
+          finishedAt: new Date(),
+        },
+      });
+
+      throw new BadRequestException(`Push sync failed: ${this.getErrorMessage(error)}`);
     }
   }
 }
