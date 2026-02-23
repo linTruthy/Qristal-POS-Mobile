@@ -42,6 +42,62 @@ export class SyncService {
     }
   }
 
+
+
+  async getSyncLogsOverview(branchId: string, limit?: string) {
+    const parsedLimit = Number(limit);
+    const normalizedLimit = Number.isFinite(parsedLimit)
+      ? Math.min(Math.max(Math.floor(parsedLimit), 1), 200)
+      : 50;
+
+    const logs = await this.prisma.syncLog.findMany({
+      where: { branchId },
+      orderBy: { startedAt: 'desc' },
+      take: normalizedLimit,
+    });
+
+    const summary = logs.reduce(
+      (acc, log) => {
+        const key = log.direction === SyncDirection.PUSH ? 'push' : 'pull';
+        acc[key].total += 1;
+
+        if (log.status === SyncStatus.SUCCESS) {
+          acc[key].success += 1;
+        } else {
+          acc[key].failed += 1;
+        }
+
+        return acc;
+      },
+      {
+        push: { total: 0, success: 0, failed: 0 },
+        pull: { total: 0, success: 0, failed: 0 },
+      },
+    );
+
+    return {
+      branchId,
+      limit: normalizedLimit,
+      summary: {
+        push: {
+          ...summary.push,
+          successRate:
+            summary.push.total > 0
+              ? Number(((summary.push.success / summary.push.total) * 100).toFixed(2))
+              : 0,
+        },
+        pull: {
+          ...summary.pull,
+          successRate:
+            summary.pull.total > 0
+              ? Number(((summary.pull.success / summary.pull.total) * 100).toFixed(2))
+              : 0,
+        },
+      },
+      logs,
+    };
+  }
+
   async pullChanges(lastSyncTimestamp: string, branchId: string) {
     let lastSyncDate: Date;
 

@@ -13,7 +13,7 @@ describe('SyncService', () => {
   let service: SyncService;
   let prisma: {
     $transaction: jest.Mock;
-    syncLog: { create: jest.Mock };
+    syncLog: { create: jest.Mock; findMany: jest.Mock };
     category: { findMany: jest.Mock };
     product: { findMany: jest.Mock };
     user: { findMany: jest.Mock };
@@ -24,7 +24,7 @@ describe('SyncService', () => {
   beforeEach(async () => {
     prisma = {
       $transaction: jest.fn(),
-      syncLog: { create: jest.fn() },
+      syncLog: { create: jest.fn(), findMany: jest.fn() },
       category: { findMany: jest.fn() },
       product: { findMany: jest.fn() },
       user: { findMany: jest.fn() },
@@ -58,6 +58,34 @@ describe('SyncService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('returns sync logs overview with success rates', async () => {
+    prisma.syncLog.findMany.mockResolvedValueOnce([
+      { direction: SyncDirection.PUSH, status: SyncStatus.SUCCESS },
+      { direction: SyncDirection.PUSH, status: SyncStatus.FAILED },
+      { direction: SyncDirection.PULL, status: SyncStatus.SUCCESS },
+    ]);
+
+    const result = await service.getSyncLogsOverview('BRANCH-01', '1000');
+
+    expect(prisma.syncLog.findMany).toHaveBeenCalledWith({
+      where: { branchId: 'BRANCH-01' },
+      orderBy: { startedAt: 'desc' },
+      take: 200,
+    });
+    expect(result.summary.push).toEqual({
+      total: 2,
+      success: 1,
+      failed: 1,
+      successRate: 50,
+    });
+    expect(result.summary.pull).toEqual({
+      total: 1,
+      success: 1,
+      failed: 0,
+      successRate: 100,
+    });
   });
 
   it('throws on invalid timestamp', async () => {
@@ -146,7 +174,6 @@ describe('SyncService', () => {
       }),
     );
   });
-
 
   it('ignores duplicate payment and audit log records without failing push', async () => {
     prisma.$transaction.mockImplementationOnce(async (handler: any) => {
@@ -262,5 +289,4 @@ describe('SyncService', () => {
 
     expect(result.success).toBe(true);
   });
-
 });
