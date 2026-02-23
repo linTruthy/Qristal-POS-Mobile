@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:drift/drift.dart' as drift;
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/constants/api_constants.dart';
@@ -69,8 +70,11 @@ class SyncService {
         return null;
       }
 
-      double _readDouble(Map<String, dynamic> item, List<String> keys,
-          {double fallback = 0.0}) {
+      double _readDouble(
+        Map<String, dynamic> item,
+        List<String> keys, {
+        double fallback = 0.0,
+      }) {
         final raw = _readString(item, keys);
         return double.tryParse(raw ?? '') ?? fallback;
       }
@@ -80,7 +84,7 @@ class SyncService {
         // --- Categories ---
         if (changes['categories'] != null) {
           for (var item in changes['categories']) {
-          batch.insert(
+            batch.insert(
               db.categories,
               CategoriesCompanion(
                 id: drift.Value(item['id']),
@@ -100,7 +104,7 @@ class SyncService {
             // Ensure price is treated as double
             double price = double.tryParse(item['price'].toString()) ?? 0.0;
 
-          batch.insert(
+            batch.insert(
               db.products,
               ProductsCompanion(
                 id: drift.Value(item['id']),
@@ -123,8 +127,10 @@ class SyncService {
         for (final raw in orders) {
           final item = Map<String, dynamic>.from(raw as Map);
           final orderId = _readString(item, ['id']);
-          final receiptNumber =
-              _readString(item, ['receiptNumber', 'receipt_number']);
+          final receiptNumber = _readString(item, [
+            'receiptNumber',
+            'receipt_number',
+          ]);
           final userId = _readString(item, ['userId', 'user_id']);
           final createdAt = _readString(item, ['createdAt', 'created_at']);
           final shiftId = _readString(item, ['shiftId', 'shift_id']);
@@ -138,34 +144,33 @@ class SyncService {
           }
 
           batch.insert(
-              db.orders,
-              OrdersCompanion(
-                id: drift.Value(orderId),
-                receiptNumber: drift.Value(receiptNumber),
-                userId: drift.Value(userId),
-                tableId:
-                    drift.Value(_readString(item, ['tableId', 'table_id'])),
-                totalAmount:
-                    drift.Value(_readDouble(item, ['totalAmount', 'total_amount'])),
-                status: drift.Value(
-                    _readString(item, ['status']) ?? 'KITCHEN'),
-                shiftId: drift.Value(shiftId),
-                createdAt: drift.Value(DateTime.parse(createdAt)),
-                updatedAt: drift.Value(
-                  DateTime.parse(
-                    _readString(item, ['updatedAt', 'updated_at']) ?? createdAt,
-                  ),
-                ),
-                isSynced: const drift.Value(true),
+            db.orders,
+            OrdersCompanion(
+              id: drift.Value(orderId),
+              receiptNumber: drift.Value(receiptNumber),
+              userId: drift.Value(userId),
+              tableId: drift.Value(_readString(item, ['tableId', 'table_id'])),
+              totalAmount: drift.Value(
+                _readDouble(item, ['totalAmount', 'total_amount']),
               ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
+              status: drift.Value(_readString(item, ['status']) ?? 'KITCHEN'),
+              shiftId: drift.Value(shiftId),
+              createdAt: drift.Value(DateTime.parse(createdAt)),
+              updatedAt: drift.Value(
+                DateTime.parse(
+                  _readString(item, ['updatedAt', 'updated_at']) ?? createdAt,
+                ),
+              ),
+              isSynced: const drift.Value(true),
+            ),
+            mode: drift.InsertMode.insertOrReplace,
+          );
+        }
 
         // --- Order Items ---
         if (changes['orderItems'] != null) {
           for (var item in changes['orderItems']) {
-          batch.insert(
+            batch.insert(
               db.orderItems,
               OrderItemsCompanion(
                 id: drift.Value(item['id']),
@@ -185,7 +190,7 @@ class SyncService {
         // --- Payments ---
         if (changes['payments'] != null) {
           for (var item in changes['payments']) {
-          batch.insert(
+            batch.insert(
               db.payments,
               PaymentsCompanion(
                 id: drift.Value(item['id']),
@@ -203,8 +208,11 @@ class SyncService {
         }
 
         // --- Tables ---
-        final seatingTables =
-            _readChangeList(['seatingTables', 'seating_tables', 'tables']);
+        final seatingTables = _readChangeList([
+          'seatingTables',
+          'seating_tables',
+          'tables',
+        ]);
         for (final raw in seatingTables) {
           final item = Map<String, dynamic>.from(raw as Map);
           final tableId = _readString(item, ['id']);
@@ -216,18 +224,17 @@ class SyncService {
           }
 
           batch.insert(
-              db.seatingTables,
-              SeatingTablesCompanion(
-                id: drift.Value(tableId),
-                name: drift.Value(tableName),
-                status:
-                    drift.Value(_readString(item, ['status']) ?? 'FREE'),
-                floor: drift.Value(_readString(item, ['floor']) ?? 'Main'),
-                updatedAt: drift.Value(DateTime.parse(updatedAt)),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
+            db.seatingTables,
+            SeatingTablesCompanion(
+              id: drift.Value(tableId),
+              name: drift.Value(tableName),
+              status: drift.Value(_readString(item, ['status']) ?? 'FREE'),
+              floor: drift.Value(_readString(item, ['floor']) ?? 'Main'),
+              updatedAt: drift.Value(DateTime.parse(updatedAt)),
+            ),
+            mode: drift.InsertMode.insertOrReplace,
+          );
+        }
       });
 
       // 4. Save new timestamp
@@ -235,9 +242,10 @@ class SyncService {
       if (kDebugMode) {
         print("Sync Completed Successfully. Timestamp: $newTimestamp");
       }
-    } catch (e) {
+    } catch (exception, stackTrace) {
+      await Sentry.captureException(exception, stackTrace: stackTrace);
       if (kDebugMode) {
-        print("Sync Error: $e");
+        print("Sync Error: $exception");
       }
       rethrow;
     }
@@ -247,8 +255,7 @@ class SyncService {
     // 1. Find unsynced orders
     final unsyncedOrders = await (db.select(
       db.orders,
-    )..where((t) => t.isSynced.equals(false)))
-        .get();
+    )..where((t) => t.isSynced.equals(false))).get();
 
     if (unsyncedOrders.isEmpty) return;
 
@@ -263,8 +270,7 @@ class SyncService {
     final orderIds = unsyncedOrders.map((order) => order.id).toList();
     final relatedItems = await (db.select(
       db.orderItems,
-    )..where((t) => t.orderId.isIn(orderIds)))
-        .get();
+    )..where((t) => t.orderId.isIn(orderIds))).get();
 
     for (final item in relatedItems) {
       itemsPayload.add({
@@ -291,8 +297,7 @@ class SyncService {
       // Fetch related payments -> ADDED FOR PAYMENTS
       final payments = await (db.select(
         db.payments,
-      )..where((t) => t.orderId.equals(order.id)))
-          .get();
+      )..where((t) => t.orderId.equals(order.id))).get();
       for (final pay in payments) {
         paymentsPayload.add({
           'id': pay.id,
@@ -304,9 +309,9 @@ class SyncService {
         });
       }
     }
-    final unsyncedShifts = await (db.select(db.shifts)
-          ..where((t) => t.isSynced.equals(false)))
-        .get();
+    final unsyncedShifts = await (db.select(
+      db.shifts,
+    )..where((t) => t.isSynced.equals(false))).get();
     List<Map<String, dynamic>> shiftsPayload = [];
 
     for (final shift in unsyncedShifts) {
@@ -335,7 +340,8 @@ class SyncService {
       final response = await http
           .post(
             Uri.parse(
-                '${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
+              '${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}',
+            ),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer $token',
@@ -345,7 +351,7 @@ class SyncService {
               'orders': ordersPayload,
               'orderItems': itemsPayload,
               'payments': paymentsPayload,
-              'shifts': shiftsPayload
+              'shifts': shiftsPayload,
             }),
           )
           .timeout(const Duration(seconds: 20));
@@ -363,9 +369,11 @@ class SyncService {
           print("❌ Push failed: ${response.statusCode} - ${response.body}");
         }
         throw Exception(
-            'Push failed: ${response.statusCode} - ${response.body}');
+          'Push failed: ${response.statusCode} - ${response.body}',
+        );
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
+      await Sentry.captureException(e, stackTrace: stackTrace);
       if (kDebugMode) print("❌ Connection error during push: $e");
       rethrow;
     }
