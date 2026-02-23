@@ -5,6 +5,9 @@ import { EventsGateway } from '../events/events.gateway';
 import { InventoryService } from '../inventory/inventory.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { SyncService } from './sync.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { InventoryService } from '../inventory/inventory.service';
+import { EventsGateway } from '../events/events.gateway';
 
 describe('SyncService', () => {
   let service: SyncService;
