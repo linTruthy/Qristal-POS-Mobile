@@ -6,9 +6,10 @@ import { SyncModule } from './sync/sync.module';
 import { AuthModule } from './auth/auth.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { EventsModule } from './events/events.module';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
-  imports: [PrismaModule, SyncModule, AuthModule, InventoryModule, EventsModule],  // Add PrismaModule here
+  imports: [PrismaModule, SyncModule, AuthModule, InventoryModule, EventsModule, ReportsModule],  // Add PrismaModule here
   controllers: [AppController],
   providers: [AppService],
 })
