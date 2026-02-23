@@ -29,8 +29,9 @@ model User {
   isActive Boolean @default(true) @map("is_active")
 
   // Relations
-  orders Order[]
-  shifts Shift[]
+  orders    Order[]
+  shifts    Shift[]
+  auditLogs AuditLog[]
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
@@ -134,6 +135,23 @@ enum PaymentMethod {
   OTHER
 }
 
+enum AuditAction {
+  VOID
+  DISCOUNT
+  CASH_IN
+  CASH_OUT
+}
+
+enum SyncDirection {
+  PULL
+  PUSH
+}
+
+enum SyncStatus {
+  SUCCESS
+  FAILED
+}
+
 model Payment {
   id        String        @id @default(uuid())
   orderId   String        @map("order_id")
@@ -223,4 +241,32 @@ model Shift {
   orders Order[] // A shift has many orders
 
   @@map("shifts")
+}
+
+model AuditLog {
+  id        String      @id @default(uuid())
+  branchId  String      @default("BRANCH-01") @map("branch_id")
+  userId    String?     @map("user_id")
+  action    AuditAction
+  orderId   String?     @map("order_id")
+  metadata  Json?
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model SyncLog {
+  id            String        @id @default(uuid())
+  branchId      String        @default("BRANCH-01") @map("branch_id")
+  direction     SyncDirection
+  status        SyncStatus
+  startedAt     DateTime      @default(now()) @map("started_at")
+  finishedAt    DateTime?     @map("finished_at")
+  recordsPushed Int           @default(0) @map("records_pushed")
+  recordsPulled Int           @default(0) @map("records_pulled")
+  errorMessage  String?       @map("error_message")
+
+  @@map("sync_logs")
 }
