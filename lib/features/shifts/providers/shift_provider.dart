@@ -3,7 +3,6 @@ import 'package:uuid/uuid.dart';
 import 'package:drift/drift.dart';
 import '../../../core/providers/database_provider.dart';
 import '../../../database/database.dart';
-import '../../auth/providers/auth_provider.dart';
 
 // Holds the currently active Shift ID
 final activeShiftIdProvider = StateProvider<String?>((ref) => null);
