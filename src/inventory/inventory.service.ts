@@ -7,6 +7,54 @@ export class InventoryService {
 
   constructor(private prisma: PrismaService) {}
 
+  
+
+  // --- CREATE ---
+  async createInventoryItem(branchId: string, data: any) {
+    return this.prisma.inventoryItem.create({
+      data: {
+        ...data,
+        branchId,
+        currentStock: Number(data.currentStock || 0),
+        minimumStock: Number(data.minimumStock || 0),
+        costPerUnit: Number(data.costPerUnit || 0),
+      },
+    });
+  }
+
+  // --- RESTOCK (Increment) ---
+  async restockItem(id: string, branchId: string, amount: number) {
+    return this.prisma.inventoryItem.update({
+      where: { id, branchId },
+      data: {
+        currentStock: {
+          increment: Number(amount),
+        },
+      },
+    });
+  }
+
+  // --- UPDATE ---
+  async updateInventoryItem(id: string, branchId: string, data: any) {
+    return this.prisma.inventoryItem.update({
+      where: { id, branchId },
+      data: {
+        name: data.name,
+        unitOfMeasure: data.unitOfMeasure,
+        minimumStock: data.minimumStock ? Number(data.minimumStock) : undefined,
+        costPerUnit: data.costPerUnit ? Number(data.costPerUnit) : undefined,
+      },
+    });
+  }
+
+  // --- DELETE ---
+  async deleteInventoryItem(id: string, branchId: string) {
+    return this.prisma.inventoryItem.delete({
+      where: { id, branchId },
+    });
+  }
+
+
   /**
    * Processes inventory deductions for a given order.
    * This should be called after an order is successfully synced from the POS.
@@ -61,9 +109,11 @@ export class InventoryService {
     }
   }
 
-  async getInventoryStatus() {
+   // --- READ ---
+   async getInventoryStatus(branchId: string) {
     return this.prisma.inventoryItem.findMany({
-      orderBy: { currentStock: 'asc' }, // Order by lowest stock first
+      where: { branchId },
+      orderBy: { currentStock: 'asc' }, // Lowest stock first
     });
   }
 }
