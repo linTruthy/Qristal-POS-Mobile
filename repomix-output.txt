@@ -177,12 +177,15 @@ qristal_mobile/
         f99644512e3287ba21c9d40ecef75e535a82a3
       30/
         4732f8842013497e14bd02f67a55f2614fb8f7
+        badc704a2b7617f525e829693880905b72cc63
       31/
         176d32b3a5a8d9857b7cd8b50bf62fa18a1dca
+        c887d679d37b94dcab38e1d86f995e9407a275
         d3be2f4d8c08b67a0ed2f9509d7a53bd69bada
       32/
         76f48b656e55bd96d4e35632f7a9610dfd7151
       33/
+        2fb7dc9c38a2a80b183a5da7edddc965997aae
         8cc51737f729a7abcb7efa192fb1301e51e13a
       34/
         16d5052b717fbc8b4b28e6e886285efa24bf86
@@ -229,6 +232,7 @@ qristal_mobile/
         2401e3cc87eaf97c4aea06b769faf3c1a53e55
         5b3d6f9705e47fef6b61050d7b48a088b9e550
       42/
+        15eee6a40bfe646997a4d70a883ba541c3d8d3
         40668152c9891a007d4fc89025e54f4f0d5aa8
         6135bc5c411bb999129a882de1bfeeb1aee0d1
       43/
@@ -258,6 +262,7 @@ qristal_mobile/
         fbecaef47673ada4e2c5369c11300b2f07e5c4
       4d/
         495eb53181025548a20fb6dd06378b37798a5f
+        57829a49af813fdedcce5f7bcc6e35009a1cf7
         6372eebdb28e45604e46eeda8dd24651419bc0
         82564480fca437ab426265a4dd6b7944e2991f
         b65733a2b8324351427cf5492517082af2e805
@@ -266,6 +271,7 @@ qristal_mobile/
       4f/
         42d19813572dd6cc576c8254b8adfb4b7dd199
         a0e342ee070474ff8a51331436e28bcc293f2c
+        bacc24b89252b3662558df6578511103b73065
         c759c48f3a6c17b7c98daf0d5f90949305074c
       50/
         28d815ad66bc736a32606d9db0d6a5b1ec9a72
@@ -275,6 +281,7 @@ qristal_mobile/
         2c0da9951a1f243719ff55c6ac9b418147b598
         71170e2e4f9da20fe77acea870819bfdfa7f70
         8254fd784f88bb6083c8fdea803d57c5e2c33d
+        c78d8cb64d6c6357ebf4eb9455e0e28e89ad34
       52/
         0c14b7a6daa875e065c2f5002fde9e5db95a9b
         ca8456ada13e456ae08073a95a56f6b60ad718
@@ -405,6 +412,7 @@ qristal_mobile/
         b096d5d4b16d2224655e8aa507e14d00fa835e
       88/
         37ef0019e7728c118161636ac6423cd1a4575b
+        8c56792631563e2611ff36b370ee39bcecf706
         b2a914f61edb6dfa511ca0d2190a404c1b885b
         cfd48dff1169879ba46840804b412fe02fefd6
         e04f233c60fe9c4078fa898d83673bd6d7bfc1
@@ -436,6 +444,7 @@ qristal_mobile/
         e349124a8d799180afc097d0d468d8ec9e2497
       94/
         6fe572ba3d58478f427f0d0e1ac5a7d72214b8
+        e684a96b9a4cc008027073677037e080e04720
       95/
         41b6d6bf04f73ee0fef4b1e66dd11b3f1908d1
         5ee3038f988929fac2dedb6a307ebd45dfcfd7
@@ -457,6 +466,7 @@ qristal_mobile/
         87b90cbb83bd2fc5847785f258783f562b9936
         cab57ed1460e33dd57ff7667effcca4dc69694
       9b/
+        006ac59dd921ba3b11eac94e494b35741f5c7b
         924a3ec3352d9a9139a9adbf25d45f1e3b02a4
         9967ca6aff59b67c815faff10591e1ed8a62f3
       9c/
@@ -467,6 +477,8 @@ qristal_mobile/
       9d/
         4a2ce0caa1888ff1e8099599fa7371ed96a027
         4d39b1ca34cb76b0924d1b1a35a5e6158489c7
+      9e/
+        dc8e29daf70c1b4158bec993e70eb78877d5b8
       9f/
         43e824c8d823794b30d64c2b4b999f9af9ed2b
         d49b80a6b18979f26bb46d86e32d0cff05f7b4
@@ -484,6 +496,7 @@ qristal_mobile/
       a6/
         368af0ee7628fa194ef8fe3bbe4523113d6e05
       a7/
+        47a4edbe82cda2b91183caf5993a92ccc59668
         54a53182fb6f3944b9101a4aaf731924bdfc3d
       a9/
         29a54a82df047058ac6f94ef21385519f9d0eb
@@ -494,6 +507,7 @@ qristal_mobile/
       ac/
         3b47926ee56b0efc39cbff3c532918abbf953f
         7f762d6c855ca5e8a145047d9b73c100e4b919
+        c88f694f88dfc6958c215f8886ef0d7340b893
       ad/
         4361447e91e38c7ceff3a3a9f4975bc7f8597a
       ae/
@@ -531,6 +545,9 @@ qristal_mobile/
       ba/
         0f6f3eb5bad58206232d731030a90d4554ce24
         2b3747bd2ee9d634a7990b8b885703634b7181
+        f8fbd1e19a1376d9bbb6c04c930d223fd4d0c9
+      bb/
+        0d500111c0063ec81073acc15ff15641d1da34
       bc/
         628a1d4330652bbd0b4134d01ee5304bbb79ed
         fd96733948ed2296e9663f710a9c5e9eef4af1
@@ -563,9 +580,11 @@ qristal_mobile/
       cb/
         1ef88056edd1caf99a935e434e7ff6943a0ef6
         392f3f3f289e0955e74ea297a3a20f7388cf8f
+        58295c5354c7c2672077664fa35374053186d4
         ec4d3234da9f79cf5cd4f64c0108b040ee0327
       cc/
         040f7aba55591b0f70f2143714d1a1fdb8b17e
+        4c158c5b8be335d951eab78f839af6a774fc13
         9ebabe71f55803ca2ae63c9d33b6a344c2a2ed
         fb5d6212bc120deb57fabb3a261299d992eee2
       cd/
@@ -636,6 +655,7 @@ qristal_mobile/
       e6/
         28a358591bef6e7f502b11b6c2a6e089677cd1
         97629470cb468cd298313d7de0c90f8ab6972c
+        b4a8c34363cffbe4dfafe399fe8624c5ecaa00
       e7/
         09d6e10744167a833ee9fcb2647037714d2bb1
         20d87c94bc7abe31900b38b667730c438410c2
@@ -660,6 +680,7 @@ qristal_mobile/
         5e8ce7a616d368269aa58a7892e2588961b8a7
         edda50ab05286799656bcdbf4e26d41389e763
       ee/
+        572040e58ee86165e5d71618b8526d777d7229
         6a0bd8f610bc39855162dd350b7bd4696ded8e
       ef/
         73e28ba971f93be6e17ee6b9f6bd1d1907ff57
@@ -686,6 +707,7 @@ qristal_mobile/
         d575a07e57adb58513783af885c7e98b58c501
       f7/
         4085f3f6a2b995f8ad1f9ff7b2c46dc118a9e0
+        f159121792d694636b82c39c3d1df931aebba2
       f8/
         b20b7eeb9cc32bb505af40147f20752f6ded9c
       f9/
@@ -821,6 +843,11 @@ qristal_mobile/
           order_service.dart
         widgets/
           payment_modal.dart
+      shifts/
+        providers/
+          shift_provider.dart
+        screens/
+          open_shift_dialog.dart
       sync/
         providers/
           sync_provider.dart
@@ -875,6 +902,7 @@ qristal-api/
         620d571635c7e93971ad86a425ec9fe47fb0e2
       06/
         3fcbbf3ee334cffab469cf3a7ae7903207be9f
+        55f88103b0dcf3692d23f646a5af76e74e5ed0
         aa7b41cd43b11e54ef7303e76049c88dcfcbb6
         e6b86fc3281c4b92db8810bef7b1032396c427
       07/
@@ -980,8 +1008,11 @@ qristal-api/
         cff2123db3e950574e0b580d9740f26fa6c2c0
       7a/
         05103cbb9951b05eef4184ae0ffbfece3a9c40
+        ad7b6d7cf7cde9b0888d16ff7ff96a4d1700e6
         aeba435465ad91b61848e9638c0cdbdc959b1b
         b239d8222c41dd98766a5085f2c18d4b63648a
+      7d/
+        aa40c329edc24be6d5fc69cbc9a01cb84132db
       7f/
         36845c8062333f9c13d2ed422a086f936db5b9
       80/
@@ -990,6 +1021,7 @@ qristal-api/
         6d68300b15b099bce1d64a53c6db5e23cdffe2
       88/
         9b827f17a5d46a9525189561fbf33267e2b13d
+        9e02af27d36b44ccf3f203d8782101f6a99eae
         a5213d7c9c919920045fdca1405769e76dd198
       8b/
         cc7a8b4a0a8a69dd4194b5a18c0a6f92365e46
@@ -1030,8 +1062,12 @@ qristal-api/
         5d7e03dfb8d83041ed9ebecf49785365252b15
       b9/
         7c3456843d3c3b2f851c870a8d9238b3ad0f5c
+      bb/
+        fb22c6daa2d26be1a0eac63b20b6c5617da76d
       be/
         67cf0c6e1dc2bfbbacb710239af561cad7aa0a
+      bf/
+        1d9e40926c13783ca73f08a449e7ff4365748d
       c0/
         0f91911c740592305583132abac37d873dc38e
         33b5cf302816c1dedf79eb93823eda7dd44d7b
@@ -1052,6 +1088,7 @@ qristal-api/
         ffa102188683c98e36b959e0c3a6cdc75d0f3c
       d2/
         2f3890a380cea30641cfecc329b5c794ef5fb2
+        5fff1dca7047eacba050470f302427e67d7e3b
       d3/
         bd21e287dbcd62006fdd2c208d19b651bb7f3c
       d5/
@@ -1128,6 +1165,8 @@ qristal-api/
       20260221210510_add_tables/
         migration.sql
       20260222111806_add_inventory/
+        migration.sql
+      20260223065237_add_shifts/
         migration.sql
       migration_lock.toml
     schema.prisma
@@ -1316,6 +1355,8 @@ cbec4d3234da9f79cf5cd4f64c0108b040ee0327 72488e07c20a9713788927da0670c8cf156081d
 54a08096d5ef364cba7f6e9209c7fe416f97710a 5ab0af269b1a137facd05e511a4c3c791d65d615 truthysys <truthysys@gmail.com> 1771785690 +0000	commit: Decoupl
 5ab0af269b1a137facd05e511a4c3c791d65d615 657e37ece46d4083064118400efff9eaf4a468eb truthysys <truthysys@gmail.com> 1771785695 +0000	pull --tags origin main: Merge made by the 'ort' strategy.
 657e37ece46d4083064118400efff9eaf4a468eb 049c6842f1e8f4f602af1b3c9e131edb3068f303 truthysys <truthysys@gmail.com> 1771788686 +0000	commit: Double order fix
+049c6842f1e8f4f602af1b3c9e131edb3068f303 ee572040e58ee86165e5d71618b8526d777d7229 truthysys <truthysys@gmail.com> 1771829848 +0000	commit: shift
+ee572040e58ee86165e5d71618b8526d777d7229 332fb7dc9c38a2a80b183a5da7edddc965997aae truthysys <truthysys@gmail.com> 1771830587 +0000	pull --tags origin main: Fast-forward
 
 ================
 File: qristal_mobile/.git/logs/refs/remotes/origin/main
@@ -1342,6 +1383,8 @@ cbec4d3234da9f79cf5cd4f64c0108b040ee0327 72488e07c20a9713788927da0670c8cf156081d
 54a08096d5ef364cba7f6e9209c7fe416f97710a 40fc422ae526f8ece050736cb2d43c8fe957f605 truthysys <truthysys@gmail.com> 1771783176 +0000	fetch: fast-forward
 40fc422ae526f8ece050736cb2d43c8fe957f605 657e37ece46d4083064118400efff9eaf4a468eb truthysys <truthysys@gmail.com> 1771785696 +0000	update by push
 657e37ece46d4083064118400efff9eaf4a468eb 049c6842f1e8f4f602af1b3c9e131edb3068f303 truthysys <truthysys@gmail.com> 1771788691 +0000	update by push
+049c6842f1e8f4f602af1b3c9e131edb3068f303 ee572040e58ee86165e5d71618b8526d777d7229 truthysys <truthysys@gmail.com> 1771829854 +0000	update by push
+ee572040e58ee86165e5d71618b8526d777d7229 332fb7dc9c38a2a80b183a5da7edddc965997aae truthysys <truthysys@gmail.com> 1771830569 +0000	fetch: fast-forward
 
 ================
 File: qristal_mobile/.git/logs/HEAD
@@ -1369,21 +1412,23 @@ cbec4d3234da9f79cf5cd4f64c0108b040ee0327 72488e07c20a9713788927da0670c8cf156081d
 54a08096d5ef364cba7f6e9209c7fe416f97710a 5ab0af269b1a137facd05e511a4c3c791d65d615 truthysys <truthysys@gmail.com> 1771785690 +0000	commit: Decoupl
 5ab0af269b1a137facd05e511a4c3c791d65d615 657e37ece46d4083064118400efff9eaf4a468eb truthysys <truthysys@gmail.com> 1771785695 +0000	pull --tags origin main: Merge made by the 'ort' strategy.
 657e37ece46d4083064118400efff9eaf4a468eb 049c6842f1e8f4f602af1b3c9e131edb3068f303 truthysys <truthysys@gmail.com> 1771788686 +0000	commit: Double order fix
+049c6842f1e8f4f602af1b3c9e131edb3068f303 ee572040e58ee86165e5d71618b8526d777d7229 truthysys <truthysys@gmail.com> 1771829848 +0000	commit: shift
+ee572040e58ee86165e5d71618b8526d777d7229 332fb7dc9c38a2a80b183a5da7edddc965997aae truthysys <truthysys@gmail.com> 1771830587 +0000	pull --tags origin main: Fast-forward
 
 ================
 File: qristal_mobile/.git/refs/heads/main
 ================
-049c6842f1e8f4f602af1b3c9e131edb3068f303
+332fb7dc9c38a2a80b183a5da7edddc965997aae
 
 ================
 File: qristal_mobile/.git/refs/remotes/origin/main
 ================
-049c6842f1e8f4f602af1b3c9e131edb3068f303
+332fb7dc9c38a2a80b183a5da7edddc965997aae
 
 ================
 File: qristal_mobile/.git/COMMIT_EDITMSG
 ================
-Double order fix
+shift
 
 ================
 File: qristal_mobile/.git/config
@@ -1405,7 +1450,7 @@ File: qristal_mobile/.git/config
 ================
 File: qristal_mobile/.git/FETCH_HEAD
 ================
-049c6842f1e8f4f602af1b3c9e131edb3068f303		branch 'main' of github.com:linTruthy/Qristal-POS-Mobile
+332fb7dc9c38a2a80b183a5da7edddc965997aae		branch 'main' of github.com:linTruthy/Qristal-POS-Mobile
 
 ================
 File: qristal_mobile/.git/HEAD
@@ -1415,12 +1460,12 @@ ref: refs/heads/main
 ================
 File: qristal_mobile/.git/ORIG_HEAD
 ================
-049c6842f1e8f4f602af1b3c9e131edb3068f303
+ee572040e58ee86165e5d71618b8526d777d7229
 
 ================
 File: qristal-api/.git/refs/heads/main
 ================
-856d68300b15b099bce1d64a53c6db5e23cdffe2
+7aad7b6d7cf7cde9b0888d16ff7ff96a4d1700e6
 
 ================
 File: qristal-api/.git/refs/remotes/origin/codex/fix-module-not-found-error
@@ -1430,12 +1475,12 @@ f57c48593ff3eb0960652603d16ef6445ac80be2
 ================
 File: qristal-api/.git/refs/remotes/origin/main
 ================
-856d68300b15b099bce1d64a53c6db5e23cdffe2
+7aad7b6d7cf7cde9b0888d16ff7ff96a4d1700e6
 
 ================
 File: qristal-api/.git/COMMIT_EDITMSG
 ================
-Logging
+shift
 
 ================
 File: qristal-api/.git/config
@@ -1455,7 +1500,7 @@ File: qristal-api/.git/config
 ================
 File: qristal-api/.git/FETCH_HEAD
 ================
-856d68300b15b099bce1d64a53c6db5e23cdffe2		branch 'main' of github.com:linTruthy/qristal-pos-api
+7aad7b6d7cf7cde9b0888d16ff7ff96a4d1700e6		branch 'main' of github.com:linTruthy/qristal-pos-api
 f57c48593ff3eb0960652603d16ef6445ac80be2	not-for-merge	branch 'codex/fix-module-not-found-error' of github.com:linTruthy/qristal-pos-api
 
 ================
@@ -1466,7 +1511,7 @@ ref: refs/heads/main
 ================
 File: qristal-api/.git/ORIG_HEAD
 ================
-856d68300b15b099bce1d64a53c6db5e23cdffe2
+7aad7b6d7cf7cde9b0888d16ff7ff96a4d1700e6
 
 ================
 File: qristal-api/prisma/migrations/20260219201451_init/migration.sql
@@ -1641,6 +1686,32 @@ ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_product_id_f
 ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_inventory_item_id_fkey" FOREIGN KEY ("inventory_item_id") REFERENCES "inventory_items"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 ================
+File: qristal-api/prisma/migrations/20260223065237_add_shifts/migration.sql
+================
+-- AlterTable
+ALTER TABLE "orders" ADD COLUMN     "shift_id" TEXT;
+
+-- CreateTable
+CREATE TABLE "shifts" (
+    "id" TEXT NOT NULL,
+    "user_id" TEXT NOT NULL,
+    "opening_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "closing_time" TIMESTAMP(3),
+    "starting_cash" DECIMAL(10,2) NOT NULL DEFAULT 0,
+    "expected_cash" DECIMAL(10,2),
+    "actual_cash" DECIMAL(10,2),
+    "notes" TEXT,
+
+    CONSTRAINT "shifts_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "orders" ADD CONSTRAINT "orders_shift_id_fkey" FOREIGN KEY ("shift_id") REFERENCES "shifts"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "shifts" ADD CONSTRAINT "shifts_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+================
 File: qristal-api/prisma/migrations/migration_lock.toml
 ================
 # Please do not edit this file manually
@@ -1651,7 +1722,7 @@ provider = "postgresql"
 File: qristal-api/prisma/schema.prisma
 ================
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
 }
 
@@ -1673,19 +1744,20 @@ enum Role {
 }
 
 model User {
-  id           String    @id @default(uuid())
-  pin          String    @unique // Hashed PIN for terminal login
-  role         Role      @default(WAITER)
-  fullName     String    @map("full_name")
-  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
-  isActive     Boolean   @default(true) @map("is_active")
-  
+  id       String  @id @default(uuid())
+  pin      String  @unique // Hashed PIN for terminal login
+  role     Role    @default(WAITER)
+  fullName String  @map("full_name")
+  branchId String  @map("branch_id") // Ready for Phase 3 (Multi-branch)
+  isActive Boolean @default(true) @map("is_active")
+
   // Relations
-  orders       Order[]
-  
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
-  deletedAt    DateTime? @map("deleted_at") // Soft delete
+  orders Order[]
+  shifts Shift[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at") // Soft delete
 
   @@map("users")
 }
@@ -1694,35 +1766,35 @@ model User {
 // 2. MENU & PRODUCTS (Server is source of truth)
 // ------------------------------------------------------
 model Category {
-  id           String    @id @default(uuid())
-  name         String
-  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
-  sortOrder    Int       @default(0) @map("sort_order")
-  
-  products     Product[]
+  id        String  @id @default(uuid())
+  name      String
+  colorHex  String? @map("color_hex") // For the POS UI (e.g., #FF5733)
+  sortOrder Int     @default(0) @map("sort_order")
 
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
-  deletedAt    DateTime? @map("deleted_at")
+  products Product[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
+  deletedAt DateTime? @map("deleted_at")
 
   @@map("categories")
 }
 
 model Product {
-  id           String    @id @default(uuid())
-  categoryId   String    @map("category_id")
-  name         String
-  price        Decimal   @db.Decimal(10, 2)
-  isAvailable  Boolean   @default(true) @map("is_available")
+  id          String  @id @default(uuid())
+  categoryId  String  @map("category_id")
+  name        String
+  price       Decimal @db.Decimal(10, 2)
+  isAvailable Boolean @default(true) @map("is_available")
 
-  category     Category  @relation(fields: [categoryId], references: [id])
-  orderItems   OrderItem[]
+  category   Category    @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
 
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
-  deletedAt    DateTime? @map("deleted_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
+  deletedAt DateTime? @map("deleted_at")
 
-  recipe          RecipeIngredient[]
+  recipe RecipeIngredient[]
 
   @@map("products")
 }
@@ -1743,32 +1815,33 @@ model Order {
   receiptNumber String      @map("receipt_number") // e.g., ORD-0001
   userId        String      @map("user_id") // Waiter who took the order
   tableId       String?     @map("table_id") // Nullable for takeaway
-  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
+  shiftId       String?     @map("shift_id")
+  totalAmount   Decimal     @map("total_amount") @db.Decimal(10, 2)
   status        OrderStatus @default(OPEN)
-  
-  user          User        @relation(fields: [userId], references: [id])
-  items         OrderItem[]
 
-  payments      Payment[]
+  user     User        @relation(fields: [userId], references: [id])
+  items    OrderItem[]
+  shift    Shift?      @relation(fields: [shiftId], references: [id])
+  payments Payment[]
 
-  table         SeatingTable? @relation(fields: [tableId], references: [id])
+  table SeatingTable? @relation(fields: [tableId], references: [id])
 
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("orders")
 }
 
 model OrderItem {
-  id                  String   @id @default(uuid())
-  orderId             String   @map("order_id")
-  productId           String   @map("product_id")
-  quantity            Int
-  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
-  notes               String?  // e.g. "Extra spicy"
-  
-  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product             Product  @relation(fields: [productId], references: [id])
+  id                 String  @id @default(uuid())
+  orderId            String  @map("order_id")
+  productId          String  @map("product_id")
+  quantity           Int
+  priceAtTimeOfOrder Decimal @map("price_at_time_of_order") @db.Decimal(10, 2) // Financial integrity
+  notes              String? // e.g. "Extra spicy"
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
 
   @@map("order_items")
 }
@@ -1781,33 +1854,33 @@ enum PaymentMethod {
 }
 
 model Payment {
-  id            String        @id @default(uuid())
-  orderId       String        @map("order_id")
-  method        PaymentMethod
-  amount        Decimal       @db.Decimal(10, 2)
-  reference     String?       // For Mobile Money Ref / Card Auth Code
-  createdAt     DateTime      @default(now()) @map("created_at")
+  id        String        @id @default(uuid())
+  orderId   String        @map("order_id")
+  method    PaymentMethod
+  amount    Decimal       @db.Decimal(10, 2)
+  reference String? // For Mobile Money Ref / Card Auth Code
+  createdAt DateTime      @default(now()) @map("created_at")
 
-  order         Order         @relation(fields: [orderId], references: [id])
+  order Order @relation(fields: [orderId], references: [id])
 
   @@map("payments")
 }
 
 model SeatingTable {
-  id        String   @id @default(uuid())
-  name      String   // e.g., "T-1", "Bar-2"
-  status    String   @default("FREE") // FREE, OCCUPIED, RESERVED
-  capacity  Int      @default(4)
-  floor     String   @default("Main") // Main, Terrace, VIP
-  
+  id       String @id @default(uuid())
+  name     String // e.g., "T-1", "Bar-2"
+  status   String @default("FREE") // FREE, OCCUPIED, RESERVED
+  capacity Int    @default(4)
+  floor    String @default("Main") // Main, Terrace, VIP
+
   // Coordinates for future Drag-n-Drop UI
-  x         Int      @default(0) 
-  y         Int      @default(0)
+  x Int @default(0)
+  y Int @default(0)
 
-  orders    Order[]
+  orders Order[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
   @@map("seating_tables")
@@ -1818,36 +1891,54 @@ model SeatingTable {
 // ------------------------------------------------------
 
 model InventoryItem {
-  id              String   @id @default(uuid())
-  name            String   // e.g., "Coffee Beans", "Milk", "Burger Bun"
-  sku             String?  @unique
-  unitOfMeasure   String   // e.g., "Kg", "Liters", "Pieces", "Grams"
-  currentStock    Decimal  @default(0) @db.Decimal(10, 4)
-  minimumStock    Decimal  @default(0) @db.Decimal(10, 4) // For low stock alerts
-  costPerUnit     Decimal  @default(0) @db.Decimal(10, 2)
-  
+  id            String  @id @default(uuid())
+  name          String // e.g., "Coffee Beans", "Milk", "Burger Bun"
+  sku           String? @unique
+  unitOfMeasure String // e.g., "Kg", "Liters", "Pieces", "Grams"
+  currentStock  Decimal @default(0) @db.Decimal(10, 4)
+  minimumStock  Decimal @default(0) @db.Decimal(10, 4) // For low stock alerts
+  costPerUnit   Decimal @default(0) @db.Decimal(10, 2)
+
   recipeIngredients RecipeIngredient[]
 
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("inventory_items")
 }
 
 // A Recipe links a Product (what you sell) to InventoryItems (what you use)
 model RecipeIngredient {
-  id              String   @id @default(uuid())
-  productId       String   @map("product_id")
-  inventoryItemId String   @map("inventory_item_id")
-  
+  id              String @id @default(uuid())
+  productId       String @map("product_id")
+  inventoryItemId String @map("inventory_item_id")
+
   // How much of the inventory item is used to make ONE of the product
   // e.g., 1 Cappuccino uses 15 (amount) Grams (from InventoryItem unit) of Coffee Beans
-  amount          Decimal  @db.Decimal(10, 4) 
+  amount Decimal @db.Decimal(10, 4)
 
-  product         Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
-  inventoryItem   InventoryItem @relation(fields: [inventoryItemId], references: [id], onDelete: Restrict)
+  product       Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  inventoryItem InventoryItem @relation(fields: [inventoryItemId], references: [id], onDelete: Restrict)
 
   @@map("recipe_ingredients")
+}
+
+model Shift {
+  id          String    @id @default(uuid())
+  userId      String    @map("user_id")
+  openingTime DateTime  @default(now()) @map("opening_time")
+  closingTime DateTime? @map("closing_time")
+
+  startingCash Decimal  @default(0) @map("starting_cash") @db.Decimal(10, 2)
+  expectedCash Decimal? @map("expected_cash") @db.Decimal(10, 2)
+  actualCash   Decimal? @map("actual_cash") @db.Decimal(10, 2)
+
+  notes String?
+
+  user   User    @relation(fields: [userId], references: [id])
+  orders Order[] // A shift has many orders
+
+  @@map("shifts")
 }
 
 ================
@@ -4046,6 +4137,131 @@ class _PaymentModalState extends ConsumerState<PaymentModal> {
           ),
         ),
       ),
+    );
+  }
+}
+
+================
+File: qristal_mobile/lib/features/shifts/providers/shift_provider.dart
+================
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+import 'package:drift/drift.dart';
+import '../../../core/providers/database_provider.dart';
+import '../../../database/database.dart';
+
+// Holds the currently active Shift ID
+final activeShiftIdProvider = StateProvider<String?>((ref) => null);
+
+class ShiftService {
+  final AppDatabase db;
+  
+  ShiftService(this.db);
+
+  // Check if user has an open shift
+  Future<String?> getActiveShift(String userId) async {
+    final shift = await (db.select(db.shifts)
+      ..where((t) => t.userId.equals(userId) & t.closingTime.isNull()))
+      .getSingleOrNull();
+      
+    return shift?.id;
+  }
+
+  // Open a new shift
+  Future<String> openShift(String userId, double startingCash) async {
+    final shiftId = const Uuid().v4();
+    await db.into(db.shifts).insert(ShiftsCompanion(
+      id: Value(shiftId),
+      userId: Value(userId),
+      openingTime: Value(DateTime.now()),
+      startingCash: Value(startingCash),
+      isSynced: const Value(false),
+    ));
+    return shiftId;
+  }
+
+  // Close shift (calculate totals)
+  Future<void> closeShift(String shiftId, double actualCash) async {
+    // 1. Calculate expected cash (Starting Cash + Cash Payments)
+    final shift = await (db.select(db.shifts)..where((t) => t.id.equals(shiftId))).getSingle();
+    
+    final payments = await (db.select(db.payments)
+      ..join([innerJoin(db.orders, db.orders.id.equalsExp(db.payments.orderId))])
+      ..where((t) => db.orders.shiftId.equals(shiftId) & db.payments.method.equals('CASH'))
+    ).get();
+
+    double cashSales = payments.fold(0, (sum, p) => sum + p.amount);
+    double expected = shift.startingCash + cashSales;
+
+    // 2. Update the shift
+    await (db.update(db.shifts)..where((t) => t.id.equals(shiftId))).write(
+      ShiftsCompanion(
+        closingTime: Value(DateTime.now()),
+        expectedCash: Value(expected),
+        actualCash: Value(actualCash),
+        isSynced: const Value(false),
+      )
+    );
+  }
+}
+
+final shiftServiceProvider = Provider((ref) => ShiftService(ref.watch(databaseProvider)));
+
+================
+File: qristal_mobile/lib/features/shifts/screens/open_shift_dialog.dart
+================
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/shift_provider.dart';
+
+class OpenShiftDialog extends ConsumerStatefulWidget {
+  final String userId;
+  const OpenShiftDialog({super.key, required this.userId});
+
+  @override
+  ConsumerState<OpenShiftDialog> createState() => _OpenShiftDialogState();
+}
+
+class _OpenShiftDialogState extends ConsumerState<OpenShiftDialog> {
+  final _cashController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Open Register"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Enter the starting cash in the till:"),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _cashController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              labelText: "Starting Cash (UGX)",
+              prefixIcon: Icon(Icons.attach_money),
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () async {
+            final startingCash = double.tryParse(_cashController.text) ?? 0.0;
+            final shiftId = await ref
+                .read(shiftServiceProvider)
+                .openShift(widget.userId, startingCash);
+
+            // Set active shift in state
+            ref.read(activeShiftIdProvider.notifier).state = shiftId;
+
+            if (context.mounted) {
+              Navigator.of(context).pop(); // Close dialog
+            }
+          },
+          child: const Text("Open Shift"),
+        )
+      ],
     );
   }
 }
@@ -7665,6 +7881,586 @@ class ProductsCompanion extends UpdateCompanion<Product> {
   }
 }
 
+class $ShiftsTable extends Shifts with TableInfo<$ShiftsTable, Shift> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ShiftsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+    'user_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _openingTimeMeta = const VerificationMeta(
+    'openingTime',
+  );
+  @override
+  late final GeneratedColumn<DateTime> openingTime = GeneratedColumn<DateTime>(
+    'opening_time',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _closingTimeMeta = const VerificationMeta(
+    'closingTime',
+  );
+  @override
+  late final GeneratedColumn<DateTime> closingTime = GeneratedColumn<DateTime>(
+    'closing_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _startingCashMeta = const VerificationMeta(
+    'startingCash',
+  );
+  @override
+  late final GeneratedColumn<double> startingCash = GeneratedColumn<double>(
+    'starting_cash',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0.0),
+  );
+  static const VerificationMeta _expectedCashMeta = const VerificationMeta(
+    'expectedCash',
+  );
+  @override
+  late final GeneratedColumn<double> expectedCash = GeneratedColumn<double>(
+    'expected_cash',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _actualCashMeta = const VerificationMeta(
+    'actualCash',
+  );
+  @override
+  late final GeneratedColumn<double> actualCash = GeneratedColumn<double>(
+    'actual_cash',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    userId,
+    openingTime,
+    closingTime,
+    startingCash,
+    expectedCash,
+    actualCash,
+    notes,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'shifts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Shift> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('opening_time')) {
+      context.handle(
+        _openingTimeMeta,
+        openingTime.isAcceptableOrUnknown(
+          data['opening_time']!,
+          _openingTimeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_openingTimeMeta);
+    }
+    if (data.containsKey('closing_time')) {
+      context.handle(
+        _closingTimeMeta,
+        closingTime.isAcceptableOrUnknown(
+          data['closing_time']!,
+          _closingTimeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('starting_cash')) {
+      context.handle(
+        _startingCashMeta,
+        startingCash.isAcceptableOrUnknown(
+          data['starting_cash']!,
+          _startingCashMeta,
+        ),
+      );
+    }
+    if (data.containsKey('expected_cash')) {
+      context.handle(
+        _expectedCashMeta,
+        expectedCash.isAcceptableOrUnknown(
+          data['expected_cash']!,
+          _expectedCashMeta,
+        ),
+      );
+    }
+    if (data.containsKey('actual_cash')) {
+      context.handle(
+        _actualCashMeta,
+        actualCash.isAcceptableOrUnknown(data['actual_cash']!, _actualCashMeta),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Shift map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Shift(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      )!,
+      openingTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}opening_time'],
+      )!,
+      closingTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}closing_time'],
+      ),
+      startingCash: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}starting_cash'],
+      )!,
+      expectedCash: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}expected_cash'],
+      ),
+      actualCash: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}actual_cash'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $ShiftsTable createAlias(String alias) {
+    return $ShiftsTable(attachedDatabase, alias);
+  }
+}
+
+class Shift extends DataClass implements Insertable<Shift> {
+  final String id;
+  final String userId;
+  final DateTime openingTime;
+  final DateTime? closingTime;
+  final double startingCash;
+  final double? expectedCash;
+  final double? actualCash;
+  final String? notes;
+  final bool isSynced;
+  const Shift({
+    required this.id,
+    required this.userId,
+    required this.openingTime,
+    this.closingTime,
+    required this.startingCash,
+    this.expectedCash,
+    this.actualCash,
+    this.notes,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['user_id'] = Variable<String>(userId);
+    map['opening_time'] = Variable<DateTime>(openingTime);
+    if (!nullToAbsent || closingTime != null) {
+      map['closing_time'] = Variable<DateTime>(closingTime);
+    }
+    map['starting_cash'] = Variable<double>(startingCash);
+    if (!nullToAbsent || expectedCash != null) {
+      map['expected_cash'] = Variable<double>(expectedCash);
+    }
+    if (!nullToAbsent || actualCash != null) {
+      map['actual_cash'] = Variable<double>(actualCash);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  ShiftsCompanion toCompanion(bool nullToAbsent) {
+    return ShiftsCompanion(
+      id: Value(id),
+      userId: Value(userId),
+      openingTime: Value(openingTime),
+      closingTime: closingTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(closingTime),
+      startingCash: Value(startingCash),
+      expectedCash: expectedCash == null && nullToAbsent
+          ? const Value.absent()
+          : Value(expectedCash),
+      actualCash: actualCash == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actualCash),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory Shift.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Shift(
+      id: serializer.fromJson<String>(json['id']),
+      userId: serializer.fromJson<String>(json['userId']),
+      openingTime: serializer.fromJson<DateTime>(json['openingTime']),
+      closingTime: serializer.fromJson<DateTime?>(json['closingTime']),
+      startingCash: serializer.fromJson<double>(json['startingCash']),
+      expectedCash: serializer.fromJson<double?>(json['expectedCash']),
+      actualCash: serializer.fromJson<double?>(json['actualCash']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'userId': serializer.toJson<String>(userId),
+      'openingTime': serializer.toJson<DateTime>(openingTime),
+      'closingTime': serializer.toJson<DateTime?>(closingTime),
+      'startingCash': serializer.toJson<double>(startingCash),
+      'expectedCash': serializer.toJson<double?>(expectedCash),
+      'actualCash': serializer.toJson<double?>(actualCash),
+      'notes': serializer.toJson<String?>(notes),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  Shift copyWith({
+    String? id,
+    String? userId,
+    DateTime? openingTime,
+    Value<DateTime?> closingTime = const Value.absent(),
+    double? startingCash,
+    Value<double?> expectedCash = const Value.absent(),
+    Value<double?> actualCash = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    bool? isSynced,
+  }) => Shift(
+    id: id ?? this.id,
+    userId: userId ?? this.userId,
+    openingTime: openingTime ?? this.openingTime,
+    closingTime: closingTime.present ? closingTime.value : this.closingTime,
+    startingCash: startingCash ?? this.startingCash,
+    expectedCash: expectedCash.present ? expectedCash.value : this.expectedCash,
+    actualCash: actualCash.present ? actualCash.value : this.actualCash,
+    notes: notes.present ? notes.value : this.notes,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  Shift copyWithCompanion(ShiftsCompanion data) {
+    return Shift(
+      id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      openingTime: data.openingTime.present
+          ? data.openingTime.value
+          : this.openingTime,
+      closingTime: data.closingTime.present
+          ? data.closingTime.value
+          : this.closingTime,
+      startingCash: data.startingCash.present
+          ? data.startingCash.value
+          : this.startingCash,
+      expectedCash: data.expectedCash.present
+          ? data.expectedCash.value
+          : this.expectedCash,
+      actualCash: data.actualCash.present
+          ? data.actualCash.value
+          : this.actualCash,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Shift(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('openingTime: $openingTime, ')
+          ..write('closingTime: $closingTime, ')
+          ..write('startingCash: $startingCash, ')
+          ..write('expectedCash: $expectedCash, ')
+          ..write('actualCash: $actualCash, ')
+          ..write('notes: $notes, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    userId,
+    openingTime,
+    closingTime,
+    startingCash,
+    expectedCash,
+    actualCash,
+    notes,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Shift &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.openingTime == this.openingTime &&
+          other.closingTime == this.closingTime &&
+          other.startingCash == this.startingCash &&
+          other.expectedCash == this.expectedCash &&
+          other.actualCash == this.actualCash &&
+          other.notes == this.notes &&
+          other.isSynced == this.isSynced);
+}
+
+class ShiftsCompanion extends UpdateCompanion<Shift> {
+  final Value<String> id;
+  final Value<String> userId;
+  final Value<DateTime> openingTime;
+  final Value<DateTime?> closingTime;
+  final Value<double> startingCash;
+  final Value<double?> expectedCash;
+  final Value<double?> actualCash;
+  final Value<String?> notes;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const ShiftsCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.openingTime = const Value.absent(),
+    this.closingTime = const Value.absent(),
+    this.startingCash = const Value.absent(),
+    this.expectedCash = const Value.absent(),
+    this.actualCash = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ShiftsCompanion.insert({
+    required String id,
+    required String userId,
+    required DateTime openingTime,
+    this.closingTime = const Value.absent(),
+    this.startingCash = const Value.absent(),
+    this.expectedCash = const Value.absent(),
+    this.actualCash = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       userId = Value(userId),
+       openingTime = Value(openingTime);
+  static Insertable<Shift> custom({
+    Expression<String>? id,
+    Expression<String>? userId,
+    Expression<DateTime>? openingTime,
+    Expression<DateTime>? closingTime,
+    Expression<double>? startingCash,
+    Expression<double>? expectedCash,
+    Expression<double>? actualCash,
+    Expression<String>? notes,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (openingTime != null) 'opening_time': openingTime,
+      if (closingTime != null) 'closing_time': closingTime,
+      if (startingCash != null) 'starting_cash': startingCash,
+      if (expectedCash != null) 'expected_cash': expectedCash,
+      if (actualCash != null) 'actual_cash': actualCash,
+      if (notes != null) 'notes': notes,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ShiftsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? userId,
+    Value<DateTime>? openingTime,
+    Value<DateTime?>? closingTime,
+    Value<double>? startingCash,
+    Value<double?>? expectedCash,
+    Value<double?>? actualCash,
+    Value<String?>? notes,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return ShiftsCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      openingTime: openingTime ?? this.openingTime,
+      closingTime: closingTime ?? this.closingTime,
+      startingCash: startingCash ?? this.startingCash,
+      expectedCash: expectedCash ?? this.expectedCash,
+      actualCash: actualCash ?? this.actualCash,
+      notes: notes ?? this.notes,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (openingTime.present) {
+      map['opening_time'] = Variable<DateTime>(openingTime.value);
+    }
+    if (closingTime.present) {
+      map['closing_time'] = Variable<DateTime>(closingTime.value);
+    }
+    if (startingCash.present) {
+      map['starting_cash'] = Variable<double>(startingCash.value);
+    }
+    if (expectedCash.present) {
+      map['expected_cash'] = Variable<double>(expectedCash.value);
+    }
+    if (actualCash.present) {
+      map['actual_cash'] = Variable<double>(actualCash.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ShiftsCompanion(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('openingTime: $openingTime, ')
+          ..write('closingTime: $closingTime, ')
+          ..write('startingCash: $startingCash, ')
+          ..write('expectedCash: $expectedCash, ')
+          ..write('actualCash: $actualCash, ')
+          ..write('notes: $notes, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
   @override
   final GeneratedDatabase attachedDatabase;
@@ -7752,6 +8548,20 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _shiftIdMeta = const VerificationMeta(
+    'shiftId',
+  );
+  @override
+  late final GeneratedColumn<String> shiftId = GeneratedColumn<String>(
+    'shift_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES shifts (id)',
+    ),
+  );
   static const VerificationMeta _isSyncedMeta = const VerificationMeta(
     'isSynced',
   );
@@ -7777,6 +8587,7 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
     status,
     createdAt,
     updatedAt,
+    shiftId,
     isSynced,
   ];
   @override
@@ -7856,6 +8667,14 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
+    if (data.containsKey('shift_id')) {
+      context.handle(
+        _shiftIdMeta,
+        shiftId.isAcceptableOrUnknown(data['shift_id']!, _shiftIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftIdMeta);
+    }
     if (data.containsKey('is_synced')) {
       context.handle(
         _isSyncedMeta,
@@ -7903,6 +8722,10 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
       )!,
+      shiftId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift_id'],
+      )!,
       isSynced: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}is_synced'],
@@ -7925,6 +8748,7 @@ class Order extends DataClass implements Insertable<Order> {
   final String status;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String shiftId;
   final bool isSynced;
   const Order({
     required this.id,
@@ -7935,6 +8759,7 @@ class Order extends DataClass implements Insertable<Order> {
     required this.status,
     required this.createdAt,
     required this.updatedAt,
+    required this.shiftId,
     required this.isSynced,
   });
   @override
@@ -7950,6 +8775,7 @@ class Order extends DataClass implements Insertable<Order> {
     map['status'] = Variable<String>(status);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['shift_id'] = Variable<String>(shiftId);
     map['is_synced'] = Variable<bool>(isSynced);
     return map;
   }
@@ -7966,6 +8792,7 @@ class Order extends DataClass implements Insertable<Order> {
       status: Value(status),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
+      shiftId: Value(shiftId),
       isSynced: Value(isSynced),
     );
   }
@@ -7984,6 +8811,7 @@ class Order extends DataClass implements Insertable<Order> {
       status: serializer.fromJson<String>(json['status']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      shiftId: serializer.fromJson<String>(json['shiftId']),
       isSynced: serializer.fromJson<bool>(json['isSynced']),
     );
   }
@@ -7999,6 +8827,7 @@ class Order extends DataClass implements Insertable<Order> {
       'status': serializer.toJson<String>(status),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'shiftId': serializer.toJson<String>(shiftId),
       'isSynced': serializer.toJson<bool>(isSynced),
     };
   }
@@ -8012,6 +8841,7 @@ class Order extends DataClass implements Insertable<Order> {
     String? status,
     DateTime? createdAt,
     DateTime? updatedAt,
+    String? shiftId,
     bool? isSynced,
   }) => Order(
     id: id ?? this.id,
@@ -8022,6 +8852,7 @@ class Order extends DataClass implements Insertable<Order> {
     status: status ?? this.status,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
+    shiftId: shiftId ?? this.shiftId,
     isSynced: isSynced ?? this.isSynced,
   );
   Order copyWithCompanion(OrdersCompanion data) {
@@ -8038,6 +8869,7 @@ class Order extends DataClass implements Insertable<Order> {
       status: data.status.present ? data.status.value : this.status,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      shiftId: data.shiftId.present ? data.shiftId.value : this.shiftId,
       isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
     );
   }
@@ -8053,6 +8885,7 @@ class Order extends DataClass implements Insertable<Order> {
           ..write('status: $status, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('shiftId: $shiftId, ')
           ..write('isSynced: $isSynced')
           ..write(')'))
         .toString();
@@ -8068,6 +8901,7 @@ class Order extends DataClass implements Insertable<Order> {
     status,
     createdAt,
     updatedAt,
+    shiftId,
     isSynced,
   );
   @override
@@ -8082,6 +8916,7 @@ class Order extends DataClass implements Insertable<Order> {
           other.status == this.status &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
+          other.shiftId == this.shiftId &&
           other.isSynced == this.isSynced);
 }
 
@@ -8094,6 +8929,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
   final Value<String> status;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+  final Value<String> shiftId;
   final Value<bool> isSynced;
   final Value<int> rowid;
   const OrdersCompanion({
@@ -8105,6 +8941,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     this.status = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.shiftId = const Value.absent(),
     this.isSynced = const Value.absent(),
     this.rowid = const Value.absent(),
   });
@@ -8117,6 +8954,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     required String status,
     required DateTime createdAt,
     required DateTime updatedAt,
+    required String shiftId,
     this.isSynced = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
@@ -8125,7 +8963,8 @@ class OrdersCompanion extends UpdateCompanion<Order> {
        totalAmount = Value(totalAmount),
        status = Value(status),
        createdAt = Value(createdAt),
-       updatedAt = Value(updatedAt);
+       updatedAt = Value(updatedAt),
+       shiftId = Value(shiftId);
   static Insertable<Order> custom({
     Expression<String>? id,
     Expression<String>? receiptNumber,
@@ -8135,6 +8974,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     Expression<String>? status,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
+    Expression<String>? shiftId,
     Expression<bool>? isSynced,
     Expression<int>? rowid,
   }) {
@@ -8147,6 +8987,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
       if (status != null) 'status': status,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (shiftId != null) 'shift_id': shiftId,
       if (isSynced != null) 'is_synced': isSynced,
       if (rowid != null) 'rowid': rowid,
     });
@@ -8161,6 +9002,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     Value<String>? status,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
+    Value<String>? shiftId,
     Value<bool>? isSynced,
     Value<int>? rowid,
   }) {
@@ -8173,6 +9015,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      shiftId: shiftId ?? this.shiftId,
       isSynced: isSynced ?? this.isSynced,
       rowid: rowid ?? this.rowid,
     );
@@ -8205,6 +9048,9 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
+    if (shiftId.present) {
+      map['shift_id'] = Variable<String>(shiftId.value);
+    }
     if (isSynced.present) {
       map['is_synced'] = Variable<bool>(isSynced.value);
     }
@@ -8225,6 +9071,7 @@ class OrdersCompanion extends UpdateCompanion<Order> {
           ..write('status: $status, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('shiftId: $shiftId, ')
           ..write('isSynced: $isSynced, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -9418,6 +10265,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $ProductsTable products = $ProductsTable(this);
+  late final $ShiftsTable shifts = $ShiftsTable(this);
   late final $OrdersTable orders = $OrdersTable(this);
   late final $OrderItemsTable orderItems = $OrderItemsTable(this);
   late final $PaymentsTable payments = $PaymentsTable(this);
@@ -9429,6 +10277,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     categories,
     products,
+    shifts,
     orders,
     orderItems,
     payments,
@@ -10169,6 +11018,385 @@ typedef $$ProductsTableProcessedTableManager =
       Product,
       PrefetchHooks Function({bool categoryId, bool orderItemsRefs})
     >;
+typedef $$ShiftsTableCreateCompanionBuilder =
+    ShiftsCompanion Function({
+      required String id,
+      required String userId,
+      required DateTime openingTime,
+      Value<DateTime?> closingTime,
+      Value<double> startingCash,
+      Value<double?> expectedCash,
+      Value<double?> actualCash,
+      Value<String?> notes,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$ShiftsTableUpdateCompanionBuilder =
+    ShiftsCompanion Function({
+      Value<String> id,
+      Value<String> userId,
+      Value<DateTime> openingTime,
+      Value<DateTime?> closingTime,
+      Value<double> startingCash,
+      Value<double?> expectedCash,
+      Value<double?> actualCash,
+      Value<String?> notes,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+final class $$ShiftsTableReferences
+    extends BaseReferences<_$AppDatabase, $ShiftsTable, Shift> {
+  $$ShiftsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$OrdersTable, List<Order>> _ordersRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.orders,
+    aliasName: $_aliasNameGenerator(db.shifts.id, db.orders.shiftId),
+  );
+
+  $$OrdersTableProcessedTableManager get ordersRefs {
+    final manager = $$OrdersTableTableManager(
+      $_db,
+      $_db.orders,
+    ).filter((f) => f.shiftId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_ordersRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$ShiftsTableFilterComposer
+    extends Composer<_$AppDatabase, $ShiftsTable> {
+  $$ShiftsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get openingTime => $composableBuilder(
+    column: $table.openingTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get closingTime => $composableBuilder(
+    column: $table.closingTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get startingCash => $composableBuilder(
+    column: $table.startingCash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get expectedCash => $composableBuilder(
+    column: $table.expectedCash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get actualCash => $composableBuilder(
+    column: $table.actualCash,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> ordersRefs(
+    Expression<bool> Function($$OrdersTableFilterComposer f) f,
+  ) {
+    final $$OrdersTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.orders,
+      getReferencedColumn: (t) => t.shiftId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrdersTableFilterComposer(
+            $db: $db,
+            $table: $db.orders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ShiftsTableOrderingComposer
+    extends Composer<_$AppDatabase, $ShiftsTable> {
+  $$ShiftsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get openingTime => $composableBuilder(
+    column: $table.openingTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get closingTime => $composableBuilder(
+    column: $table.closingTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get startingCash => $composableBuilder(
+    column: $table.startingCash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get expectedCash => $composableBuilder(
+    column: $table.expectedCash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get actualCash => $composableBuilder(
+    column: $table.actualCash,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ShiftsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ShiftsTable> {
+  $$ShiftsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get openingTime => $composableBuilder(
+    column: $table.openingTime,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get closingTime => $composableBuilder(
+    column: $table.closingTime,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get startingCash => $composableBuilder(
+    column: $table.startingCash,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get expectedCash => $composableBuilder(
+    column: $table.expectedCash,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get actualCash => $composableBuilder(
+    column: $table.actualCash,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+
+  Expression<T> ordersRefs<T extends Object>(
+    Expression<T> Function($$OrdersTableAnnotationComposer a) f,
+  ) {
+    final $$OrdersTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.orders,
+      getReferencedColumn: (t) => t.shiftId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$OrdersTableAnnotationComposer(
+            $db: $db,
+            $table: $db.orders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$ShiftsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ShiftsTable,
+          Shift,
+          $$ShiftsTableFilterComposer,
+          $$ShiftsTableOrderingComposer,
+          $$ShiftsTableAnnotationComposer,
+          $$ShiftsTableCreateCompanionBuilder,
+          $$ShiftsTableUpdateCompanionBuilder,
+          (Shift, $$ShiftsTableReferences),
+          Shift,
+          PrefetchHooks Function({bool ordersRefs})
+        > {
+  $$ShiftsTableTableManager(_$AppDatabase db, $ShiftsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ShiftsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ShiftsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ShiftsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> userId = const Value.absent(),
+                Value<DateTime> openingTime = const Value.absent(),
+                Value<DateTime?> closingTime = const Value.absent(),
+                Value<double> startingCash = const Value.absent(),
+                Value<double?> expectedCash = const Value.absent(),
+                Value<double?> actualCash = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ShiftsCompanion(
+                id: id,
+                userId: userId,
+                openingTime: openingTime,
+                closingTime: closingTime,
+                startingCash: startingCash,
+                expectedCash: expectedCash,
+                actualCash: actualCash,
+                notes: notes,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String userId,
+                required DateTime openingTime,
+                Value<DateTime?> closingTime = const Value.absent(),
+                Value<double> startingCash = const Value.absent(),
+                Value<double?> expectedCash = const Value.absent(),
+                Value<double?> actualCash = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ShiftsCompanion.insert(
+                id: id,
+                userId: userId,
+                openingTime: openingTime,
+                closingTime: closingTime,
+                startingCash: startingCash,
+                expectedCash: expectedCash,
+                actualCash: actualCash,
+                notes: notes,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) =>
+                    (e.readTable(table), $$ShiftsTableReferences(db, table, e)),
+              )
+              .toList(),
+          prefetchHooksCallback: ({ordersRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (ordersRefs) db.orders],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (ordersRefs)
+                    await $_getPrefetchedData<Shift, $ShiftsTable, Order>(
+                      currentTable: table,
+                      referencedTable: $$ShiftsTableReferences._ordersRefsTable(
+                        db,
+                      ),
+                      managerFromTypedResult: (p0) =>
+                          $$ShiftsTableReferences(db, table, p0).ordersRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.shiftId == item.id),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ShiftsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ShiftsTable,
+      Shift,
+      $$ShiftsTableFilterComposer,
+      $$ShiftsTableOrderingComposer,
+      $$ShiftsTableAnnotationComposer,
+      $$ShiftsTableCreateCompanionBuilder,
+      $$ShiftsTableUpdateCompanionBuilder,
+      (Shift, $$ShiftsTableReferences),
+      Shift,
+      PrefetchHooks Function({bool ordersRefs})
+    >;
 typedef $$OrdersTableCreateCompanionBuilder =
     OrdersCompanion Function({
       required String id,
@@ -10179,6 +11407,7 @@ typedef $$OrdersTableCreateCompanionBuilder =
       required String status,
       required DateTime createdAt,
       required DateTime updatedAt,
+      required String shiftId,
       Value<bool> isSynced,
       Value<int> rowid,
     });
@@ -10192,6 +11421,7 @@ typedef $$OrdersTableUpdateCompanionBuilder =
       Value<String> status,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
+      Value<String> shiftId,
       Value<bool> isSynced,
       Value<int> rowid,
     });
@@ -10199,6 +11429,24 @@ typedef $$OrdersTableUpdateCompanionBuilder =
 final class $$OrdersTableReferences
     extends BaseReferences<_$AppDatabase, $OrdersTable, Order> {
   $$OrdersTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $ShiftsTable _shiftIdTable(_$AppDatabase db) => db.shifts.createAlias(
+    $_aliasNameGenerator(db.orders.shiftId, db.shifts.id),
+  );
+
+  $$ShiftsTableProcessedTableManager get shiftId {
+    final $_column = $_itemColumn<String>('shift_id')!;
+
+    final manager = $$ShiftsTableTableManager(
+      $_db,
+      $_db.shifts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_shiftIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 
   static MultiTypedResultKey<$OrderItemsTable, List<OrderItem>>
   _orderItemsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
@@ -10291,6 +11539,29 @@ class $$OrdersTableFilterComposer
     column: $table.isSynced,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$ShiftsTableFilterComposer get shiftId {
+    final $$ShiftsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.shiftId,
+      referencedTable: $db.shifts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ShiftsTableFilterComposer(
+            $db: $db,
+            $table: $db.shifts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   Expression<bool> orderItemsRefs(
     Expression<bool> Function($$OrderItemsTableFilterComposer f) f,
@@ -10396,6 +11667,29 @@ class $$OrdersTableOrderingComposer
     column: $table.isSynced,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$ShiftsTableOrderingComposer get shiftId {
+    final $$ShiftsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.shiftId,
+      referencedTable: $db.shifts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ShiftsTableOrderingComposer(
+            $db: $db,
+            $table: $db.shifts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$OrdersTableAnnotationComposer
@@ -10437,6 +11731,29 @@ class $$OrdersTableAnnotationComposer
 
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
+
+  $$ShiftsTableAnnotationComposer get shiftId {
+    final $$ShiftsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.shiftId,
+      referencedTable: $db.shifts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ShiftsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.shifts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 
   Expression<T> orderItemsRefs<T extends Object>(
     Expression<T> Function($$OrderItemsTableAnnotationComposer a) f,
@@ -10502,7 +11819,11 @@ class $$OrdersTableTableManager
           $$OrdersTableUpdateCompanionBuilder,
           (Order, $$OrdersTableReferences),
           Order,
-          PrefetchHooks Function({bool orderItemsRefs, bool paymentsRefs})
+          PrefetchHooks Function({
+            bool shiftId,
+            bool orderItemsRefs,
+            bool paymentsRefs,
+          })
         > {
   $$OrdersTableTableManager(_$AppDatabase db, $OrdersTable table)
     : super(
@@ -10525,6 +11846,7 @@ class $$OrdersTableTableManager
                 Value<String> status = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<String> shiftId = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => OrdersCompanion(
@@ -10536,6 +11858,7 @@ class $$OrdersTableTableManager
                 status: status,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                shiftId: shiftId,
                 isSynced: isSynced,
                 rowid: rowid,
               ),
@@ -10549,6 +11872,7 @@ class $$OrdersTableTableManager
                 required String status,
                 required DateTime createdAt,
                 required DateTime updatedAt,
+                required String shiftId,
                 Value<bool> isSynced = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => OrdersCompanion.insert(
@@ -10560,6 +11884,7 @@ class $$OrdersTableTableManager
                 status: status,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                shiftId: shiftId,
                 isSynced: isSynced,
                 rowid: rowid,
               ),
@@ -10570,14 +11895,49 @@ class $$OrdersTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({orderItemsRefs = false, paymentsRefs = false}) {
+              ({
+                shiftId = false,
+                orderItemsRefs = false,
+                paymentsRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (orderItemsRefs) db.orderItems,
                     if (paymentsRefs) db.payments,
                   ],
-                  addJoins: null,
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (shiftId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.shiftId,
+                                    referencedTable: $$OrdersTableReferences
+                                        ._shiftIdTable(db),
+                                    referencedColumn: $$OrdersTableReferences
+                                        ._shiftIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
                   getPrefetchedDataCallback: (items) async {
                     return [
                       if (orderItemsRefs)
@@ -10638,7 +11998,11 @@ typedef $$OrdersTableProcessedTableManager =
       $$OrdersTableUpdateCompanionBuilder,
       (Order, $$OrdersTableReferences),
       Order,
-      PrefetchHooks Function({bool orderItemsRefs, bool paymentsRefs})
+      PrefetchHooks Function({
+        bool shiftId,
+        bool orderItemsRefs,
+        bool paymentsRefs,
+      })
     >;
 typedef $$OrderItemsTableCreateCompanionBuilder =
     OrderItemsCompanion Function({
@@ -11612,6 +12976,8 @@ class $AppDatabaseManager {
       $$CategoriesTableTableManager(_db, _db.categories);
   $$ProductsTableTableManager get products =>
       $$ProductsTableTableManager(_db, _db.products);
+  $$ShiftsTableTableManager get shifts =>
+      $$ShiftsTableTableManager(_db, _db.shifts);
   $$OrdersTableTableManager get orders =>
       $$OrdersTableTableManager(_db, _db.orders);
   $$OrderItemsTableTableManager get orderItems =>
@@ -11650,184 +13016,6 @@ class QristalApp extends ConsumerWidget { // Change to ConsumerWidget
       routes: {'/home': (context) => const FloorPlanScreen()},
     );
   }
-}
-
-================
-File: qristal_mobile/lib/database/database.dart
-================
-import 'dart:io';
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as p;
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
-
-part 'database.g.dart';
-
-// 1. Categories Table
-class Categories extends Table {
-  TextColumn get id => text()();
-  TextColumn get name => text()();
-  TextColumn get colorHex => text().nullable()();
-  // Fixed: .defaultValue -> .withDefault
-  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
-  DateTimeColumn get updatedAt => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// 2. Products Table
-class Products extends Table {
-  TextColumn get id => text()();
-  TextColumn get categoryId => text().references(Categories, #id)();
-  TextColumn get name => text()();
-  RealColumn get price => real()();
-  BoolColumn get isAvailable => boolean().withDefault(const Constant(true))();
-  DateTimeColumn get updatedAt => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// 3. Orders Table
-class Orders extends Table {
-  TextColumn get id => text()();
-  TextColumn get receiptNumber => text()();
-  TextColumn get userId => text()();
-  TextColumn get tableId => text().nullable()();
-  RealColumn get totalAmount => real()();
-  TextColumn get status => text()();
-  DateTimeColumn get createdAt => dateTime()();
-  DateTimeColumn get updatedAt => dateTime()();
-
-  // Local-only flag to track what needs to be uploaded
-  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// 4. OrderItems Table (This was missing!)
-class OrderItems extends Table {
-  TextColumn get id => text()();
-  TextColumn get orderId => text().references(Orders, #id)();
-  TextColumn get productId => text().references(Products, #id)();
-  IntColumn get quantity => integer()();
-  RealColumn get priceAtTimeOfOrder => real()();
-  TextColumn get notes => text().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-class Payments extends Table {
-  TextColumn get id => text()();
-  TextColumn get orderId => text().references(Orders, #id)();
-  TextColumn get method => text()(); // 'CASH', 'MOBILE_MONEY', etc.
-  RealColumn get amount => real()();
-  TextColumn get reference => text().nullable()(); // Trans ID
-  DateTimeColumn get createdAt => dateTime()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-class SeatingTables extends Table {
-  TextColumn get id => text()();
-  TextColumn get name => text()();
-  TextColumn get status => text().withDefault(const Constant('FREE'))();
-  TextColumn get floor => text().withDefault(const Constant('Main'))();
-  DateTimeColumn get updatedAt => dateTime().nullable()();
-
-  @override
-  Set<Column> get primaryKey => {id};
-}
-
-// Database Registry
-@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
-class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
-
-  @override
-  int get schemaVersion => 3; // Bump version
-
-  @override
-  MigrationStrategy get migration {
-    return MigrationStrategy(
-      onUpgrade: (Migrator m, int from, int to) async {
-        if (from < 3) {
-          await m.createTable(seatingTables);
-        }
-      },
-    );
-  }
-
-
-  Stream<List<Order>> watchKitchenOrders() {
-    return (select(orders)
-          ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
-          ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
-        .watch();
-  }
-
-  // 2. Get Items for a specific Order (Joined with Product info)
-  Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
-    final query = select(orderItems).join([
-      innerJoin(products, products.id.equalsExp(orderItems.productId)),
-    ])..where(orderItems.orderId.equals(orderId));
-
-    final rows = await query.get();
-
-    return rows.map((row) {
-      return TypedOrderItem(
-        item: row.readTable(orderItems),
-        product: row.readTable(products),
-      );
-    }).toList();
-  }
-
-  // 3. Update Order Status
-  Future<void> updateOrderStatus(String id, String newStatus) async {
-    await (update(orders)..where((t) => t.id.equals(id))).write(
-      OrdersCompanion(
-        status: Value(newStatus),
-        updatedAt: Value(DateTime.now()), // Important for Sync!
-        isSynced: const Value(false), // Mark as dirty so it syncs up
-      ),
-    );
-  }
-}
-
-// Helper class to hold joined data
-class TypedOrderItem {
-  final OrderItem item;
-  final Product product;
-  TypedOrderItem({required this.item, required this.product});
-}
-
-
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    // 1. Get the folder
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
-
-    // 2. FOR ANDROID: Load the native library specifically
-    if (Platform.isAndroid) {
-      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
-
-      // Optional: Explicitly tell sqlite3 where to look if the workaround fails,
-      // though the line above usually fixes it.
-      final cachebase = (await getTemporaryDirectory()).path;
-      sqlite3.tempDirectory = cachebase;
-    }
-
-    // 3. Create the database
-    return NativeDatabase.createInBackground(file);
-  });
 }
 
 ================
@@ -12377,6 +13565,202 @@ export default function Dashboard() {
       </div>
     </main>
   );
+}
+
+================
+File: qristal_mobile/lib/database/database.dart
+================
+import 'dart:io';
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as p;
+import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
+
+part 'database.g.dart';
+
+// 1. Categories Table
+class Categories extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get colorHex => text().nullable()();
+  // Fixed: .defaultValue -> .withDefault
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// 2. Products Table
+class Products extends Table {
+  TextColumn get id => text()();
+  TextColumn get categoryId => text().references(Categories, #id)();
+  TextColumn get name => text()();
+  RealColumn get price => real()();
+  BoolColumn get isAvailable => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// 3. Orders Table
+class Orders extends Table {
+  TextColumn get id => text()();
+  TextColumn get receiptNumber => text()();
+  TextColumn get userId => text()();
+  TextColumn get tableId => text().nullable()();
+  RealColumn get totalAmount => real()();
+  TextColumn get status => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get shiftId => text().references(Shifts, #id)(); 
+
+  // Local-only flag to track what needs to be uploaded
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// 4. OrderItems Table (This was missing!)
+class OrderItems extends Table {
+  TextColumn get id => text()();
+  TextColumn get orderId => text().references(Orders, #id)();
+  TextColumn get productId => text().references(Products, #id)();
+  IntColumn get quantity => integer()();
+  RealColumn get priceAtTimeOfOrder => real()();
+  TextColumn get notes => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class Payments extends Table {
+  TextColumn get id => text()();
+  TextColumn get orderId => text().references(Orders, #id)();
+  TextColumn get method => text()(); // 'CASH', 'MOBILE_MONEY', etc.
+  RealColumn get amount => real()();
+  TextColumn get reference => text().nullable()(); // Trans ID
+  DateTimeColumn get createdAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class SeatingTables extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get status => text().withDefault(const Constant('FREE'))();
+  TextColumn get floor => text().withDefault(const Constant('Main'))();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class Shifts extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  DateTimeColumn get openingTime => dateTime()();
+  DateTimeColumn get closingTime => dateTime().nullable()();
+  
+  RealColumn get startingCash => real().withDefault(const Constant(0.0))();
+  RealColumn get expectedCash => real().nullable()();
+  RealColumn get actualCash => real().nullable()();
+  
+  TextColumn get notes => text().nullable()();
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+// Database Registry
+@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
+class AppDatabase extends _$AppDatabase {
+  AppDatabase() : super(_openConnection());
+
+  @override
+  int get schemaVersion => 4; // Bump version
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onUpgrade: (Migrator m, int from, int to) async {
+        if (from < 3) {
+          await m.createTable(seatingTables);
+        }
+      },
+    );
+  }
+
+
+  Stream<List<Order>> watchKitchenOrders() {
+    return (select(orders)
+          ..where((t) => t.status.isIn(['KITCHEN', 'PREPARING']))
+          ..orderBy([(t) => OrderingTerm(expression: t.createdAt)]))
+        .watch();
+  }
+
+  // 2. Get Items for a specific Order (Joined with Product info)
+  Future<List<TypedOrderItem>> getOrderItems(String orderId) async {
+    final query = select(orderItems).join([
+      innerJoin(products, products.id.equalsExp(orderItems.productId)),
+    ])..where(orderItems.orderId.equals(orderId));
+
+    final rows = await query.get();
+
+    return rows.map((row) {
+      return TypedOrderItem(
+        item: row.readTable(orderItems),
+        product: row.readTable(products),
+      );
+    }).toList();
+  }
+
+  // 3. Update Order Status
+  Future<void> updateOrderStatus(String id, String newStatus) async {
+    await (update(orders)..where((t) => t.id.equals(id))).write(
+      OrdersCompanion(
+        status: Value(newStatus),
+        updatedAt: Value(DateTime.now()), // Important for Sync!
+        isSynced: const Value(false), // Mark as dirty so it syncs up
+      ),
+    );
+  }
+}
+
+// Helper class to hold joined data
+class TypedOrderItem {
+  final OrderItem item;
+  final Product product;
+  TypedOrderItem({required this.item, required this.product});
+}
+
+
+
+LazyDatabase _openConnection() {
+  return LazyDatabase(() async {
+    // 1. Get the folder
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+
+    // 2. FOR ANDROID: Load the native library specifically
+    if (Platform.isAndroid) {
+      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
+
+      // Optional: Explicitly tell sqlite3 where to look if the workaround fails,
+      // though the line above usually fixes it.
+      final cachebase = (await getTemporaryDirectory()).path;
+      sqlite3.tempDirectory = cachebase;
+    }
+
+    // 3. Create the database
+    return NativeDatabase.createInBackground(file);
+  });
 }
 
 ================

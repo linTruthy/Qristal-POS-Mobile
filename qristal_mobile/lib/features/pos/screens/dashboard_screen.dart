@@ -1,17 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../auth/providers/auth_provider.dart';
 import '../../hardware/screens/printer_settings_screen.dart';
 import '../../kitchen/screens/kitchen_screen.dart';
+import '../../shifts/providers/shift_provider.dart';
+import '../../shifts/screens/close_shift_screen.dart';
+import '../../shifts/screens/open_shift_dialog.dart';
 import '../../sync/providers/sync_queue_provider.dart';
 import '../providers/menu_provider.dart';
 import '../providers/cart_provider.dart';
 
-class DashboardScreen extends ConsumerWidget {
+class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends ConsumerState<DashboardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Schedule the check for after the first frame build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAndEnforceShift();
+    });
+  }
+
+  Future<void> _checkAndEnforceShift() async {
+    final userId = ref.read(authControllerProvider).userId;
+    if (userId == null) return;
+
+    final shiftService = ref.read(shiftServiceProvider);
+
+    // 1. Check if we already have an ID in memory state
+    if (ref.read(activeShiftIdProvider) != null) return;
+
+    // 2. Check Database for an existing open shift for this user
+    final existingShiftId = await shiftService.getActiveShift(userId);
+
+    if (existingShiftId != null) {
+      // Restore the shift
+      ref.read(activeShiftIdProvider.notifier).state = existingShiftId;
+    } else {
+      // 3. Force Open Shift
+      if (mounted) {
+        showDialog(
+          context: context,
+          barrierDismissible: false, // User must open shift or logout
+          builder: (context) => OpenShiftDialog(userId: userId),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // Watch sync state to show loading indicator if needed
 
     final syncQueue = ref.watch(syncQueueProvider);
@@ -20,6 +65,47 @@ class DashboardScreen extends ConsumerWidget {
         title: const Text("Qristal POS - Cashier"),
         backgroundColor: AppTheme.surface,
         actions: [
+          // Shift Indicator
+          Consumer(builder: (context, ref, _) {
+            final shiftId = ref.watch(activeShiftIdProvider);
+            return Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Chip(
+                  label: Text(shiftId != null ? "SHIFT OPEN" : "NO SHIFT"),
+                  backgroundColor: shiftId != null
+                      ? Colors.green.withOpacity(0.2)
+                      : Colors.red.withOpacity(0.2),
+                  labelStyle: TextStyle(
+                      color: shiftId != null ? Colors.green : Colors.red,
+                      fontSize: 10),
+                ));
+          }),
+
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'close_shift') {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const CloseShiftScreen()));
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem(
+                  value: 'close_shift',
+                  child: Row(
+                    children: [
+                      Icon(Icons.assignment_turned_in, color: Colors.black),
+                      SizedBox(width: 8),
+                      Text('End Shift / Z-Report'),
+                    ],
+                  ),
+                ),
+              ];
+            },
+          ),
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -79,7 +165,7 @@ class DashboardScreen extends ConsumerWidget {
             flex: 2,
             child: Container(
               color: AppTheme.surface,
-              child: const CategoryList(),
+              child: const CategoryListWidget(),
             ),
           ),
 
@@ -89,14 +175,14 @@ class DashboardScreen extends ConsumerWidget {
             child: Container(
               color: AppTheme.background,
               padding: const EdgeInsets.all(8),
-              child: const ProductGrid(),
+              child: const ProductGridWidget(),
             ),
           ),
 
           // 3. RIGHT COLUMN: Cart / Ticket
           Expanded(
             flex: 3,
-            child: Container(color: Colors.white, child: const CartView()),
+            child: Container(color: Colors.white, child: const CartWidget()),
           ),
         ],
       ),
@@ -126,8 +212,8 @@ Widget _buildSyncIcon(ConnectionStatus status) {
   }
 }
 
-class CategoryList extends ConsumerWidget {
-  const CategoryList({super.key});
+class CategoryListWidget extends ConsumerWidget {
+  const CategoryListWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -182,8 +268,8 @@ class CategoryList extends ConsumerWidget {
   }
 }
 
-class ProductGrid extends ConsumerWidget {
-  const ProductGrid({super.key});
+class ProductGridWidget extends ConsumerWidget {
+  const ProductGridWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -242,8 +328,8 @@ class ProductGrid extends ConsumerWidget {
   }
 }
 
-class CartView extends ConsumerWidget {
-  const CartView({super.key});
+class CartWidget extends ConsumerWidget {
+  const CartWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -382,10 +468,12 @@ class CartView extends ConsumerWidget {
                           await ref.read(cartProvider.notifier).sendToKitchen();
 
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Order sent to kitchen! 🍽️")),
+                            const SnackBar(
+                                content: Text("Order sent to kitchen! 🍽️")),
                           );
                         },
-                  child: const Text("SEND TO KITCHEN", style: TextStyle(fontSize: 20)),
+                  child: const Text("SEND TO KITCHEN",
+                      style: TextStyle(fontSize: 20)),
                 ),
               ),
             ],

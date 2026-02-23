@@ -22,7 +22,7 @@ class SyncService {
     await _pushToWeb(token);
 
     // 2. PULL remote changes (menu updates)
-    await pullFromWeb(token); // (Your existing pull logic moves here)
+    await pullFromWeb(token);
   }
 
   Future<void> pullFromWeb(String token) async {
@@ -197,7 +197,8 @@ class SyncService {
     // 1. Find unsynced orders
     final unsyncedOrders = await (db.select(
       db.orders,
-    )..where((t) => t.isSynced.equals(false))).get();
+    )..where((t) => t.isSynced.equals(false)))
+        .get();
 
     if (unsyncedOrders.isEmpty) return;
 
@@ -212,7 +213,8 @@ class SyncService {
     final orderIds = unsyncedOrders.map((order) => order.id).toList();
     final relatedItems = await (db.select(
       db.orderItems,
-    )..where((t) => t.orderId.isIn(orderIds))).get();
+    )..where((t) => t.orderId.isIn(orderIds)))
+        .get();
 
     for (final item in relatedItems) {
       itemsPayload.add({
@@ -239,7 +241,8 @@ class SyncService {
       // Fetch related payments -> ADDED FOR PAYMENTS
       final payments = await (db.select(
         db.payments,
-      )..where((t) => t.orderId.equals(order.id))).get();
+      )..where((t) => t.orderId.equals(order.id)))
+          .get();
       for (final pay in payments) {
         paymentsPayload.add({
           'id': pay.id,
@@ -250,6 +253,23 @@ class SyncService {
           'createdAt': pay.createdAt.toIso8601String(),
         });
       }
+    }
+    final unsyncedShifts = await (db.select(db.shifts)
+          ..where((t) => t.isSynced.equals(false)))
+        .get();
+    List<Map<String, dynamic>> shiftsPayload = [];
+
+    for (final shift in unsyncedShifts) {
+      shiftsPayload.add({
+        'id': shift.id,
+        'userId': shift.userId,
+        'openingTime': shift.openingTime.toIso8601String(),
+        'closingTime': shift.closingTime?.toIso8601String(),
+        'startingCash': shift.startingCash,
+        'expectedCash': shift.expectedCash,
+        'actualCash': shift.actualCash,
+        'notes': shift.notes,
+      });
     }
 
     if (kDebugMode) {
@@ -264,17 +284,19 @@ class SyncService {
     try {
       final response = await http
           .post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        // Include payments in the payload!
-        body: jsonEncode({
-          'orders': ordersPayload,
-          'orderItems': itemsPayload,
-          'payments': paymentsPayload,
-        }),
+            Uri.parse(
+                '${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $token',
+            },
+            // Include payments in the payload!
+            body: jsonEncode({
+              'orders': ordersPayload,
+              'orderItems': itemsPayload,
+              'payments': paymentsPayload,
+              'shifts': shiftsPayload
+            }),
           )
           .timeout(const Duration(seconds: 20));
 
@@ -290,7 +312,8 @@ class SyncService {
         if (kDebugMode) {
           print("❌ Push failed: ${response.statusCode} - ${response.body}");
         }
-        throw Exception('Push failed: ${response.statusCode} - ${response.body}');
+        throw Exception(
+            'Push failed: ${response.statusCode} - ${response.body}');
       }
     } catch (e) {
       if (kDebugMode) print("❌ Connection error during push: $e");
