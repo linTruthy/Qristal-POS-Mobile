@@ -34,6 +34,14 @@ export class SyncService {
     return 'code' in error && (error as { code?: string }).code === 'P2002';
   }
 
+  private async writeSyncLogSafely(data: Prisma.SyncLogCreateInput): Promise<void> {
+    try {
+      await this.prisma.syncLog.create({ data });
+    } catch (error) {
+      this.logger.error(`Failed to persist sync log: ${this.getErrorMessage(error)}`);
+    }
+  }
+
   async pullChanges(lastSyncTimestamp: string, branchId: string) {
     let lastSyncDate: Date;
 
@@ -94,14 +102,12 @@ export class SyncService {
         seatingTables.length +
         orders.length;
 
-      await this.prisma.syncLog.create({
-        data: {
-          branchId,
-          direction: SyncDirection.PULL,
-          status: SyncStatus.SUCCESS,
-          recordsPulled,
-          finishedAt: new Date(),
-        },
+      await this.writeSyncLogSafely({
+        branchId,
+        direction: SyncDirection.PULL,
+        status: SyncStatus.SUCCESS,
+        recordsPulled,
+        finishedAt: new Date(),
       });
 
       return {
@@ -115,14 +121,12 @@ export class SyncService {
         },
       };
     } catch (error) {
-      await this.prisma.syncLog.create({
-        data: {
-          branchId,
-          direction: SyncDirection.PULL,
-          status: SyncStatus.FAILED,
-          errorMessage: this.getErrorMessage(error),
-          finishedAt: new Date(),
-        },
+      await this.writeSyncLogSafely({
+        branchId,
+        direction: SyncDirection.PULL,
+        status: SyncStatus.FAILED,
+        errorMessage: this.getErrorMessage(error),
+        finishedAt: new Date(),
       });
       throw error;
     }
@@ -305,15 +309,13 @@ export class SyncService {
       const recordsPushed = processedOrders + processedShifts + processedAuditLogs;
       const wasSuccessful = errors.length === 0;
 
-      await this.prisma.syncLog.create({
-        data: {
-          branchId: userBranchId,
-          direction: SyncDirection.PUSH,
-          status: wasSuccessful ? SyncStatus.SUCCESS : SyncStatus.FAILED,
-          recordsPushed,
-          errorMessage: wasSuccessful ? null : JSON.stringify(errors),
-          finishedAt: new Date(),
-        },
+      await this.writeSyncLogSafely({
+        branchId: userBranchId,
+        direction: SyncDirection.PUSH,
+        status: wasSuccessful ? SyncStatus.SUCCESS : SyncStatus.FAILED,
+        recordsPushed,
+        errorMessage: wasSuccessful ? null : JSON.stringify(errors),
+        finishedAt: new Date(),
       });
 
       return {
@@ -324,14 +326,12 @@ export class SyncService {
         errors: errors.length > 0 ? errors : undefined,
       };
     } catch (error) {
-      await this.prisma.syncLog.create({
-        data: {
-          branchId: userBranchId,
-          direction: SyncDirection.PUSH,
-          status: SyncStatus.FAILED,
-          errorMessage: this.getErrorMessage(error),
-          finishedAt: new Date(),
-        },
+      await this.writeSyncLogSafely({
+        branchId: userBranchId,
+        direction: SyncDirection.PUSH,
+        status: SyncStatus.FAILED,
+        errorMessage: this.getErrorMessage(error),
+        finishedAt: new Date(),
       });
 
       throw new BadRequestException(`Push sync failed: ${this.getErrorMessage(error)}`);

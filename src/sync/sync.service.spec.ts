@@ -211,4 +211,56 @@ describe('SyncService', () => {
       }),
     );
   });
+
+  it('does not fail pull when sync log persistence fails', async () => {
+    prisma.category.findMany.mockResolvedValueOnce([]);
+    prisma.product.findMany.mockResolvedValueOnce([]);
+    prisma.user.findMany.mockResolvedValueOnce([]);
+    prisma.seatingTable.findMany.mockResolvedValueOnce([]);
+    prisma.order.findMany.mockResolvedValueOnce([]);
+    prisma.syncLog.create.mockRejectedValueOnce(new Error('sync log table unavailable'));
+
+    const result = await service.pullChanges('', 'BRANCH-01');
+
+    expect(result.changes).toBeDefined();
+  });
+
+  it('does not fail push when sync log persistence fails', async () => {
+    prisma.$transaction.mockImplementationOnce(async (handler: any) => {
+      const tx = {
+        shift: { upsert: jest.fn() },
+        order: {
+          findUnique: jest.fn().mockResolvedValue({ id: 'order-1' }),
+          upsert: jest.fn().mockResolvedValue({ id: 'order-1' }),
+        },
+        orderItem: { upsert: jest.fn() },
+        payment: { create: jest.fn() },
+        auditLog: { create: jest.fn() },
+      };
+
+      await handler(tx);
+    });
+    prisma.syncLog.create.mockRejectedValueOnce(new Error('sync log table unavailable'));
+
+    const result = await service.pushChanges(
+      {
+        orders: [
+          {
+            id: 'order-1',
+            receiptNumber: 'ORD-1',
+            userId: 'user-1',
+            tableId: null,
+            shiftId: null,
+            totalAmount: 40,
+            status: 'OPEN',
+            createdAt: new Date().toISOString(),
+          },
+        ],
+      },
+      'BRANCH-01',
+    );
+
+    expect(result.success).toBe(true);
+  });
+
 });
