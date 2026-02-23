@@ -58,6 +58,8 @@ qristal_mobile/
             main
       HEAD
     objects/
+      00/
+        f72e38429dd0f4756fb4898031136a52e95c17
       01/
         c2e41511f965e6c91a9c77f2995f75df784f9e
       02/
@@ -67,6 +69,7 @@ qristal_mobile/
         f41c8d541710c42fabb2007d31fdd6abc4c986
       04/
         1312bb4bab9b838e144d86a5c7d26cdc710d08
+        9c6842f1e8f4f602af1b3c9e131edb3068f303
         ef206c8607696ac2bb082bb1b46afe648f59f7
       05/
         8ec426c4d30f74356aeffd68596a986f95b70b
@@ -151,6 +154,7 @@ qristal_mobile/
       26/
         c3c93befc1ec977bad3b6b520cb5ebe02e0b44
       27/
+        629b10f12cd8ec69f4331456b7cfc145214ebe
         d93e9f189ddd2cdc5dcf406f71cee2f4754963
       28/
         df5b5aa8d6e9c95fb2f2aa53e10f88c0f7cd3a
@@ -161,6 +165,8 @@ qristal_mobile/
         e92a985a3ddf0c1084d06e8bb868e23a6fb314
       2a/
         21e9c25a41abec82db318a5ec9e1437e787260
+      2b/
+        4d05162c211bba5cd6d52c0d7fbc128db991c8
       2d/
         431f89a29f3a9000c1fade6f0899e6a1af947d
       2e/
@@ -172,6 +178,7 @@ qristal_mobile/
       30/
         4732f8842013497e14bd02f67a55f2614fb8f7
       31/
+        176d32b3a5a8d9857b7cd8b50bf62fa18a1dca
         d3be2f4d8c08b67a0ed2f9509d7a53bd69bada
       32/
         76f48b656e55bd96d4e35632f7a9610dfd7151
@@ -254,6 +261,8 @@ qristal_mobile/
         6372eebdb28e45604e46eeda8dd24651419bc0
         82564480fca437ab426265a4dd6b7944e2991f
         b65733a2b8324351427cf5492517082af2e805
+      4e/
+        2ece4dc4c9a8c00c0bfc351a4f811edf444b80
       4f/
         42d19813572dd6cc576c8254b8adfb4b7dd199
         a0e342ee070474ff8a51331436e28bcc293f2c
@@ -268,6 +277,7 @@ qristal_mobile/
         8254fd784f88bb6083c8fdea803d57c5e2c33d
       52/
         0c14b7a6daa875e065c2f5002fde9e5db95a9b
+        ca8456ada13e456ae08073a95a56f6b60ad718
       53/
         6165d35a42ac4ce974f9cf7ac24a9ba0645acd
       54/
@@ -296,6 +306,7 @@ qristal_mobile/
       5a/
         2047a1728fc6473e3b46e4682ea8888b501718
         88276a7b36980d2efa2689a410aebb67aa65b8
+        b0af269b1a137facd05e511a4c3c791d65d615
       5b/
         57b8e3184d29d5723f7feb65ee4a9eb7d1dd03
         65547313277f7c52a64e125c2164dbb49f73de
@@ -305,6 +316,8 @@ qristal_mobile/
         17b58426d1736a340f4b9b679a573db02428c9
         894dd11d0b6860004e1057f5d931e56c10879f
       5d/
+        00592ac3f8af40b28e2d45b805e9034324ff31
+        12359942af8fb879a372dec7cb6d0414dd7cbc
         5f80da6bb9177da48965b4acf5a1a37c99498d
       60/
         537c675a7a57e4891a6f9d39b5ab6a6e8848f8
@@ -315,6 +328,7 @@ qristal_mobile/
       65/
         16e4e403e42793029cb71ad6a249a90bdd7292
         26e9a6128b3a9bc617c9b6313855c563e8c24b
+        7e37ece46d4083064118400efff9eaf4a468eb
       66/
         a5487a223c9db9c415a840b4451379ec15b214
         a65d1e4a79f230031ec0e0959a721039e7282f
@@ -381,6 +395,8 @@ qristal_mobile/
         c07dddf956ceb6a3f3b6342cc51f9d29d8fed6
       81/
         d44c4d4f90e501507b5c1da5d0549e9dddd3a1
+      82/
+        58a54d8c615c42eca01b2f4585c5a62b3cae76
       84/
         4c7cc646502c41d7ea3df37eff7e06b7fb1307
       87/
@@ -416,6 +432,8 @@ qristal_mobile/
         a6529dc9f0a6df21c6558c5d5c6e5e80f8c68b
       92/
         765696cd9db09f7ec48474176830efc9483494
+      93/
+        e349124a8d799180afc097d0d468d8ec9e2497
       94/
         6fe572ba3d58478f427f0d0e1ac5a7d72214b8
       95/
@@ -440,7 +458,9 @@ qristal_mobile/
         cab57ed1460e33dd57ff7667effcca4dc69694
       9b/
         924a3ec3352d9a9139a9adbf25d45f1e3b02a4
+        9967ca6aff59b67c815faff10591e1ed8a62f3
       9c/
+        368ff1a4a11c8611a66f65c92dc9b5dbdf8ddf
         51a9e7f1f45fc3cae4f90c69f3ca63cab38fb9
         6b7c04713014538dcd1687b26813fb1a051377
         92e4f92fe09052c0a97ac82ca22ce578c58184
@@ -481,6 +501,8 @@ qristal_mobile/
         665c94faf6eeda8a4c64c8694b997ffc1e19fb
         a9a5a2de10b6532baba5b7ecf25a54c4933786
         ba7933805bb49ebbda873201878731a13fc0d0
+      af/
+        32b6910b95df9666977858e6a1216f571d3091
       b0/
         977602f6a5063e9b2aece0c86fbc137d236bec
       b1/
@@ -507,6 +529,7 @@ qristal_mobile/
         ccbe70af97c9d8b78c64c2c53b70636b18f7b5
         f0433b76c11c75c504e777a57bdaac7dd858e4
       ba/
+        0f6f3eb5bad58206232d731030a90d4554ce24
         2b3747bd2ee9d634a7990b8b885703634b7181
       bc/
         628a1d4330652bbd0b4134d01ee5304bbb79ed
@@ -567,6 +590,7 @@ qristal_mobile/
       d4/
         92d0d98c8fdc9f93ad2543bb4f531803e9df72
       d5/
+        e8209a83241e298f42a99e850fe6239ac58beb
         f1c8d34e7a88e3f88bea192c3a370d44689c3c
       d6/
         233034165902aa230956985cea2568d4034126
@@ -610,6 +634,7 @@ qristal_mobile/
         64453265576d5deba1e82827411a1639e4db8d
         d0872a4d9e3b5d48b9197ab2a3263d01582848
       e6/
+        28a358591bef6e7f502b11b6c2a6e089677cd1
         97629470cb468cd298313d7de0c90f8ab6972c
       e7/
         09d6e10744167a833ee9fcb2647037714d2bb1
@@ -669,6 +694,7 @@ qristal_mobile/
         45b19e80d47b2e92fb969e4d6bacb025d4fc71
         58b37f4d61657a0521a647aa5c9fb580298422
         605bc840f7bb713a721358bd422dd94c0755c2
+        6691c06710b596be7a0aeb883b084426a2305b
       fc/
         0c98b4b780c32fb2b4557dee193fc8d01113d7
         1131dfdf1d70ddcdacc4f1aff9ec7d8a21a810
@@ -1153,7 +1179,6 @@ qristal-api/
   package.json
   prisma.config.ts
   README.md
-  repomix-output.txt
   repomix.config.json
   tsconfig.build.json
   tsconfig.json
@@ -1170,22 +1195,36 @@ qristal-dashboard/
     objects/
       05/
         e726d1b4201bc8c7716d2b058279676582e8c0
+      08/
+        de6d229b74ea8ff5115264534c642a10a2511d
       09/
         d57bcde0ea070b03d3c24f3b493e67da5e74de
       14/
         090c4d8a875b5ac4117921ee70f0619e1b99d8
       1b/
         458579e874fcc3784b0bd50df171d353b70821
+      43/
+        e39c6d031d5cbaf624c40b8d21fd45d4aa83cf
+      4f/
+        a156d19fc2ff91d399a7eab3d554bab8ee2c22
       5e/
         f6a520780202a1d6addd833d800ccb1ecac0bb
       61/
         e36849cf7cfa9f1f71b4a3964a4953e3e243d3
+      65/
+        015d061677aa2e8f7d148be2a184b8e426d4d9
       73/
         fcc46e9d119e19ecac53983af4edbd43b99232
+      7a/
+        cee85667d1f7d0c3917040d3d7efb48cf0333d
       84/
         2881313bcadaa86fcf20980dfc41531782f2e1
+      88/
+        262e2750ce167a365e9580a1592cb9b7aed707
       91/
         3e14b9dcba3d2b4d0009df64810fc99ceae522
+      93/
+        166bd7c144df7916c866c381609814f5cf67a9
       94/
         a829ba6d8eaaab4b4f01e0b32d361be1836b6b
       9b/
@@ -1193,6 +1232,8 @@ qristal-dashboard/
       a2/
         982fad35bbcdf73e9758aea8ae012330693d9b
         dc41ecee5ec435200fe7cba2bde4107f823774
+      ab/
+        04cc51ecd1e2ef891a6a47a54a525e77293344
       ac/
         3b427c8c0bc2624128c3ff6374c66766471d85
         e694768c551ac3d889bc12cee8e573a3d12cd7
@@ -1208,6 +1249,10 @@ qristal-dashboard/
         e9e2b1b91f9dfc5f430ecdd9437fd9a0e3ec24
       e2/
         15bc4ccf138bbc38ad58ad57e92135484b3c0f
+      e5/
+        9e78192d97da20c2c9baa245364bc552463b42
+      e7/
+        c8c98015189fee3551c01cf7c1bb476e7d7ad3
       e9/
         ffa3083ad279ecf95fd8eae59cb253e9a539c4
       f7/
@@ -1268,6 +1313,9 @@ cbec4d3234da9f79cf5cd4f64c0108b040ee0327 72488e07c20a9713788927da0670c8cf156081d
 72488e07c20a9713788927da0670c8cf156081da 222151a1c25d31bdbc2fee55e5397f7c0364cedd truthysys <truthysys@gmail.com> 1771771624 +0000	commit: Order kds fix
 222151a1c25d31bdbc2fee55e5397f7c0364cedd 072b762b162da4ccbe00cd4286712a41472e5535 truthysys <truthysys@gmail.com> 1771772902 +0000	commit: Reliable sync
 072b762b162da4ccbe00cd4286712a41472e5535 54a08096d5ef364cba7f6e9209c7fe416f97710a truthysys <truthysys@gmail.com> 1771780249 +0000	commit: Sync order items
+54a08096d5ef364cba7f6e9209c7fe416f97710a 5ab0af269b1a137facd05e511a4c3c791d65d615 truthysys <truthysys@gmail.com> 1771785690 +0000	commit: Decoupl
+5ab0af269b1a137facd05e511a4c3c791d65d615 657e37ece46d4083064118400efff9eaf4a468eb truthysys <truthysys@gmail.com> 1771785695 +0000	pull --tags origin main: Merge made by the 'ort' strategy.
+657e37ece46d4083064118400efff9eaf4a468eb 049c6842f1e8f4f602af1b3c9e131edb3068f303 truthysys <truthysys@gmail.com> 1771788686 +0000	commit: Double order fix
 
 ================
 File: qristal_mobile/.git/logs/refs/remotes/origin/main
@@ -1292,6 +1340,8 @@ cbec4d3234da9f79cf5cd4f64c0108b040ee0327 72488e07c20a9713788927da0670c8cf156081d
 222151a1c25d31bdbc2fee55e5397f7c0364cedd 072b762b162da4ccbe00cd4286712a41472e5535 truthysys <truthysys@gmail.com> 1771772908 +0000	update by push
 072b762b162da4ccbe00cd4286712a41472e5535 54a08096d5ef364cba7f6e9209c7fe416f97710a truthysys <truthysys@gmail.com> 1771780256 +0000	update by push
 54a08096d5ef364cba7f6e9209c7fe416f97710a 40fc422ae526f8ece050736cb2d43c8fe957f605 truthysys <truthysys@gmail.com> 1771783176 +0000	fetch: fast-forward
+40fc422ae526f8ece050736cb2d43c8fe957f605 657e37ece46d4083064118400efff9eaf4a468eb truthysys <truthysys@gmail.com> 1771785696 +0000	update by push
+657e37ece46d4083064118400efff9eaf4a468eb 049c6842f1e8f4f602af1b3c9e131edb3068f303 truthysys <truthysys@gmail.com> 1771788691 +0000	update by push
 
 ================
 File: qristal_mobile/.git/logs/HEAD
@@ -1316,21 +1366,24 @@ cbec4d3234da9f79cf5cd4f64c0108b040ee0327 72488e07c20a9713788927da0670c8cf156081d
 72488e07c20a9713788927da0670c8cf156081da 222151a1c25d31bdbc2fee55e5397f7c0364cedd truthysys <truthysys@gmail.com> 1771771624 +0000	commit: Order kds fix
 222151a1c25d31bdbc2fee55e5397f7c0364cedd 072b762b162da4ccbe00cd4286712a41472e5535 truthysys <truthysys@gmail.com> 1771772902 +0000	commit: Reliable sync
 072b762b162da4ccbe00cd4286712a41472e5535 54a08096d5ef364cba7f6e9209c7fe416f97710a truthysys <truthysys@gmail.com> 1771780249 +0000	commit: Sync order items
+54a08096d5ef364cba7f6e9209c7fe416f97710a 5ab0af269b1a137facd05e511a4c3c791d65d615 truthysys <truthysys@gmail.com> 1771785690 +0000	commit: Decoupl
+5ab0af269b1a137facd05e511a4c3c791d65d615 657e37ece46d4083064118400efff9eaf4a468eb truthysys <truthysys@gmail.com> 1771785695 +0000	pull --tags origin main: Merge made by the 'ort' strategy.
+657e37ece46d4083064118400efff9eaf4a468eb 049c6842f1e8f4f602af1b3c9e131edb3068f303 truthysys <truthysys@gmail.com> 1771788686 +0000	commit: Double order fix
 
 ================
 File: qristal_mobile/.git/refs/heads/main
 ================
-54a08096d5ef364cba7f6e9209c7fe416f97710a
+049c6842f1e8f4f602af1b3c9e131edb3068f303
 
 ================
 File: qristal_mobile/.git/refs/remotes/origin/main
 ================
-40fc422ae526f8ece050736cb2d43c8fe957f605
+049c6842f1e8f4f602af1b3c9e131edb3068f303
 
 ================
 File: qristal_mobile/.git/COMMIT_EDITMSG
 ================
-Sync order items
+Double order fix
 
 ================
 File: qristal_mobile/.git/config
@@ -1352,7 +1405,7 @@ File: qristal_mobile/.git/config
 ================
 File: qristal_mobile/.git/FETCH_HEAD
 ================
-40fc422ae526f8ece050736cb2d43c8fe957f605		branch 'main' of github.com:linTruthy/Qristal-POS-Mobile
+049c6842f1e8f4f602af1b3c9e131edb3068f303		branch 'main' of github.com:linTruthy/Qristal-POS-Mobile
 
 ================
 File: qristal_mobile/.git/HEAD
@@ -1362,7 +1415,7 @@ ref: refs/heads/main
 ================
 File: qristal_mobile/.git/ORIG_HEAD
 ================
-54a08096d5ef364cba7f6e9209c7fe416f97710a
+049c6842f1e8f4f602af1b3c9e131edb3068f303
 
 ================
 File: qristal-api/.git/refs/heads/main
@@ -3225,2019 +3278,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ================
-File: qristal-api/repomix-output.txt
-================
-This file is a merged representation of the entire codebase, combined into a single document by Repomix.
-
-================================================================
-File Summary
-================================================================
-
-Purpose:
---------
-This file contains a packed representation of the entire repository's contents.
-It is designed to be easily consumable by AI systems for analysis, code review,
-or other automated processes.
-
-File Format:
-------------
-The content is organized as follows:
-1. This summary section
-2. Repository information
-3. Directory structure
-4. Repository files (if enabled)
-5. Multiple file entries, each consisting of:
-  a. A separator line (================)
-  b. The file path (File: path/to/file)
-  c. Another separator line
-  d. The full contents of the file
-  e. A blank line
-
-Usage Guidelines:
------------------
-- This file should be treated as read-only. Any changes should be made to the
-  original repository files, not this packed version.
-- When processing this file, use the file path to distinguish
-  between different files in the repository.
-- Be aware that this file may contain sensitive information. Handle it with
-  the same level of security as you would the original repository.
-
-Notes:
-------
-- Some files may have been excluded based on .gitignore rules and Repomix's configuration
-- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
-- Files matching patterns in .gitignore are excluded
-- Files matching default ignore patterns are excluded
-- Files are sorted by Git change count (files with more changes are at the bottom)
-
-
-================================================================
-Directory Structure
-================================================================
-prisma/
-  migrations/
-    20260219201451_init/
-      migration.sql
-    20260221192920_add_payments/
-      migration.sql
-    20260221210510_add_tables/
-      migration.sql
-    20260222111806_add_inventory/
-      migration.sql
-    migration_lock.toml
-  schema.prisma
-  schema.prisma.save
-  seed.ts
-scripts/
-  create-main-entry.cjs
-src/
-  auth/
-    auth.controller.spec.ts
-    auth.controller.ts
-    auth.module.ts
-    auth.service.spec.ts
-    auth.service.ts
-    jwt.strategy.ts
-  events/
-    events.gateway.spec.ts
-    events.gateway.ts
-  inventory/
-    inventory.controller.spec.ts
-    inventory.controller.ts
-    inventory.module.ts
-    inventory.service.spec.ts
-    inventory.service.ts
-  prisma/
-    prisma.module.ts
-    prisma.service.ts
-  sync/
-    sync.controller.spec.ts
-    sync.controller.ts
-    sync.module.ts
-    sync.service.spec.ts
-    sync.service.ts
-  app.controller.spec.ts
-  app.controller.ts
-  app.module.ts
-  app.service.ts
-  main.ts
-test/
-  app.e2e-spec.ts
-  jest-e2e.json
-.gitignore
-.prettierrc
-.repomixignore
-docker-compose.yaml
-eslint.config.mjs
-nest-cli.json
-package.json
-prisma.config.ts
-README.md
-repomix.config.json
-tsconfig.build.json
-tsconfig.json
-
-================================================================
-Files
-================================================================
-
-================
-File: .repomixignore
-================
-# Add patterns to ignore here, one per line
-# Example:
-# *.log
-# tmp/
-
-================
-File: repomix.config.json
-================
-{
-  "$schema": "https://repomix.com/schemas/latest/schema.json",
-  "input": {
-    "maxFileSize": 52428800
-  },
-  "output": {
-    "filePath": "repomix-output.txt",
-    "style": "plain",
-    "parsableStyle": false,
-    "fileSummary": true,
-    "directoryStructure": true,
-    "files": true,
-    "removeComments": false,
-    "removeEmptyLines": false,
-    "compress": false,
-    "topFilesLength": 5,
-    "showLineNumbers": false,
-    "truncateBase64": false,
-    "copyToClipboard": false,
-    "includeFullDirectoryStructure": false,
-    "tokenCountTree": false,
-    "git": {
-      "sortByChanges": true,
-      "sortByChangesMaxCommits": 100,
-      "includeDiffs": false,
-      "includeLogs": false,
-      "includeLogsCount": 50
-    }
-  },
-  "include": [],
-  "ignore": {
-    "useGitignore": true,
-    "useDotIgnore": true,
-    "useDefaultPatterns": true,
-    "customPatterns": []
-  },
-  "security": {
-    "enableSecurityCheck": true
-  },
-  "tokenCount": {
-    "encoding": "o200k_base"
-  }
-}
-
-================
-File: prisma/migrations/20260219201451_init/migration.sql
-================
--- CreateEnum
-CREATE TYPE "Role" AS ENUM ('OWNER', 'MANAGER', 'CASHIER', 'WAITER', 'KITCHEN');
-
--- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('OPEN', 'KITCHEN', 'SERVED', 'CLOSED', 'VOIDED');
-
--- CreateTable
-CREATE TABLE "users" (
-    "id" TEXT NOT NULL,
-    "pin" TEXT NOT NULL,
-    "role" "Role" NOT NULL DEFAULT 'WAITER',
-    "full_name" TEXT NOT NULL,
-    "branch_id" TEXT NOT NULL,
-    "is_active" BOOLEAN NOT NULL DEFAULT true,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-    "deleted_at" TIMESTAMP(3),
-
-    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "categories" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "color_hex" TEXT,
-    "sort_order" INTEGER NOT NULL DEFAULT 0,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-    "deleted_at" TIMESTAMP(3),
-
-    CONSTRAINT "categories_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "products" (
-    "id" TEXT NOT NULL,
-    "category_id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "price" DECIMAL(10,2) NOT NULL,
-    "is_available" BOOLEAN NOT NULL DEFAULT true,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-    "deleted_at" TIMESTAMP(3),
-
-    CONSTRAINT "products_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "orders" (
-    "id" TEXT NOT NULL,
-    "receipt_number" TEXT NOT NULL,
-    "user_id" TEXT NOT NULL,
-    "table_id" TEXT,
-    "total_amount" DECIMAL(10,2) NOT NULL,
-    "status" "OrderStatus" NOT NULL DEFAULT 'OPEN',
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "order_items" (
-    "id" TEXT NOT NULL,
-    "order_id" TEXT NOT NULL,
-    "product_id" TEXT NOT NULL,
-    "quantity" INTEGER NOT NULL,
-    "price_at_time_of_order" DECIMAL(10,2) NOT NULL,
-    "notes" TEXT,
-
-    CONSTRAINT "order_items_pkey" PRIMARY KEY ("id")
-);
-
--- CreateIndex
-CREATE UNIQUE INDEX "users_pin_key" ON "users"("pin");
-
--- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_category_id_fkey" FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "order_items" ADD CONSTRAINT "order_items_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
-================
-File: prisma/migrations/20260221192920_add_payments/migration.sql
-================
--- CreateEnum
-CREATE TYPE "PaymentMethod" AS ENUM ('CASH', 'CARD', 'MOBILE_MONEY', 'OTHER');
-
--- CreateTable
-CREATE TABLE "payments" (
-    "id" TEXT NOT NULL,
-    "order_id" TEXT NOT NULL,
-    "method" "PaymentMethod" NOT NULL,
-    "amount" DECIMAL(10,2) NOT NULL,
-    "reference" TEXT,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
-);
-
--- AddForeignKey
-ALTER TABLE "payments" ADD CONSTRAINT "payments_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "orders"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
-================
-File: prisma/migrations/20260221210510_add_tables/migration.sql
-================
--- CreateTable
-CREATE TABLE "seating_tables" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'FREE',
-    "capacity" INTEGER NOT NULL DEFAULT 4,
-    "floor" TEXT NOT NULL DEFAULT 'Main',
-    "x" INTEGER NOT NULL DEFAULT 0,
-    "y" INTEGER NOT NULL DEFAULT 0,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-    "deleted_at" TIMESTAMP(3),
-
-    CONSTRAINT "seating_tables_pkey" PRIMARY KEY ("id")
-);
-
--- AddForeignKey
-ALTER TABLE "orders" ADD CONSTRAINT "orders_table_id_fkey" FOREIGN KEY ("table_id") REFERENCES "seating_tables"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
-================
-File: prisma/migrations/20260222111806_add_inventory/migration.sql
-================
--- CreateTable
-CREATE TABLE "inventory_items" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "sku" TEXT,
-    "unitOfMeasure" TEXT NOT NULL,
-    "currentStock" DECIMAL(10,4) NOT NULL DEFAULT 0,
-    "minimumStock" DECIMAL(10,4) NOT NULL DEFAULT 0,
-    "costPerUnit" DECIMAL(10,2) NOT NULL DEFAULT 0,
-    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "inventory_items_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "recipe_ingredients" (
-    "id" TEXT NOT NULL,
-    "product_id" TEXT NOT NULL,
-    "inventory_item_id" TEXT NOT NULL,
-    "amount" DECIMAL(10,4) NOT NULL,
-
-    CONSTRAINT "recipe_ingredients_pkey" PRIMARY KEY ("id")
-);
-
--- CreateIndex
-CREATE UNIQUE INDEX "inventory_items_sku_key" ON "inventory_items"("sku");
-
--- AddForeignKey
-ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "recipe_ingredients" ADD CONSTRAINT "recipe_ingredients_inventory_item_id_fkey" FOREIGN KEY ("inventory_item_id") REFERENCES "inventory_items"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
-================
-File: prisma/migrations/migration_lock.toml
-================
-# Please do not edit this file manually
-# It should be added in your version-control system (i.e. Git)
-provider = "postgresql"
-
-================
-File: prisma/schema.prisma.save
-================
-generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
-}
-
-datasource db {
-  provider = "postgresql"
-}
-
-// ------------------------------------------------------
-// 1. AUTH & STAFF
-// ------------------------------------------------------
-enum Role {
-  OWNER
-  MANAGER
-  CASHIER
-  WAITER
-  KITCHEN
-}
-
-model User {
-  id           String    @id @default(uuid())
-  pin          String    @unique // Hashed PIN for terminal login
-  role         Role      @default(WAITER)
-  fullName     String    @map("full_name")
-  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
-  isActive     Boolean   @default(true) @map("is_active")
-  
-  // Relations
-  orders       Order[]
-  
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
-  deletedAt    DateTime? @map("deleted_at") // Soft delete
-
-  @@map("users")
-}
-
-// ------------------------------------------------------
-// 2. MENU & PRODUCTS (Server is source of truth)
-// ------------------------------------------------------
-model Category {
-  id           String    @id @default(uuid())
-  name         String
-  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
-  sortOrder    Int       @default(0) @map("sort_order")
-  
-  products     Product[]
-
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
-  deletedAt    DateTime? @map("deleted_at")
-
-  @@map("categories")
-}
-
-model Product {
-  id           String    @id @default(uuid())
-  categoryId   String    @map("category_id")
-  name         String
-  price        Decimal   @db.Decimal(10, 2)
-  isAvailable  Boolean   @default(true) @map("is_available")
-
-  category     Category  @relation(fields: [categoryId], references: [id])
-  orderItems   OrderItem[]
-
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
-  deletedAt    DateTime? @map("deleted_at")
-
-  @@map("products")
-}
-
-// ------------------------------------------------------
-// 3. ORDERS (Terminals are source of truth, pushed to server)
-// ------------------------------------------------------
-enum OrderStatus {
-  OPEN
-  KITCHEN
-  SERVED
-  CLOSED
-  VOIDED
-}
-
-model Order {
-  id            String      @id @default(uuid()) // Terminals generate this UUID
-  receiptNumber String      @map("receipt_number") // e.g., ORD-0001
-  userId        String      @map("user_id") // Waiter who took the order
-  tableId       String?     @map("table_id") // Nullable for takeaway
-  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
-  status        OrderStatus @default(OPEN)
-  
-  user          User        @relation(fields: [userId], references: [id])
-  items         OrderItem[]
-
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
-
-  @@map("orders")
-}
-
-model OrderItem {
-  id                  String   @id @default(uuid())
-  orderId             String   @map("order_id")
-  productId           String   @map("product_id")
-  quantity            Int
-  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
-  notes               String?  // e.g. "Extra spicy"
-  
-  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product             Product  @relation(fields: [productId], references: [id])
-
-  @@map("order_items")
-}
-x
-
-================
-File: scripts/create-main-entry.cjs
-================
-const { writeFileSync } = require('node:fs');
-const { join } = require('node:path');
-
-const entrypointPath = join(__dirname, '..', 'dist', 'main.js');
-writeFileSync(entrypointPath, "require('./src/main.js');\n", 'utf8');
-console.log(`Created ${entrypointPath}`);
-
-================
-File: src/auth/auth.controller.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from './auth.controller';
-
-describe('AuthController', () => {
-  let controller: AuthController;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AuthController],
-    }).compile();
-
-    controller = module.get<AuthController>(AuthController);
-  });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
-
-================
-File: src/auth/auth.controller.ts
-================
-// src/auth/auth.controller.ts
-import { Controller, Post, Body, UnauthorizedException } from '@nestjs/common';
-import { AuthService } from './auth.service';
-
-@Controller('auth')
-export class AuthController {
-  constructor(private authService: AuthService) {}
-
-  @Post('login')
-  async login(@Body() body: { id: string; pin: string }) {
-    const user = await this.authService.validateUser(body.id, body.pin);
-    if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-    return this.authService.login(user);
-  }
-}
-
-================
-File: src/auth/auth.module.ts
-================
-// src/auth/auth.module.ts
-import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
-
-@Module({
-  imports: [
-    PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '24h' },
-    }),
-  ],
-  providers: [AuthService, JwtStrategy],
-  controllers: [AuthController],
-})
-export class AuthModule {}
-
-================
-File: src/auth/auth.service.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
-
-describe('AuthService', () => {
-  let service: AuthService;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
-    }).compile();
-
-    service = module.get<AuthService>(AuthService);
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
-
-================
-File: src/auth/auth.service.ts
-================
-// src/auth/auth.service.ts
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from '../prisma/prisma.service';
-import * as bcrypt from 'bcrypt';
-
-@Injectable()
-export class AuthService {
-  constructor(
-    private prisma: PrismaService,
-    private jwtService: JwtService
-  ) {}
-
-  async validateUser(userId: string, pin: string): Promise<any> {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (user && (await bcrypt.compare(pin, user.pin))) {
-      const { pin, ...result } = user;
-      return result;
-    }
-    return null;
-  }
-
-  async login(user: any) {
-    const payload = { sub: user.id, role: user.role, branchId: user.branchId };
-    return {
-      access_token: this.jwtService.sign(payload),
-      user: user
-    };
-  }
-}
-
-================
-File: src/auth/jwt.strategy.ts
-================
-// src/auth/jwt.strategy.ts
-import { ExtractJwt, Strategy } from 'passport-jwt';
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: process.env.JWT_SECRET,
-    });
-  }
-
-  async validate(payload: any) {
-    // This return value is added to Request object (req.user)
-    return { userId: payload.sub, role: payload.role, branchId: payload.branchId };
-  }
-}
-
-================
-File: src/events/events.gateway.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { EventsGateway } from './events.gateway';
-
-describe('EventsGateway', () => {
-  let gateway: EventsGateway;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [EventsGateway],
-    }).compile();
-
-    gateway = module.get<EventsGateway>(EventsGateway);
-  });
-
-  it('should be defined', () => {
-    expect(gateway).toBeDefined();
-  });
-});
-
-================
-File: src/events/events.gateway.ts
-================
-import {
-  WebSocketGateway,
-  WebSocketServer,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-} from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
-import { Logger } from '@nestjs/common';
-
-// Allow any origin for now to avoid CORS issues during dev/testing across devices
-@WebSocketGateway({
-  cors: {
-    origin: '*',
-  },
-})
-export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer()
-  server: Server;
-
-  private logger: Logger = new Logger('EventsGateway');
-
-  handleConnection(client: Socket) {
-    this.logger.log(`Client connected: ${client.id}`);
-  }
-
-  handleDisconnect(client: Socket) {
-    this.logger.log(`Client disconnected: ${client.id}`);
-  }
-
-  // --- Methods to emit events from other services ---
-
-  // Call this when an order is received from the POS
-  emitNewOrder(orderData: any) {
-    this.server.emit('newOrder', orderData);
-  }
-
-  // Call this when inventory is updated
-  emitInventoryUpdate(inventoryData: any) {
-    this.server.emit('inventoryUpdate', inventoryData);
-  }
-}
-
-================
-File: src/inventory/inventory.controller.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { InventoryController } from './inventory.controller';
-
-describe('InventoryController', () => {
-  let controller: InventoryController;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [InventoryController],
-    }).compile();
-
-    controller = module.get<InventoryController>(InventoryController);
-  });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
-
-================
-File: src/inventory/inventory.controller.ts
-================
-import { Controller, Get } from '@nestjs/common';
-import { InventoryService } from './inventory.service';
-
-@Controller('inventory')
-export class InventoryController {
-  constructor(private readonly inventoryService: InventoryService) {}
-
-  @Get()
-  async getInventory() {
-    return this.inventoryService.getInventoryStatus();
-  }
-}
-
-================
-File: src/inventory/inventory.module.ts
-================
-import { Module } from '@nestjs/common';
-import { InventoryService } from './inventory.service';
-import { InventoryController } from './inventory.controller';
-
-@Module({
-  providers: [InventoryService],
-  controllers: [InventoryController]
-})
-export class InventoryModule {}
-
-================
-File: src/inventory/inventory.service.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { InventoryService } from './inventory.service';
-
-describe('InventoryService', () => {
-  let service: InventoryService;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [InventoryService],
-    }).compile();
-
-    service = module.get<InventoryService>(InventoryService);
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
-
-================
-File: src/inventory/inventory.service.ts
-================
-import { Injectable, Logger } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-
-@Injectable()
-export class InventoryService {
-  private readonly logger = new Logger(InventoryService.name);
-
-  constructor(private prisma: PrismaService) {}
-
-  /**
-   * Processes inventory deductions for a given order.
-   * This should be called after an order is successfully synced from the POS.
-   */
-  async deductStockForOrder(orderId: string) {
-    try {
-      // 1. Fetch the order and its items
-      const order = await this.prisma.order.findUnique({
-        where: { id: orderId },
-        include: { items: true },
-      });
-
-      if (!order) {
-        this.logger.error(`Order ${orderId} not found for inventory deduction.`);
-        return;
-      }
-
-      this.logger.log(`Processing inventory for Order: ${order.receiptNumber}`);
-
-      // 2. Loop through each item in the order
-      for (const orderItem of order.items) {
-        
-        // 3. Find the recipe for this product
-        const recipeIngredients = await this.prisma.recipeIngredient.findMany({
-          where: { productId: orderItem.productId },
-        });
-
-        if (recipeIngredients.length === 0) {
-            // It's a product without a recipe (maybe a retail item), skip deduction or handle retail logic.
-            continue; 
-        }
-
-        // 4. Calculate total deduction and update inventory
-        for (const ingredient of recipeIngredients) {
-            // quantity ordered * amount needed per item
-            const totalDeduction = Number(orderItem.quantity) * Number(ingredient.amount);
-
-            await this.prisma.inventoryItem.update({
-                where: { id: ingredient.inventoryItemId },
-                data: {
-                    currentStock: {
-                        decrement: totalDeduction
-                    }
-                }
-            });
-
-            this.logger.debug(`Deducted ${totalDeduction} from InventoryItem ${ingredient.inventoryItemId}`);
-        }
-      }
-    } catch (error) {
-        this.logger.error(`Failed to deduct inventory for order ${orderId}: ${error.message}`);
-    }
-  }
-
-  async getInventoryStatus() {
-    return this.prisma.inventoryItem.findMany({
-      orderBy: { currentStock: 'asc' }, // Order by lowest stock first
-    });
-  }
-}
-
-================
-File: src/prisma/prisma.module.ts
-================
-import { Global, Module } from '@nestjs/common';
-import { PrismaService } from './prisma.service';
-
-@Global() // Makes PrismaService available everywhere without importing the module
-@Module({
-    providers: [PrismaService],
-    exports: [PrismaService],
-})
-export class PrismaModule {}
-
-================
-File: src/prisma/prisma.service.ts
-================
-import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-
-@Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit {
-  async onModuleInit() {
-    await this.$connect();
-  }
-}
-
-================
-File: src/sync/sync.controller.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { SyncController } from './sync.controller';
-
-describe('SyncController', () => {
-  let controller: SyncController;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [SyncController],
-    }).compile();
-
-    controller = module.get<SyncController>(SyncController);
-  });
-
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
-});
-
-================
-File: src/sync/sync.controller.ts
-================
-// src/sync/sync.controller.ts
-import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport'; // Built-in guard
-import { SyncService } from './sync.service';
-
-@Controller('sync')
-@UseGuards(AuthGuard('jwt')) // This protects all routes in this controller
-export class SyncController {
-    constructor(private readonly syncService: SyncService) { }
-
-    @Get('pull')
-    async pull(@Query('lastSyncTimestamp') lastSyncTimestamp: string) {
-        return this.syncService.pullChanges(lastSyncTimestamp);
-    }
-
-    @Post('push')
-    async push(@Body() payload: any) {
-        return this.syncService.pushChanges(payload);
-    }
-}
-
-================
-File: src/sync/sync.module.ts
-================
-import { Module } from '@nestjs/common';
-import { SyncService } from './sync.service';
-import { SyncController } from './sync.controller';
-
-@Module({
-  providers: [SyncService],
-  controllers: [SyncController]
-})
-export class SyncModule {}
-
-================
-File: src/sync/sync.service.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { SyncService } from './sync.service';
-
-describe('SyncService', () => {
-  let service: SyncService;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [SyncService],
-    }).compile();
-
-    service = module.get<SyncService>(SyncService);
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
-
-================
-File: src/app.controller.spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
-describe('AppController', () => {
-  let appController: AppController;
-
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
-    }).compile();
-
-    appController = app.get<AppController>(AppController);
-  });
-
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
-    });
-  });
-});
-
-================
-File: src/app.controller.ts
-================
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-}
-
-================
-File: src/app.service.ts
-================
-import { Injectable } from '@nestjs/common';
-
-@Injectable()
-export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
-}
-
-================
-File: test/app.e2e-spec.ts
-================
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import request from 'supertest';
-import { App } from 'supertest/types';
-import { AppModule } from './../src/app.module';
-
-describe('AppController (e2e)', () => {
-  let app: INestApplication<App>;
-
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
-
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
-
-================
-File: test/jest-e2e.json
-================
-{
-  "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": ".",
-  "testEnvironment": "node",
-  "testRegex": ".e2e-spec.ts$",
-  "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
-  }
-}
-
-================
-File: .gitignore
-================
-# compiled output
-/dist
-/node_modules
-/build
-
-# Logs
-logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-
-# OS
-.DS_Store
-
-# Tests
-/coverage
-/.nyc_output
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
-
-# temp directory
-.temp
-.tmp
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-
-/generated/prisma
-
-================
-File: .prettierrc
-================
-{
-  "singleQuote": true,
-  "trailingComma": "all"
-}
-
-================
-File: docker-compose.yaml
-================
-version: '3.8'
-services:
-  postgres:
-    image: postgres:15-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: qristal_user
-      POSTGRES_PASSWORD: qristal_password
-      POSTGRES_DB: qristal_db
-    ports:
-      - '5432:5432'
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:
-
-================
-File: eslint.config.mjs
-================
-// @ts-check
-import eslint from '@eslint/js';
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-
-export default tseslint.config(
-  {
-    ignores: ['eslint.config.mjs'],
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  eslintPluginPrettierRecommended,
-  {
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.jest,
-      },
-      sourceType: 'commonjs',
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
-  {
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn',
-      "prettier/prettier": ["error", { endOfLine: "auto" }],
-    },
-  },
-);
-
-================
-File: nest-cli.json
-================
-{
-  "$schema": "https://json.schemastore.org/nest-cli",
-  "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
-  "compilerOptions": {
-    "deleteOutDir": true
-  }
-}
-
-================
-File: prisma.config.ts
-================
-import "dotenv/config";
-import { defineConfig, env } from "@prisma/config";
-
-export default defineConfig({
-  schema: "prisma/schema.prisma",
-  datasource: {
-    url: env("DATABASE_URL"),
-  },
-});
-
-================
-File: README.md
-================
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
-================
-File: tsconfig.build.json
-================
-{
-  "extends": "./tsconfig.json",
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
-}
-
-================
-File: tsconfig.json
-================
-{
-  "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2023",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
-  }
-}
-
-================
-File: src/main.ts
-================
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  
-  // Enable CORS so your Flutter Web/Mobile can talk to it
-  app.enableCors(); 
-  
-  // Listen on 0.0.0.0 to accept external connections in Docker/Railway
-  await app.listen(process.env.PORT || 3000, '0.0.0.0');
-  
-  console.log(`Application is running on: ${await app.getUrl()}`);
-}
-bootstrap();
-
-================
-File: prisma/seed.ts
-================
-import { PrismaClient } from '@prisma/client';
-import * as bcrypt from 'bcrypt';
-
-const prisma = new PrismaClient();
-
-async function main() {
-  console.log('Clearing database...');
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.inventoryItem.deleteMany();
-  await prisma.recipeIngredient.deleteMany();
-  await prisma.seatingTable.deleteMany();
-
-
-  console.log('Seeding data...');
-
-  // 1. Create a User
-  const hashedPin = await bcrypt.hash('1234', 10);
-  const admin = await prisma.user.create({
-    data: {
-      fullName: 'Admin User',
-      pin: hashedPin,
-      role: 'OWNER',
-      branchId: 'BRANCH-01',
-      isActive: true,
-    },
-  });
-
-  // 2. Create Categories
-  const catDrinks = await prisma.category.create({
-    data: { name: 'Drinks', colorHex: '#3498db', sortOrder: 1 },
-  });
-
-  const catFood = await prisma.category.create({
-    data: { name: 'Food', colorHex: '#e67e22', sortOrder: 2 },
-  });
-
-  // 3. Create Products
-  await prisma.product.createMany({
-    data: [
-      {
-        categoryId: catDrinks.id,
-        name: 'Coffee',
-        price: 2.50,
-        isAvailable: true,
-      },
-      {
-        categoryId: catDrinks.id,
-        name: 'Soda',
-        price: 1.50,
-        isAvailable: true,
-      },
-      {
-        categoryId: catFood.id,
-        name: 'Burger',
-        price: 8.50,
-        isAvailable: true,
-      },
-      {
-        categoryId: catFood.id,
-        name: 'Fries',
-        price: 3.00,
-        isAvailable: true,
-      },
-    ],
-  });
-
-  console.log('Seeding Inventory...');
-  
-  const coffeeBeans = await prisma.inventoryItem.create({
-    data: { name: 'Espresso Beans', unitOfMeasure: 'Grams', currentStock: 5000, costPerUnit: 0.05 }
-  });
-
-  const milk = await prisma.inventoryItem.create({
-     data: { name: 'Whole Milk', unitOfMeasure: 'Liters', currentStock: 20, costPerUnit: 2000 }
-  });
-
-  const bun = await prisma.inventoryItem.create({
-    data: { name: 'Brioche Bun', unitOfMeasure: 'Pieces', currentStock: 100, costPerUnit: 500 }
-  });
-
-  const beefPatty = await prisma.inventoryItem.create({
-    data: { name: 'Beef Patty 150g', unitOfMeasure: 'Pieces', currentStock: 100, costPerUnit: 2500 }
-  });
-
-  console.log('Creating Recipes...');
-  
-  // Find the Coffee product we created earlier
-  const coffee = await prisma.product.findFirst({ where: { name: 'Coffee' }});
-  if (coffee) {
-    await prisma.recipeIngredient.createMany({
-        data: [
-            { productId: coffee.id, inventoryItemId: coffeeBeans.id, amount: 18 }, // 18 grams of beans
-            { productId: coffee.id, inventoryItemId: milk.id, amount: 0.2 },       // 200ml milk
-        ]
-    });
-  }
-
-  // Find the Burger product
-  const burger = await prisma.product.findFirst({ where: { name: 'Burger' }});
-  if (burger) {
-    await prisma.recipeIngredient.createMany({
-        data: [
-            { productId: burger.id, inventoryItemId: bun.id, amount: 1 }, 
-            { productId: burger.id, inventoryItemId: beefPatty.id, amount: 1 },
-        ]
-    });
-  }
-  
-  console.log('Seeding Tables...');
-  await prisma.seatingTable.createMany({
-    data: [
-      { name: 'T-01', status: 'FREE', floor: 'Main', x: 0, y: 0 },
-      { name: 'T-02', status: 'FREE', floor: 'Main', x: 1, y: 0 },
-      { name: 'T-03', status: 'OCCUPIED', floor: 'Main', x: 2, y: 0 }, // Mocking an active table
-      { name: 'VIP-1', status: 'FREE', floor: 'VIP', x: 0, y: 1 },
-    ]
-  });
-
-  console.log('Seed data created successfully!');
-}
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
-
-================
-File: src/app.module.ts
-================
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PrismaModule } from './prisma/prisma.module';
-import { SyncModule } from './sync/sync.module';
-import { AuthModule } from './auth/auth.module';
-import { InventoryModule } from './inventory/inventory.module';
-import { EventsGateway } from './events/events.gateway';
-
-@Module({
-  imports: [PrismaModule, SyncModule, AuthModule, InventoryModule],  // Add PrismaModule here
-  controllers: [AppController],
-  providers: [AppService, EventsGateway],
-})
-export class AppModule {}
-
-================
-File: prisma/schema.prisma
-================
-generator client {
-  provider = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
-}
-
-datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
-// ------------------------------------------------------
-// 1. AUTH & STAFF
-// ------------------------------------------------------
-enum Role {
-  OWNER
-  MANAGER
-  CASHIER
-  WAITER
-  KITCHEN
-}
-
-model User {
-  id           String    @id @default(uuid())
-  pin          String    @unique // Hashed PIN for terminal login
-  role         Role      @default(WAITER)
-  fullName     String    @map("full_name")
-  branchId     String    @map("branch_id") // Ready for Phase 3 (Multi-branch)
-  isActive     Boolean   @default(true) @map("is_active")
-  
-  // Relations
-  orders       Order[]
-  
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
-  deletedAt    DateTime? @map("deleted_at") // Soft delete
-
-  @@map("users")
-}
-
-// ------------------------------------------------------
-// 2. MENU & PRODUCTS (Server is source of truth)
-// ------------------------------------------------------
-model Category {
-  id           String    @id @default(uuid())
-  name         String
-  colorHex     String?   @map("color_hex") // For the POS UI (e.g., #FF5733)
-  sortOrder    Int       @default(0) @map("sort_order")
-  
-  products     Product[]
-
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at") // Used by terminal to detect changes
-  deletedAt    DateTime? @map("deleted_at")
-
-  @@map("categories")
-}
-
-model Product {
-  id           String    @id @default(uuid())
-  categoryId   String    @map("category_id")
-  name         String
-  price        Decimal   @db.Decimal(10, 2)
-  isAvailable  Boolean   @default(true) @map("is_available")
-
-  category     Category  @relation(fields: [categoryId], references: [id])
-  orderItems   OrderItem[]
-
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at") // The sync engine monitors this field heavily!
-  deletedAt    DateTime? @map("deleted_at")
-
-  recipe          RecipeIngredient[]
-
-  @@map("products")
-}
-
-// ------------------------------------------------------
-// 3. ORDERS (Terminals are source of truth, pushed to server)
-// ------------------------------------------------------
-enum OrderStatus {
-  OPEN
-  KITCHEN
-  SERVED
-  CLOSED
-  VOIDED
-}
-
-model Order {
-  id            String      @id @default(uuid()) // Terminals generate this UUID
-  receiptNumber String      @map("receipt_number") // e.g., ORD-0001
-  userId        String      @map("user_id") // Waiter who took the order
-  tableId       String?     @map("table_id") // Nullable for takeaway
-  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
-  status        OrderStatus @default(OPEN)
-  
-  user          User        @relation(fields: [userId], references: [id])
-  items         OrderItem[]
-
-  payments      Payment[]
-
-  table         SeatingTable? @relation(fields: [tableId], references: [id])
-
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
-
-  @@map("orders")
-}
-
-model OrderItem {
-  id                  String   @id @default(uuid())
-  orderId             String   @map("order_id")
-  productId           String   @map("product_id")
-  quantity            Int
-  priceAtTimeOfOrder  Decimal  @db.Decimal(10, 2) @map("price_at_time_of_order") // Financial integrity
-  notes               String?  // e.g. "Extra spicy"
-  
-  order               Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product             Product  @relation(fields: [productId], references: [id])
-
-  @@map("order_items")
-}
-
-enum PaymentMethod {
-  CASH
-  CARD
-  MOBILE_MONEY
-  OTHER
-}
-
-model Payment {
-  id            String        @id @default(uuid())
-  orderId       String        @map("order_id")
-  method        PaymentMethod
-  amount        Decimal       @db.Decimal(10, 2)
-  reference     String?       // For Mobile Money Ref / Card Auth Code
-  createdAt     DateTime      @default(now()) @map("created_at")
-
-  order         Order         @relation(fields: [orderId], references: [id])
-
-  @@map("payments")
-}
-
-model SeatingTable {
-  id        String   @id @default(uuid())
-  name      String   // e.g., "T-1", "Bar-2"
-  status    String   @default("FREE") // FREE, OCCUPIED, RESERVED
-  capacity  Int      @default(4)
-  floor     String   @default("Main") // Main, Terrace, VIP
-  
-  // Coordinates for future Drag-n-Drop UI
-  x         Int      @default(0) 
-  y         Int      @default(0)
-
-  orders    Order[]
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
-
-  @@map("seating_tables")
-}
-
-// ------------------------------------------------------
-// 4. INVENTORY & RECIPES
-// ------------------------------------------------------
-
-model InventoryItem {
-  id              String   @id @default(uuid())
-  name            String   // e.g., "Coffee Beans", "Milk", "Burger Bun"
-  sku             String?  @unique
-  unitOfMeasure   String   // e.g., "Kg", "Liters", "Pieces", "Grams"
-  currentStock    Decimal  @default(0) @db.Decimal(10, 4)
-  minimumStock    Decimal  @default(0) @db.Decimal(10, 4) // For low stock alerts
-  costPerUnit     Decimal  @default(0) @db.Decimal(10, 2)
-  
-  recipeIngredients RecipeIngredient[]
-
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
-
-  @@map("inventory_items")
-}
-
-// A Recipe links a Product (what you sell) to InventoryItems (what you use)
-model RecipeIngredient {
-  id              String   @id @default(uuid())
-  productId       String   @map("product_id")
-  inventoryItemId String   @map("inventory_item_id")
-  
-  // How much of the inventory item is used to make ONE of the product
-  // e.g., 1 Cappuccino uses 15 (amount) Grams (from InventoryItem unit) of Coffee Beans
-  amount          Decimal  @db.Decimal(10, 4) 
-
-  product         Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
-  inventoryItem   InventoryItem @relation(fields: [inventoryItemId], references: [id], onDelete: Restrict)
-
-  @@map("recipe_ingredients")
-}
-
-================
-File: src/sync/sync.service.ts
-================
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service'; // Assuming you generated a Prisma module
-import { EventsGateway } from '../events/events.gateway';
-import { InventoryService } from '../inventory/inventory.service';
-
-@Injectable()
-export class SyncService {
-  constructor(private prisma: PrismaService,
-    private inventoryService: InventoryService,
-    private eventsGateway: EventsGateway
-  ) { }
-
-  /**
-   * PULL: Client requests data that has changed since `lastSyncTimestamp`.
-   * The client sends a timestamp (ISO string), and the server returns
-   * all records where `updatedAt > lastSyncTimestamp`.
-   */
-  async pullChanges(lastSyncTimestamp: string) {
-    let lastSyncDate: Date;
-
-    if (!lastSyncTimestamp) {
-      // If no timestamp provided, do a full initial sync (return all data)
-      lastSyncDate = new Date(0); // 1970-01-01
-    } else {
-      lastSyncDate = new Date(lastSyncTimestamp);
-      if (isNaN(lastSyncDate.getTime())) {
-        throw new BadRequestException('Invalid lastSyncTimestamp format.');
-      }
-    }
-
-    // Fetch all updated records
-    const [categories, products, users, seatingTables, orders] = await Promise.all([
-      this.prisma.category.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
-      }),
-      this.prisma.product.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
-      }),
-      this.prisma.user.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
-      }),
-      this.prisma.seatingTable.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
-      }),
-      this.prisma.order.findMany({
-        where: { updatedAt: { gt: lastSyncDate } },
-      }),
-    ]);
-
-    return {
-      timestamp: new Date().toISOString(), // The client will save this for the next sync
-      changes: {
-        categories,
-        products,
-        users,
-        seatingTables,
-        orders,
-      },
-    };
-  }
-
-  /**
-   * PUSH: Client sends new/updated data (orders, transactions) to the server.
-   * Since orders are generated on the POS, the server needs to upsert them.
-   */
-  async pushChanges(payload: any) {
-    const { orders, orderItems, payments } = payload;
-    const errors: { id: any; error: any }[] = [];
-    let processedOrders = 0;
-
-    const newOrderIdsToDeduct: string[] = [];
-
-    const newlyCreatedOrdersForKDS = [];
-    // We use a transaction to ensure data integrity
-    try {
-      await this.prisma.$transaction(async (tx) => {
-
-        // 1. Process Orders
-        if (orders && Array.isArray(orders)) {
-          for (const order of orders) {
-            try {
-              const existing = await tx.order.findUnique({ where: { id: order.id } });
-              const savedOrder = await tx.order.upsert({
-                where: { id: order.id },
-                update: {
-                  status: order.status,
-                  totalAmount: order.totalAmount,
-                  updatedAt: new Date(), // Force server timestamp
-                },
-                create: {
-                  id: order.id,
-                  receiptNumber: order.receiptNumber,
-                  userId: order.userId,
-                  tableId: order.tableId,
-                  totalAmount: order.totalAmount,
-                  status: order.status,
-                  createdAt: new Date(order.createdAt), // Keep original creation time
-                },
-              });
-              processedOrders++;
-              if (!existing) {
-                newOrderIdsToDeduct.push(order.id);
-                newlyCreatedOrdersForKDS.push(savedOrder); // Save for WebSocket
-              }
-
-            } catch (err) {
-              errors.push({ id: order.id, error: err.message });
-            }
-          }
-        }
-
-        // 2. Process Order Items
-        if (orderItems && Array.isArray(orderItems)) {
-          for (const item of orderItems) {
-            try {
-              await tx.orderItem.upsert({
-                where: { id: item.id },
-                update: {
-                  quantity: item.quantity,
-                  notes: item.notes,
-                },
-                create: {
-                  id: item.id,
-                  orderId: item.orderId,
-                  productId: item.productId,
-                  quantity: item.quantity,
-                  priceAtTimeOfOrder: item.priceAtTimeOfOrder,
-                  notes: item.notes,
-                },
-              });
-            } catch (err) {
-              errors.push({ id: item.id, error: err.message });
-            }
-          }
-        }
-
-        // 3. Process Payments
-        if (payments && Array.isArray(payments)) {
-          for (const pay of payments) {
-            try {
-              await tx.payment.create({ // We usually only create payments, not update them
-                data: {
-                  id: pay.id,
-                  orderId: pay.orderId,
-                  method: pay.method, // Ensure Enum mapping matches
-                  amount: pay.amount,
-                  reference: pay.reference,
-                  createdAt: new Date(pay.createdAt),
-                }
-              });
-            } catch (err) {
-              // If it exists, ignore (idempotency), otherwise log error
-              if (!err.message.includes('Unique constraint')) {
-                errors.push({ id: pay.id, error: err.message });
-              }
-            }
-          }
-        }
-      });
-
-      for (const orderId of newOrderIdsToDeduct) {
-        // Fire and forget - don't await this so the POS gets a fast response
-        this.inventoryService.deductStockForOrder(orderId).catch(e =>
-          console.error(`Inventory deduction failed async: ${e}`)
-        );
-      }
-      if (newlyCreatedOrdersForKDS.length > 0) {
-        // In a real app we'd fetch the items too, but sending the signal is enough 
-        // for the KDS to know it needs to pull. Let's send the data.
-        this.eventsGateway.emitNewOrder({ message: 'New orders arrived!' });
-      }
-
-      // 2. Trigger Inventory Deduction (Non-blocking)
-      for (const orderId of newOrderIdsToDeduct) {
-        this.inventoryService.deductStockForOrder(orderId).then(async () => {
-          // After deduction, fetch latest inventory and broadcast to Dashboard
-          const latestInventory = await this.inventoryService.getInventoryStatus();
-          this.eventsGateway.emitInventoryUpdate(latestInventory);
-        }).catch(e => console.error(e));
-      }
-      return {
-        success: true,
-        processedOrders,
-        errors: errors.length > 0 ? errors : undefined,
-      };
-
-    } catch (error) {
-      // Transaction failed
-      throw new BadRequestException(`Push sync failed: ${error.message}`);
-    }
-  }
-}
-
-================
-File: package.json
-================
-{
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
-  },
-  "name": "qristal-api",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
-  "license": "UNLICENSED",
-  "scripts": {
-    "build": "nest build && node scripts/create-main-entry.cjs",
-    "postinstall": "npx prisma generate",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
-  },
-  "dependencies": {
-    "@nestjs/cli": "^11.0.0",
-    "@nestjs/common": "^11.0.1",
-    "@nestjs/core": "^11.0.1",
-    "@nestjs/jwt": "^11.0.2",
-    "@nestjs/passport": "^11.0.5",
-    "@nestjs/platform-express": "^11.0.1",
-    "@nestjs/platform-socket.io": "^11.1.14",
-    "@nestjs/swagger": "^11.2.6",
-    "@nestjs/websockets": "^11.1.14",
-    "@prisma/client": "^5.22.0",
-    "bcrypt": "^6.0.0",
-    "passport-jwt": "^4.0.1",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1",
-    "socket.io": "^4.8.3"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.18.0",
-    "@nestjs/schematics": "^11.0.0",
-    "@nestjs/testing": "^11.0.1",
-    "@prisma/config": "^7.4.1",
-    "@types/bcrypt": "^6.0.0",
-    "@types/express": "^5.0.0",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^22.10.7",
-    "@types/supertest": "^6.0.2",
-    "dotenv": "^17.3.1",
-    "eslint": "^9.18.0",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-prettier": "^5.2.2",
-    "globals": "^16.0.0",
-    "jest": "^30.0.0",
-    "prettier": "^3.4.2",
-    "prisma": "^5.22.0",
-    "source-map-support": "^0.5.21",
-    "supertest": "^7.0.0",
-    "ts-jest": "^29.2.5",
-    "ts-loader": "^9.5.2",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
-  }
-}
-
-
-
-
-
-================================================================
-End of Codebase
-================================================================
-
-================
 File: qristal-api/repomix.config.json
 ================
 {
@@ -5326,33 +3366,39 @@ File: qristal-dashboard/.git/logs/refs/heads/main
 ================
 0000000000000000000000000000000000000000 ac3b427c8c0bc2624128c3ff6374c66766471d85 truthysys <truthysys@gmail.com> 1771763624 +0000	commit (initial): Initial commit
 ac3b427c8c0bc2624128c3ff6374c66766471d85 842881313bcadaa86fcf20980dfc41531782f2e1 truthysys <truthysys@gmail.com> 1771772926 +0000	commit: Reliable socket
+842881313bcadaa86fcf20980dfc41531782f2e1 7acee85667d1f7d0c3917040d3d7efb48cf0333d truthysys <truthysys@gmail.com> 1771785725 +0000	commit: Kds
+7acee85667d1f7d0c3917040d3d7efb48cf0333d 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf truthysys <truthysys@gmail.com> 1771788655 +0000	commit: Fix kds
 
 ================
 File: qristal-dashboard/.git/logs/refs/remotes/origin/main
 ================
 0000000000000000000000000000000000000000 ac3b427c8c0bc2624128c3ff6374c66766471d85 truthysys <truthysys@gmail.com> 1771763769 +0000	update by push
 ac3b427c8c0bc2624128c3ff6374c66766471d85 842881313bcadaa86fcf20980dfc41531782f2e1 truthysys <truthysys@gmail.com> 1771772936 +0000	update by push
+842881313bcadaa86fcf20980dfc41531782f2e1 7acee85667d1f7d0c3917040d3d7efb48cf0333d truthysys <truthysys@gmail.com> 1771785732 +0000	update by push
+7acee85667d1f7d0c3917040d3d7efb48cf0333d 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf truthysys <truthysys@gmail.com> 1771788662 +0000	update by push
 
 ================
 File: qristal-dashboard/.git/logs/HEAD
 ================
 0000000000000000000000000000000000000000 ac3b427c8c0bc2624128c3ff6374c66766471d85 truthysys <truthysys@gmail.com> 1771763624 +0000	commit (initial): Initial commit
 ac3b427c8c0bc2624128c3ff6374c66766471d85 842881313bcadaa86fcf20980dfc41531782f2e1 truthysys <truthysys@gmail.com> 1771772926 +0000	commit: Reliable socket
+842881313bcadaa86fcf20980dfc41531782f2e1 7acee85667d1f7d0c3917040d3d7efb48cf0333d truthysys <truthysys@gmail.com> 1771785725 +0000	commit: Kds
+7acee85667d1f7d0c3917040d3d7efb48cf0333d 43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf truthysys <truthysys@gmail.com> 1771788655 +0000	commit: Fix kds
 
 ================
 File: qristal-dashboard/.git/refs/heads/main
 ================
-842881313bcadaa86fcf20980dfc41531782f2e1
+43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf
 
 ================
 File: qristal-dashboard/.git/refs/remotes/origin/main
 ================
-842881313bcadaa86fcf20980dfc41531782f2e1
+43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf
 
 ================
 File: qristal-dashboard/.git/COMMIT_EDITMSG
 ================
-Reliable socket
+Fix kds
 
 ================
 File: qristal-dashboard/.git/config
@@ -5382,7 +3428,7 @@ ref: refs/heads/main
 ================
 File: qristal-dashboard/.git/ORIG_HEAD
 ================
-842881313bcadaa86fcf20980dfc41531782f2e1
+43e39c6d031d5cbaf624c40b8d21fd45d4aa83cf
 
 ================
 File: qristal_mobile/android/app/src/debug/AndroidManifest.xml
@@ -7811,51 +5857,6 @@ File: repomix.config.json
 }
 
 ================
-File: qristal_mobile/.idx/dev.nix
-================
-{pkgs}: {
-  channel = "stable-24.05";
-  packages = [
-    pkgs.jdk17
-    pkgs.unzip
-    pkgs.openssh
-  ];
-  idx.extensions = [
-    
-  ];
-  idx.previews = {
-    previews = {
-      # web = {
-      #   command = [
-      #     "flutter"
-      #     "run"
-      #     "--machine"
-      #     "-d"
-      #     "web-server"
-      #     "--web-hostname"
-      #     "0.0.0.0"
-      #     "--web-port"
-      #     "$PORT"
-      #   ];
-      #   manager = "flutter";
-      # };
-      # android = {
-      #   command = [
-      #     "flutter"
-      #     "run"
-      #     "--machine"
-      #     "-d"
-      #     "android"
-      #     "-d"
-      #     "localhost:5555"
-      #   ];
-      #   manager = "flutter";
-      # };
-    };
-  };
-}
-
-================
 File: qristal_mobile/android/gradle/wrapper/gradle-wrapper.properties
 ================
 distributionBase=GRADLE_USER_HOME
@@ -8443,6 +6444,51 @@ File: .idx/dev.nix
 }
 
 ================
+File: qristal_mobile/.idx/dev.nix
+================
+{pkgs}: {
+  channel = "stable-24.05";
+  packages = [
+    pkgs.jdk17
+    pkgs.unzip
+    pkgs.openssh
+  ];
+  idx.extensions = [
+    
+  ];
+  idx.previews = {
+    previews = {
+      # web = {
+      #   command = [
+      #     "flutter"
+      #     "run"
+      #     "--machine"
+      #     "-d"
+      #     "web-server"
+      #     "--web-hostname"
+      #     "0.0.0.0"
+      #     "--web-port"
+      #     "$PORT"
+      #   ];
+      #   manager = "flutter";
+      # };
+      android = {
+       command = [
+         "flutter"
+       "run"
+          "--machine"
+        "-d"
+          "android"
+          "-d"
+          "localhost:5555"
+         ];
+        manager = "flutter";
+       };
+    };
+  };
+}
+
+================
 File: qristal_mobile/lib/core/constants/api_constants.dart
 ================
 class ApiConstants {
@@ -8777,168 +6823,6 @@ class OrderService {
       }
     });
   }
-}
-
-================
-File: qristal-dashboard/src/app/page.tsx
-================
-"use client";
-
-import { useCallback, useEffect, useState } from 'react';
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  ReferenceLine,
-} from 'recharts';
-import { io, Socket } from 'socket.io-client';
-
-const SERVER_URL = 'https://qristal-pos-api.onrender.com';
-const REFRESH_INTERVAL_MS = 10000;
-
-type InventoryItem = {
-  id: string;
-  name: string;
-  sku?: string;
-  unitOfMeasure: string;
-  currentStock: number;
-  minimumStock: number;
-  costPerUnit: number;
-};
-
-export default function Dashboard() {
-  const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchInventory = useCallback(async () => {
-    try {
-      const response = await fetch(`${SERVER_URL}/inventory`, {
-        cache: 'no-store',
-      });
-      const data = await response.json();
-      setInventory(data);
-    } catch (error) {
-      console.error('Error fetching inventory:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void fetchInventory();
-
-    const socket: Socket = io(SERVER_URL, {
-      transports: ['websocket', 'polling'],
-      reconnection: true,
-    });
-
-    socket.on('connect', () => {
-      console.log('Dashboard connected to live server!');
-    });
-
-    socket.on('connect_error', (error) => {
-      console.error('Socket connection error, relying on polling fallback:', error.message);
-    });
-
-    const handleInventoryUpdate = (updatedInventoryData: InventoryItem[]) => {
-      console.log('⚡ Real-time inventory update received!');
-      setInventory(updatedInventoryData);
-    };
-
-    // Support both common event names to avoid missing updates because of naming mismatch.
-    socket.on('inventoryUpdate', handleInventoryUpdate);
-    socket.on('inventoryUpdated', handleInventoryUpdate);
-
-    const refreshTimer = setInterval(() => {
-      void fetchInventory();
-    }, REFRESH_INTERVAL_MS);
-
-    return () => {
-      clearInterval(refreshTimer);
-      socket.disconnect();
-    };
-  }, [fetchInventory]);
-
-  if (loading) return <div className="p-8">Loading live data...</div>;
-
-  return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Qristal Dashboard</h1>
-            <p className="text-gray-500">Real-time inventory & analytics</p>
-          </div>
-          <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow">
-            Owner Portal
-          </div>
-        </header>
-
-        {/* Chart Section */}
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
-          <h2 className="text-xl font-bold text-gray-800 mb-6">Current Stock Levels</h2>
-          <div className="h-80 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={inventory} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip cursor={{ fill: '#f3f4f6' }} />
-                <Legend />
-                {/* Red line showing minimum safe stock level at 20 */}
-                <ReferenceLine y={20} label="Low Stock Warning" stroke="red" strokeDasharray="3 3" />
-                <Bar dataKey="currentStock" name="Current Stock" fill="#0EA5E9" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Data Table Section */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Stock</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Cost</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {inventory.map((item) => (
-                <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{item.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-gray-500">{item.sku || 'N/A'}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-gray-500">{item.unitOfMeasure}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-gray-900">{item.currentStock}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-gray-500">UGX {item.costPerUnit}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.currentStock > item.minimumStock ? (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                        In Stock
-                      </span>
-                    ) : (
-                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                        Low Stock
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </main>
-  );
 }
 
 ================
@@ -14171,965 +12055,328 @@ foreach(ffi_plugin ${FLUTTER_FFI_PLUGIN_LIST})
 endforeach(ffi_plugin)
 
 ================
-File: qristal_mobile/lib/features/pos/providers/cart_provider.dart
+File: qristal-dashboard/src/app/page.tsx
 ================
-import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uuid/uuid.dart';
-import '../../../core/providers/database_provider.dart';
-import '../../../database/database.dart';
-import '../../hardware/services/printer_service.dart';
-import '../../auth/providers/auth_provider.dart';
-import '../../sync/providers/sync_provider.dart';
-import '../../tables/screens/floor_plan_screen.dart';
-import '../models/cart_item.dart';
-import '../services/order_service.dart';
-import '../widgets/payment_modal.dart';
+"use client";
 
-class CartNotifier extends StateNotifier<List<CartItem>> {
-  final AppDatabase db;
-  final String? userId;
-  final String userName;
-  final PrinterService printerService; // <--- ADD THIS
-  final Ref ref;
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+} from "recharts";
+import { io, Socket } from "socket.io-client";
 
-  CartNotifier(
-    this.db,
-    this.userId,
-    this.userName,
-    this.printerService,
-    this.ref,
-  ) : super([]);
+const SERVER_URL = "https://qristal-pos-api.onrender.com";
+const REFRESH_INTERVAL_MS = 10000;
+const ORDER_ENDPOINTS = ["/orders", "/orders/kitchen", "/sync/pull?lastSyncTimestamp=1970-01-01T00:00:00.000Z"];
 
-  void addToCart(Product product) {
-    final existingIndex = state.indexWhere(
-      (item) => item.product.id == product.id,
-    );
+type InventoryItem = {
+  id: string;
+  name: string;
+  sku?: string;
+  unitOfMeasure: string;
+  currentStock: number;
+  minimumStock: number;
+  costPerUnit: number;
+};
 
-    if (existingIndex >= 0) {
-      // Item exists, increment quantity
-      final existingItem = state[existingIndex];
-      final updatedItem = existingItem.copyWith(
-        quantity: existingItem.quantity + 1,
-      );
+type KitchenOrder = {
+  id: string;
+  receiptNumber: string;
+  status: string;
+  tableId?: string | null;
+  createdAt: string;
+  totalAmount: number;
+};
 
-      // Update state immutably
-      state = [
-        ...state.sublist(0, existingIndex),
-        updatedItem,
-        ...state.sublist(existingIndex + 1),
-      ];
-    } else {
-      // Add new item
-      state = [...state, CartItem(product: product)];
+type DashboardTab = "inventory" | "kds";
+
+function normalizeKitchenOrders(payload: unknown): KitchenOrder[] {
+  const body = payload as Record<string, unknown>;
+  const list = Array.isArray(payload)
+    ? payload
+    : Array.isArray(body?.orders)
+    ? body.orders
+    : Array.isArray((body?.changes as Record<string, unknown> | undefined)?.orders)
+    ? ((body?.changes as Record<string, unknown>).orders as unknown[])
+    : [];
+
+  return list
+    .map((raw) => {
+      const item = raw as Record<string, unknown>;
+      return {
+        id: String(item.id ?? ""),
+        receiptNumber: String(item.receiptNumber ?? item.receipt_number ?? ""),
+        status: String(item.status ?? ""),
+        tableId: item.tableId ? String(item.tableId) : item.table_id ? String(item.table_id) : null,
+        createdAt: String(item.createdAt ?? item.created_at ?? new Date().toISOString()),
+        totalAmount: Number(item.totalAmount ?? item.total_amount ?? 0),
+      } as KitchenOrder;
+    })
+    .filter((order) => order.id && ["KITCHEN", "PREPARING"].includes(order.status))
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}
+
+export default function Dashboard() {
+  const [inventory, setInventory] = useState<InventoryItem[]>([]);
+  const [kitchenOrders, setKitchenOrders] = useState<KitchenOrder[]>([]);
+  const [activeTab, setActiveTab] = useState<DashboardTab>("inventory");
+  const [loading, setLoading] = useState(true);
+
+  const fetchInventory = useCallback(async () => {
+    try {
+      const response = await fetch(`${SERVER_URL}/inventory`, {
+        cache: "no-store",
+      });
+      const data = await response.json();
+      setInventory(data);
+    } catch (error) {
+      console.error("Error fetching inventory:", error);
     }
-  }
+  }, []);
 
-  void removeFromCart(Product product) {
-    state = state.where((item) => item.product.id != product.id).toList();
-  }
+  const fetchKitchenOrders = useCallback(async () => {
+    try {
+      for (const endpoint of ORDER_ENDPOINTS) {
+        const response = await fetch(`${SERVER_URL}${endpoint}`, {
+          cache: "no-store",
+        });
+        if (!response.ok) continue;
 
-  void clearCart() {
-    state = [];
-  }
-
-  double get totalAmount => state.fold(0, (sum, item) => sum + item.total);
-
-  // Future<void> placeOrder() async {
-  //   if (state.isEmpty || userId == null) return;
-
-  //   final orderId = const Uuid().v4();
-  //   final total = totalAmount; // using the getter
-  //   final now = DateTime.now();
-
-  //   // 1. Transaction to save Order + Items safely
-  //   await db.transaction(() async {
-  //     // Create Header
-  //     await db
-  //         .into(db.orders)
-  //         .insert(
-  //           OrdersCompanion(
-  //             id: Value(orderId),
-  //             receiptNumber: Value(
-  //               orderId.substring(0, 8).toUpperCase(),
-  //             ), // Simple receipt #
-  //             userId: Value(userId!),
-  //             totalAmount: Value(total),
-  //             status: const Value('KITCHEN'), // Send straight to kitchen
-  //             createdAt: Value(now),
-  //             updatedAt: Value(now),
-  //             isSynced: const Value(false),
-  //           ),
-  //         );
-
-  //     // Create Items
-  //     for (var cartItem in state) {
-  //       await db
-  //           .into(db.orderItems)
-  //           .insert(
-  //             OrderItemsCompanion(
-  //               id: Value(const Uuid().v4()),
-  //               orderId: Value(orderId),
-  //               productId: Value(cartItem.product.id),
-  //               quantity: Value(cartItem.quantity),
-  //               priceAtTimeOfOrder: Value(cartItem.product.price),
-  //               notes: Value(cartItem.notes),
-  //             ),
-  //           );
-  //     }
-  //   });
-
-  //   // 2. Clear UI
-  //   state = [];
-
-  //   // 3. Trigger Background Sync immediately so Kitchen sees it
-  //   ref.read(syncControllerProvider.notifier).performSync();
-  // }
-
-  Future<void> checkout(BuildContext context) async {
-    if (state.isEmpty || userId == null) return;
-
-    final total = totalAmount;
-
-    // Show the Dialog
-    showDialog(
-      context: context,
-      builder: (_) => PaymentModal(
-        totalAmount: total,
-        onConfirmed: (method, tendered, refCode) async {
-          await _finalizeOrder(total, method, tendered, refCode);
-        },
-      ),
-    );
-  }
-
-  Future<void> _finalizeOrder(
-    double total,
-    String method,
-    double tendered,
-    String? refCode,
-  ) async {
-    final orderId = const Uuid().v4();
-    final now = DateTime.now();
-    final tableId = ref.read(activeTableIdProvider);
-
-    await db.transaction(() async {
-      // 1. Order
-      await db
-          .into(db.orders)
-          .insert(
-            OrdersCompanion(
-              id: Value(orderId),
-              receiptNumber: Value(
-                orderId.substring(0, 4).toUpperCase(),
-              ), // Short code
-              userId: Value(userId!),
-              tableId: Value(tableId),
-              totalAmount: Value(total),
-              status: const Value('CLOSED'), // Closed because it is paid
-              isSynced: const Value(false),
-              createdAt: Value(now),
-              updatedAt: Value(now),
-            ),
-          );
-      //If a table was selected, update its status to OCCUPIED locally
-      if (tableId != null) {
-        await (db.update(db.seatingTables)..where((t) => t.id.equals(tableId)))
-            .write(SeatingTablesCompanion(status: const Value('OCCUPIED')));
+        const data = await response.json();
+        const normalized = normalizeKitchenOrders(data);
+        if (normalized.length > 0 || endpoint === ORDER_ENDPOINTS[ORDER_ENDPOINTS.length - 1]) {
+          setKitchenOrders(normalized);
+          break;
+        }
       }
-      // 2. Items
-      for (var cartItem in state) {
-        await db
-            .into(db.orderItems)
-            .insert(
-              OrderItemsCompanion(
-                id: Value(const Uuid().v4()),
-                orderId: Value(orderId),
-                productId: Value(cartItem.product.id),
-                quantity: Value(cartItem.quantity),
-                priceAtTimeOfOrder: Value(cartItem.product.price),
-              ),
-            );
-      }
+    } catch (error) {
+      console.error("Error fetching kitchen orders:", error);
+      setKitchenOrders([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-      // 3. Payment
-      await db
-          .into(db.payments)
-          .insert(
-            PaymentsCompanion(
-              id: Value(const Uuid().v4()),
-              orderId: Value(orderId),
-              method: Value(method),
-              amount: Value(total), // We record the bill amount, not tendered
-              reference: Value(refCode),
-              createdAt: Value(now),
-            ),
-          );
+  useEffect(() => {
+    void Promise.all([fetchInventory(), fetchKitchenOrders()]);
+
+    const socket: Socket = io(SERVER_URL, {
+      transports: ["websocket", "polling"],
+      reconnection: true,
     });
 
-    // 2. Trigger Print
-    try {
-      await printerService.printReceipt(
-        orderId: orderId,
-        items: state, // The current cart items
-        total: total,
-        tendered: tendered,
-        paymentMethod: method,
-        cashierName: userName,
+    socket.on("connect", () => {
+      console.log("Dashboard connected to live server!");
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error(
+        "Socket connection error, relying on polling fallback:",
+        error.message,
       );
-    } catch (e) {
-      if (kDebugMode) {
-        print("Printing failed (Device might not be connected): $e");
-      }
-    }
+    });
 
-    // 3. Clear State & Sync
-    state = [];
-    ref.read(syncControllerProvider.notifier).performSync();
-  }
-}
+    const handleInventoryUpdate = (updatedInventoryData: InventoryItem[]) => {
+      setInventory(updatedInventoryData);
+    };
 
-final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
-  final db = ref.watch(databaseProvider);
-  final printerService = ref.watch(
-    printerServiceProvider,
-  ); // <--- INJECT PRINTER SERVICE
-  final authState = ref.watch(authControllerProvider);
+    const refreshTimer = setInterval(() => {
+      void fetchInventory();
+      void fetchKitchenOrders();
+    }, REFRESH_INTERVAL_MS);
 
-  final currentUserId = authState.userId;
-  final currentUserName = authState.userId ?? 'Cashier';
+    socket.on("inventoryUpdate", handleInventoryUpdate);
+    socket.on("inventoryUpdated", handleInventoryUpdate);
+    socket.on("newOrder", () => {
+      void fetchKitchenOrders();
+    });
+    socket.on("orderUpdated", () => {
+      void fetchKitchenOrders();
+    });
 
-  return CartNotifier(db, currentUserId, currentUserName, printerService, ref);
-});
-// Add a Provider for OrderService
-final orderServiceProvider = Provider(
-  (ref) => OrderService(ref.watch(databaseProvider)),
-);
-// Update the Cart Controller to handle checkout
-final checkoutProvider = FutureProvider.family<void, String>((
-  ref,
-  userId,
-) async {
-  final cart = ref.read(cartProvider);
-  if (cart.isEmpty) return;
+    return () => {
+      clearInterval(refreshTimer);
+      socket.disconnect();
+    };
+  }, [fetchInventory, fetchKitchenOrders]);
 
-  final orderService = ref.read(orderServiceProvider);
+  const kdsCounts = useMemo(() => {
+    return {
+      kitchen: kitchenOrders.filter((order) => order.status === "KITCHEN").length,
+      preparing: kitchenOrders.filter((order) => order.status === "PREPARING").length,
+    };
+  }, [kitchenOrders]);
 
-  // Place the order locally
-  await orderService.placeOrder(
-    cartItems: cart,
-    userId: userId,
-    // tableId: null for now (Takeaway)
+  if (loading) return <div className="p-8">Loading live data...</div>;
+
+  return (
+    <main className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-6xl mx-auto">
+        <header className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Qristal Dashboard</h1>
+            <p className="text-gray-500">Owner portal with inventory and kitchen operations</p>
+          </div>
+          <div className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold shadow">
+            Owner Portal
+          </div>
+        </header>
+
+        <div className="mb-6 border-b border-gray-200">
+          <nav className="-mb-px flex gap-6" aria-label="Dashboard sections">
+            <button
+              className={`pb-3 text-sm font-semibold border-b-2 ${
+                activeTab === "inventory"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setActiveTab("inventory")}
+            >
+              Inventory
+            </button>
+            <button
+              className={`pb-3 text-sm font-semibold border-b-2 ${
+                activeTab === "kds"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={() => setActiveTab("kds")}
+            >
+              Web KDS
+            </button>
+          </nav>
+        </div>
+
+        {activeTab === "inventory" ? (
+          <>
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
+              <h2 className="text-xl font-bold text-gray-800 mb-6">Current Stock Levels</h2>
+              <div className="h-80 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={inventory} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} />
+                    <YAxis axisLine={false} tickLine={false} />
+                    <Tooltip cursor={{ fill: "#f3f4f6" }} />
+                    <Legend />
+                    <ReferenceLine y={20} label="Low Stock Warning" stroke="red" strokeDasharray="3 3" />
+                    <Bar dataKey="currentStock" name="Current Stock" fill="#0EA5E9" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Item Name</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Stock</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Unit Cost</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {inventory.map((item) => (
+                    <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{item.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">{item.sku || "N/A"}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">{item.unitOfMeasure}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900">{item.currentStock}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-500">UGX {item.costPerUnit}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.currentStock > item.minimumStock ? (
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            In Stock
+                          </span>
+                        ) : (
+                          <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                            Low Stock
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <section className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-sm text-gray-500">Queued</p>
+                <p className="text-3xl font-bold text-gray-900">{kdsCounts.kitchen}</p>
+              </div>
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-sm text-gray-500">Preparing</p>
+                <p className="text-3xl font-bold text-amber-600">{kdsCounts.preparing}</p>
+              </div>
+              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                <p className="text-sm text-gray-500">Total Active</p>
+                <p className="text-3xl font-bold text-blue-600">{kitchenOrders.length}</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="px-6 py-4 border-b border-gray-100">
+                <h2 className="text-xl font-bold text-gray-800">Kitchen Display Queue</h2>
+                <p className="text-sm text-gray-500 mt-1">Live view of KITCHEN and PREPARING orders</p>
+              </div>
+              {kitchenOrders.length === 0 ? (
+                <div className="p-8 text-center text-gray-500">No active kitchen orders.</div>
+              ) : (
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order #</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Table</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {kitchenOrders.map((order) => (
+                      <tr key={order.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap font-semibold text-gray-900">{order.receiptNumber}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-500">{order.tableId || "Takeaway/Retail"}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span
+                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                              order.status === "PREPARING"
+                                ? "bg-amber-100 text-amber-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}
+                          >
+                            {order.status}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-700">UGX {order.totalAmount}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                          {new Date(order.createdAt).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          </section>
+        )}
+      </div>
+    </main>
   );
-
-  // Clear cart UI
-  ref.read(cartProvider.notifier).clearCart();
-});
-
-================
-File: qristal_mobile/lib/features/pos/screens/dashboard_screen.dart
-================
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_theme.dart';
-import '../../hardware/screens/printer_settings_screen.dart';
-import '../../kitchen/screens/kitchen_screen.dart';
-import '../../sync/providers/sync_provider.dart';
-import '../../sync/providers/sync_queue_provider.dart';
-import '../providers/menu_provider.dart';
-import '../providers/cart_provider.dart';
-
-class DashboardScreen extends ConsumerWidget {
-  const DashboardScreen({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // Watch sync state to show loading indicator if needed
-
-    final syncQueue = ref.watch(syncQueueProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Qristal POS - Cashier"),
-        backgroundColor: AppTheme.surface,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                if (syncQueue.pendingOrders > 0)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      "${syncQueue.pendingOrders} Pending",
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                const SizedBox(width: 8),
-                _buildSyncIcon(syncQueue.status),
-              ],
-            ),
-          ),
-          // Navigation to Kitchen Display System
-          IconButton(
-            icon: const Icon(Icons.soup_kitchen),
-            tooltip: 'Kitchen Display',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const KitchenScreen()),
-              );
-            },
-          ),
-          // Navigation to Printer Settings
-          IconButton(
-            icon: const Icon(Icons.print),
-            tooltip: 'Printer Settings',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const PrinterSettingsScreen(),
-                ),
-              );
-            },
-          ),
-
-          const SizedBox(width: 20),
-        ],
-      ),
-      body: Row(
-        children: [
-          // 1. LEFT COLUMN: Categories
-          Expanded(
-            flex: 2,
-            child: Container(
-              color: AppTheme.surface,
-              child: const CategoryList(),
-            ),
-          ),
-
-          // 2. MIDDLE COLUMN: Products Grid
-          Expanded(
-            flex: 5,
-            child: Container(
-              color: AppTheme.background,
-              padding: const EdgeInsets.all(8),
-              child: const ProductGrid(),
-            ),
-          ),
-
-          // 3. RIGHT COLUMN: Cart / Ticket
-          Expanded(
-            flex: 3,
-            child: Container(color: Colors.white, child: const CartView()),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// --- WIDGETS ---
-
-Widget _buildSyncIcon(ConnectionStatus status) {
-  switch (status) {
-    case ConnectionStatus.syncing:
-      return const SizedBox(
-        width: 20,
-        height: 20,
-        child: CircularProgressIndicator(
-          color: AppTheme.qristalBlue,
-          strokeWidth: 2,
-        ),
-      );
-    case ConnectionStatus.offline:
-      return const Icon(Icons.cloud_off, color: Colors.grey);
-    case ConnectionStatus.error:
-      return const Icon(Icons.error_outline, color: AppTheme.error);
-    case ConnectionStatus.online:
-      return const Icon(Icons.cloud_done, color: AppTheme.emerald);
-  }
-}
-
-class CategoryList extends ConsumerWidget {
-  const CategoryList({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final categoriesAsync = ref.watch(categoriesStreamProvider);
-    final selectedId = ref.watch(selectedCategoryProvider);
-
-    return categoriesAsync.when(
-      data: (categories) => ListView.builder(
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          final cat = categories[index];
-          final isSelected = cat.id == selectedId;
-
-          return InkWell(
-            onTap: () =>
-                ref.read(selectedCategoryProvider.notifier).state = cat.id,
-            child: Container(
-              height: 80,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              color: isSelected ? AppTheme.qristalBlue.withOpacity(0.2) : null,
-              child: Row(
-                children: [
-                  Container(
-                    width: 6,
-                    height: 80,
-                    color: hexToColor(cat.colorHex) ?? Colors.grey,
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    cat.name,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: isSelected ? AppTheme.qristalBlue : Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error: $err')),
-    );
-  }
-
-  Color? hexToColor(String? hex) {
-    if (hex == null) return null;
-    return Color(int.parse(hex.replaceFirst('#', '0xFF')));
-  }
-}
-
-class ProductGrid extends ConsumerWidget {
-  const ProductGrid({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final productsAsync = ref.watch(productsStreamProvider);
-
-    return productsAsync.when(
-      data: (products) => GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, // 3 Columns of products
-          childAspectRatio: 1.2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-        ),
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return Card(
-            color: AppTheme.surface,
-            elevation: 2,
-            child: InkWell(
-              onTap: () {
-                // ADD TO CART ACTION
-                ref.read(cartProvider.notifier).addToCart(product);
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    product.name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "UGX ${product.price.toStringAsFixed(0)}",
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: AppTheme.emerald,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (err, stack) => Center(child: Text('Error: $err')),
-    );
-  }
-}
-
-class CartView extends ConsumerWidget {
-  const CartView({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final cartItems = ref.watch(cartProvider);
-    final cartNotifier = ref.read(cartProvider.notifier);
-
-    return Column(
-      children: [
-        // Ticket Header
-        Container(
-          padding: const EdgeInsets.all(16),
-          color: Colors.grey[100],
-          width: double.infinity,
-          child: Row(
-            children: [
-              const Text(
-                "Current Order",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete_sweep, color: Colors.red),
-                onPressed: () {
-                  // Clear Cart
-                  cartNotifier.clearCart();
-                },
-              ),
-            ],
-          ),
-        ),
-
-        // Cart List
-        Expanded(
-          child: cartItems.isEmpty
-              ? const Center(
-                  child: Text(
-                    "Cart is empty",
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                )
-              : ListView.separated(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: cartItems.length,
-                  separatorBuilder: (ctx, i) => const Divider(),
-                  itemBuilder: (context, index) {
-                    final item = cartItems[index];
-                    return ListTile(
-                      title: Text(
-                        item.product.name,
-                        style: const TextStyle(color: Colors.black87),
-                      ),
-                      subtitle: Text(
-                        "UGX ${item.product.price.toStringAsFixed(0)} x ${item.quantity}",
-                        style: const TextStyle(color: Colors.black54),
-                      ),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "UGX ${item.total.toStringAsFixed(0)}",
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.remove_circle_outline,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              cartNotifier.removeFromCart(item.product);
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-        ),
-
-        // Total & Checkout
-        Container(
-          padding: const EdgeInsets.all(16),
-          color: Colors.grey[200],
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "TOTAL",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
-                    style: const TextStyle(
-                      color: AppTheme.emerald,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                height: 60,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.emerald,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: cartItems.isEmpty
-                      ? null
-                      : () async {
-                          // 1. Get current user (you might need a UserProvider to store the logged-in ID)
-                          // For MVP, we can grab it from SecureStorage or pass it down.
-                          // Let's assume we have a simple provider for current user ID:
-                          //  const userId =
-                          //      "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
-
-                          // 2. Save to Local DB (Instant)
-                          // await ref
-                          //     .read(orderServiceProvider)
-                          //     .placeOrder(cartItems: cartItems, userId: userId);
-                          ref.read(cartProvider.notifier).checkout(context);
-                          // 3. Clear UI
-                          ref.read(cartProvider.notifier).clearCart();
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Order Saved ! 🚀")),
-                          );
-
-                          // 4. Trigger Background Sync to Cloud
-                          // We don't await this because we want the UI to be unblocked immediately
-                          ref
-                              .read(syncControllerProvider.notifier)
-                              .performSync();
-                        },
-                  child: const Text("CHARGE", style: TextStyle(fontSize: 24)),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-================
-File: qristal_mobile/lib/services/sync_service.dart
-================
-import 'dart:convert';
-import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'package:drift/drift.dart' as drift;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../../core/constants/api_constants.dart';
-import '../../../database/database.dart';
-
-class SyncService {
-  final AppDatabase db;
-  final _storage = const FlutterSecureStorage();
-
-  SyncService(this.db);
-
-  Future<void> syncData() async {
-    final token = await _storage.read(key: 'jwt_token');
-    if (token == null) throw Exception("Not Authenticated");
-
-    // 1. PUSH local changes first (so server has latest sales)
-    await _pushToWeb(token);
-
-    // 2. PULL remote changes (menu updates)
-    await pullFromWeb(token); // (Your existing pull logic moves here)
-  }
-
-  Future<void> pullFromWeb(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? lastSync = prefs.getString('last_sync_timestamp');
-
-    // 1. Prepare Query Params
-    String url = '${ApiConstants.baseUrl}/sync/pull';
-    if (lastSync != null) {
-      url += '?lastSyncTimestamp=$lastSync';
-    }
-
-    try {
-      // 2. Fetch Data
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode != 200) {
-        throw Exception('Sync failed: ${response.body}');
-      }
-
-      final data = jsonDecode(response.body);
-      final changes = data['changes'];
-      final newTimestamp = data['timestamp'];
-
-      // 3. Insert into SQLite (Batch Transaction for Performance)
-      await db.batch((batch) {
-        // --- Categories ---
-        if (changes['categories'] != null) {
-          for (var item in changes['categories']) {
-            batch.insert(
-              db.categories,
-              CategoriesCompanion(
-                id: drift.Value(item['id']),
-                name: drift.Value(item['name']),
-                colorHex: drift.Value(item['colorHex']),
-                sortOrder: drift.Value(item['sortOrder']),
-                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
-        }
-
-        // --- Products ---
-        if (changes['products'] != null) {
-          for (var item in changes['products']) {
-            // Ensure price is treated as double
-            double price = double.tryParse(item['price'].toString()) ?? 0.0;
-
-            batch.insert(
-              db.products,
-              ProductsCompanion(
-                id: drift.Value(item['id']),
-                categoryId: drift.Value(item['categoryId']),
-                name: drift.Value(item['name']),
-                price: drift.Value(price),
-                isAvailable: drift.Value(item['isAvailable']),
-                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
-        }
-
-        // --- Users (Optional, for offline login check later) ---
-        // You would handle users similarly here
-
-        // --- Orders ---
-        if (changes['orders'] != null) {
-          for (var item in changes['orders']) {
-            batch.insert(
-              db.orders,
-              OrdersCompanion(
-                id: drift.Value(item['id']),
-                receiptNumber: drift.Value(item['receiptNumber']),
-                userId: drift.Value(item['userId']),
-                tableId: drift.Value(item['tableId']),
-                totalAmount: drift.Value(
-                  double.tryParse(item['totalAmount'].toString()) ?? 0.0,
-                ),
-                status: drift.Value(item['status']),
-                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
-                updatedAt: drift.Value(
-                  DateTime.parse(item['updatedAt'] ?? item['createdAt']),
-                ),
-                isSynced: const drift.Value(true),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
-        }
-
-        // --- Order Items ---
-        if (changes['orderItems'] != null) {
-          for (var item in changes['orderItems']) {
-            batch.insert(
-              db.orderItems,
-              OrderItemsCompanion(
-                id: drift.Value(item['id']),
-                orderId: drift.Value(item['orderId']),
-                productId: drift.Value(item['productId']),
-                quantity: drift.Value(item['quantity']),
-                priceAtTimeOfOrder: drift.Value(
-                  double.tryParse(item['priceAtTimeOfOrder'].toString()) ?? 0.0,
-                ),
-                notes: drift.Value(item['notes']),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
-        }
-
-        // --- Payments ---
-        if (changes['payments'] != null) {
-          for (var item in changes['payments']) {
-            batch.insert(
-              db.payments,
-              PaymentsCompanion(
-                id: drift.Value(item['id']),
-                orderId: drift.Value(item['orderId']),
-                method: drift.Value(item['method']),
-                amount: drift.Value(
-                  double.tryParse(item['amount'].toString()) ?? 0.0,
-                ),
-                reference: drift.Value(item['reference']),
-                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
-        }
-
-        // --- Tables ---
-        if (changes['seatingTables'] != null) {
-          // Ensure your backend API returns this key
-          for (var item in changes['seatingTables']) {
-            batch.insert(
-              db.seatingTables,
-              SeatingTablesCompanion(
-                id: drift.Value(item['id']),
-                name: drift.Value(item['name']),
-                status: drift.Value(item['status']),
-                floor: drift.Value(item['floor']),
-                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
-              ),
-              mode: drift.InsertMode.insertOrReplace,
-            );
-          }
-        }
-      });
-
-      // 4. Save new timestamp
-      await prefs.setString('last_sync_timestamp', newTimestamp);
-      if (kDebugMode) {
-        print("Sync Completed Successfully. Timestamp: $newTimestamp");
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print("Sync Error: $e");
-      }
-      rethrow;
-    }
-  }
-
-  Future<void> _pushToWeb(String token) async {
-    // 1. Find unsynced orders
-    final unsyncedOrders = await (db.select(
-      db.orders,
-    )..where((t) => t.isSynced.equals(false))).get();
-
-    if (unsyncedOrders.isEmpty) return;
-
-    if (kDebugMode) {
-      print("Found ${unsyncedOrders.length} orders to push.");
-    }
-
-    List<Map<String, dynamic>> ordersPayload = [];
-    List<Map<String, dynamic>> itemsPayload = [];
-    List<Map<String, dynamic>> paymentsPayload = []; // -> ADDED FOR PAYMENTS
-
-    for (final order in unsyncedOrders) {
-      ordersPayload.add({
-        'id': order.id,
-        'receiptNumber': order.receiptNumber,
-        'userId': order.userId,
-        'tableId': order.tableId,
-        'totalAmount': order.totalAmount,
-        'status': order.status,
-        'createdAt': order.createdAt.toIso8601String(),
-      });
-
-      // Fetch related items
-      final items = await (db.select(
-        db.orderItems,
-      )..where((t) => t.orderId.equals(order.id))).get();
-      for (final item in items) {
-        itemsPayload.add({
-          'id': item.id,
-          'orderId': item.orderId,
-          'productId': item.productId,
-          'quantity': item.quantity,
-          'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
-          'notes': item.notes,
-        });
-      }
-
-      // Fetch related payments -> ADDED FOR PAYMENTS
-      final payments = await (db.select(
-        db.payments,
-      )..where((t) => t.orderId.equals(order.id))).get();
-      for (final pay in payments) {
-        paymentsPayload.add({
-          'id': pay.id,
-          'orderId': pay.orderId,
-          'method': pay.method,
-          'amount': pay.amount,
-          'reference': pay.reference,
-          'createdAt': pay.createdAt.toIso8601String(),
-        });
-      }
-    }
-
-    try {
-      final response = await http
-          .post(
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        // Include payments in the payload!
-        body: jsonEncode({
-          'orders': ordersPayload,
-          'orderItems': itemsPayload,
-          'payments': paymentsPayload,
-        }),
-          )
-          .timeout(const Duration(seconds: 20));
-
-      if (response.statusCode == 201 || response.statusCode == 200) {
-        await db.transaction(() async {
-          for (final order in unsyncedOrders) {
-            await (db.update(db.orders)..where((t) => t.id.equals(order.id)))
-                .write(const OrdersCompanion(isSynced: Value(true)));
-          }
-        });
-        if (kDebugMode) print("✅ Sync Push Successful!");
-      } else {
-        if (kDebugMode) {
-          print("❌ Push failed: ${response.statusCode} - ${response.body}");
-        }
-        throw Exception('Push failed: ${response.statusCode} - ${response.body}');
-      }
-    } catch (e) {
-      if (kDebugMode) print("❌ Connection error during push: $e");
-      rethrow;
-    }
-  }
 }
 
 ================
@@ -16153,6 +13400,966 @@ packages:
 sdks:
   dart: ">=3.9.0 <4.0.0"
   flutter: ">=3.35.0"
+
+================
+File: qristal_mobile/lib/features/pos/providers/cart_provider.dart
+================
+import 'dart:async';
+
+import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uuid/uuid.dart';
+import '../../../core/providers/database_provider.dart';
+import '../../../database/database.dart';
+import '../../auth/providers/auth_provider.dart';
+import '../../sync/providers/sync_provider.dart';
+import '../../tables/screens/floor_plan_screen.dart';
+import '../models/cart_item.dart';
+import '../services/order_service.dart';
+
+class CartNotifier extends StateNotifier<List<CartItem>> {
+  final AppDatabase db;
+  final String? userId;
+  final String userName;
+  final Ref ref;
+
+  String? _activeOrderId;
+  final Map<String, int> _baselineQuantities = {};
+
+  CartNotifier(
+    this.db,
+    this.userId,
+    this.userName,
+    this.ref,
+  ) : super([]);
+
+  void addToCart(Product product) {
+    final existingIndex = state.indexWhere((item) => item.product.id == product.id);
+
+    if (existingIndex >= 0) {
+      final existingItem = state[existingIndex];
+      final updatedItem = existingItem.copyWith(quantity: existingItem.quantity + 1);
+      state = [
+        ...state.sublist(0, existingIndex),
+        updatedItem,
+        ...state.sublist(existingIndex + 1),
+      ];
+    } else {
+      state = [...state, CartItem(product: product)];
+    }
+  }
+
+  void removeFromCart(Product product) {
+    state = state.where((item) => item.product.id != product.id).toList();
+  }
+
+  void clearCart() {
+    state = [];
+    _activeOrderId = null;
+    _baselineQuantities.clear();
+  }
+
+  double get totalAmount => state.fold(0, (sum, item) => sum + item.total);
+
+  Future<void> loadTableCart(String? tableId) async {
+    if (tableId == null) {
+      clearCart();
+      return;
+    }
+
+    final existingOrder = await (db.select(db.orders)
+          ..where(
+            (o) =>
+                o.tableId.equals(tableId) &
+                o.status.isIn(const ['KITCHEN', 'PREPARING']),
+          )
+          ..orderBy([(o) => OrderingTerm.desc(o.createdAt)])
+          ..limit(1))
+        .getSingleOrNull();
+
+    if (existingOrder == null) {
+      clearCart();
+      return;
+    }
+
+    final typedItems = await db.getOrderItems(existingOrder.id);
+    final recalled = typedItems
+        .map(
+          (row) => CartItem(
+            product: row.product,
+            quantity: row.item.quantity,
+            notes: row.item.notes ?? '',
+          ),
+        )
+        .toList();
+
+    _activeOrderId = existingOrder.id;
+    _baselineQuantities
+      ..clear()
+      ..addAll(_toQuantityMap(recalled));
+    state = recalled;
+  }
+
+  Future<void> sendToKitchen() async {
+    if (state.isEmpty || userId == null) return;
+
+    final now = DateTime.now();
+    final tableId = ref.read(activeTableIdProvider);
+    final currentQuantities = _toQuantityMap(state);
+
+    if (_activeOrderId == null) {
+      final orderId = const Uuid().v4();
+      await db.transaction(() async {
+        await db.into(db.orders).insert(
+              OrdersCompanion(
+                id: Value(orderId),
+                receiptNumber: Value(_buildOrderNumber(tableId, now)),
+                userId: Value(userId!),
+                tableId: Value(tableId),
+                totalAmount: Value(totalAmount),
+                status: const Value('KITCHEN'),
+                isSynced: const Value(false),
+                createdAt: Value(now),
+                updatedAt: Value(now),
+              ),
+            );
+
+        if (tableId != null) {
+          await (db.update(db.seatingTables)..where((t) => t.id.equals(tableId)))
+              .write(SeatingTablesCompanion(status: const Value('OCCUPIED')));
+        }
+
+        for (final cartItem in state) {
+          await db.into(db.orderItems).insert(
+                OrderItemsCompanion(
+                  id: Value(const Uuid().v4()),
+                  orderId: Value(orderId),
+                  productId: Value(cartItem.product.id),
+                  quantity: Value(cartItem.quantity),
+                  priceAtTimeOfOrder: Value(cartItem.product.price),
+                  notes: Value(cartItem.notes.isEmpty ? null : cartItem.notes),
+                ),
+              );
+        }
+      });
+
+      _activeOrderId = orderId;
+      _baselineQuantities
+        ..clear()
+        ..addAll(currentQuantities);
+      state = [];
+      ref.read(syncControllerProvider.notifier).performSync();
+      return;
+    }
+
+    final newItems = <CartItem>[];
+    for (final item in state) {
+      final key = _cartKey(item.product.id, item.notes);
+      final baseline = _baselineQuantities[key] ?? 0;
+      final delta = item.quantity - baseline;
+      if (delta > 0) {
+        newItems.add(item.copyWith(quantity: delta));
+      }
+    }
+
+    if (newItems.isEmpty) {
+      if (kDebugMode) {
+        print('No new items to send for order $_activeOrderId');
+      }
+      return;
+    }
+
+    await db.transaction(() async {
+      for (final item in newItems) {
+        await db.into(db.orderItems).insert(
+              OrderItemsCompanion(
+                id: Value(const Uuid().v4()),
+                orderId: Value(_activeOrderId!),
+                productId: Value(item.product.id),
+                quantity: Value(item.quantity),
+                priceAtTimeOfOrder: Value(item.product.price),
+                notes: Value(item.notes.isEmpty ? null : item.notes),
+              ),
+            );
+      }
+
+      await (db.update(db.orders)..where((o) => o.id.equals(_activeOrderId!))).write(
+        OrdersCompanion(
+          totalAmount: Value(totalAmount),
+          updatedAt: Value(now),
+          isSynced: const Value(false),
+        ),
+      );
+    });
+
+    _baselineQuantities
+      ..clear()
+      ..addAll(currentQuantities);
+
+    state = [];
+    ref.read(syncControllerProvider.notifier).performSync();
+  }
+
+  Map<String, int> _toQuantityMap(List<CartItem> items) {
+    final map = <String, int>{};
+    for (final item in items) {
+      final key = _cartKey(item.product.id, item.notes);
+      map[key] = (map[key] ?? 0) + item.quantity;
+    }
+    return map;
+  }
+
+  String _cartKey(String productId, String notes) => '$productId::${notes.trim()}';
+
+  String _buildOrderNumber(String? tableId, DateTime now) {
+    if (tableId != null && tableId.isNotEmpty) {
+      return tableId.substring(0, 4).toUpperCase();
+    }
+
+    final suffix = (now.millisecondsSinceEpoch % 10000).toString().padLeft(4, '0');
+    return 'TK$suffix';
+  }
+}
+
+final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
+  final db = ref.watch(databaseProvider);
+  final authState = ref.watch(authControllerProvider);
+
+  final notifier = CartNotifier(
+    db,
+    authState.userId,
+    authState.userId ?? 'Cashier',
+    ref,
+  );
+
+  Future.microtask(() => notifier.loadTableCart(ref.read(activeTableIdProvider)));
+  ref.listen<String?>(activeTableIdProvider, (previous, next) {
+    unawaited(notifier.loadTableCart(next));
+  });
+
+  return notifier;
+});
+
+final orderServiceProvider = Provider((ref) => OrderService(ref.watch(databaseProvider)));
+
+final checkoutProvider = FutureProvider.family<void, String>((ref, userId) async {
+  final cart = ref.read(cartProvider);
+  if (cart.isEmpty) return;
+
+  final orderService = ref.read(orderServiceProvider);
+  await orderService.placeOrder(
+    cartItems: cart,
+    userId: userId,
+  );
+
+  ref.read(cartProvider.notifier).clearCart();
+});
+
+================
+File: qristal_mobile/lib/features/pos/screens/dashboard_screen.dart
+================
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/app_theme.dart';
+import '../../hardware/screens/printer_settings_screen.dart';
+import '../../kitchen/screens/kitchen_screen.dart';
+import '../../sync/providers/sync_queue_provider.dart';
+import '../providers/menu_provider.dart';
+import '../providers/cart_provider.dart';
+
+class DashboardScreen extends ConsumerWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch sync state to show loading indicator if needed
+
+    final syncQueue = ref.watch(syncQueueProvider);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Qristal POS - Cashier"),
+        backgroundColor: AppTheme.surface,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                if (syncQueue.pendingOrders > 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 2,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      "${syncQueue.pendingOrders} Pending",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                const SizedBox(width: 8),
+                _buildSyncIcon(syncQueue.status),
+              ],
+            ),
+          ),
+          // Navigation to Kitchen Display System
+          IconButton(
+            icon: const Icon(Icons.soup_kitchen),
+            tooltip: 'Kitchen Display',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const KitchenScreen()),
+              );
+            },
+          ),
+          // Navigation to Printer Settings
+          IconButton(
+            icon: const Icon(Icons.print),
+            tooltip: 'Printer Settings',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const PrinterSettingsScreen(),
+                ),
+              );
+            },
+          ),
+
+          const SizedBox(width: 20),
+        ],
+      ),
+      body: Row(
+        children: [
+          // 1. LEFT COLUMN: Categories
+          Expanded(
+            flex: 2,
+            child: Container(
+              color: AppTheme.surface,
+              child: const CategoryList(),
+            ),
+          ),
+
+          // 2. MIDDLE COLUMN: Products Grid
+          Expanded(
+            flex: 5,
+            child: Container(
+              color: AppTheme.background,
+              padding: const EdgeInsets.all(8),
+              child: const ProductGrid(),
+            ),
+          ),
+
+          // 3. RIGHT COLUMN: Cart / Ticket
+          Expanded(
+            flex: 3,
+            child: Container(color: Colors.white, child: const CartView()),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// --- WIDGETS ---
+
+Widget _buildSyncIcon(ConnectionStatus status) {
+  switch (status) {
+    case ConnectionStatus.syncing:
+      return const SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          color: AppTheme.qristalBlue,
+          strokeWidth: 2,
+        ),
+      );
+    case ConnectionStatus.offline:
+      return const Icon(Icons.cloud_off, color: Colors.grey);
+    case ConnectionStatus.error:
+      return const Icon(Icons.error_outline, color: AppTheme.error);
+    case ConnectionStatus.online:
+      return const Icon(Icons.cloud_done, color: AppTheme.emerald);
+  }
+}
+
+class CategoryList extends ConsumerWidget {
+  const CategoryList({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoriesAsync = ref.watch(categoriesStreamProvider);
+    final selectedId = ref.watch(selectedCategoryProvider);
+
+    return categoriesAsync.when(
+      data: (categories) => ListView.builder(
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          final cat = categories[index];
+          final isSelected = cat.id == selectedId;
+
+          return InkWell(
+            onTap: () =>
+                ref.read(selectedCategoryProvider.notifier).state = cat.id,
+            child: Container(
+              height: 80,
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              color: isSelected ? AppTheme.qristalBlue.withOpacity(0.2) : null,
+              child: Row(
+                children: [
+                  Container(
+                    width: 6,
+                    height: 80,
+                    color: hexToColor(cat.colorHex) ?? Colors.grey,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    cat.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: isSelected ? AppTheme.qristalBlue : Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, stack) => Center(child: Text('Error: $err')),
+    );
+  }
+
+  Color? hexToColor(String? hex) {
+    if (hex == null) return null;
+    return Color(int.parse(hex.replaceFirst('#', '0xFF')));
+  }
+}
+
+class ProductGrid extends ConsumerWidget {
+  const ProductGrid({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productsAsync = ref.watch(productsStreamProvider);
+
+    return productsAsync.when(
+      data: (products) => GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3, // 3 Columns of products
+          childAspectRatio: 1.2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return Card(
+            color: AppTheme.surface,
+            elevation: 2,
+            child: InkWell(
+              onTap: () {
+                // ADD TO CART ACTION
+                ref.read(cartProvider.notifier).addToCart(product);
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    product.name,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "UGX ${product.price.toStringAsFixed(0)}",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: AppTheme.emerald,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (err, stack) => Center(child: Text('Error: $err')),
+    );
+  }
+}
+
+class CartView extends ConsumerWidget {
+  const CartView({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cartItems = ref.watch(cartProvider);
+    final cartNotifier = ref.read(cartProvider.notifier);
+
+    return Column(
+      children: [
+        // Ticket Header
+        Container(
+          padding: const EdgeInsets.all(16),
+          color: Colors.grey[100],
+          width: double.infinity,
+          child: Row(
+            children: [
+              const Text(
+                "Current Order",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.delete_sweep, color: Colors.red),
+                onPressed: () {
+                  // Clear Cart
+                  cartNotifier.clearCart();
+                },
+              ),
+            ],
+          ),
+        ),
+
+        // Cart List
+        Expanded(
+          child: cartItems.isEmpty
+              ? const Center(
+                  child: Text(
+                    "Cart is empty",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
+              : ListView.separated(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: cartItems.length,
+                  separatorBuilder: (ctx, i) => const Divider(),
+                  itemBuilder: (context, index) {
+                    final item = cartItems[index];
+                    return ListTile(
+                      title: Text(
+                        item.product.name,
+                        style: const TextStyle(color: Colors.black87),
+                      ),
+                      subtitle: Text(
+                        "UGX ${item.product.price.toStringAsFixed(0)} x ${item.quantity}",
+                        style: const TextStyle(color: Colors.black54),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "UGX ${item.total.toStringAsFixed(0)}",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              cartNotifier.removeFromCart(item.product);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+        ),
+
+        // Total & Checkout
+        Container(
+          padding: const EdgeInsets.all(16),
+          color: Colors.grey[200],
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "TOTAL",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
+                    style: const TextStyle(
+                      color: AppTheme.emerald,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.emerald,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  onPressed: cartItems.isEmpty
+                      ? null
+                      : () async {
+                          // 1. Get current user (you might need a UserProvider to store the logged-in ID)
+                          // For MVP, we can grab it from SecureStorage or pass it down.
+                          // Let's assume we have a simple provider for current user ID:
+                          //  const userId =
+                          //      "YOUR_LOGGED_IN_USER_ID"; // Replace this with actual state later
+
+                          // 2. Save to Local DB (Instant)
+                          // await ref
+                          //     .read(orderServiceProvider)
+                          //     .placeOrder(cartItems: cartItems, userId: userId);
+                          await ref.read(cartProvider.notifier).sendToKitchen();
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Order sent to kitchen! 🍽️")),
+                          );
+                        },
+                  child: const Text("SEND TO KITCHEN", style: TextStyle(fontSize: 20)),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+================
+File: qristal_mobile/lib/services/sync_service.dart
+================
+import 'dart:convert';
+import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+import 'package:drift/drift.dart' as drift;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../../core/constants/api_constants.dart';
+import '../../../database/database.dart';
+
+class SyncService {
+  final AppDatabase db;
+  final _storage = const FlutterSecureStorage();
+
+  SyncService(this.db);
+
+  Future<void> syncData() async {
+    final token = await _storage.read(key: 'jwt_token');
+    if (token == null) throw Exception("Not Authenticated");
+
+    // 1. PUSH local changes first (so server has latest sales)
+    await _pushToWeb(token);
+
+    // 2. PULL remote changes (menu updates)
+    await pullFromWeb(token); // (Your existing pull logic moves here)
+  }
+
+  Future<void> pullFromWeb(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? lastSync = prefs.getString('last_sync_timestamp');
+
+    // 1. Prepare Query Params
+    String url = '${ApiConstants.baseUrl}/sync/pull';
+    if (lastSync != null) {
+      url += '?lastSyncTimestamp=$lastSync';
+    }
+
+    try {
+      // 2. Fetch Data
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Sync failed: ${response.body}');
+      }
+
+      final data = jsonDecode(response.body);
+      final changes = data['changes'];
+      final newTimestamp = data['timestamp'];
+
+      // 3. Insert into SQLite (Batch Transaction for Performance)
+      await db.batch((batch) {
+        // --- Categories ---
+        if (changes['categories'] != null) {
+          for (var item in changes['categories']) {
+            batch.insert(
+              db.categories,
+              CategoriesCompanion(
+                id: drift.Value(item['id']),
+                name: drift.Value(item['name']),
+                colorHex: drift.Value(item['colorHex']),
+                sortOrder: drift.Value(item['sortOrder']),
+                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Products ---
+        if (changes['products'] != null) {
+          for (var item in changes['products']) {
+            // Ensure price is treated as double
+            double price = double.tryParse(item['price'].toString()) ?? 0.0;
+
+            batch.insert(
+              db.products,
+              ProductsCompanion(
+                id: drift.Value(item['id']),
+                categoryId: drift.Value(item['categoryId']),
+                name: drift.Value(item['name']),
+                price: drift.Value(price),
+                isAvailable: drift.Value(item['isAvailable']),
+                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Users (Optional, for offline login check later) ---
+        // You would handle users similarly here
+
+        // --- Orders ---
+        if (changes['orders'] != null) {
+          for (var item in changes['orders']) {
+            batch.insert(
+              db.orders,
+              OrdersCompanion(
+                id: drift.Value(item['id']),
+                receiptNumber: drift.Value(item['receiptNumber']),
+                userId: drift.Value(item['userId']),
+                tableId: drift.Value(item['tableId']),
+                totalAmount: drift.Value(
+                  double.tryParse(item['totalAmount'].toString()) ?? 0.0,
+                ),
+                status: drift.Value(item['status']),
+                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
+                updatedAt: drift.Value(
+                  DateTime.parse(item['updatedAt'] ?? item['createdAt']),
+                ),
+                isSynced: const drift.Value(true),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Order Items ---
+        if (changes['orderItems'] != null) {
+          for (var item in changes['orderItems']) {
+            batch.insert(
+              db.orderItems,
+              OrderItemsCompanion(
+                id: drift.Value(item['id']),
+                orderId: drift.Value(item['orderId']),
+                productId: drift.Value(item['productId']),
+                quantity: drift.Value(item['quantity']),
+                priceAtTimeOfOrder: drift.Value(
+                  double.tryParse(item['priceAtTimeOfOrder'].toString()) ?? 0.0,
+                ),
+                notes: drift.Value(item['notes']),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Payments ---
+        if (changes['payments'] != null) {
+          for (var item in changes['payments']) {
+            batch.insert(
+              db.payments,
+              PaymentsCompanion(
+                id: drift.Value(item['id']),
+                orderId: drift.Value(item['orderId']),
+                method: drift.Value(item['method']),
+                amount: drift.Value(
+                  double.tryParse(item['amount'].toString()) ?? 0.0,
+                ),
+                reference: drift.Value(item['reference']),
+                createdAt: drift.Value(DateTime.parse(item['createdAt'])),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+
+        // --- Tables ---
+        if (changes['seatingTables'] != null) {
+          // Ensure your backend API returns this key
+          for (var item in changes['seatingTables']) {
+            batch.insert(
+              db.seatingTables,
+              SeatingTablesCompanion(
+                id: drift.Value(item['id']),
+                name: drift.Value(item['name']),
+                status: drift.Value(item['status']),
+                floor: drift.Value(item['floor']),
+                updatedAt: drift.Value(DateTime.parse(item['updatedAt'])),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
+      });
+
+      // 4. Save new timestamp
+      await prefs.setString('last_sync_timestamp', newTimestamp);
+      if (kDebugMode) {
+        print("Sync Completed Successfully. Timestamp: $newTimestamp");
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Sync Error: $e");
+      }
+      rethrow;
+    }
+  }
+
+  Future<void> _pushToWeb(String token) async {
+    // 1. Find unsynced orders
+    final unsyncedOrders = await (db.select(
+      db.orders,
+    )..where((t) => t.isSynced.equals(false))).get();
+
+    if (unsyncedOrders.isEmpty) return;
+
+    if (kDebugMode) {
+      print("Found ${unsyncedOrders.length} orders to push.");
+    }
+
+    List<Map<String, dynamic>> ordersPayload = [];
+    List<Map<String, dynamic>> itemsPayload = [];
+    List<Map<String, dynamic>> paymentsPayload = []; // -> ADDED FOR PAYMENTS
+
+    final orderIds = unsyncedOrders.map((order) => order.id).toList();
+    final relatedItems = await (db.select(
+      db.orderItems,
+    )..where((t) => t.orderId.isIn(orderIds))).get();
+
+    for (final item in relatedItems) {
+      itemsPayload.add({
+        'id': item.id,
+        'orderId': item.orderId,
+        'productId': item.productId,
+        'quantity': item.quantity,
+        'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
+        'notes': item.notes,
+      });
+    }
+
+    for (final order in unsyncedOrders) {
+      ordersPayload.add({
+        'id': order.id,
+        'receiptNumber': order.receiptNumber,
+        'userId': order.userId,
+        'tableId': order.tableId,
+        'totalAmount': order.totalAmount,
+        'status': order.status,
+        'createdAt': order.createdAt.toIso8601String(),
+      });
+
+      // Fetch related payments -> ADDED FOR PAYMENTS
+      final payments = await (db.select(
+        db.payments,
+      )..where((t) => t.orderId.equals(order.id))).get();
+      for (final pay in payments) {
+        paymentsPayload.add({
+          'id': pay.id,
+          'orderId': pay.orderId,
+          'method': pay.method,
+          'amount': pay.amount,
+          'reference': pay.reference,
+          'createdAt': pay.createdAt.toIso8601String(),
+        });
+      }
+    }
+
+    if (kDebugMode) {
+      print(
+        'Prepared sync payload: '
+        '${ordersPayload.length} orders, '
+        '${itemsPayload.length} orderItems, '
+        '${paymentsPayload.length} payments.',
+      );
+    }
+
+    try {
+      final response = await http
+          .post(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        // Include payments in the payload!
+        body: jsonEncode({
+          'orders': ordersPayload,
+          'orderItems': itemsPayload,
+          'payments': paymentsPayload,
+        }),
+          )
+          .timeout(const Duration(seconds: 20));
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        await db.transaction(() async {
+          for (final order in unsyncedOrders) {
+            await (db.update(db.orders)..where((t) => t.id.equals(order.id)))
+                .write(const OrdersCompanion(isSynced: Value(true)));
+          }
+        });
+        if (kDebugMode) print("✅ Sync Push Successful!");
+      } else {
+        if (kDebugMode) {
+          print("❌ Push failed: ${response.statusCode} - ${response.body}");
+        }
+        throw Exception('Push failed: ${response.statusCode} - ${response.body}');
+      }
+    } catch (e) {
+      if (kDebugMode) print("❌ Connection error during push: $e");
+      rethrow;
+    }
+  }
+}
 
 ================
 File: qristal_mobile/pubspec.yaml

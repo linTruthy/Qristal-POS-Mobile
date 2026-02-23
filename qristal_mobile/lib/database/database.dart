@@ -44,6 +44,7 @@ class Orders extends Table {
   TextColumn get status => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get shiftId => text().references(Shifts, #id)(); 
 
   // Local-only flag to track what needs to be uploaded
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
@@ -88,13 +89,30 @@ class SeatingTables extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class Shifts extends Table {
+  TextColumn get id => text()();
+  TextColumn get userId => text()();
+  DateTimeColumn get openingTime => dateTime()();
+  DateTimeColumn get closingTime => dateTime().nullable()();
+  
+  RealColumn get startingCash => real().withDefault(const Constant(0.0))();
+  RealColumn get expectedCash => real().nullable()();
+  RealColumn get actualCash => real().nullable()();
+  
+  TextColumn get notes => text().nullable()();
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 // Database Registry
 @DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3; // Bump version
+  int get schemaVersion => 4; // Bump version
 
   @override
   MigrationStrategy get migration {
