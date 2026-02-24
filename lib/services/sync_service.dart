@@ -235,6 +235,27 @@ class SyncService {
             mode: drift.InsertMode.insertOrReplace,
           );
         }
+        
+        // --- Shifts ---
+        if (changes['shifts'] != null) {
+          for (var item in changes['shifts']) {
+            batch.insert(
+              db.shifts,
+              ShiftsCompanion(
+                id: drift.Value(item['id']),
+                userId: drift.Value(item['userId']),
+                openingTime: drift.Value(DateTime.parse(item['openingTime'])),
+                closingTime: drift.Value(item['closingTime'] != null ? DateTime.parse(item['closingTime']) : null),
+                startingCash: drift.Value(double.tryParse(item['startingCash'].toString()) ?? 0.0),
+                expectedCash: drift.Value(double.tryParse(item['expectedCash'].toString()) ?? 0.0),
+                actualCash: drift.Value(double.tryParse(item['actualCash'].toString()) ?? 0.0),
+                notes: drift.Value(item['notes']),
+                isSynced: const drift.Value(true),
+              ),
+              mode: drift.InsertMode.insertOrReplace,
+            );
+          }
+        }
       });
 
       // 4. Save new timestamp
