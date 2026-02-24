@@ -243,6 +243,8 @@ model Shift {
   orders   Order[]   // A shift has many orders
   payments Payment[]
 
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
   @@map("shifts")
 }
 
