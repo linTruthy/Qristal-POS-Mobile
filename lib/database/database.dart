@@ -40,6 +40,7 @@ class Products extends Table {
 class Orders extends Table {
   TextColumn get id => text()();
   TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
+
   TextColumn get receiptNumber => text()();
   TextColumn get userId => text()();
   TextColumn get tableId => text().nullable()();
@@ -47,7 +48,7 @@ class Orders extends Table {
   TextColumn get status => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
-  TextColumn get shiftId => text().references(Shifts, #id)(); 
+  TextColumn get shiftId => text().references(Shifts, #id)();
 
   // Local-only flag to track what needs to be uploaded
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
@@ -71,7 +72,9 @@ class OrderItems extends Table {
 
 class Payments extends Table {
   TextColumn get id => text()();
+  TextColumn get branchId => text().withDefault(const Constant('BRANCH-01'))();
   TextColumn get orderId => text().references(Orders, #id)();
+  TextColumn get shiftId => text().references(Shifts, #id)();
   TextColumn get method => text()(); // 'CASH', 'MOBILE_MONEY', etc.
   RealColumn get amount => real()();
   TextColumn get reference => text().nullable()(); // Trans ID
@@ -99,11 +102,11 @@ class Shifts extends Table {
   TextColumn get userId => text()();
   DateTimeColumn get openingTime => dateTime()();
   DateTimeColumn get closingTime => dateTime().nullable()();
-  
+
   RealColumn get startingCash => real().withDefault(const Constant(0.0))();
   RealColumn get expectedCash => real().nullable()();
   RealColumn get actualCash => real().nullable()();
-  
+
   TextColumn get notes => text().nullable()();
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
 
@@ -112,7 +115,9 @@ class Shifts extends Table {
 }
 
 // Database Registry
-@DriftDatabase(tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables])
+@DriftDatabase(
+  tables: [Categories, Products, Orders, OrderItems, Payments, SeatingTables],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
@@ -129,7 +134,6 @@ class AppDatabase extends _$AppDatabase {
       },
     );
   }
-
 
   Stream<List<Order>> watchKitchenOrders() {
     return (select(orders)
@@ -172,8 +176,6 @@ class TypedOrderItem {
   final Product product;
   TypedOrderItem({required this.item, required this.product});
 }
-
-
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
