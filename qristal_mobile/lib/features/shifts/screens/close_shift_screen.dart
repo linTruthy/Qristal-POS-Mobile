@@ -70,8 +70,37 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
           );
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text("Failed to print Z-Report (continuing logout)")));
+        final shouldContinue = await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Printing Failed'),
+            content: const Text(
+                'Could not print the Z-Report. Do you want to continue closing the shift without printing?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  // To allow retrying, we just close the dialog.
+                  // The user can then press the "CLOSE SHIFT & PRINT" button again.
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('Retry'),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Continue with closing the shift.
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Continue without Printing'),
+              ),
+            ],
+          ),
+        );
+
+        // If the user chooses to not continue (i.e., they want to retry),
+        // we stop the execution of this function.
+        if (shouldContinue != true) {
+          return; // Stop the close shift process.
+        }
       }
     }
 
@@ -81,12 +110,10 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
     // 4. Force Sync
     ref.read(syncControllerProvider.notifier).performSync();
 
-    // 5. Logout and return to Login Screen
-    await ref.read(authControllerProvider.notifier).logout();
-
+    // 5. Navigate to Login
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
         (route) => false,
       );
     }
@@ -95,40 +122,45 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
     }
 
     if (_summary == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("End of Day - Z Report")),
+        appBar: AppBar(title: const Text("Close Shift")),
         body: const Center(
-          child: Text("No active shift found. Open a shift before closing."),
+          child: Text("No active shift."),
         ),
       );
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text("End of Day - Z Report")),
+      appBar: AppBar(
+        title: const Text("Close Shift"),
+      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSummaryCard(),
+            Text("Shift Summary", style: AppTheme.headerStyle),
+            const Divider(height: 30),
+            _buildSummaryRow("Total Sales:", _summary!.totalSales),
+            _buildSummaryRow("Cash Sales:", _summary!.cashSales),
+            _buildSummaryRow("Digital Sales:", _summary!.digitalSales),
+            const Divider(height: 30),
+            _buildSummaryRow("Starting Cash:", _summary!.shift.startingCash),
+            _buildSummaryRow("Expected Cash in Drawer:", _summary!.expectedCash),
             const SizedBox(height: 30),
-            const Text("Cash Reconciliation",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text("Counted Cash", style: AppTheme.headerStyle),
             const SizedBox(height: 10),
-            Text(
-              "Expected Cash in Drawer: UGX ${_summary!.expectedCash.toStringAsFixed(0)}",
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-            const SizedBox(height: 20),
             TextField(
               controller: _cashController,
-              keyboardType: TextInputType.number,
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(
-                labelText: "Actual Counted Cash",
+                border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.attach_money),
                 hintText: "Enter amount counted",
               ),
@@ -151,45 +183,24 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
     );
   }
 
-  Widget _buildSummaryCard() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppTheme.surface,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        children: [
-          _row("Opening Float", _summary!.shift.startingCash),
-          const Divider(),
-          _row("Cash Sales", _summary!.cashSales),
-          _row("Mobile Money / Card", _summary!.digitalSales),
-          const Divider(thickness: 2),
-          _row("Total Sales", _summary!.totalSales, isBold: true),
-        ],
-      ),
-    );
-  }
-
-  Widget _row(String label, double amount, {bool isBold = false}) {
+  Widget _buildSummaryRow(String label, double value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
-          Text(
-            "UGX ${amount.toStringAsFixed(0)}",
-            style: TextStyle(
-                color: isBold ? AppTheme.emerald : Colors.white,
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-                fontSize: isBold ? 18 : 14),
-          ),
+          Text(label, style: const TextStyle(fontSize: 16)),
+          Text("₺${value.toStringAsFixed(2)}",
+              style:
+                  const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _cashController.dispose();
+    super.dispose();
   }
 }

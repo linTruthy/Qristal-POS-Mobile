@@ -42,12 +42,28 @@ class OrderService {
           notes: Value(item.notes),
         ));
       }
+
+      // 3. Update Seating Table Status if applicable
+      if (tableId != null) {
+        await (db.update(db.seatingTables)..where((t) => t.id.equals(tableId)))
+            .write(const SeatingTablesCompanion(
+              status: Value('OCCUPIED'),
+              isSynced: Value(false),
+        ));
+      }
     });
   }
 
   Future<void> closeOrder(String orderId, double totalAmount, List<Payment> payments) async {
     await db.transaction(() async {
-      // 1. Update order status
+      // 1. Get the order to find the tableId
+      final order = await (db.select(db.orders)..where((t) => t.id.equals(orderId))).getSingleOrNull();
+
+      if (order == null) {
+        return;
+      }
+      
+      // 2. Update order status
       await (db.update(db.orders)..where((t) => t.id.equals(orderId)))
           .write(OrdersCompanion(
         status: const Value('CLOSED'),
@@ -56,9 +72,18 @@ class OrderService {
         updatedAt: Value(DateTime.now()),
       ));
 
-      // 2. Insert payments
+      // 3. Insert payments
       for (final payment in payments) {
         await db.into(db.payments).insert(payment.toCompanion(true));
+      }
+      
+      // 4. Update Seating Table Status to 'FREE'
+      if (order.tableId != null) {
+        await (db.update(db.seatingTables)..where((t) => t.id.equals(order.tableId!)))
+          .write(const SeatingTablesCompanion(
+            status: Value('FREE'),
+            isSynced: Value(false),
+          ));
       }
     });
   }

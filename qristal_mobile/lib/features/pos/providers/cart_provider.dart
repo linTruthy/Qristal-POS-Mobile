@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
+import '../../../core/constants/role_constants.dart';
 import '../../../core/providers/database_provider.dart';
 import '../../../database/database.dart';
 import '../../auth/providers/auth_provider.dart';
@@ -52,8 +53,42 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     }
   }
 
-  void removeFromCart(Product product) {
+  Future<void> removeFromCart(Product product) async {
+    final userRole = await ref.read(userRoleProvider.future);
+    if (_activeOrderId != null &&
+        (userRole != UserRole.MANAGER && userRole != UserRole.OWNER)) {
+      return;
+    }
     state = state.where((item) => item.product.id != product.id).toList();
+  }
+
+  Future<void> decreaseQuantity(CartItem item) async {
+    final userRole = await ref.read(userRoleProvider.future);
+    if (_activeOrderId != null &&
+        (userRole != UserRole.MANAGER && userRole != UserRole.OWNER)) {
+      final key = _cartKey(item.product.id, item.notes);
+      final baseline = _baselineQuantities[key] ?? 0;
+      if ((item.quantity - 1) < baseline) {
+        return;
+      }
+    }
+
+    final existingIndex = state.indexWhere(
+        (i) => i.product.id == item.product.id && i.notes == item.notes);
+
+    if (existingIndex != -1) {
+      if (state[existingIndex].quantity > 1) {
+        final updatedItem = state[existingIndex]
+            .copyWith(quantity: state[existingIndex].quantity - 1);
+        state = [
+          ...state.sublist(0, existingIndex),
+          updatedItem,
+          ...state.sublist(existingIndex + 1),
+        ];
+      } else {
+        await removeFromCart(item.product);
+      }
+    }
   }
 
   void clearCart() {
@@ -106,7 +141,6 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
   Future<void> sendToKitchen() async {
     if (state.isEmpty || userId == null) return;
 
-    // 1. Get Active Shift ID
     final shiftId = ref.read(activeShiftIdProvider);
     if (shiftId == null) {
       throw Exception("No active shift found. Please clock in.");
@@ -125,7 +159,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
                 receiptNumber: Value(_buildOrderNumber(tableId, now)),
                 userId: Value(userId!),
                 tableId: Value(tableId),
-                shiftId: Value(shiftId), // <--- INSERT SHIFT ID
+                shiftId: Value(shiftId), 
                 totalAmount: Value(totalAmount),
                 status: const Value('KITCHEN'),
                 isSynced: const Value(false),
@@ -163,7 +197,6 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       return;
     }
 
-    // Existing Order Update Logic (Kitchen Re-fire)
     final newItems = <CartItem>[];
     for (final item in state) {
       final key = _cartKey(item.product.id, item.notes);
@@ -210,7 +243,6 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
   Future<void> checkout(BuildContext context) async {
     if (state.isEmpty || userId == null) return;
 
-    // Check for shift before opening payment modal
     final shiftId = ref.read(activeShiftIdProvider);
     if (shiftId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -243,14 +275,13 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     final tableId = ref.read(activeTableIdProvider);
 
     await db.transaction(() async {
-      // 1. Order
       await db.into(db.orders).insert(
             OrdersCompanion(
               id: Value(orderId),
               receiptNumber: Value(orderId.substring(0, 4).toUpperCase()),
               userId: Value(userId!),
               tableId: Value(tableId),
-              shiftId: Value(shiftId), // <--- INSERT SHIFT ID
+              shiftId: Value(shiftId), 
               totalAmount: Value(total),
               status: const Value('CLOSED'),
               isSynced: const Value(false),
@@ -264,7 +295,6 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             .write(const SeatingTablesCompanion(status: Value('OCCUPIED')));
       }
 
-      // 2. Items
       for (var cartItem in state) {
         await db.into(db.orderItems).insert(
               OrderItemsCompanion(
@@ -277,11 +307,11 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             );
       }
 
-      // 3. Payment
       await db.into(db.payments).insert(
             PaymentsCompanion(
               id: Value(const Uuid().v4()),
               orderId: Value(orderId),
+              shiftId: Value(shiftId),
               method: Value(method),
               amount: Value(total),
               reference: Value(refCode),
@@ -290,7 +320,6 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
           );
     });
 
-    // 2. Trigger Print
     try {
       await printerService.printReceipt(
         orderId: orderId,
@@ -340,12 +369,11 @@ final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
   final notifier = CartNotifier(
     db,
     authState.userId,
-    'Cashier', // TODO: Get name from User table
+    'Cashier', 
     printerService,
     ref,
   );
 
-  // Load cart if table is selected
   final tableId = ref.watch(activeTableIdProvider);
   if (tableId != null) {
     Future.microtask(() => notifier.loadTableCart(tableId));

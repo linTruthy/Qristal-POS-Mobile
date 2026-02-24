@@ -1,51 +1,48 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/constants/role_constants.dart';
 import '../services/auth_service.dart';
 
-// 1. Provider for the Service
 final authServiceProvider = Provider((ref) => AuthService());
 
-// 2. State Controller for the Login Screen
-class LoginState {
-  final bool isLoading;
-  final String? error;
+final userRoleProvider = FutureProvider<UserRole>((ref) async {
+  return ref.watch(authServiceProvider).getRole();
+});
+
+class AuthState {
   final bool isAuthenticated;
   final String? userId;
-  final String? role;
 
-  LoginState({
-    this.isLoading = false,
-    this.error,
-    this.isAuthenticated = false,
-    this.userId,
-    this.role,
-  });
+  AuthState({required this.isAuthenticated, this.userId});
 }
 
-class AuthController extends StateNotifier<LoginState> {
+class AuthController extends StateNotifier<AuthState> {
   final AuthService _authService;
 
-  AuthController(this._authService) : super(LoginState());
+  AuthController(this._authService)
+      : super(AuthState(isAuthenticated: false, userId: null));
 
   Future<void> login(String userId, String pin) async {
-    state = LoginState(isLoading: true);
-    try {
-      var data = await _authService.login(userId, pin);
-      final role = data['user']['role'];
-      //state = LoginState(isAuthenticated: true, userId: userId);
-      state = LoginState(isAuthenticated: true, userId: userId, role: role);
-    } catch (e) {
-      state = LoginState(error: e.toString().replaceAll('Exception: ', ''));
-    }
+    final data = await _authService.login(userId, pin);
+    state = AuthState(isAuthenticated: true, userId: data['user']['id']);
   }
 
   Future<void> logout() async {
     await _authService.logout();
-    state = LoginState(isAuthenticated: false);
+    state = AuthState(isAuthenticated: false, userId: null);
+  }
+
+  Future<void> checkAuthStatus() async {
+    final token = await _authService.getToken();
+    if (token != null) {
+      // Here you might want to decode the token to get user info
+      // For now, let's assume if a token exists, the user is authenticated.
+      // A better approach would be to verify the token with the backend.
+      // And get user ID from there.
+      state = AuthState(isAuthenticated: true, userId: 'some_user_id'); // Placeholder
+    }
   }
 }
 
-// 3. Provider for the Controller
-final authControllerProvider =
-    StateNotifierProvider<AuthController, LoginState>((ref) {
+final authControllerProvider = StateNotifierProvider<AuthController, AuthState>((ref) {
   return AuthController(ref.watch(authServiceProvider));
 });
