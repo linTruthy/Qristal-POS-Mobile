@@ -211,6 +211,7 @@ describe('SyncService', () => {
             orderId: 'order-1',
             method: 'CASH',
             amount: 40,
+            shiftId: 'shift-1',
             createdAt: new Date().toISOString(),
           },
         ],
@@ -340,6 +341,66 @@ describe('SyncService', () => {
           shiftId: 'shift-1',
         }),
       }),
+    );
+  });
+
+
+  it('fails payment processing when shiftId cannot be resolved', async () => {
+    const paymentCreate = jest.fn();
+    prisma.$transaction.mockImplementationOnce(async (handler: any) => {
+      const tx = {
+        shift: { upsert: jest.fn() },
+        order: {
+          findUnique: jest
+            .fn()
+            .mockResolvedValueOnce({ id: 'order-1' })
+            .mockResolvedValueOnce({ shiftId: null }),
+          upsert: jest.fn().mockResolvedValue({ id: 'order-1' }),
+        },
+        orderItem: { upsert: jest.fn() },
+        payment: { create: paymentCreate },
+        auditLog: { create: jest.fn() },
+      };
+
+      await handler(tx);
+    });
+
+    const result = await service.pushChanges(
+      {
+        orders: [
+          {
+            id: 'order-1',
+            receiptNumber: 'ORD-1',
+            userId: 'user-1',
+            tableId: null,
+            shiftId: null,
+            totalAmount: 40,
+            status: 'OPEN',
+            createdAt: new Date().toISOString(),
+          },
+        ],
+        payments: [
+          {
+            id: 'payment-1',
+            orderId: 'order-1',
+            method: 'CASH',
+            amount: 40,
+            createdAt: new Date().toISOString(),
+          },
+        ],
+      },
+      'BRANCH-01',
+    );
+
+    expect(paymentCreate).not.toHaveBeenCalled();
+    expect(result.success).toBe(false);
+    expect(result.errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: 'payment-1',
+          error: expect.stringContaining('shiftId is required'),
+        }),
+      ]),
     );
   });
 

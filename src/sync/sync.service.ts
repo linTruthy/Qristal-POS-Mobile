@@ -295,6 +295,25 @@ export class SyncService {
         if (payments && Array.isArray(payments)) {
           for (const pay of payments) {
             try {
+              let resolvedShiftId = pay.shiftId ?? orderShiftMap.get(pay.orderId) ?? null;
+
+              if (!resolvedShiftId) {
+                const existingOrder = await tx.order.findUnique({
+                  where: { id: pay.orderId },
+                  select: { shiftId: true },
+                });
+                resolvedShiftId = existingOrder?.shiftId ?? null;
+              }
+
+              if (!resolvedShiftId) {
+                errors.push({
+                  id: pay.id,
+                  error:
+                    'Payment error: shiftId is required. Provide payment.shiftId or sync order with a shiftId first.',
+                });
+                continue;
+              }
+
               await tx.payment.create({
                 data: {
                   id: pay.id,
@@ -302,7 +321,7 @@ export class SyncService {
                   method: pay.method,
                   amount: pay.amount,
                   reference: pay.reference,
-                  shiftId: pay.shiftId ?? orderShiftMap.get(pay.orderId) ?? null,
+                  shiftId: resolvedShiftId,
                   createdAt: new Date(pay.createdAt),
                 },
               });
