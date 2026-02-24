@@ -252,79 +252,89 @@ class SyncService {
   }
 
   Future<void> _pushToWeb(String token) async {
-    // 1. Find unsynced orders
-    final unsyncedOrders = await (db.select(
-      db.orders,
-    )..where((t) => t.isSynced.equals(false))).get();
+    // 1. Find unsynced data
+    final unsyncedOrders = await (db.select(db.orders)..where((t) => t.isSynced.equals(false))).get();
+    final unsyncedShifts = await (db.select(db.shifts)..where((t) => t.isSynced.equals(false))).get();
+    final unsyncedTables = await (db.select(db.seatingTables)..where((t) => t.isSynced.equals(false))).get();
 
-    if (unsyncedOrders.isEmpty) return;
+    if (unsyncedOrders.isEmpty && unsyncedShifts.isEmpty && unsyncedTables.isEmpty) return;
 
     if (kDebugMode) {
-      print("Found ${unsyncedOrders.length} orders to push.");
+      print("Found ${unsyncedOrders.length} orders, ${unsyncedShifts.length} shifts, and ${unsyncedTables.length} tables to push.");
     }
 
     List<Map<String, dynamic>> ordersPayload = [];
     List<Map<String, dynamic>> itemsPayload = [];
-    List<Map<String, dynamic>> paymentsPayload = []; // -> ADDED FOR PAYMENTS
+    List<Map<String, dynamic>> paymentsPayload = [];
+    List<Map<String, dynamic>> shiftsPayload = [];
+    List<Map<String, dynamic>> tablesPayload = [];
 
-    final orderIds = unsyncedOrders.map((order) => order.id).toList();
-    final relatedItems = await (db.select(
-      db.orderItems,
-    )..where((t) => t.orderId.isIn(orderIds))).get();
+    if (unsyncedOrders.isNotEmpty) {
+      final orderIds = unsyncedOrders.map((order) => order.id).toList();
+      final relatedItems = await (db.select(db.orderItems)..where((t) => t.orderId.isIn(orderIds))).get();
 
-    for (final item in relatedItems) {
-      itemsPayload.add({
-        'id': item.id,
-        'orderId': item.orderId,
-        'productId': item.productId,
-        'quantity': item.quantity,
-        'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
-        'notes': item.notes,
-      });
+      for (final item in relatedItems) {
+        itemsPayload.add({
+          'id': item.id,
+          'orderId': item.orderId,
+          'productId': item.productId,
+          'quantity': item.quantity,
+          'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
+          'notes': item.notes,
+        });
+      }
+
+      for (final order in unsyncedOrders) {
+        ordersPayload.add({
+          'id': order.id,
+          'receiptNumber': order.receiptNumber,
+          'userId': order.userId,
+          'tableId': order.tableId,
+          'totalAmount': order.totalAmount,
+          'status': order.status,
+          'createdAt': order.createdAt.toIso8601String(),
+          'updatedAt': order.updatedAt.toIso8601String(),
+        });
+
+        final payments = await (db.select(db.payments)..where((t) => t.orderId.equals(order.id))).get();
+        for (final pay in payments) {
+          paymentsPayload.add({
+            'id': pay.id,
+            'orderId': pay.orderId,
+            'method': pay.method,
+            'amount': pay.amount,
+            'reference': pay.reference,
+            'createdAt': pay.createdAt.toIso8601String(),
+          });
+        }
+      }
     }
 
-    for (final order in unsyncedOrders) {
-      ordersPayload.add({
-        'id': order.id,
-        'receiptNumber': order.receiptNumber,
-        'userId': order.userId,
-        'tableId': order.tableId,
-        'totalAmount': order.totalAmount,
-        'status': order.status,
-        'createdAt': order.createdAt.toIso8601String(),
-      });
-
-      // Fetch related payments -> ADDED FOR PAYMENTS
-      final payments = await (db.select(
-        db.payments,
-      )..where((t) => t.orderId.equals(order.id))).get();
-      for (final pay in payments) {
-        paymentsPayload.add({
-          'id': pay.id,
-          'orderId': pay.orderId,
-          'method': pay.method,
-          'amount': pay.amount,
-          'reference': pay.reference,
-          'createdAt': pay.createdAt.toIso8601String(),
+    if (unsyncedShifts.isNotEmpty) {
+      for (final shift in unsyncedShifts) {
+        shiftsPayload.add({
+          'id': shift.id,
+          'userId': shift.userId,
+          'openingTime': shift.openingTime.toIso8601String(),
+          'closingTime': shift.closingTime?.toIso8601String(),
+          'startingCash': shift.startingCash,
+          'expectedCash': shift.expectedCash,
+          'actualCash': shift.actualCash,
+          'notes': shift.notes,
         });
       }
     }
-    final unsyncedShifts = await (db.select(
-      db.shifts,
-    )..where((t) => t.isSynced.equals(false))).get();
-    List<Map<String, dynamic>> shiftsPayload = [];
 
-    for (final shift in unsyncedShifts) {
-      shiftsPayload.add({
-        'id': shift.id,
-        'userId': shift.userId,
-        'openingTime': shift.openingTime.toIso8601String(),
-        'closingTime': shift.closingTime?.toIso8601String(),
-        'startingCash': shift.startingCash,
-        'expectedCash': shift.expectedCash,
-        'actualCash': shift.actualCash,
-        'notes': shift.notes,
-      });
+    if (unsyncedTables.isNotEmpty) {
+      for (final table in unsyncedTables) {
+        tablesPayload.add({
+          'id': table.id,
+          'name': table.name,
+          'status': table.status,
+          'floor': table.floor,
+          'updatedAt': table.updatedAt.toIso8601String(),
+        });
+      }
     }
 
     if (kDebugMode) {
@@ -332,26 +342,26 @@ class SyncService {
         'Prepared sync payload: '
         '${ordersPayload.length} orders, '
         '${itemsPayload.length} orderItems, '
-        '${paymentsPayload.length} payments.',
+        '${paymentsPayload.length} payments, '
+        '${shiftsPayload.length} shifts, '
+        '${tablesPayload.length} tables.'
       );
     }
 
     try {
       final response = await http
           .post(
-            Uri.parse(
-              '${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}',
-            ),
+            Uri.parse('${ApiConstants.baseUrl}${ApiConstants.syncPushEndpoint}'),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': 'Bearer $token',
             },
-            // Include payments in the payload!
             body: jsonEncode({
               'orders': ordersPayload,
               'orderItems': itemsPayload,
               'payments': paymentsPayload,
               'shifts': shiftsPayload,
+              'seatingTables': tablesPayload,
             }),
           )
           .timeout(const Duration(seconds: 20));
@@ -361,6 +371,14 @@ class SyncService {
           for (final order in unsyncedOrders) {
             await (db.update(db.orders)..where((t) => t.id.equals(order.id)))
                 .write(const OrdersCompanion(isSynced: Value(true)));
+          }
+          for (final shift in unsyncedShifts) {
+            await (db.update(db.shifts)..where((t) => t.id.equals(shift.id)))
+                .write(const ShiftsCompanion(isSynced: Value(true)));
+          }
+           for (final table in unsyncedTables) {
+            await (db.update(db.seatingTables)..where((t) => t.id.equals(table.id)))
+                .write(const SeatingTablesCompanion(isSynced: Value(true)));
           }
         });
         if (kDebugMode) print("✅ Sync Push Successful!");

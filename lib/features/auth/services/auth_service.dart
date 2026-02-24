@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../core/constants/api_constants.dart';
+import '../../../core/constants/role_constants.dart';
 
 class AuthService {
   final _storage = const FlutterSecureStorage();
@@ -41,5 +42,14 @@ class AuthService {
 
   Future<String?> getToken() async {
     return await _storage.read(key: 'jwt_token');
+  }
+
+  Future<UserRole> getRole() async {
+    final userDataString = await _storage.read(key: 'user_data');
+    if (userDataString == null) {
+      return UserRole.WAITER; // Default role
+    }
+    final userData = jsonDecode(userDataString);
+    return (userData['role'] as String).toUserRole();
   }
 }
