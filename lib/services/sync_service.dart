@@ -332,7 +332,7 @@ class SyncService {
           'name': table.name,
           'status': table.status,
           'floor': table.floor,
-          'updatedAt': table.updatedAt.toIso8601String(),
+          'updatedAt': table.updatedAt?.toIso8601String(),
         });
       }
     }

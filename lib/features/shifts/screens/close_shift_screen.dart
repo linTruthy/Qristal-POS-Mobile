@@ -145,7 +145,7 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Shift Summary", style: AppTheme.headerStyle),
+            Text("Shift Summary", ),
             const Divider(height: 30),
             _buildSummaryRow("Total Sales:", _summary!.totalSales),
             _buildSummaryRow("Cash Sales:", _summary!.cashSales),
@@ -154,7 +154,7 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
             _buildSummaryRow("Starting Cash:", _summary!.shift.startingCash),
             _buildSummaryRow("Expected Cash in Drawer:", _summary!.expectedCash),
             const SizedBox(height: 30),
-            Text("Counted Cash", style: AppTheme.headerStyle),
+            Text("Counted Cash", ),
             const SizedBox(height: 10),
             TextField(
               controller: _cashController,
