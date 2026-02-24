@@ -192,6 +192,7 @@ export class SyncService {
     this.logger.log('Received pushChanges payload');
     const { orders, orderItems, payments, shifts, auditLogs } = payload;
     const errors: { id: any; error: string }[] = [];
+    const orderShiftMap = new Map<string, string | null>();
 
     let processedOrders = 0;
     let processedShifts = 0;
@@ -234,6 +235,7 @@ export class SyncService {
 
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
+            orderShiftMap.set(order.id, order.shiftId ?? null);
             try {
               const existing = await tx.order.findUnique({ where: { id: order.id } });
               const savedOrder = await tx.order.upsert({
@@ -300,6 +302,7 @@ export class SyncService {
                   method: pay.method,
                   amount: pay.amount,
                   reference: pay.reference,
+                  shiftId: pay.shiftId ?? orderShiftMap.get(pay.orderId) ?? null,
                   createdAt: new Date(pay.createdAt),
                 },
               });

@@ -155,12 +155,14 @@ enum SyncStatus {
 model Payment {
   id        String        @id @default(uuid())
   orderId   String        @map("order_id")
+  shiftId   String?       @map("shift_id")
   method    PaymentMethod
   amount    Decimal       @db.Decimal(10, 2)
   reference String? // For Mobile Money Ref / Card Auth Code
   createdAt DateTime      @default(now()) @map("created_at")
 
   order Order @relation(fields: [orderId], references: [id])
+  shift Shift? @relation(fields: [shiftId], references: [id])
 
   @@map("payments")
 }
@@ -237,8 +239,9 @@ model Shift {
 
   notes String?
 
-  user   User    @relation(fields: [userId], references: [id])
-  orders Order[] // A shift has many orders
+  user     User      @relation(fields: [userId], references: [id])
+  orders   Order[]   // A shift has many orders
+  payments Payment[]
 
   @@map("shifts")
 }
