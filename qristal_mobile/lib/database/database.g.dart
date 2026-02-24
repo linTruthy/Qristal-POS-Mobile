@@ -2607,6 +2607,18 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _branchIdMeta = const VerificationMeta(
+    'branchId',
+  );
+  @override
+  late final GeneratedColumn<String> branchId = GeneratedColumn<String>(
+    'branch_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('BRANCH-01'),
+  );
   static const VerificationMeta _orderIdMeta = const VerificationMeta(
     'orderId',
   );
@@ -2619,6 +2631,20 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'REFERENCES orders (id)',
+    ),
+  );
+  static const VerificationMeta _shiftIdMeta = const VerificationMeta(
+    'shiftId',
+  );
+  @override
+  late final GeneratedColumn<String> shiftId = GeneratedColumn<String>(
+    'shift_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES shifts (id)',
     ),
   );
   static const VerificationMeta _methodMeta = const VerificationMeta('method');
@@ -2664,7 +2690,9 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
   @override
   List<GeneratedColumn> get $columns => [
     id,
+    branchId,
     orderId,
+    shiftId,
     method,
     amount,
     reference,
@@ -2687,6 +2715,12 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
     } else if (isInserting) {
       context.missing(_idMeta);
     }
+    if (data.containsKey('branch_id')) {
+      context.handle(
+        _branchIdMeta,
+        branchId.isAcceptableOrUnknown(data['branch_id']!, _branchIdMeta),
+      );
+    }
     if (data.containsKey('order_id')) {
       context.handle(
         _orderIdMeta,
@@ -2694,6 +2728,14 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
       );
     } else if (isInserting) {
       context.missing(_orderIdMeta);
+    }
+    if (data.containsKey('shift_id')) {
+      context.handle(
+        _shiftIdMeta,
+        shiftId.isAcceptableOrUnknown(data['shift_id']!, _shiftIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftIdMeta);
     }
     if (data.containsKey('method')) {
       context.handle(
@@ -2738,9 +2780,17 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
         DriftSqlType.string,
         data['${effectivePrefix}id'],
       )!,
+      branchId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}branch_id'],
+      )!,
       orderId: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}order_id'],
+      )!,
+      shiftId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift_id'],
       )!,
       method: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -2769,14 +2819,18 @@ class $PaymentsTable extends Payments with TableInfo<$PaymentsTable, Payment> {
 
 class Payment extends DataClass implements Insertable<Payment> {
   final String id;
+  final String branchId;
   final String orderId;
+  final String shiftId;
   final String method;
   final double amount;
   final String? reference;
   final DateTime createdAt;
   const Payment({
     required this.id,
+    required this.branchId,
     required this.orderId,
+    required this.shiftId,
     required this.method,
     required this.amount,
     this.reference,
@@ -2786,7 +2840,9 @@ class Payment extends DataClass implements Insertable<Payment> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
+    map['branch_id'] = Variable<String>(branchId);
     map['order_id'] = Variable<String>(orderId);
+    map['shift_id'] = Variable<String>(shiftId);
     map['method'] = Variable<String>(method);
     map['amount'] = Variable<double>(amount);
     if (!nullToAbsent || reference != null) {
@@ -2799,7 +2855,9 @@ class Payment extends DataClass implements Insertable<Payment> {
   PaymentsCompanion toCompanion(bool nullToAbsent) {
     return PaymentsCompanion(
       id: Value(id),
+      branchId: Value(branchId),
       orderId: Value(orderId),
+      shiftId: Value(shiftId),
       method: Value(method),
       amount: Value(amount),
       reference: reference == null && nullToAbsent
@@ -2816,7 +2874,9 @@ class Payment extends DataClass implements Insertable<Payment> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Payment(
       id: serializer.fromJson<String>(json['id']),
+      branchId: serializer.fromJson<String>(json['branchId']),
       orderId: serializer.fromJson<String>(json['orderId']),
+      shiftId: serializer.fromJson<String>(json['shiftId']),
       method: serializer.fromJson<String>(json['method']),
       amount: serializer.fromJson<double>(json['amount']),
       reference: serializer.fromJson<String?>(json['reference']),
@@ -2828,7 +2888,9 @@ class Payment extends DataClass implements Insertable<Payment> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
+      'branchId': serializer.toJson<String>(branchId),
       'orderId': serializer.toJson<String>(orderId),
+      'shiftId': serializer.toJson<String>(shiftId),
       'method': serializer.toJson<String>(method),
       'amount': serializer.toJson<double>(amount),
       'reference': serializer.toJson<String?>(reference),
@@ -2838,14 +2900,18 @@ class Payment extends DataClass implements Insertable<Payment> {
 
   Payment copyWith({
     String? id,
+    String? branchId,
     String? orderId,
+    String? shiftId,
     String? method,
     double? amount,
     Value<String?> reference = const Value.absent(),
     DateTime? createdAt,
   }) => Payment(
     id: id ?? this.id,
+    branchId: branchId ?? this.branchId,
     orderId: orderId ?? this.orderId,
+    shiftId: shiftId ?? this.shiftId,
     method: method ?? this.method,
     amount: amount ?? this.amount,
     reference: reference.present ? reference.value : this.reference,
@@ -2854,7 +2920,9 @@ class Payment extends DataClass implements Insertable<Payment> {
   Payment copyWithCompanion(PaymentsCompanion data) {
     return Payment(
       id: data.id.present ? data.id.value : this.id,
+      branchId: data.branchId.present ? data.branchId.value : this.branchId,
       orderId: data.orderId.present ? data.orderId.value : this.orderId,
+      shiftId: data.shiftId.present ? data.shiftId.value : this.shiftId,
       method: data.method.present ? data.method.value : this.method,
       amount: data.amount.present ? data.amount.value : this.amount,
       reference: data.reference.present ? data.reference.value : this.reference,
@@ -2866,7 +2934,9 @@ class Payment extends DataClass implements Insertable<Payment> {
   String toString() {
     return (StringBuffer('Payment(')
           ..write('id: $id, ')
+          ..write('branchId: $branchId, ')
           ..write('orderId: $orderId, ')
+          ..write('shiftId: $shiftId, ')
           ..write('method: $method, ')
           ..write('amount: $amount, ')
           ..write('reference: $reference, ')
@@ -2876,14 +2946,24 @@ class Payment extends DataClass implements Insertable<Payment> {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, orderId, method, amount, reference, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    branchId,
+    orderId,
+    shiftId,
+    method,
+    amount,
+    reference,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Payment &&
           other.id == this.id &&
+          other.branchId == this.branchId &&
           other.orderId == this.orderId &&
+          other.shiftId == this.shiftId &&
           other.method == this.method &&
           other.amount == this.amount &&
           other.reference == this.reference &&
@@ -2892,7 +2972,9 @@ class Payment extends DataClass implements Insertable<Payment> {
 
 class PaymentsCompanion extends UpdateCompanion<Payment> {
   final Value<String> id;
+  final Value<String> branchId;
   final Value<String> orderId;
+  final Value<String> shiftId;
   final Value<String> method;
   final Value<double> amount;
   final Value<String?> reference;
@@ -2900,7 +2982,9 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
   final Value<int> rowid;
   const PaymentsCompanion({
     this.id = const Value.absent(),
+    this.branchId = const Value.absent(),
     this.orderId = const Value.absent(),
+    this.shiftId = const Value.absent(),
     this.method = const Value.absent(),
     this.amount = const Value.absent(),
     this.reference = const Value.absent(),
@@ -2909,7 +2993,9 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
   });
   PaymentsCompanion.insert({
     required String id,
+    this.branchId = const Value.absent(),
     required String orderId,
+    required String shiftId,
     required String method,
     required double amount,
     this.reference = const Value.absent(),
@@ -2917,12 +3003,15 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        orderId = Value(orderId),
+       shiftId = Value(shiftId),
        method = Value(method),
        amount = Value(amount),
        createdAt = Value(createdAt);
   static Insertable<Payment> custom({
     Expression<String>? id,
+    Expression<String>? branchId,
     Expression<String>? orderId,
+    Expression<String>? shiftId,
     Expression<String>? method,
     Expression<double>? amount,
     Expression<String>? reference,
@@ -2931,7 +3020,9 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (branchId != null) 'branch_id': branchId,
       if (orderId != null) 'order_id': orderId,
+      if (shiftId != null) 'shift_id': shiftId,
       if (method != null) 'method': method,
       if (amount != null) 'amount': amount,
       if (reference != null) 'reference': reference,
@@ -2942,7 +3033,9 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
 
   PaymentsCompanion copyWith({
     Value<String>? id,
+    Value<String>? branchId,
     Value<String>? orderId,
+    Value<String>? shiftId,
     Value<String>? method,
     Value<double>? amount,
     Value<String?>? reference,
@@ -2951,7 +3044,9 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
   }) {
     return PaymentsCompanion(
       id: id ?? this.id,
+      branchId: branchId ?? this.branchId,
       orderId: orderId ?? this.orderId,
+      shiftId: shiftId ?? this.shiftId,
       method: method ?? this.method,
       amount: amount ?? this.amount,
       reference: reference ?? this.reference,
@@ -2966,8 +3061,14 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
     if (id.present) {
       map['id'] = Variable<String>(id.value);
     }
+    if (branchId.present) {
+      map['branch_id'] = Variable<String>(branchId.value);
+    }
     if (orderId.present) {
       map['order_id'] = Variable<String>(orderId.value);
+    }
+    if (shiftId.present) {
+      map['shift_id'] = Variable<String>(shiftId.value);
     }
     if (method.present) {
       map['method'] = Variable<String>(method.value);
@@ -2991,7 +3092,9 @@ class PaymentsCompanion extends UpdateCompanion<Payment> {
   String toString() {
     return (StringBuffer('PaymentsCompanion(')
           ..write('id: $id, ')
+          ..write('branchId: $branchId, ')
           ..write('orderId: $orderId, ')
+          ..write('shiftId: $shiftId, ')
           ..write('method: $method, ')
           ..write('amount: $amount, ')
           ..write('reference: $reference, ')
@@ -4247,6 +4350,25 @@ final class $$ShiftsTableReferences
       manager.$state.copyWith(prefetchedData: cache),
     );
   }
+
+  static MultiTypedResultKey<$PaymentsTable, List<Payment>> _paymentsRefsTable(
+    _$AppDatabase db,
+  ) => MultiTypedResultKey.fromTable(
+    db.payments,
+    aliasName: $_aliasNameGenerator(db.shifts.id, db.payments.shiftId),
+  );
+
+  $$PaymentsTableProcessedTableManager get paymentsRefs {
+    final manager = $$PaymentsTableTableManager(
+      $_db,
+      $_db.payments,
+    ).filter((f) => f.shiftId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_paymentsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$ShiftsTableFilterComposer
@@ -4324,6 +4446,31 @@ class $$ShiftsTableFilterComposer
           }) => $$OrdersTableFilterComposer(
             $db: $db,
             $table: $db.orders,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> paymentsRefs(
+    Expression<bool> Function($$PaymentsTableFilterComposer f) f,
+  ) {
+    final $$PaymentsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.payments,
+      getReferencedColumn: (t) => t.shiftId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PaymentsTableFilterComposer(
+            $db: $db,
+            $table: $db.payments,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -4467,6 +4614,31 @@ class $$ShiftsTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> paymentsRefs<T extends Object>(
+    Expression<T> Function($$PaymentsTableAnnotationComposer a) f,
+  ) {
+    final $$PaymentsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.payments,
+      getReferencedColumn: (t) => t.shiftId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PaymentsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.payments,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$ShiftsTableTableManager
@@ -4482,7 +4654,7 @@ class $$ShiftsTableTableManager
           $$ShiftsTableUpdateCompanionBuilder,
           (Shift, $$ShiftsTableReferences),
           Shift,
-          PrefetchHooks Function({bool ordersRefs})
+          PrefetchHooks Function({bool ordersRefs, bool paymentsRefs})
         > {
   $$ShiftsTableTableManager(_$AppDatabase db, $ShiftsTable table)
     : super(
@@ -4553,10 +4725,13 @@ class $$ShiftsTableTableManager
                     (e.readTable(table), $$ShiftsTableReferences(db, table, e)),
               )
               .toList(),
-          prefetchHooksCallback: ({ordersRefs = false}) {
+          prefetchHooksCallback: ({ordersRefs = false, paymentsRefs = false}) {
             return PrefetchHooks(
               db: db,
-              explicitlyWatchedTables: [if (ordersRefs) db.orders],
+              explicitlyWatchedTables: [
+                if (ordersRefs) db.orders,
+                if (paymentsRefs) db.payments,
+              ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
                 return [
@@ -4568,6 +4743,17 @@ class $$ShiftsTableTableManager
                       ),
                       managerFromTypedResult: (p0) =>
                           $$ShiftsTableReferences(db, table, p0).ordersRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.shiftId == item.id),
+                      typedResults: items,
+                    ),
+                  if (paymentsRefs)
+                    await $_getPrefetchedData<Shift, $ShiftsTable, Payment>(
+                      currentTable: table,
+                      referencedTable: $$ShiftsTableReferences
+                          ._paymentsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$ShiftsTableReferences(db, table, p0).paymentsRefs,
                       referencedItemsForCurrentItem: (item, referencedItems) =>
                           referencedItems.where((e) => e.shiftId == item.id),
                       typedResults: items,
@@ -4592,7 +4778,7 @@ typedef $$ShiftsTableProcessedTableManager =
       $$ShiftsTableUpdateCompanionBuilder,
       (Shift, $$ShiftsTableReferences),
       Shift,
-      PrefetchHooks Function({bool ordersRefs})
+      PrefetchHooks Function({bool ordersRefs, bool paymentsRefs})
     >;
 typedef $$OrdersTableCreateCompanionBuilder =
     OrdersCompanion Function({
@@ -5650,7 +5836,9 @@ typedef $$OrderItemsTableProcessedTableManager =
 typedef $$PaymentsTableCreateCompanionBuilder =
     PaymentsCompanion Function({
       required String id,
+      Value<String> branchId,
       required String orderId,
+      required String shiftId,
       required String method,
       required double amount,
       Value<String?> reference,
@@ -5660,7 +5848,9 @@ typedef $$PaymentsTableCreateCompanionBuilder =
 typedef $$PaymentsTableUpdateCompanionBuilder =
     PaymentsCompanion Function({
       Value<String> id,
+      Value<String> branchId,
       Value<String> orderId,
+      Value<String> shiftId,
       Value<String> method,
       Value<double> amount,
       Value<String?> reference,
@@ -5689,6 +5879,24 @@ final class $$PaymentsTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static $ShiftsTable _shiftIdTable(_$AppDatabase db) => db.shifts.createAlias(
+    $_aliasNameGenerator(db.payments.shiftId, db.shifts.id),
+  );
+
+  $$ShiftsTableProcessedTableManager get shiftId {
+    final $_column = $_itemColumn<String>('shift_id')!;
+
+    final manager = $$ShiftsTableTableManager(
+      $_db,
+      $_db.shifts,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_shiftIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
 }
 
 class $$PaymentsTableFilterComposer
@@ -5702,6 +5910,11 @@ class $$PaymentsTableFilterComposer
   });
   ColumnFilters<String> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get branchId => $composableBuilder(
+    column: $table.branchId,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5747,6 +5960,29 @@ class $$PaymentsTableFilterComposer
     );
     return composer;
   }
+
+  $$ShiftsTableFilterComposer get shiftId {
+    final $$ShiftsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.shiftId,
+      referencedTable: $db.shifts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ShiftsTableFilterComposer(
+            $db: $db,
+            $table: $db.shifts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$PaymentsTableOrderingComposer
@@ -5760,6 +5996,11 @@ class $$PaymentsTableOrderingComposer
   });
   ColumnOrderings<String> get id => $composableBuilder(
     column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get branchId => $composableBuilder(
+    column: $table.branchId,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -5805,6 +6046,29 @@ class $$PaymentsTableOrderingComposer
     );
     return composer;
   }
+
+  $$ShiftsTableOrderingComposer get shiftId {
+    final $$ShiftsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.shiftId,
+      referencedTable: $db.shifts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ShiftsTableOrderingComposer(
+            $db: $db,
+            $table: $db.shifts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$PaymentsTableAnnotationComposer
@@ -5818,6 +6082,9 @@ class $$PaymentsTableAnnotationComposer
   });
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get branchId =>
+      $composableBuilder(column: $table.branchId, builder: (column) => column);
 
   GeneratedColumn<String> get method =>
       $composableBuilder(column: $table.method, builder: (column) => column);
@@ -5853,6 +6120,29 @@ class $$PaymentsTableAnnotationComposer
     );
     return composer;
   }
+
+  $$ShiftsTableAnnotationComposer get shiftId {
+    final $$ShiftsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.shiftId,
+      referencedTable: $db.shifts,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ShiftsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.shifts,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$PaymentsTableTableManager
@@ -5868,7 +6158,7 @@ class $$PaymentsTableTableManager
           $$PaymentsTableUpdateCompanionBuilder,
           (Payment, $$PaymentsTableReferences),
           Payment,
-          PrefetchHooks Function({bool orderId})
+          PrefetchHooks Function({bool orderId, bool shiftId})
         > {
   $$PaymentsTableTableManager(_$AppDatabase db, $PaymentsTable table)
     : super(
@@ -5884,7 +6174,9 @@ class $$PaymentsTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> id = const Value.absent(),
+                Value<String> branchId = const Value.absent(),
                 Value<String> orderId = const Value.absent(),
+                Value<String> shiftId = const Value.absent(),
                 Value<String> method = const Value.absent(),
                 Value<double> amount = const Value.absent(),
                 Value<String?> reference = const Value.absent(),
@@ -5892,7 +6184,9 @@ class $$PaymentsTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => PaymentsCompanion(
                 id: id,
+                branchId: branchId,
                 orderId: orderId,
+                shiftId: shiftId,
                 method: method,
                 amount: amount,
                 reference: reference,
@@ -5902,7 +6196,9 @@ class $$PaymentsTableTableManager
           createCompanionCallback:
               ({
                 required String id,
+                Value<String> branchId = const Value.absent(),
                 required String orderId,
+                required String shiftId,
                 required String method,
                 required double amount,
                 Value<String?> reference = const Value.absent(),
@@ -5910,7 +6206,9 @@ class $$PaymentsTableTableManager
                 Value<int> rowid = const Value.absent(),
               }) => PaymentsCompanion.insert(
                 id: id,
+                branchId: branchId,
                 orderId: orderId,
+                shiftId: shiftId,
                 method: method,
                 amount: amount,
                 reference: reference,
@@ -5925,7 +6223,7 @@ class $$PaymentsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({orderId = false}) {
+          prefetchHooksCallback: ({orderId = false, shiftId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -5958,6 +6256,19 @@ class $$PaymentsTableTableManager
                               )
                               as T;
                     }
+                    if (shiftId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.shiftId,
+                                referencedTable: $$PaymentsTableReferences
+                                    ._shiftIdTable(db),
+                                referencedColumn: $$PaymentsTableReferences
+                                    ._shiftIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
                     return state;
                   },
@@ -5982,7 +6293,7 @@ typedef $$PaymentsTableProcessedTableManager =
       $$PaymentsTableUpdateCompanionBuilder,
       (Payment, $$PaymentsTableReferences),
       Payment,
-      PrefetchHooks Function({bool orderId})
+      PrefetchHooks Function({bool orderId, bool shiftId})
     >;
 typedef $$SeatingTablesTableCreateCompanionBuilder =
     SeatingTablesCompanion Function({
