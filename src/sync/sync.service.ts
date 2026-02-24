@@ -111,7 +111,7 @@ export class SyncService {
     }
 
     try {
-      const [categories, products, users, seatingTables, orders] = await Promise.all([
+      const [categories, products, users, seatingTables, orders, shifts] = await Promise.all([
         this.prisma.category.findMany({
           where: {
             updatedAt: { gt: lastSyncDate },
@@ -149,6 +149,12 @@ export class SyncService {
             branchId,
           },
         }),
+        this.prisma.shift.findMany({
+          where: {
+            updatedAt: { gt: lastSyncDate },
+            branchId,
+          }
+        })
       ]);
 
       const recordsPulled =
@@ -156,7 +162,8 @@ export class SyncService {
         products.length +
         users.length +
         seatingTables.length +
-        orders.length;
+        orders.length +
+        shifts.length;
 
       await this.writeSyncLogSafely({
         branchId,
@@ -174,6 +181,7 @@ export class SyncService {
           users,
           seatingTables,
           orders,
+          shifts,
         },
       };
     } catch (error) {
