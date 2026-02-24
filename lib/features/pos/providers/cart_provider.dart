@@ -282,6 +282,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             PaymentsCompanion(
               id: Value(const Uuid().v4()),
               orderId: Value(orderId),
+              shiftId: Value(shiftId),
               method: Value(method),
               amount: Value(total),
               reference: Value(refCode),
