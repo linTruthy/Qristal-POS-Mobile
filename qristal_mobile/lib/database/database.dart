@@ -91,7 +91,7 @@ class SeatingTables extends Table {
   TextColumn get status => text().withDefault(const Constant('FREE'))();
   TextColumn get floor => text().withDefault(const Constant('Main'))();
   DateTimeColumn get updatedAt => dateTime().nullable()();
-
+  BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
   @override
   Set<Column> get primaryKey => {id};
 }

@@ -3172,6 +3172,21 @@ class $SeatingTablesTable extends SeatingTables
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -3180,6 +3195,7 @@ class $SeatingTablesTable extends SeatingTables
     status,
     floor,
     updatedAt,
+    isSynced,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3230,6 +3246,12 @@ class $SeatingTablesTable extends SeatingTables
         updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
       );
     }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
     return context;
   }
 
@@ -3263,6 +3285,10 @@ class $SeatingTablesTable extends SeatingTables
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
       ),
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
     );
   }
 
@@ -3279,6 +3305,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
   final String status;
   final String floor;
   final DateTime? updatedAt;
+  final bool isSynced;
   const SeatingTable({
     required this.id,
     required this.branchId,
@@ -3286,6 +3313,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
     required this.status,
     required this.floor,
     this.updatedAt,
+    required this.isSynced,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -3298,6 +3326,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
     if (!nullToAbsent || updatedAt != null) {
       map['updated_at'] = Variable<DateTime>(updatedAt);
     }
+    map['is_synced'] = Variable<bool>(isSynced);
     return map;
   }
 
@@ -3311,6 +3340,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
       updatedAt: updatedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(updatedAt),
+      isSynced: Value(isSynced),
     );
   }
 
@@ -3326,6 +3356,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
       status: serializer.fromJson<String>(json['status']),
       floor: serializer.fromJson<String>(json['floor']),
       updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
     );
   }
   @override
@@ -3338,6 +3369,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
       'status': serializer.toJson<String>(status),
       'floor': serializer.toJson<String>(floor),
       'updatedAt': serializer.toJson<DateTime?>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
     };
   }
 
@@ -3348,6 +3380,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
     String? status,
     String? floor,
     Value<DateTime?> updatedAt = const Value.absent(),
+    bool? isSynced,
   }) => SeatingTable(
     id: id ?? this.id,
     branchId: branchId ?? this.branchId,
@@ -3355,6 +3388,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
     status: status ?? this.status,
     floor: floor ?? this.floor,
     updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
   );
   SeatingTable copyWithCompanion(SeatingTablesCompanion data) {
     return SeatingTable(
@@ -3364,6 +3398,7 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
       status: data.status.present ? data.status.value : this.status,
       floor: data.floor.present ? data.floor.value : this.floor,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
     );
   }
 
@@ -3375,13 +3410,15 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
           ..write('name: $name, ')
           ..write('status: $status, ')
           ..write('floor: $floor, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, branchId, name, status, floor, updatedAt);
+  int get hashCode =>
+      Object.hash(id, branchId, name, status, floor, updatedAt, isSynced);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -3391,7 +3428,8 @@ class SeatingTable extends DataClass implements Insertable<SeatingTable> {
           other.name == this.name &&
           other.status == this.status &&
           other.floor == this.floor &&
-          other.updatedAt == this.updatedAt);
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
 }
 
 class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
@@ -3401,6 +3439,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
   final Value<String> status;
   final Value<String> floor;
   final Value<DateTime?> updatedAt;
+  final Value<bool> isSynced;
   final Value<int> rowid;
   const SeatingTablesCompanion({
     this.id = const Value.absent(),
@@ -3409,6 +3448,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
     this.status = const Value.absent(),
     this.floor = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   SeatingTablesCompanion.insert({
@@ -3418,6 +3458,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
     this.status = const Value.absent(),
     this.floor = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        name = Value(name);
@@ -3428,6 +3469,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
     Expression<String>? status,
     Expression<String>? floor,
     Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -3437,6 +3479,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
       if (status != null) 'status': status,
       if (floor != null) 'floor': floor,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -3448,6 +3491,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
     Value<String>? status,
     Value<String>? floor,
     Value<DateTime?>? updatedAt,
+    Value<bool>? isSynced,
     Value<int>? rowid,
   }) {
     return SeatingTablesCompanion(
@@ -3457,6 +3501,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
       status: status ?? this.status,
       floor: floor ?? this.floor,
       updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -3482,6 +3527,9 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -3497,6 +3545,7 @@ class SeatingTablesCompanion extends UpdateCompanion<SeatingTable> {
           ..write('status: $status, ')
           ..write('floor: $floor, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6303,6 +6352,7 @@ typedef $$SeatingTablesTableCreateCompanionBuilder =
       Value<String> status,
       Value<String> floor,
       Value<DateTime?> updatedAt,
+      Value<bool> isSynced,
       Value<int> rowid,
     });
 typedef $$SeatingTablesTableUpdateCompanionBuilder =
@@ -6313,6 +6363,7 @@ typedef $$SeatingTablesTableUpdateCompanionBuilder =
       Value<String> status,
       Value<String> floor,
       Value<DateTime?> updatedAt,
+      Value<bool> isSynced,
       Value<int> rowid,
     });
 
@@ -6352,6 +6403,11 @@ class $$SeatingTablesTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -6394,6 +6450,11 @@ class $$SeatingTablesTableOrderingComposer
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SeatingTablesTableAnnotationComposer
@@ -6422,6 +6483,9 @@ class $$SeatingTablesTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
 }
 
 class $$SeatingTablesTableTableManager
@@ -6461,6 +6525,7 @@ class $$SeatingTablesTableTableManager
                 Value<String> status = const Value.absent(),
                 Value<String> floor = const Value.absent(),
                 Value<DateTime?> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SeatingTablesCompanion(
                 id: id,
@@ -6469,6 +6534,7 @@ class $$SeatingTablesTableTableManager
                 status: status,
                 floor: floor,
                 updatedAt: updatedAt,
+                isSynced: isSynced,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -6479,6 +6545,7 @@ class $$SeatingTablesTableTableManager
                 Value<String> status = const Value.absent(),
                 Value<String> floor = const Value.absent(),
                 Value<DateTime?> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => SeatingTablesCompanion.insert(
                 id: id,
@@ -6487,6 +6554,7 @@ class $$SeatingTablesTableTableManager
                 status: status,
                 floor: floor,
                 updatedAt: updatedAt,
+                isSynced: isSynced,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

@@ -5,7 +5,7 @@ import '../../kitchen/screens/kitchen_screen.dart';
 import '../../sync/providers/sync_provider.dart';
 import '../../tables/screens/floor_plan_screen.dart';
 import '../providers/auth_provider.dart';
-import 'package:sentry/sentry.dart';
+
 
 
 class LoginScreen extends ConsumerStatefulWidget {
