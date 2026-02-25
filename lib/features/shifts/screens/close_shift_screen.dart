@@ -51,10 +51,6 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
     final actualCash = double.tryParse(_cashController.text) ?? 0.0;
     final shiftId = _summary!.shift.id;
 
-    // 1. Update Database
-    await ref.read(shiftServiceProvider).closeShift(shiftId, actualCash);
-
-    // 2. Print Z-Report
     try {
       await ref.read(printerServiceProvider).printZReport(
             shiftId: shiftId,
@@ -103,14 +99,17 @@ class _CloseShiftScreenState extends ConsumerState<CloseShiftScreen> {
         }
       }
     }
+    
+    // 1. Update Database
+    await ref.read(shiftServiceProvider).closeShift(shiftId, actualCash);
 
-    // 3. Clear active shift state
+    // 2. Clear active shift state
     ref.read(activeShiftIdProvider.notifier).state = null;
 
-    // 4. Force Sync
+    // 3. Force Sync
     ref.read(syncControllerProvider.notifier).performSync();
 
-    // 5. Navigate to Login
+    // 4. Navigate to Login
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginScreen()),

@@ -48,7 +48,7 @@ class OrderService {
         await (db.update(db.seatingTables)..where((t) => t.id.equals(tableId)))
             .write(const SeatingTablesCompanion(
               status: Value('OCCUPIED'),
-              isSynced: Value(false),
+              isSynced: Value(true),
         ));
       }
     });
@@ -82,7 +82,7 @@ class OrderService {
         await (db.update(db.seatingTables)..where((t) => t.id.equals(order.tableId!)))
           .write(const SeatingTablesCompanion(
             status: Value('FREE'),
-            isSynced: Value(false),
+            isSynced: Value(true),
           ));
       }
     });
