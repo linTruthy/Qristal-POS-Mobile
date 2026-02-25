@@ -243,7 +243,23 @@ export class SyncService {
 
         if (orders && Array.isArray(orders)) {
           for (const order of orders) {
-            orderShiftMap.set(order.id, order.shiftId ?? null);
+            let resolvedShiftId = order.shiftId;
+            if (!resolvedShiftId) {
+              const activeShift = await tx.shift.findFirst({
+                where: {
+                  userId: order.userId,
+                  branchId: userBranchId,
+                  closingTime: null,
+                },
+                orderBy: { openingTime: 'desc' },
+              });
+              if (activeShift) {
+                resolvedShiftId = activeShift.id;
+              }
+            }
+
+            orderShiftMap.set(order.id, resolvedShiftId ?? null);
+
             try {
               const existing = await tx.order.findUnique({ where: { id: order.id } });
               const savedOrder = await tx.order.upsert({
@@ -252,13 +268,14 @@ export class SyncService {
                   status: order.status,
                   totalAmount: order.totalAmount,
                   updatedAt: new Date(),
+                  shiftId: resolvedShiftId,
                 },
                 create: {
                   id: order.id,
                   receiptNumber: order.receiptNumber,
                   userId: order.userId,
                   tableId: order.tableId,
-                  shiftId: order.shiftId,
+                  shiftId: resolvedShiftId,
                   totalAmount: order.totalAmount,
                   status: order.status,
                   createdAt: new Date(order.createdAt),
@@ -308,9 +325,31 @@ export class SyncService {
               if (!resolvedShiftId) {
                 const existingOrder = await tx.order.findUnique({
                   where: { id: pay.orderId },
-                  select: { shiftId: true },
+                  select: { shiftId: true, userId: true },
                 });
-                resolvedShiftId = existingOrder?.shiftId ?? null;
+
+                if (existingOrder) {
+                  resolvedShiftId = existingOrder.shiftId;
+                  if (!resolvedShiftId) {
+                    const activeShift = await tx.shift.findFirst({
+                      where: {
+                        userId: existingOrder.userId,
+                        branchId: userBranchId,
+                        closingTime: null,
+                      },
+                      orderBy: { openingTime: 'desc' },
+                    });
+
+                    if (activeShift) {
+                      resolvedShiftId = activeShift.id;
+                      // Update the order with the found shiftId for future consistency
+                      await tx.order.update({
+                        where: { id: pay.orderId },
+                        data: { shiftId: resolvedShiftId },
+                      });
+                    }
+                  }
+                }
               }
 
               if (!resolvedShiftId) {
