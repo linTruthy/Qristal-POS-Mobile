@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:drift/drift.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -38,9 +37,18 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     this.ref,
   ) : super([]);
 
-  void addToCart(Product product) {
-    final existingIndex =
-        state.indexWhere((item) => item.product.id == product.id);
+  void addToCart(Product product, {
+    String? routeTo,
+    List<CartModifier> modifiers = const [],
+    List<CartSide> sides = const [],
+  }) {
+    final probe = CartItem(
+      product: product,
+      routeTo: routeTo,
+      modifiers: modifiers,
+      sides: sides,
+    );
+    final existingIndex = state.indexWhere((item) => _cartKey(item) == _cartKey(probe));
 
     if (existingIndex >= 0) {
       final existingItem = state[existingIndex];
@@ -52,7 +60,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
         ...state.sublist(existingIndex + 1),
       ];
     } else {
-      state = [...state, CartItem(product: product)];
+      state = [...state, CartItem(product: product, routeTo: routeTo, modifiers: modifiers, sides: sides)];
     }
     _markOrderModified();
   }
@@ -71,7 +79,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     final userRole = await ref.read(userRoleProvider.future);
     if (_activeOrderId != null &&
         (userRole != UserRole.MANAGER && userRole != UserRole.OWNER)) {
-      final key = _cartKey(item.product.id, item.notes);
+      final key = _cartKey(item);
       final baseline = _baselineQuantities[key] ?? 0;
       if ((item.quantity - 1) < baseline) {
         return;
@@ -136,6 +144,13 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             product: row.product,
             quantity: row.item.quantity,
             notes: row.item.notes ?? '',
+            routeTo: row.item.routeTo,
+            modifiers: row.modifiers
+                .map((m) => CartModifier(name: m.name, priceDelta: m.priceDelta, routeTo: m.routeTo))
+                .toList(),
+            sides: row.sides
+                .map((side) => CartSide(name: side.name, quantity: side.quantity, priceDelta: side.priceDelta, routeTo: side.routeTo))
+                .toList(),
           ),
         )
         .toList();
@@ -227,16 +242,19 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
         }
 
         for (final cartItem in state) {
+          final orderItemId = const Uuid().v4();
           await db.into(db.orderItems).insert(
                 OrderItemsCompanion(
-                  id: Value(const Uuid().v4()),
+                  id: Value(orderItemId),
                   orderId: Value(orderId),
                   productId: Value(cartItem.product.id),
                   quantity: Value(cartItem.quantity),
                   priceAtTimeOfOrder: Value(cartItem.product.price),
+                  routeTo: Value(cartItem.routeTo),
                   notes: Value(cartItem.notes.isEmpty ? null : cartItem.notes),
                 ),
               );
+          await _insertOrderItemRelations(cartItem, orderItemId);
         }
       });
 
@@ -251,7 +269,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
     final newItems = <CartItem>[];
     for (final item in state) {
-      final key = _cartKey(item.product.id, item.notes);
+      final key = _cartKey(item);
       final baseline = _baselineQuantities[key] ?? 0;
       final delta = item.quantity - baseline;
       if (delta > 0) {
@@ -263,16 +281,19 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
     await db.transaction(() async {
       for (final item in newItems) {
+        final orderItemId = const Uuid().v4();
         await db.into(db.orderItems).insert(
               OrderItemsCompanion(
-                id: Value(const Uuid().v4()),
+                id: Value(orderItemId),
                 orderId: Value(_activeOrderId!),
                 productId: Value(item.product.id),
                 quantity: Value(item.quantity),
                 priceAtTimeOfOrder: Value(item.product.price),
+                routeTo: Value(item.routeTo),
                 notes: Value(item.notes.isEmpty ? null : item.notes),
               ),
             );
+        await _insertOrderItemRelations(item, orderItemId);
       }
 
       await (db.update(db.orders)..where((o) => o.id.equals(_activeOrderId!)))
@@ -348,15 +369,19 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       }
 
       for (var cartItem in state) {
+        final orderItemId = const Uuid().v4();
         await db.into(db.orderItems).insert(
               OrderItemsCompanion(
-                id: Value(const Uuid().v4()),
+                id: Value(orderItemId),
                 orderId: Value(orderId),
                 productId: Value(cartItem.product.id),
                 quantity: Value(cartItem.quantity),
                 priceAtTimeOfOrder: Value(cartItem.product.price),
+                routeTo: Value(cartItem.routeTo),
+                notes: Value(cartItem.notes.isEmpty ? null : cartItem.notes),
               ),
             );
+        await _insertOrderItemRelations(cartItem, orderItemId);
       }
 
       await db.into(db.payments).insert(
@@ -396,14 +421,48 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
   Map<String, int> _toQuantityMap(List<CartItem> items) {
     final map = <String, int>{};
     for (final item in items) {
-      final key = _cartKey(item.product.id, item.notes);
+      final key = _cartKey(item);
       map[key] = (map[key] ?? 0) + item.quantity;
     }
     return map;
   }
 
-  String _cartKey(String productId, String notes) =>
-      '$productId::${notes.trim()}';
+  String _cartKey(CartItem item) {
+    final mods = item.modifiers
+        .map((m) => '${m.name}:${m.priceDelta}:${m.routeTo ?? ''}')
+        .join('|');
+    final sides = item.sides
+        .map((s) => '${s.name}:${s.quantity}:${s.priceDelta}:${s.routeTo ?? ''}')
+        .join('|');
+    return '${item.product.id}::${item.notes.trim()}::${item.routeTo ?? ''}::${mods}::${sides}';
+  }
+
+  Future<void> _insertOrderItemRelations(CartItem cartItem, String orderItemId) async {
+    for (final modifier in cartItem.modifiers) {
+      await db.into(db.orderItemModifiers).insert(
+            OrderItemModifiersCompanion(
+              id: Value(const Uuid().v4()),
+              orderItemId: Value(orderItemId),
+              name: Value(modifier.name),
+              priceDelta: Value(modifier.priceDelta),
+              routeTo: Value(modifier.routeTo),
+            ),
+          );
+    }
+
+    for (final side in cartItem.sides) {
+      await db.into(db.orderItemSides).insert(
+            OrderItemSidesCompanion(
+              id: Value(const Uuid().v4()),
+              orderItemId: Value(orderItemId),
+              name: Value(side.name),
+              quantity: Value(side.quantity),
+              priceDelta: Value(side.priceDelta),
+              routeTo: Value(side.routeTo),
+            ),
+          );
+    }
+  }
 
   String _buildOrderNumber(String? tableId, DateTime now) {
     if (tableId != null && tableId.isNotEmpty) {
@@ -447,9 +506,13 @@ final checkoutProvider =
   if (cart.isEmpty) return;
 
   final orderService = ref.read(orderServiceProvider);
+  final shiftId = ref.read(activeShiftIdProvider);
+  if (shiftId == null) return;
+
   await orderService.placeOrder(
     cartItems: cart,
     userId: userId,
+    shiftId: shiftId,
   );
 
   ref.read(cartProvider.notifier).clearCart();

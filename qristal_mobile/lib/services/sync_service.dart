@@ -6,8 +6,8 @@ import 'package:drift/drift.dart' as drift;
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../../core/constants/api_constants.dart';
-import '../../../database/database.dart';
+import '../core/constants/api_constants.dart';
+import '../database/database.dart';
 
 class SyncService {
   final AppDatabase db;
@@ -180,11 +180,64 @@ class SyncService {
                 priceAtTimeOfOrder: drift.Value(
                   double.tryParse(item['priceAtTimeOfOrder'].toString()) ?? 0.0,
                 ),
+                routeTo: drift.Value(item['routeTo'] ?? item['route_to']),
                 notes: drift.Value(item['notes']),
               ),
               mode: drift.InsertMode.insertOrReplace,
             );
           }
+        }
+
+
+        // --- Order Item Modifiers ---
+        final orderItemModifiers = _readChangeList([
+          'orderItemModifiers',
+          'order_item_modifiers',
+        ]);
+        for (final raw in orderItemModifiers) {
+          final item = Map<String, dynamic>.from(raw as Map);
+          final id = _readString(item, ['id']);
+          final orderItemId = _readString(item, ['orderItemId', 'order_item_id']);
+          final name = _readString(item, ['name']);
+          if (id == null || orderItemId == null || name == null) continue;
+
+          batch.insert(
+            db.orderItemModifiers,
+            OrderItemModifiersCompanion(
+              id: drift.Value(id),
+              orderItemId: drift.Value(orderItemId),
+              name: drift.Value(name),
+              priceDelta: drift.Value(_readDouble(item, ['priceDelta', 'price_delta'])),
+              routeTo: drift.Value(_readString(item, ['routeTo', 'route_to'])),
+            ),
+            mode: drift.InsertMode.insertOrReplace,
+          );
+        }
+
+        // --- Order Item Sides ---
+        final orderItemSides = _readChangeList([
+          'orderItemSides',
+          'order_item_sides',
+        ]);
+        for (final raw in orderItemSides) {
+          final item = Map<String, dynamic>.from(raw as Map);
+          final id = _readString(item, ['id']);
+          final orderItemId = _readString(item, ['orderItemId', 'order_item_id']);
+          final name = _readString(item, ['name']);
+          if (id == null || orderItemId == null || name == null) continue;
+
+          batch.insert(
+            db.orderItemSides,
+            OrderItemSidesCompanion(
+              id: drift.Value(id),
+              orderItemId: drift.Value(orderItemId),
+              name: drift.Value(name),
+              quantity: drift.Value(int.tryParse(_readString(item, ['quantity']) ?? '') ?? 1),
+              priceDelta: drift.Value(_readDouble(item, ['priceDelta', 'price_delta'])),
+              routeTo: drift.Value(_readString(item, ['routeTo', 'route_to'])),
+            ),
+            mode: drift.InsertMode.insertOrReplace,
+          );
         }
 
         // --- Payments ---
@@ -287,12 +340,21 @@ class SyncService {
     List<Map<String, dynamic>> ordersPayload = [];
     List<Map<String, dynamic>> itemsPayload = [];
     List<Map<String, dynamic>> paymentsPayload = [];
+    List<Map<String, dynamic>> orderItemModifiersPayload = [];
+    List<Map<String, dynamic>> orderItemSidesPayload = [];
     List<Map<String, dynamic>> shiftsPayload = [];
     List<Map<String, dynamic>> tablesPayload = [];
 
     if (unsyncedOrders.isNotEmpty) {
       final orderIds = unsyncedOrders.map((order) => order.id).toList();
       final relatedItems = await (db.select(db.orderItems)..where((t) => t.orderId.isIn(orderIds))).get();
+      final itemIds = relatedItems.map((item) => item.id).toList();
+      final relatedModifiers = itemIds.isEmpty
+          ? <OrderItemModifier>[]
+          : await (db.select(db.orderItemModifiers)..where((t) => t.orderItemId.isIn(itemIds))).get();
+      final relatedSides = itemIds.isEmpty
+          ? <OrderItemSide>[]
+          : await (db.select(db.orderItemSides)..where((t) => t.orderItemId.isIn(itemIds))).get();
 
       for (final item in relatedItems) {
         itemsPayload.add({
@@ -301,7 +363,29 @@ class SyncService {
           'productId': item.productId,
           'quantity': item.quantity,
           'priceAtTimeOfOrder': item.priceAtTimeOfOrder,
+          'routeTo': item.routeTo,
           'notes': item.notes,
+        });
+      }
+
+      for (final modifier in relatedModifiers) {
+        orderItemModifiersPayload.add({
+          'id': modifier.id,
+          'orderItemId': modifier.orderItemId,
+          'name': modifier.name,
+          'priceDelta': modifier.priceDelta,
+          'routeTo': modifier.routeTo,
+        });
+      }
+
+      for (final side in relatedSides) {
+        orderItemSidesPayload.add({
+          'id': side.id,
+          'orderItemId': side.orderItemId,
+          'name': side.name,
+          'quantity': side.quantity,
+          'priceDelta': side.priceDelta,
+          'routeTo': side.routeTo,
         });
       }
 
@@ -364,6 +448,8 @@ class SyncService {
         '${ordersPayload.length} orders, '
         '${itemsPayload.length} orderItems, '
         '${paymentsPayload.length} payments, '
+        '${orderItemModifiersPayload.length} orderItemModifiers, '
+        '${orderItemSidesPayload.length} orderItemSides, '
         '${shiftsPayload.length} shifts, '
         '${tablesPayload.length} tables.'
       );
@@ -381,6 +467,8 @@ class SyncService {
               'orders': ordersPayload,
               'orderItems': itemsPayload,
               'payments': paymentsPayload,
+              'orderItemModifiers': orderItemModifiersPayload,
+              'orderItemSides': orderItemSidesPayload,
               'shifts': shiftsPayload,
               'seatingTables': tablesPayload,
             }),
@@ -397,7 +485,7 @@ class SyncService {
             await (db.update(db.shifts)..where((t) => t.id.equals(shift.id)))
                 .write(const ShiftsCompanion(isSynced: Value(true)));
           }
-           for (final table in unsyncedTables) {
+          for (final table in unsyncedTables) {
             await (db.update(db.seatingTables)..where((t) => t.id.equals(table.id)))
                 .write(const SeatingTablesCompanion(isSynced: Value(true)));
           }
