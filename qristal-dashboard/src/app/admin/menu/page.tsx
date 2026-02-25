@@ -229,6 +229,12 @@ export default function MenuPage() {
     });
   };
 
+  const parseCsv = (value: string) =>
+    value
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
   const handleProdSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFeedback(null);
