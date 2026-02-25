@@ -461,6 +461,40 @@ class CartWidget extends ConsumerWidget {
                     ),
                   ),
 
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SizedBox(
+                      height: 60,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueGrey,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: cartItems.isEmpty
+                            ? null
+                            : () async {
+                                final message =
+                                    await cartNotifier.printBillCheck();
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      message ?? 'Bill printed successfully.',
+                                    ),
+                                  ),
+                                );
+                              },
+                        child: const Text("PRINT BILL",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center),
+                      ),
+                    ),
+                  ),
+
                   // PAY/CHECKOUT BUTTON (Only Cashiers/Managers/Owners)
                   if (canCheckout) ...[
                     const SizedBox(width: 8),
