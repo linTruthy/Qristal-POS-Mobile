@@ -10,17 +10,16 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   const navItems = [
-    { name: "Dashboard", href: "/" },
+    { name: "Dashboard", href: "/admin" },
+    { name: "Business Analytics", href: "/admin/analytics" },
     { name: "Staff & Users", href: "/admin/users" },
     { name: "Menu Management", href: "/admin/menu" },
-    { name: "Inventory", href: "/admin/inventory" }, // <--- ADD THIS LINE
+    { name: "Inventory & Recipes", href: "/admin/inventory" },
     { name: "Floor Plan", href: "/admin/tables" },
-    { name: "Reports", href: "/reports" },
   ];
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Sidebar */}
       <aside className="w-64 bg-white shadow-md flex flex-col">
         <div className="p-6 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-blue-600">Qristal Admin</h1>
@@ -28,7 +27,9 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         </div>
         <nav className="flex-1 p-4 space-y-1">
           {navItems.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/admin" && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
@@ -54,10 +55,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-8">
-        {children}
-      </main>
+      <main className="flex-1 overflow-y-auto p-8">{children}</main>
     </div>
   );
 }
