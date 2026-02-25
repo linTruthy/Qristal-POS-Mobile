@@ -275,6 +275,11 @@ function Dashboard() {
     return seed;
   }, [kitchenOrders]);
 
+  const visibleOrders = useMemo(() => {
+    if (activeLane === "ALL") return kitchenOrders;
+    return kitchenOrders.filter((order) => (order.items || []).some((item) => item.lane === activeLane));
+  }, [activeLane, kitchenOrders]);
+
   if (loading) return <div className="p-8">Loading live data...</div>;
 
   return (
@@ -436,6 +441,31 @@ function Dashboard() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+              <p className="text-sm text-gray-500 mb-3">Production lane routing (items)</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveLane("ALL")}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold border ${
+                    activeLane === "ALL" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-600 border-gray-200"
+                  }`}
+                >
+                  ALL ({kitchenOrders.reduce((sum, order) => sum + (order.items?.length || 0), 0)})
+                </button>
+                {KDS_LANES.map((lane) => (
+                  <button
+                    key={lane}
+                    onClick={() => setActiveLane(lane)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border ${
+                      activeLane === lane ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-600 border-gray-200"
+                    }`}
+                  >
+                    {lane} ({kdsCounts.byLane[lane]})
+                  </button>
+                ))}
               </div>
             </div>
 
