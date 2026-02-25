@@ -26,6 +26,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
   String? _activeOrderId;
   final Map<String, int> _baselineQuantities = {};
+  int _orderRevision = 0;
+  int _lastPrintedRevision = -1;
+  int _printsForCurrentRevision = 0;
 
   CartNotifier(
     this.db,
@@ -51,6 +54,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     } else {
       state = [...state, CartItem(product: product)];
     }
+    _markOrderModified();
   }
 
   Future<void> removeFromCart(Product product) async {
@@ -60,6 +64,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       return;
     }
     state = state.where((item) => item.product.id != product.id).toList();
+    _markOrderModified();
   }
 
   Future<void> decreaseQuantity(CartItem item) async {
@@ -85,6 +90,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
           updatedItem,
           ...state.sublist(existingIndex + 1),
         ];
+        _markOrderModified();
       } else {
         await removeFromCart(item.product);
       }
@@ -95,6 +101,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     state = [];
     _activeOrderId = null;
     _baselineQuantities.clear();
+    _orderRevision = 0;
+    _lastPrintedRevision = -1;
+    _printsForCurrentRevision = 0;
   }
 
   double get totalAmount => state.fold(0, (sum, item) => sum + item.total);
@@ -135,7 +144,50 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     _baselineQuantities
       ..clear()
       ..addAll(_toQuantityMap(recalled));
+    _orderRevision = 0;
+    _lastPrintedRevision = -1;
+    _printsForCurrentRevision = 0;
     state = recalled;
+  }
+
+  Future<String?> printBillCheck() async {
+    if (state.isEmpty || userId == null) {
+      return 'Add items before printing a bill.';
+    }
+
+    final userRole = await ref.read(userRoleProvider.future);
+    final maxPrints =
+        (userRole == UserRole.MANAGER || userRole == UserRole.OWNER) ? 5 : 1;
+
+    if (_lastPrintedRevision != _orderRevision) {
+      _printsForCurrentRevision = 0;
+    }
+
+    if (_printsForCurrentRevision >= maxPrints) {
+      return userRole == UserRole.MANAGER || userRole == UserRole.OWNER
+          ? 'Bill already printed 5 times for this version of the order.'
+          : 'Bill already printed once. Modify the order first to print again.';
+    }
+
+    final now = DateTime.now();
+    final orderReference = _activeOrderId ??
+        _buildOrderNumber(ref.read(activeTableIdProvider), now);
+
+    try {
+      await printerService.printReceipt(
+        orderId: orderReference,
+        items: state,
+        total: totalAmount,
+        tendered: 0,
+        paymentMethod: 'BILL CHECK',
+        cashierName: userName,
+      );
+      _lastPrintedRevision = _orderRevision;
+      _printsForCurrentRevision += 1;
+      return null;
+    } catch (e) {
+      return 'Printing failed: $e';
+    }
   }
 
   Future<void> sendToKitchen() async {
@@ -292,7 +344,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
       if (tableId != null) {
         await (db.update(db.seatingTables)..where((t) => t.id.equals(tableId)))
-            .write(const SeatingTablesCompanion(status: Value('OCCUPIED')));
+            .write(const SeatingTablesCompanion(status: Value('FREE')));
       }
 
       for (var cartItem in state) {
@@ -333,8 +385,12 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       if (kDebugMode) print("Printing failed: $e");
     }
 
-    state = [];
+    clearCart();
     ref.read(syncControllerProvider.notifier).performSync();
+  }
+
+  void _markOrderModified() {
+    _orderRevision += 1;
   }
 
   Map<String, int> _toQuantityMap(List<CartItem> items) {
