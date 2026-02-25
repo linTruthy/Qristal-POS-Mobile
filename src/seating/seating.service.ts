@@ -10,11 +10,11 @@ export class SeatingService {
   }
 
   create(branchId: string, data: any) {
-    return this.prisma.seatingTable.create({ data: { ...data, branchId } });
+    return this.prisma.seatingTable.create({ data: { ...data, branchId, isSynced: true } });
   }
 
   update(id: string, branchId: string, data: any) {
-    return this.prisma.seatingTable.update({ where: { id, branchId }, data });
+    return this.prisma.seatingTable.update({ where: { id, branchId }, data: { ...data, isSynced: true } });
   }
 
   remove(id: string, branchId: string) {
