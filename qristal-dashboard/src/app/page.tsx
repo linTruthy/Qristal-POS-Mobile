@@ -121,6 +121,16 @@ function normalizeKitchenOrders(payload: unknown): KitchenOrder[] {
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
+function formatAge(createdAt: string): string {
+  const diffMs = Date.now() - new Date(createdAt).getTime();
+  const minutes = Math.max(0, Math.floor(diffMs / 60000));
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  const rem = minutes % 60;
+  return `${hours}h ${rem}m ago`;
+}
+
 function Dashboard() {
   const { token, logout, user } = useAuth();
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
@@ -238,7 +248,31 @@ function Dashboard() {
         },
         { KITCHEN: 0, BARISTA: 0, BAR: 0, RETAIL: 0, OTHER: 0 },
       ),
+      totalItems: allItems.reduce((sum, item) => sum + item.quantity, 0),
     };
+  }, [kitchenOrders]);
+
+  const visibleOrders = useMemo(() => {
+    if (activeLane === "ALL") return kitchenOrders;
+    return kitchenOrders.filter((order) => (order.items || []).some((item) => item.lane === activeLane));
+  }, [activeLane, kitchenOrders]);
+
+  const laneBoard = useMemo(() => {
+    const seed: Record<KdsLane, Array<{ order: KitchenOrder; item: KitchenOrderItem }>> = {
+      KITCHEN: [],
+      BARISTA: [],
+      BAR: [],
+      RETAIL: [],
+      OTHER: [],
+    };
+
+    for (const order of kitchenOrders) {
+      for (const item of order.items || []) {
+        seed[item.lane].push({ order, item });
+      }
+    }
+
+    return seed;
   }, [kitchenOrders]);
 
   const visibleOrders = useMemo(() => {
@@ -350,8 +384,63 @@ function Dashboard() {
                 <p className="text-3xl font-bold text-amber-600">{kdsCounts.preparing}</p>
               </div>
               <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
-                <p className="text-sm text-gray-500">Total Active</p>
-                <p className="text-3xl font-bold text-blue-600">{kitchenOrders.length}</p>
+                <p className="text-sm text-gray-500">Total Active Items</p>
+                <p className="text-3xl font-bold text-blue-600">{kdsCounts.totalItems}</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+              <p className="text-sm text-gray-500 mb-3">Production lane routing (items)</p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveLane("ALL")}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold border ${
+                    activeLane === "ALL" ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-600 border-gray-200"
+                  }`}
+                >
+                  ALL ({kdsCounts.totalItems})
+                </button>
+                {KDS_LANES.map((lane) => (
+                  <button
+                    key={lane}
+                    onClick={() => setActiveLane(lane)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border ${
+                      activeLane === lane ? "bg-blue-600 text-white border-blue-600" : "bg-white text-gray-600 border-gray-200"
+                    }`}
+                  >
+                    {lane} ({kdsCounts.byLane[lane]})
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3">Lane board (item tickets)</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
+                {KDS_LANES.map((lane) => {
+                  const entries = laneBoard[lane];
+                  return (
+                    <div key={lane} className="border border-gray-100 rounded-lg p-3 bg-gray-50 min-h-[12rem]">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-semibold text-sm text-gray-800">{lane}</p>
+                        <span className="text-xs px-2 py-0.5 rounded bg-white border border-gray-200 text-gray-600">{entries.length}</span>
+                      </div>
+                      <div className="space-y-2">
+                        {entries.slice(0, 5).map(({ order, item }) => (
+                          <div key={`${order.id}-${item.id}`} className="rounded border border-gray-200 bg-white p-2 text-xs">
+                            <p className="font-semibold text-gray-800">#{order.receiptNumber}</p>
+                            <p className="text-gray-700 mt-1">{item.quantity}x {item.name}</p>
+                            <p className="text-gray-500 mt-1">{formatAge(order.createdAt)}</p>
+                          </div>
+                        ))}
+                        {entries.length > 5 && (
+                          <p className="text-xs text-gray-500">+{entries.length - 5} more</p>
+                        )}
+                        {entries.length === 0 && <p className="text-xs text-gray-400">No items</p>}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
