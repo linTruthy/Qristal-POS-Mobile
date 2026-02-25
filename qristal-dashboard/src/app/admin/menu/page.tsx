@@ -14,6 +14,8 @@ type Category = {
   colorHex: string;
 };
 
+type ProductionArea = "KITCHEN" | "BARISTA" | "BAR" | "RETAIL" | "OTHER";
+
 type Product = {
   id: string;
   name: string;
@@ -33,8 +35,6 @@ type ProductMetadata = Record<
   }
 >;
 
-type ProductionArea = "KITCHEN" | "BARISTA" | "BAR" | "RETAIL" | "OTHER";
-
 type ProductFormState = {
   name: string;
   price: string;
@@ -44,8 +44,12 @@ type ProductFormState = {
   sides: string;
 };
 
-const PRODUCTION_AREAS: ProductionArea[] = ["KITCHEN", "BARISTA", "BAR", "RETAIL", "OTHER"];
+type Feedback = {
+  type: "success" | "warning" | "error";
+  message: string;
+};
 
+const PRODUCTION_AREAS: ProductionArea[] = ["KITCHEN", "BARISTA", "BAR", "RETAIL", "OTHER"];
 const EMPTY_PRODUCT_FORM: ProductFormState = {
   name: "",
   price: "",
@@ -53,6 +57,15 @@ const EMPTY_PRODUCT_FORM: ProductFormState = {
   productionArea: "KITCHEN",
   modifierGroups: "",
   sides: "",
+};
+
+const readStorage = <T,>(key: string, fallback: T): T => {
+  if (typeof window === "undefined") return fallback;
+  try {
+    return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback));
+  } catch {
+    return fallback;
+  }
 };
 
 const parseCsv = (value: string) =>
@@ -65,7 +78,7 @@ const parseCsv = (value: string) =>
     ),
   );
 
-const asProductionArea = (value: string | undefined): ProductionArea => {
+const toProductionArea = (value?: string): ProductionArea => {
   if (!value) return "KITCHEN";
   return PRODUCTION_AREAS.includes(value as ProductionArea) ? (value as ProductionArea) : "OTHER";
 };
@@ -75,31 +88,11 @@ export default function MenuPage() {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const [productMetadata, setProductMetadata] = useState<ProductMetadata>(() => {
-    if (typeof window === "undefined") return {};
-    try {
-      return JSON.parse(localStorage.getItem(PRODUCT_METADATA_KEY) || "{}");
-    } catch {
-      return {};
-    }
-  });
-  const [modifierLibrary, setModifierLibrary] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      return JSON.parse(localStorage.getItem(MODIFIER_LIBRARY_KEY) || "[]");
-    } catch {
-      return [];
-    }
-  });
-  const [sidesLibrary, setSidesLibrary] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      return JSON.parse(localStorage.getItem(SIDES_LIBRARY_KEY) || "[]");
-    } catch {
-      return [];
-    }
-  });
+  const [productMetadata, setProductMetadata] = useState<ProductMetadata>(() => readStorage(PRODUCT_METADATA_KEY, {}));
+  const [modifierLibrary, setModifierLibrary] = useState<string[]>(() => readStorage(MODIFIER_LIBRARY_KEY, []));
+  const [sidesLibrary, setSidesLibrary] = useState<string[]>(() => readStorage(SIDES_LIBRARY_KEY, []));
 
   const [catModalOpen, setCatModalOpen] = useState(false);
   const [prodModalOpen, setProdModalOpen] = useState(false);
@@ -110,20 +103,42 @@ export default function MenuPage() {
 
   const [newModifier, setNewModifier] = useState("");
   const [newSide, setNewSide] = useState("");
-  const [feedback, setFeedback] = useState<{ type: "success" | "warning" | "error"; message: string } | null>(null);
+  const [feedback, setFeedback] = useState<Feedback | null>(null);
 
-  const syncLibrariesFromProducts = (items: Product[]) => {
-    const productModifiers = items.flatMap((item) => item.modifierGroups || []);
-    const productSides = items.flatMap((item) => item.sides || []);
-
-    setModifierLibrary((current) => Array.from(new Set([...current, ...productModifiers])).sort((a, b) => a.localeCompare(b)));
-    setSidesLibrary((current) => Array.from(new Set([...current, ...productSides])).sort((a, b) => a.localeCompare(b)));
+  const persistMetadata = (id: string, metadata: ProductMetadata[string]) => {
+    setProductMetadata((current) => ({ ...current, [id]: metadata }));
   };
 
-  const fetchData = async () => {
-    if (!token) return;
-    const headers = { Authorization: `Bearer ${token}` };
+  const removeMetadata = (id: string) => {
+    setProductMetadata((current) => {
+      if (!current[id]) return current;
+      const next = { ...current };
+      delete next[id];
+      return next;
+    });
+  };
 
+  const resolveProductMeta = (product: Product) => {
+    const local = productMetadata[product.id];
+    return {
+      productionArea: local?.productionArea || toProductionArea(product.productionArea),
+      modifierGroups: local?.modifierGroups || product.modifierGroups || [],
+      sides: local?.sides || product.sides || [],
+    };
+  };
+
+  const syncLibrariesFromProducts = (items: Product[]) => {
+    const modifiers = items.flatMap((item) => item.modifierGroups || []);
+    const sides = items.flatMap((item) => item.sides || []);
+
+    setModifierLibrary((current) => Array.from(new Set([...current, ...modifiers])).sort((a, b) => a.localeCompare(b)));
+    setSidesLibrary((current) => Array.from(new Set([...current, ...sides])).sort((a, b) => a.localeCompare(b)));
+  };
+
+  const loadMenuData = async () => {
+    if (!token) return;
+
+    const headers = { Authorization: `Bearer ${token}` };
     const [categoriesRes, productsRes] = await Promise.all([
       fetch(`${SERVER_URL}/categories`, { headers }),
       fetch(`${SERVER_URL}/products`, { headers }),
@@ -157,17 +172,22 @@ export default function MenuPage() {
 
     const headers = { Authorization: `Bearer ${token}` };
     const load = async () => {
-      const [categoriesRes, productsRes] = await Promise.all([
-        fetch(`${SERVER_URL}/categories`, { headers }),
-        fetch(`${SERVER_URL}/products`, { headers }),
-      ]);
+      try {
+        setLoading(true);
+        const [categoriesRes, productsRes] = await Promise.all([
+          fetch(`${SERVER_URL}/categories`, { headers }),
+          fetch(`${SERVER_URL}/products`, { headers }),
+        ]);
 
-      const categoriesData: Category[] = await categoriesRes.json();
-      const productsData: Product[] = await productsRes.json();
+        const categoriesData: Category[] = await categoriesRes.json();
+        const productsData: Product[] = await productsRes.json();
 
-      setCategories(categoriesData);
-      setProducts(productsData);
-      syncLibrariesFromProducts(productsData);
+        setCategories(categoriesData);
+        setProducts(productsData);
+        syncLibrariesFromProducts(productsData);
+      } finally {
+        setLoading(false);
+      }
     };
 
     void load();
@@ -177,15 +197,6 @@ export default function MenuPage() {
     setProdModalOpen(false);
     setEditingProductId(null);
     setProdForm(EMPTY_PRODUCT_FORM);
-  };
-
-  const resolveProductMeta = (product: Product) => {
-    const localMeta = productMetadata[product.id];
-    return {
-      productionArea: localMeta?.productionArea || asProductionArea(product.productionArea),
-      modifierGroups: localMeta?.modifierGroups || product.modifierGroups || [],
-      sides: localMeta?.sides || product.sides || [],
-    };
   };
 
   const openCreateProduct = () => {
@@ -208,25 +219,45 @@ export default function MenuPage() {
     setProdModalOpen(true);
   };
 
+  const addLibraryValue = (scope: "modifier" | "side") => {
+    if (scope === "modifier") {
+      const value = newModifier.trim();
+      if (!value) return;
+      setModifierLibrary((current) => Array.from(new Set([...current, value])).sort((a, b) => a.localeCompare(b)));
+      setNewModifier("");
+      return;
+    }
+
+    const value = newSide.trim();
+    if (!value) return;
+    setSidesLibrary((current) => Array.from(new Set([...current, value])).sort((a, b) => a.localeCompare(b)));
+    setNewSide("");
+  };
+
+  const addTokenToForm = (scope: "modifier" | "side", tokenValue: string) => {
+    if (scope === "modifier") {
+      const values = Array.from(new Set([...parseCsv(prodForm.modifierGroups), tokenValue]));
+      setProdForm((current) => ({ ...current, modifierGroups: values.join(", ") }));
+      return;
+    }
+
+    const values = Array.from(new Set([...parseCsv(prodForm.sides), tokenValue]));
+    setProdForm((current) => ({ ...current, sides: values.join(", ") }));
+  };
+
   const handleCatSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     await fetch(`${SERVER_URL}/categories`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify(catForm),
     });
+
     setCatModalOpen(false);
     setCatForm({ name: "", colorHex: "#3498db" });
-    void fetchData();
-  };
-
-  const saveMetadataFallback = (productId: string, metadata: ProductMetadata[string]) => {
-    setProductMetadata((current) => ({ ...current, [productId]: metadata }));
-    setFeedback({
-      type: "warning",
-      message:
-        "Saved locally only: product endpoint did not accept routing/modifier updates yet. Data is stored in this browser until backend support is enabled.",
-    });
+    setFeedback({ type: "success", message: "Category created successfully." });
+    await loadMenuData();
   };
 
   const parseCsv = (value: string) =>
@@ -239,24 +270,25 @@ export default function MenuPage() {
     e.preventDefault();
     setFeedback(null);
 
+    const price = Number(prodForm.price);
+    if (Number.isNaN(price) || price <= 0) {
+      setFeedback({ type: "error", message: "Please provide a valid product price." });
+      return;
+    }
+
     const modifierGroups = parseCsv(prodForm.modifierGroups);
     const sides = parseCsv(prodForm.sides);
 
     const payload = {
       name: prodForm.name,
-      price: Number(prodForm.price),
+      price,
       categoryId: prodForm.categoryId,
       productionArea: prodForm.productionArea,
       modifierGroups,
       sides,
     };
 
-    if (Number.isNaN(payload.price) || payload.price <= 0) {
-      setFeedback({ type: "error", message: "Please provide a valid product price." });
-      return;
-    }
-
-    const metadataPayload = {
+    const metadataPayload: ProductMetadata[string] = {
       productionArea: prodForm.productionArea,
       modifierGroups,
       sides,
@@ -264,29 +296,30 @@ export default function MenuPage() {
 
     if (editingProductId) {
       const headers = { "Content-Type": "application/json", Authorization: `Bearer ${token}` };
-      let updateRes = await fetch(`${SERVER_URL}/products/${editingProductId}`, {
+      let response = await fetch(`${SERVER_URL}/products/${editingProductId}`, {
         method: "PATCH",
         headers,
         body: JSON.stringify(payload),
       });
 
-      if (!updateRes.ok) {
-        updateRes = await fetch(`${SERVER_URL}/products/${editingProductId}`, {
+      if (!response.ok) {
+        response = await fetch(`${SERVER_URL}/products/${editingProductId}`, {
           method: "PUT",
           headers,
           body: JSON.stringify(payload),
         });
       }
 
-      if (!updateRes.ok) {
-        saveMetadataFallback(editingProductId, metadataPayload);
-      } else {
-        setProductMetadata((current) => {
-          const copy = { ...current };
-          delete copy[editingProductId];
-          return copy;
-        });
+      if (response.ok) {
+        removeMetadata(editingProductId);
         setFeedback({ type: "success", message: "Product updated successfully." });
+      } else {
+        persistMetadata(editingProductId, metadataPayload);
+        setFeedback({
+          type: "warning",
+          message:
+            "Update saved locally only. Backend update endpoint does not currently accept modifier/routing fields.",
+        });
       }
     } else {
       const createRes = await fetch(`${SERVER_URL}/products`, {
@@ -295,15 +328,17 @@ export default function MenuPage() {
         body: JSON.stringify(payload),
       });
 
-      const createdProduct = createRes.ok ? await createRes.json() : null;
-
       if (!createRes.ok) {
         setFeedback({ type: "error", message: "Unable to create product. Please retry." });
         return;
       }
 
+      const createdProduct = await createRes.json();
       if (createdProduct?.id) {
-        setProductMetadata((current) => ({ ...current, [createdProduct.id]: metadataPayload }));
+        const serverHasMetadata = createdProduct.productionArea || createdProduct.modifierGroups || createdProduct.sides;
+        if (!serverHasMetadata) {
+          persistMetadata(createdProduct.id, metadataPayload);
+        }
       }
 
       setFeedback({ type: "success", message: "Product created successfully." });
@@ -313,7 +348,7 @@ export default function MenuPage() {
     setSidesLibrary((current) => Array.from(new Set([...current, ...sides])).sort((a, b) => a.localeCompare(b)));
 
     closeProductModal();
-    void fetchData();
+    await loadMenuData();
   };
 
   const handleDeleteProduct = async (id: string) => {
@@ -324,38 +359,27 @@ export default function MenuPage() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    setProductMetadata((current) => {
-      if (!current[id]) return current;
-      const copy = { ...current };
-      delete copy[id];
-      return copy;
-    });
-
-    void fetchData();
+    removeMetadata(id);
+    setFeedback({ type: "success", message: "Product deleted." });
+    await loadMenuData();
   };
 
-  const pushLibraryToken = (scope: "modifier" | "side", tokenValue: string) => {
-    if (scope === "modifier") {
-      const next = Array.from(new Set([...parseCsv(prodForm.modifierGroups), tokenValue]));
-      setProdForm((current) => ({ ...current, modifierGroups: next.join(", ") }));
-      return;
-    }
-
-    const next = Array.from(new Set([...parseCsv(prodForm.sides), tokenValue]));
-    setProdForm((current) => ({ ...current, sides: next.join(", ") }));
-  };
-
-  const multiKdsCounts = products.reduce<Record<string, number>>((acc, product) => {
-    const area = resolveProductMeta(product).productionArea;
-    acc[area] = (acc[area] || 0) + 1;
-    return acc;
-  }, {});
+  const laneCounts = products.reduce<Record<ProductionArea, number>>(
+    (acc, product) => {
+      const area = resolveProductMeta(product).productionArea;
+      acc[area] += 1;
+      return acc;
+    },
+    { KITCHEN: 0, BARISTA: 0, BAR: 0, RETAIL: 0, OTHER: 0 },
+  );
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Menu, Modifiers & Production Routing</h1>
-        <p className="text-sm text-gray-500 mt-1">Next increment: edit existing products and try server persistence first, local fallback second.</p>
+        <p className="text-sm text-gray-500 mt-1">
+          Configure modifier/sides and assign each product to Kitchen, Barista, Bar, Retail, or Other production lanes.
+        </p>
       </div>
 
       {feedback && (
@@ -376,7 +400,7 @@ export default function MenuPage() {
         {PRODUCTION_AREAS.map((area) => (
           <div key={area} className="rounded-xl border border-gray-200 bg-white px-4 py-3">
             <p className="text-xs font-semibold tracking-wide text-gray-500">{area}</p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">{multiKdsCounts[area] || 0}</p>
+            <p className="text-2xl font-bold text-gray-900 mt-1">{laneCounts[area]}</p>
           </div>
         ))}
       </div>
@@ -402,20 +426,17 @@ export default function MenuPage() {
 
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-5">
             <h2 className="text-lg font-bold">Modifier & Side Libraries</h2>
+
             <div>
               <p className="text-sm font-semibold text-gray-700 mb-2">Modifier groups</p>
               <div className="flex gap-2 mb-2">
-                <input value={newModifier} onChange={(e) => setNewModifier(e.target.value)} placeholder="e.g. Sugar level" className="flex-1 border p-2 rounded" />
-                <button
-                  type="button"
-                  onClick={() => {
-                    const value = newModifier.trim();
-                    if (!value) return;
-                    setModifierLibrary((current) => Array.from(new Set([...current, value])).sort((a, b) => a.localeCompare(b)));
-                    setNewModifier("");
-                  }}
-                  className="px-3 py-2 bg-blue-600 text-white rounded"
-                >
+                <input
+                  value={newModifier}
+                  onChange={(e) => setNewModifier(e.target.value)}
+                  placeholder="e.g. Milk choice"
+                  className="flex-1 border p-2 rounded"
+                />
+                <button type="button" onClick={() => addLibraryValue("modifier")} className="px-3 py-2 bg-blue-600 text-white rounded">
                   Add
                 </button>
               </div>
@@ -431,17 +452,13 @@ export default function MenuPage() {
             <div>
               <p className="text-sm font-semibold text-gray-700 mb-2">Sides</p>
               <div className="flex gap-2 mb-2">
-                <input value={newSide} onChange={(e) => setNewSide(e.target.value)} placeholder="e.g. Chips" className="flex-1 border p-2 rounded" />
-                <button
-                  type="button"
-                  onClick={() => {
-                    const value = newSide.trim();
-                    if (!value) return;
-                    setSidesLibrary((current) => Array.from(new Set([...current, value])).sort((a, b) => a.localeCompare(b)));
-                    setNewSide("");
-                  }}
-                  className="px-3 py-2 bg-blue-600 text-white rounded"
-                >
+                <input
+                  value={newSide}
+                  onChange={(e) => setNewSide(e.target.value)}
+                  placeholder="e.g. Fries"
+                  className="flex-1 border p-2 rounded"
+                />
+                <button type="button" onClick={() => addLibraryValue("side")} className="px-3 py-2 bg-blue-600 text-white rounded">
                   Add
                 </button>
               </div>
@@ -464,46 +481,50 @@ export default function MenuPage() {
             </button>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full">
-              <thead>
-                <tr className="text-left text-xs text-gray-500 uppercase border-b">
-                  <th className="pb-2">Name</th>
-                  <th className="pb-2">Category</th>
-                  <th className="pb-2">Price</th>
-                  <th className="pb-2">Production</th>
-                  <th className="pb-2">Modifiers</th>
-                  <th className="pb-2">Sides</th>
-                  <th className="pb-2">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y">
-                {products.map((product) => {
-                  const meta = resolveProductMeta(product);
-                  return (
-                    <tr key={product.id}>
-                      <td className="py-3 font-medium">{product.name}</td>
-                      <td className="py-3 text-sm text-gray-500">{categories.find((c) => c.id === product.categoryId)?.name || "Unknown"}</td>
-                      <td className="py-3">UGX {product.price}</td>
-                      <td className="py-3">
-                        <span className="px-2 py-1 rounded bg-amber-50 text-amber-700 text-xs font-semibold">{meta.productionArea}</span>
-                      </td>
-                      <td className="py-3 text-xs text-gray-600">{meta.modifierGroups.length ? meta.modifierGroups.join(", ") : "—"}</td>
-                      <td className="py-3 text-xs text-gray-600">{meta.sides.length ? meta.sides.join(", ") : "—"}</td>
-                      <td className="py-3 text-sm">
-                        <button onClick={() => openEditProduct(product)} className="text-blue-600 hover:text-blue-800 mr-3">
-                          Edit
-                        </button>
-                        <button onClick={() => handleDeleteProduct(product.id)} className="text-red-500 hover:text-red-700">
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          {loading ? (
+            <div className="py-8 text-sm text-gray-500">Loading products...</div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="min-w-full">
+                <thead>
+                  <tr className="text-left text-xs text-gray-500 uppercase border-b">
+                    <th className="pb-2">Name</th>
+                    <th className="pb-2">Category</th>
+                    <th className="pb-2">Price</th>
+                    <th className="pb-2">Production</th>
+                    <th className="pb-2">Modifiers</th>
+                    <th className="pb-2">Sides</th>
+                    <th className="pb-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {products.map((product) => {
+                    const meta = resolveProductMeta(product);
+                    return (
+                      <tr key={product.id}>
+                        <td className="py-3 font-medium">{product.name}</td>
+                        <td className="py-3 text-sm text-gray-500">{categories.find((c) => c.id === product.categoryId)?.name || "Unknown"}</td>
+                        <td className="py-3">UGX {product.price}</td>
+                        <td className="py-3">
+                          <span className="px-2 py-1 rounded bg-amber-50 text-amber-700 text-xs font-semibold">{meta.productionArea}</span>
+                        </td>
+                        <td className="py-3 text-xs text-gray-600">{meta.modifierGroups.length ? meta.modifierGroups.join(", ") : "—"}</td>
+                        <td className="py-3 text-xs text-gray-600">{meta.sides.length ? meta.sides.join(", ") : "—"}</td>
+                        <td className="py-3 text-sm">
+                          <button onClick={() => openEditProduct(product)} className="text-blue-600 hover:text-blue-800 mr-3">
+                            Edit
+                          </button>
+                          <button onClick={() => handleDeleteProduct(product.id)} className="text-red-500 hover:text-red-700">
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
 
@@ -567,9 +588,9 @@ export default function MenuPage() {
                 required
               >
                 <option value="">Select Category</option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
                   </option>
                 ))}
               </select>
@@ -577,7 +598,7 @@ export default function MenuPage() {
               <select
                 className="w-full border p-2 rounded mb-3"
                 value={prodForm.productionArea}
-                onChange={(e) => setProdForm({ ...prodForm, productionArea: asProductionArea(e.target.value) })}
+                onChange={(e) => setProdForm({ ...prodForm, productionArea: toProductionArea(e.target.value) })}
               >
                 {PRODUCTION_AREAS.map((area) => (
                   <option key={area} value={area}>
@@ -598,7 +619,7 @@ export default function MenuPage() {
                     <button
                       type="button"
                       key={item}
-                      onClick={() => pushLibraryToken("modifier", item)}
+                      onClick={() => addTokenToForm("modifier", item)}
                       className="px-2 py-1 rounded text-xs bg-indigo-50 text-indigo-700 border border-indigo-100"
                     >
                       + {item}
@@ -619,7 +640,7 @@ export default function MenuPage() {
                     <button
                       type="button"
                       key={item}
-                      onClick={() => pushLibraryToken("side", item)}
+                      onClick={() => addTokenToForm("side", item)}
                       className="px-2 py-1 rounded text-xs bg-emerald-50 text-emerald-700 border border-emerald-100"
                     >
                       + {item}
