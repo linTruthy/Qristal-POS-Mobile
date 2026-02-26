@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -21,15 +22,20 @@ export class MenuService {
 
   // --- PRODUCTS ---
   getProducts(branchId: string) {
-    return this.prisma.product.findMany({ 
-        where: { branchId },
-        include: { category: true } // Helpful for the Admin dashboard table
+    return this.prisma.product.findMany({
+      where: { branchId },
+      include: { category: true },
     });
   }
-  createProduct(branchId: string, data: any) {
-    return this.prisma.product.create({ data: { ...data, branchId } });
+  createProduct(branchId: string, data: Prisma.ProductCreateInput) {
+    return this.prisma.product.create({
+      data: {
+        ...data,
+        branchId,
+      },
+    });
   }
-  updateProduct(id: string, branchId: string, data: any) {
+  updateProduct(id: string, branchId: string, data: Prisma.ProductUpdateInput) {
     return this.prisma.product.update({ where: { id, branchId }, data });
   }
   deleteProduct(id: string, branchId: string) {
