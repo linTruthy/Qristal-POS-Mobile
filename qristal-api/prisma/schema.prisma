@@ -120,12 +120,40 @@ model OrderItem {
   productId          String  @map("product_id")
   quantity           Int
   priceAtTimeOfOrder Decimal @map("price_at_time_of_order") @db.Decimal(10, 2) // Financial integrity
+  routeTo            String? @map("route_to")
   notes              String? // e.g. "Extra spicy"
 
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id])
+  order      Order                @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product    Product              @relation(fields: [productId], references: [id])
+  modifiers  OrderItemModifier[]
+  sides      OrderItemSide[]
 
   @@map("order_items")
+}
+
+model OrderItemModifier {
+  id          String  @id @default(uuid())
+  orderItemId String  @map("order_item_id")
+  name        String
+  priceDelta  Decimal @default(0) @map("price_delta") @db.Decimal(10, 2)
+  routeTo     String? @map("route_to")
+
+  orderItem OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+
+  @@map("order_item_modifiers")
+}
+
+model OrderItemSide {
+  id          String  @id @default(uuid())
+  orderItemId String  @map("order_item_id")
+  name        String
+  quantity    Int     @default(1)
+  priceDelta  Decimal @default(0) @map("price_delta") @db.Decimal(10, 2)
+  routeTo     String? @map("route_to")
+
+  orderItem OrderItem @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+
+  @@map("order_item_sides")
 }
 
 enum PaymentMethod {
