@@ -111,7 +111,7 @@ export class SyncService {
     }
 
     try {
-      const [categories, products, users, seatingTables, orders, shifts] = await Promise.all([
+      const [categories, products, users, seatingTables, orders, orderItems, orderItemModifiers, orderItemSides, shifts] = await Promise.all([
         this.prisma.category.findMany({
           where: {
             updatedAt: { gt: lastSyncDate },
@@ -149,6 +149,25 @@ export class SyncService {
             branchId,
           },
         }),
+        this.prisma.orderItem.findMany({
+          where: {
+            order: { branchId },
+          },
+        }),
+        this.prisma.orderItemModifier.findMany({
+          where: {
+            orderItem: {
+              order: { branchId },
+            },
+          },
+        }),
+        this.prisma.orderItemSide.findMany({
+          where: {
+            orderItem: {
+              order: { branchId },
+            },
+          },
+        }),
         this.prisma.shift.findMany({
           where: {
             updatedAt: { gt: lastSyncDate },
@@ -163,6 +182,9 @@ export class SyncService {
         users.length +
         seatingTables.length +
         orders.length +
+        orderItems.length +
+        orderItemModifiers.length +
+        orderItemSides.length +
         shifts.length;
 
       await this.writeSyncLogSafely({
@@ -181,6 +203,9 @@ export class SyncService {
           users,
           seatingTables,
           orders,
+          orderItems,
+          orderItemModifiers,
+          orderItemSides,
           shifts,
         },
       };
@@ -198,7 +223,7 @@ export class SyncService {
 
   async pushChanges(payload: any, userBranchId: string) {
     this.logger.log('Received pushChanges payload');
-    const { orders, orderItems, payments, shifts, auditLogs } = payload;
+    const { orders, orderItems, orderItemModifiers, orderItemSides, payments, shifts, auditLogs } = payload;
     const errors: { id: any; error: string }[] = [];
     const orderShiftMap = new Map<string, string | null>();
 
@@ -300,6 +325,7 @@ export class SyncService {
                 where: { id: item.id },
                 update: {
                   quantity: item.quantity,
+                  routeTo: item.routeTo,
                   notes: item.notes,
                 },
                 create: {
@@ -308,6 +334,7 @@ export class SyncService {
                   productId: item.productId,
                   quantity: item.quantity,
                   priceAtTimeOfOrder: item.priceAtTimeOfOrder,
+                  routeTo: item.routeTo,
                   notes: item.notes,
                 },
               });
@@ -316,6 +343,60 @@ export class SyncService {
             }
           }
         }
+
+        if (orderItemModifiers && Array.isArray(orderItemModifiers)) {
+          for (const modifier of orderItemModifiers) {
+            try {
+              await tx.orderItemModifier.upsert({
+                where: { id: modifier.id },
+                update: {
+                  name: modifier.name,
+                  priceDelta: modifier.priceDelta,
+                  routeTo: modifier.routeTo,
+                },
+                create: {
+                  id: modifier.id,
+                  orderItemId: modifier.orderItemId,
+                  name: modifier.name,
+                  priceDelta: modifier.priceDelta,
+                  routeTo: modifier.routeTo,
+                },
+              });
+            } catch (err) {
+              errors.push({
+                id: modifier.id,
+                error: `Modifier error: ${this.getErrorMessage(err)}`,
+              });
+            }
+          }
+        }
+
+        if (orderItemSides && Array.isArray(orderItemSides)) {
+          for (const side of orderItemSides) {
+            try {
+              await tx.orderItemSide.upsert({
+                where: { id: side.id },
+                update: {
+                  name: side.name,
+                  quantity: side.quantity,
+                  priceDelta: side.priceDelta,
+                  routeTo: side.routeTo,
+                },
+                create: {
+                  id: side.id,
+                  orderItemId: side.orderItemId,
+                  name: side.name,
+                  quantity: side.quantity,
+                  priceDelta: side.priceDelta,
+                  routeTo: side.routeTo,
+                },
+              });
+            } catch (err) {
+              errors.push({ id: side.id, error: `Side error: ${this.getErrorMessage(err)}` });
+            }
+          }
+        }
+
 
         if (payments && Array.isArray(payments)) {
           for (const pay of payments) {

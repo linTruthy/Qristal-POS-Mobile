@@ -5,9 +5,6 @@ import { EventsGateway } from '../events/events.gateway';
 import { InventoryService } from '../inventory/inventory.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { SyncService } from './sync.service';
-import { PrismaService } from '../prisma/prisma.service';
-import { InventoryService } from '../inventory/inventory.service';
-import { EventsGateway } from '../events/events.gateway';
 
 describe('SyncService', () => {
   let service: SyncService;
@@ -19,6 +16,10 @@ describe('SyncService', () => {
     user: { findMany: jest.Mock };
     seatingTable: { findMany: jest.Mock };
     order: { findMany: jest.Mock };
+    orderItem: { findMany: jest.Mock };
+    orderItemModifier: { findMany: jest.Mock };
+    orderItemSide: { findMany: jest.Mock };
+    shift: { findMany: jest.Mock };
   };
 
   beforeEach(async () => {
@@ -30,6 +31,10 @@ describe('SyncService', () => {
       user: { findMany: jest.fn() },
       seatingTable: { findMany: jest.fn() },
       order: { findMany: jest.fn() },
+      orderItem: { findMany: jest.fn() },
+      orderItemModifier: { findMany: jest.fn() },
+      orderItemSide: { findMany: jest.fn() },
+      shift: { findMany: jest.fn() },
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -100,6 +105,10 @@ describe('SyncService', () => {
     prisma.user.findMany.mockResolvedValueOnce([{ id: 'u1' }]);
     prisma.seatingTable.findMany.mockResolvedValueOnce([{ id: 't1' }]);
     prisma.order.findMany.mockResolvedValueOnce([{ id: 'o1' }]);
+    prisma.orderItem.findMany.mockResolvedValueOnce([{ id: 'oi1' }]);
+    prisma.orderItemModifier.findMany.mockResolvedValueOnce([{ id: 'm1' }]);
+    prisma.orderItemSide.findMany.mockResolvedValueOnce([{ id: 's1' }]);
+    prisma.shift.findMany.mockResolvedValueOnce([{ id: 'sh1' }]);
 
     await service.pullChanges('', 'BRANCH-01');
 
@@ -109,7 +118,7 @@ describe('SyncService', () => {
           direction: SyncDirection.PULL,
           status: SyncStatus.SUCCESS,
           branchId: 'BRANCH-01',
-          recordsPulled: 5,
+          recordsPulled: 9,
         }),
       }),
     );
@@ -126,6 +135,8 @@ describe('SyncService', () => {
         orderItem: {
           upsert: jest.fn().mockRejectedValue(new Error('item failed')),
         },
+        orderItemModifier: { upsert: jest.fn() },
+        orderItemSide: { upsert: jest.fn() },
         payment: { create: jest.fn() },
         auditLog: { create: jest.fn() },
       };
@@ -184,6 +195,8 @@ describe('SyncService', () => {
           upsert: jest.fn().mockResolvedValue({ id: 'order-1' }),
         },
         orderItem: { upsert: jest.fn() },
+        orderItemModifier: { upsert: jest.fn() },
+        orderItemSide: { upsert: jest.fn() },
         payment: { create: jest.fn().mockRejectedValue({ code: 'P2002' }) },
         auditLog: { create: jest.fn().mockRejectedValue({ code: 'P2002' }) },
       };
@@ -246,6 +259,10 @@ describe('SyncService', () => {
     prisma.user.findMany.mockResolvedValueOnce([]);
     prisma.seatingTable.findMany.mockResolvedValueOnce([]);
     prisma.order.findMany.mockResolvedValueOnce([]);
+    prisma.orderItem.findMany.mockResolvedValueOnce([]);
+    prisma.orderItemModifier.findMany.mockResolvedValueOnce([]);
+    prisma.orderItemSide.findMany.mockResolvedValueOnce([]);
+    prisma.shift.findMany.mockResolvedValueOnce([]);
     prisma.syncLog.create.mockRejectedValueOnce(new Error('sync log table unavailable'));
 
     const result = await service.pullChanges('', 'BRANCH-01');
@@ -262,6 +279,8 @@ describe('SyncService', () => {
           upsert: jest.fn().mockResolvedValue({ id: 'order-1' }),
         },
         orderItem: { upsert: jest.fn() },
+        orderItemModifier: { upsert: jest.fn() },
+        orderItemSide: { upsert: jest.fn() },
         payment: { create: jest.fn() },
         auditLog: { create: jest.fn() },
       };
@@ -344,6 +363,87 @@ describe('SyncService', () => {
     );
   });
 
+
+  it('persists routeTo, modifiers, and sides for order items', async () => {
+    const orderItemUpsert = jest.fn();
+    const modifierUpsert = jest.fn();
+    const sideUpsert = jest.fn();
+
+    prisma.$transaction.mockImplementationOnce(async (handler: any) => {
+      const tx = {
+        shift: { upsert: jest.fn() },
+        order: {
+          findUnique: jest.fn().mockResolvedValue({ id: 'order-1' }),
+          upsert: jest.fn().mockResolvedValue({ id: 'order-1' }),
+        },
+        orderItem: { upsert: orderItemUpsert },
+        orderItemModifier: { upsert: modifierUpsert },
+        orderItemSide: { upsert: sideUpsert },
+        payment: { create: jest.fn() },
+        auditLog: { create: jest.fn() },
+      };
+
+      await handler(tx);
+    });
+
+    const result = await service.pushChanges(
+      {
+        orders: [
+          {
+            id: 'order-1',
+            receiptNumber: 'ORD-1',
+            userId: 'user-1',
+            tableId: null,
+            shiftId: 'shift-1',
+            totalAmount: 45,
+            status: 'OPEN',
+            createdAt: new Date().toISOString(),
+          },
+        ],
+        orderItems: [
+          {
+            id: 'item-1',
+            orderId: 'order-1',
+            productId: 'product-1',
+            quantity: 1,
+            priceAtTimeOfOrder: 40,
+            routeTo: 'GRILL',
+            notes: 'No onions',
+          },
+        ],
+        orderItemModifiers: [
+          {
+            id: 'mod-1',
+            orderItemId: 'item-1',
+            name: 'Extra Cheese',
+            priceDelta: 3,
+            routeTo: 'GRILL',
+          },
+        ],
+        orderItemSides: [
+          {
+            id: 'side-1',
+            orderItemId: 'item-1',
+            name: 'Fries',
+            quantity: 1,
+            priceDelta: 2,
+            routeTo: 'FRYER',
+          },
+        ],
+      },
+      'BRANCH-01',
+    );
+
+    expect(result.success).toBe(true);
+    expect(orderItemUpsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        update: expect.objectContaining({ routeTo: 'GRILL' }),
+        create: expect.objectContaining({ routeTo: 'GRILL' }),
+      }),
+    );
+    expect(modifierUpsert).toHaveBeenCalled();
+    expect(sideUpsert).toHaveBeenCalled();
+  });
 
   it('fails payment processing when shiftId cannot be resolved', async () => {
     const paymentCreate = jest.fn();

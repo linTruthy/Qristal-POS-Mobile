@@ -75,6 +75,59 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     _markOrderModified();
   }
 
+
+  Future<void> removeCartItem(CartItem item) async {
+    final userRole = await ref.read(userRoleProvider.future);
+    if (_activeOrderId != null &&
+        (userRole != UserRole.MANAGER && userRole != UserRole.OWNER)) {
+      final key = _cartKey(item);
+      final baseline = _baselineQuantities[key] ?? 0;
+      if (baseline > 0) {
+        return;
+      }
+    }
+
+    state = state.where((line) => _cartKey(line) != _cartKey(item)).toList();
+    _markOrderModified();
+  }
+
+  void increaseQuantity(CartItem item) {
+    final targetKey = _cartKey(item);
+    final existingIndex = state.indexWhere((line) => _cartKey(line) == targetKey);
+    if (existingIndex == -1) return;
+
+    final updated = state[existingIndex].copyWith(quantity: state[existingIndex].quantity + 1);
+    state = [
+      ...state.sublist(0, existingIndex),
+      updated,
+      ...state.sublist(existingIndex + 1),
+    ];
+    _markOrderModified();
+  }
+
+  Future<void> updateCartItem(CartItem previousItem, CartItem updatedItem) async {
+    final userRole = await ref.read(userRoleProvider.future);
+    if (_activeOrderId != null &&
+        (userRole != UserRole.MANAGER && userRole != UserRole.OWNER)) {
+      final key = _cartKey(previousItem);
+      final baseline = _baselineQuantities[key] ?? 0;
+      if (updatedItem.quantity < baseline) {
+        return;
+      }
+    }
+
+    final targetKey = _cartKey(previousItem);
+    final existingIndex = state.indexWhere((line) => _cartKey(line) == targetKey);
+    if (existingIndex == -1) return;
+
+    state = [
+      ...state.sublist(0, existingIndex),
+      updatedItem,
+      ...state.sublist(existingIndex + 1),
+    ];
+    _markOrderModified();
+  }
+
   Future<void> decreaseQuantity(CartItem item) async {
     final userRole = await ref.read(userRoleProvider.future);
     if (_activeOrderId != null &&
@@ -86,8 +139,8 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       }
     }
 
-    final existingIndex = state.indexWhere(
-        (i) => i.product.id == item.product.id && i.notes == item.notes);
+    final targetKey = _cartKey(item);
+    final existingIndex = state.indexWhere((i) => _cartKey(i) == targetKey);
 
     if (existingIndex != -1) {
       if (state[existingIndex].quantity > 1) {
@@ -100,7 +153,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
         ];
         _markOrderModified();
       } else {
-        await removeFromCart(item.product);
+        await removeCartItem(item);
       }
     }
   }
