@@ -144,12 +144,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     onSubmitted: (_) => _handleLogin(),
                   ),
                   const SizedBox(height: 40),
-                  ElevatedButton(
-                    onPressed: () {
-                      throw StateError('This is test exception');
-                    },
-                    child: const Text('Verify Sentry Setup'),
-                  ),
+                
                   // Login Button
                   SizedBox(
                     height: 60,
