@@ -57,7 +57,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   
   void _handleLogin() {
     final userId =
-        '20e712c3-e030-4bc5-ac2b-cafd92dc055f'; // _userController.text.trim();
+        'bd17a196-78d8-446c-aae0-d53456f5bf86'; // _userController.text.trim();
     final pin = _pinController.text
         .trim(); // '1234'; // _pinController.text.trim();
 
@@ -144,12 +144,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     onSubmitted: (_) => _handleLogin(),
                   ),
                   const SizedBox(height: 40),
-                  ElevatedButton(
-                    onPressed: () {
-                      throw StateError('This is test exception');
-                    },
-                    child: const Text('Verify Sentry Setup'),
-                  ),
+                
                   // Login Button
                   SizedBox(
                     height: 60,
