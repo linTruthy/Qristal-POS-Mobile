@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
 const SERVER_URL = "https://qristal-pos-api.onrender.com";
-const PRODUCT_METADATA_KEY = "qristal-menu-product-metadata";
 const MODIFIER_LIBRARY_KEY = "qristal-menu-modifier-library";
 const SIDES_LIBRARY_KEY = "qristal-menu-sides-library";
 
@@ -26,15 +25,6 @@ type Product = {
   sides?: string[];
 };
 
-type ProductMetadata = Record<
-  string,
-  {
-    productionArea: ProductionArea;
-    modifierGroups: string[];
-    sides: string[];
-  }
->;
-
 type ProductFormState = {
   name: string;
   price: string;
@@ -45,7 +35,7 @@ type ProductFormState = {
 };
 
 type Feedback = {
-  type: "success" | "warning" | "error";
+  type: "success" | "error";
   message: string;
 };
 
@@ -90,7 +80,6 @@ export default function MenuPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [productMetadata, setProductMetadata] = useState<ProductMetadata>(() => readStorage(PRODUCT_METADATA_KEY, {}));
   const [modifierLibrary, setModifierLibrary] = useState<string[]>(() => readStorage(MODIFIER_LIBRARY_KEY, []));
   const [sidesLibrary, setSidesLibrary] = useState<string[]>(() => readStorage(SIDES_LIBRARY_KEY, []));
 
@@ -104,28 +93,6 @@ export default function MenuPage() {
   const [newModifier, setNewModifier] = useState("");
   const [newSide, setNewSide] = useState("");
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-
-  const persistMetadata = (id: string, metadata: ProductMetadata[string]) => {
-    setProductMetadata((current) => ({ ...current, [id]: metadata }));
-  };
-
-  const removeMetadata = (id: string) => {
-    setProductMetadata((current) => {
-      if (!current[id]) return current;
-      const next = { ...current };
-      delete next[id];
-      return next;
-    });
-  };
-
-  const resolveProductMeta = (product: Product) => {
-    const local = productMetadata[product.id];
-    return {
-      productionArea: local?.productionArea || toProductionArea(product.productionArea),
-      modifierGroups: local?.modifierGroups || product.modifierGroups || [],
-      sides: local?.sides || product.sides || [],
-    };
-  };
 
   const syncLibrariesFromProducts = (items: Product[]) => {
     const modifiers = items.flatMap((item) => item.modifierGroups || []);
@@ -151,11 +118,6 @@ export default function MenuPage() {
     setProducts(productsData);
     syncLibrariesFromProducts(productsData);
   };
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    localStorage.setItem(PRODUCT_METADATA_KEY, JSON.stringify(productMetadata));
-  }, [productMetadata]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -206,15 +168,14 @@ export default function MenuPage() {
   };
 
   const openEditProduct = (product: Product) => {
-    const meta = resolveProductMeta(product);
     setEditingProductId(product.id);
     setProdForm({
       name: product.name,
       price: String(product.price),
       categoryId: product.categoryId,
-      productionArea: meta.productionArea,
-      modifierGroups: meta.modifierGroups.join(", "),
-      sides: meta.sides.join(", "),
+      productionArea: toProductionArea(product.productionArea),
+      modifierGroups: (product.modifierGroups || []).join(", "),
+      sides: (product.sides || []).join(", "),
     });
     setProdModalOpen(true);
   };
@@ -288,12 +249,6 @@ export default function MenuPage() {
       sides,
     };
 
-    const metadataPayload: ProductMetadata[string] = {
-      productionArea: prodForm.productionArea,
-      modifierGroups,
-      sides,
-    };
-
     if (editingProductId) {
       const headers = { "Content-Type": "application/json", Authorization: `Bearer ${token}` };
       let response = await fetch(`${SERVER_URL}/products/${editingProductId}`, {
@@ -310,17 +265,12 @@ export default function MenuPage() {
         });
       }
 
-      if (response.ok) {
-        removeMetadata(editingProductId);
-        setFeedback({ type: "success", message: "Product updated successfully." });
-      } else {
-        persistMetadata(editingProductId, metadataPayload);
-        setFeedback({
-          type: "warning",
-          message:
-            "Update saved locally only. Backend update endpoint does not currently accept modifier/routing fields.",
-        });
+      if (!response.ok) {
+        setFeedback({ type: "error", message: "Unable to update product. Please retry." });
+        return;
       }
+
+      setFeedback({ type: "success", message: "Product updated successfully." });
     } else {
       const createRes = await fetch(`${SERVER_URL}/products`, {
         method: "POST",
@@ -333,14 +283,7 @@ export default function MenuPage() {
         return;
       }
 
-      const createdProduct = await createRes.json();
-      if (createdProduct?.id) {
-        const serverHasMetadata = createdProduct.productionArea || createdProduct.modifierGroups || createdProduct.sides;
-        if (!serverHasMetadata) {
-          persistMetadata(createdProduct.id, metadataPayload);
-        }
-      }
-
+      await createRes.json();
       setFeedback({ type: "success", message: "Product created successfully." });
     }
 
@@ -359,14 +302,13 @@ export default function MenuPage() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    removeMetadata(id);
     setFeedback({ type: "success", message: "Product deleted." });
     await loadMenuData();
   };
 
   const laneCounts = products.reduce<Record<ProductionArea, number>>(
     (acc, product) => {
-      const area = resolveProductMeta(product).productionArea;
+      const area = toProductionArea(product.productionArea);
       acc[area] += 1;
       return acc;
     },
@@ -387,9 +329,7 @@ export default function MenuPage() {
           className={`rounded-lg border px-4 py-3 text-sm ${
             feedback.type === "success"
               ? "bg-emerald-50 border-emerald-200 text-emerald-700"
-              : feedback.type === "warning"
-                ? "bg-amber-50 border-amber-200 text-amber-700"
-                : "bg-red-50 border-red-200 text-red-700"
+              : "bg-red-50 border-red-200 text-red-700"
           }`}
         >
           {feedback.message}
@@ -499,17 +439,17 @@ export default function MenuPage() {
                 </thead>
                 <tbody className="divide-y">
                   {products.map((product) => {
-                    const meta = resolveProductMeta(product);
+                    const area = toProductionArea(product.productionArea);
                     return (
                       <tr key={product.id}>
                         <td className="py-3 font-medium">{product.name}</td>
                         <td className="py-3 text-sm text-gray-500">{categories.find((c) => c.id === product.categoryId)?.name || "Unknown"}</td>
                         <td className="py-3">UGX {product.price}</td>
                         <td className="py-3">
-                          <span className="px-2 py-1 rounded bg-amber-50 text-amber-700 text-xs font-semibold">{meta.productionArea}</span>
+                          <span className="px-2 py-1 rounded bg-amber-50 text-amber-700 text-xs font-semibold">{area}</span>
                         </td>
-                        <td className="py-3 text-xs text-gray-600">{meta.modifierGroups.length ? meta.modifierGroups.join(", ") : "—"}</td>
-                        <td className="py-3 text-xs text-gray-600">{meta.sides.length ? meta.sides.join(", ") : "—"}</td>
+                        <td className="py-3 text-xs text-gray-600">{product.modifierGroups?.length ? product.modifierGroups.join(", ") : "—"}</td>
+                        <td className="py-3 text-xs text-gray-600">{product.sides?.length ? product.sides.join(", ") : "—"}</td>
                         <td className="py-3 text-sm">
                           <button onClick={() => openEditProduct(product)} className="text-blue-600 hover:text-blue-800 mr-3">
                             Edit

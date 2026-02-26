@@ -20,6 +20,14 @@ enum Role {
   KITCHEN
 }
 
+enum ProductionArea {
+  KITCHEN
+  BARISTA
+  BAR
+  RETAIL
+  OTHER
+}
+
 model User {
   id       String  @id @default(uuid())
   pin      String  @unique // Hashed PIN for terminal login
@@ -65,6 +73,9 @@ model Product {
   name        String
   price       Decimal @db.Decimal(10, 2)
   isAvailable Boolean @default(true) @map("is_available")
+  productionArea ProductionArea @default(KITCHEN) @map("production_area")
+  modifierGroups String[] @default([]) @map("modifier_groups")
+  sides          String[] @default([])
 
   category   Category    @relation(fields: [categoryId], references: [id])
   orderItems OrderItem[]
