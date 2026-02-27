@@ -1,45 +1,41 @@
-{ pkgs, ... }: {
-  # Which nixpkgs channel to use.
-  channel = "unstable"; 
-  
-  # Use https://search.nixos.org/packages to find packages
+{pkgs}: {
+  channel = "stable-24.05";
   packages = [
-    pkgs.docker
-    pkgs.docker-compose # Added for convenience
-    pkgs.openssl
-    pkgs.nodejs_20
-    pkgs.flutter
+    pkgs.jdk17
+    pkgs.unzip
     pkgs.openssh
   ];
-
-  # Enable the Docker daemon service
-  services.docker.enable = true;
-
-  # Sets environment variables in the workspace
-  env = {};
-  
-  idx = {
-    extensions = [
-      "google.gemini-cli-vscode-ide-companion"
-    ];
+  idx.extensions = [
+    
+  ];
+  idx.previews = {
     previews = {
-      enable = true;
-      previews = {
-        # web = {
-        #   command = ["npm" "run" "dev"];
-        #   manager = "web";
-        #   env = {
-        #     PORT = "$PORT";
-        #   };
-        # };
-      };
-    };
-    workspace = {
-      onCreate = {
-        default.openFiles = [ ".idx/dev.nix" "README.md" ];
-      };
-      onStart = {
-      };
+      # web = {
+      #   command = [
+      #     "flutter"
+      #     "run"
+      #     "--machine"
+      #     "-d"
+      #     "web-server"
+      #     "--web-hostname"
+      #     "0.0.0.0"
+      #     "--web-port"
+      #     "$PORT"
+      #   ];
+      #   manager = "flutter";
+      # };
+      # android = {
+      #  command = [
+      #    "flutter"
+      #  "run"
+      #     "--machine"
+      #   "-d"
+      #     "android"
+      #     "-d"
+      #     "localhost:5555"
+      #    ];
+      #   manager = "flutter";
+      #  };
     };
   };
 }

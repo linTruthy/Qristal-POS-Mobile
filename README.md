@@ -1,78 +1,142 @@
-# Qristal POS
+# Qristal Mobile (POS Terminal)
 
-A full-stack, offline-capable Point of Sale system for restaurants and hospitality businesses — built and maintained by [Truthy Systems](https://truthysystems.com).
+The offline-first POS terminal application for the Qristal POS system. Built with Flutter, it runs on Android, iOS, and Windows and is designed for waitstaff and cashiers at the point of sale.
 
-Qristal POS is composed of three sub-repositories managed as Git submodules:
-
-| Repo | Description | Stack |
-|------|-------------|-------|
-| [`qristal_api`](./qristal_api) | Backend REST API & WebSocket server | NestJS · PostgreSQL · Prisma |
-| [`qristal_dashboard`](./qristal_dashboard) | Web-based admin & reporting dashboard | Next.js · React · Tailwind CSS |
-| [`qristal_mobile`](./qristal_mobile) | Offline-first POS terminal app | Flutter · Drift (SQLite) |
+Developed and maintained by **[Truthy Systems](https://truthysystems.com)**.
 
 ---
 
-## System Overview
+## Tech Stack
 
-```
-┌─────────────────────────────────────────────────────┐
-│                   qristal_api                        │
-│  NestJS REST API + WebSocket Gateway (PostgreSQL)   │
-└──────────────────────┬──────────────────────────────┘
-                       │  HTTP / WebSocket
-        ┌──────────────┴──────────────┐
-        │                             │
-┌───────▼────────┐          ┌─────────▼──────────┐
-│qristal_dashboard│          │  qristal_mobile     │
-│ Next.js (Web)  │          │  Flutter (Android/  │
-│ Admin Portal   │          │  iOS / Windows)     │
-└────────────────┘          └────────────────────┘
-```
-
-The mobile app operates fully offline and syncs with the API when a connection is available. The dashboard provides management tools — menu editing, user management, inventory, analytics, and reporting.
-
----
-
-## Cloning the Monorepo
-
-```bash
-git clone --recurse-submodules <repo-url>
-```
-
-Or if already cloned:
-
-```bash
-git submodule update --init --recursive
-```
+- **Framework:** Flutter (Dart)
+- **Local database:** Drift (SQLite)
+- **State management:** Riverpod
+- **Auth:** JWT stored via `flutter_secure_storage`
+- **Printing:** Bluetooth thermal receipt printer
+- **Error tracking:** Sentry
+- **Real-time:** WebSocket (connected to `qristal_api`)
 
 ---
 
 ## Features
 
-- **PIN-based staff authentication** with role-based access (Owner, Manager, Cashier, Waiter, Kitchen)
-- **Offline-first POS** — orders, payments, and shifts work without internet
-- **Real-time sync** — push/pull architecture with WebSocket live updates
-- **Table & floor plan management**
-- **Kitchen display routing** — items routed to Kitchen, Bar, Barista, etc.
-- **Shift management** — open/close shifts with cash reconciliation
-- **Inventory tracking** with recipe-based stock deduction
-- **Multi-branch ready** — branch isolation built into the data model
-- **Audit logs** — void, discount, and cash flow events are tracked
-- **Receipt printing** via Bluetooth thermal printer (mobile)
-- **Analytics & reports** via the web dashboard
+- PIN-based login with role-aware UI (Cashier, Waiter, Kitchen, Manager, Owner)
+- Offline-first order taking — works without internet
+- Background sync — push unsynced orders/payments/shifts, pull menu and table updates
+- Cart management with product modifiers and sides
+- Kitchen routing — items dispatched to Kitchen, Bar, Barista, etc.
+- Table & floor plan selection
+- Shift management — open/close shifts with starting and actual cash reconciliation
+- Receipt printing via Bluetooth thermal printer
+- Kitchen display screen (KDS) for kitchen staff
+- Real-time order status updates via WebSocket
 
 ---
 
-## Getting Started
+## Prerequisites
 
-Each sub-project has its own setup guide. See the respective `README.md`:
+- Flutter SDK 3.x
+- Android SDK / Xcode (for mobile targets) or Visual Studio (for Windows)
+- A running instance of `qristal_api`
 
-- [API Setup →](./qristal_api/README.md)
-- [Dashboard Setup →](./qristal_dashboard/README.md)
-- [Mobile App Setup →](./qristal_mobile/README.md)
+---
+
+## Setup
+
+### 1. Install Flutter dependencies
+
+```bash
+flutter pub get
+```
+
+### 2. Configure the API URL
+
+Edit `lib/core/constants/api_constants.dart`:
+
+```dart
+static String get baseUrl {
+  return 'https://your-api-url.com'; // Replace with your API endpoint
+}
+```
+
+### 3. Generate Drift database code
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+### 4. Run the app
+
+```bash
+# Android
+flutter run
+
+# Windows
+flutter run -d windows
+```
+
+---
+
+## Building for Release
+
+```bash
+# Android APK
+flutter build apk --release
+
+# Android App Bundle
+flutter build appbundle --release
+
+# Windows
+flutter build windows --release
+```
+
+---
+
+## Project Structure
+
+```
+lib/
+  core/
+    constants/        # API endpoints, role definitions
+    providers/        # Database provider
+    theme/            # App theme
+  database/           # Drift database schema & generated code
+  features/
+    auth/             # Login screen, auth service, auth provider
+    hardware/         # Bluetooth printer service & receipt generator
+    kitchen/          # Kitchen display screen
+    pos/              # Dashboard, cart, menu provider, order service, payment modal
+    shifts/           # Open/close shift screens and provider
+    sync/             # Sync provider and queue
+    tables/           # Floor plan screen
+  services/
+    sync_service.dart     # Pull/push sync logic
+    websocket_service.dart
+  main.dart
+```
+
+---
+
+## Sync Architecture
+
+The mobile app uses a timestamp-based sync strategy:
+
+- **Pull** — fetches menu, tables, and shifts updated since the last sync timestamp
+- **Push** — sends unsynced orders, payments, shifts, and table status changes to the API
+- Sync runs on app start and can be triggered manually
+
+---
+
+## Supported Platforms
+
+| Platform | Status |
+|----------|--------|
+| Android | ✅ Supported |
+| Windows | ✅ Supported |
+| iOS | 🔧 Configured (not primary target) |
 
 ---
 
 ## Developer
 
-Built by **[Truthy Systems](https://truthysystems.com)** — software solutions for modern businesses.
+Built by **[Truthy Systems](https://truthysystems.com)**.
