@@ -79,6 +79,8 @@ model Product {
 
   category   Category    @relation(fields: [categoryId], references: [id])
   orderItems OrderItem[]
+  productModifierGroups ProductModifierGroup[]
+  productSides          ProductSide[]
 
   branchId     String    @default("BRANCH-01") @map("branch_id")
 
@@ -167,6 +169,88 @@ model OrderItemSide {
   @@map("order_item_sides")
 }
 
+model ModifierGroup {
+  id        String @id @default(uuid())
+  branchId  String @default("BRANCH-01") @map("branch_id")
+  name      String
+  minSelect Int    @default(0) @map("min_select")
+  maxSelect Int?   @map("max_select")
+  isRequired Boolean @default(false) @map("is_required")
+  sortOrder Int    @default(0) @map("sort_order")
+
+  modifiers Modifier[]
+  products  ProductModifierGroup[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@unique([branchId, name])
+  @@map("modifier_groups")
+}
+
+model Modifier {
+  id              String  @id @default(uuid())
+  modifierGroupId String  @map("modifier_group_id")
+  name            String
+  priceDelta      Decimal @default(0) @map("price_delta") @db.Decimal(10, 2)
+  productionArea  ProductionArea @default(KITCHEN) @map("production_area")
+  isAvailable     Boolean @default(true) @map("is_available")
+  sortOrder       Int     @default(0) @map("sort_order")
+
+  modifierGroup ModifierGroup @relation(fields: [modifierGroupId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@unique([modifierGroupId, name])
+  @@map("modifiers")
+}
+model Side {
+  id            String  @id @default(uuid())
+  branchId      String  @default("BRANCH-01") @map("branch_id")
+  name          String
+  priceDelta    Decimal @default(0) @map("price_delta") @db.Decimal(10, 2)
+  productionArea ProductionArea @default(KITCHEN) @map("production_area")
+  isAvailable   Boolean @default(true) @map("is_available")
+  sortOrder     Int     @default(0) @map("sort_order")
+
+  products ProductSide[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  @@unique([branchId, name])
+  @@map("sides_library")
+}
+
+model ProductModifierGroup {
+  id              String @id @default(uuid())
+  productId       String @map("product_id")
+  modifierGroupId String @map("modifier_group_id")
+  sortOrder       Int    @default(0) @map("sort_order")
+
+  product       Product       @relation(fields: [productId], references: [id], onDelete: Cascade)
+  modifierGroup ModifierGroup @relation(fields: [modifierGroupId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, modifierGroupId])
+  @@map("product_modifier_groups")
+}
+
+model ProductSide {
+  id        String @id @default(uuid())
+  productId String @map("product_id")
+  sideId    String @map("side_id")
+  sortOrder Int    @default(0) @map("sort_order")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  side    Side    @relation(fields: [sideId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, sideId])
+  @@map("product_sides")
+}
 enum PaymentMethod {
   CASH
   CARD

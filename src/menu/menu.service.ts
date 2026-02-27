@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class MenuService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   // --- CATEGORIES ---
   getCategories(branchId: string) {
@@ -20,25 +19,124 @@ export class MenuService {
     return this.prisma.category.delete({ where: { id, branchId } });
   }
 
-  // --- PRODUCTS ---
-  getProducts(branchId: string) {
-    return this.prisma.product.findMany({
-      where: { branchId },
-      include: { category: true },
+  // --- MODIFIER GROUPS ---
+  getModifierGroups(branchId: string) {
+    return this.prisma.modifierGroup.findMany({
+      where: { branchId, deletedAt: null },
+      include: {
+        modifiers: {
+          where: { deletedAt: null },
+          orderBy: { sortOrder: 'asc' },
+        },
+      },
+      orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
     });
   }
-  createProduct(branchId: string, data: Prisma.ProductCreateInput) {
-    return this.prisma.product.create({
+
+  createModifierGroup(branchId: string, data: any) {
+    return this.prisma.modifierGroup.create({
       data: {
-        ...data,
         branchId,
+        name: String(data.name || '').trim(),
+        minSelect: Number(data.minSelect || 0),
+        maxSelect: data.maxSelect == null || data.maxSelect === '' ? null : Number(data.maxSelect),
+        isRequired: Boolean(data.isRequired),
+        sortOrder: Number(data.sortOrder || 0),
       },
     });
   }
-  updateProduct(id: string, branchId: string, data: Prisma.ProductUpdateInput) {
-    return this.prisma.product.update({ where: { id, branchId }, data });
+
+  updateModifierGroup(id: string, _branchId: string, data: any) {
+    return this.prisma.modifierGroup.update({
+      where: { id },
+      data: {
+        name: data.name,
+        minSelect: data.minSelect == null ? undefined : Number(data.minSelect),
+        maxSelect: data.maxSelect == null || data.maxSelect === '' ? null : Number(data.maxSelect),
+        isRequired: typeof data.isRequired === 'boolean' ? data.isRequired : undefined,
+        sortOrder: data.sortOrder == null ? undefined : Number(data.sortOrder),
+      },
+    });
   }
-  deleteProduct(id: string, branchId: string) {
-    return this.prisma.product.delete({ where: { id, branchId } });
+
+  deleteModifierGroup(id: string, _branchId: string) {
+    return this.prisma.modifierGroup.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  createModifier(modifierGroupId: string, _branchId: string, data: any) {
+    return this.prisma.modifier.create({
+      data: {
+        modifierGroup: { connect: { id: modifierGroupId } },
+        name: String(data.name || '').trim(),
+        priceDelta: Number(data.priceDelta || 0),
+        productionArea: data.productionArea || 'KITCHEN',
+        isAvailable: data.isAvailable == null ? true : Boolean(data.isAvailable),
+        sortOrder: Number(data.sortOrder || 0),
+      },
+    });
+  }
+
+  updateModifier(id: string, modifierGroupId: string, _branchId: string, data: any) {
+    return this.prisma.modifier.update({
+      where: { id },
+      data: {
+        name: data.name,
+        priceDelta: data.priceDelta == null ? undefined : Number(data.priceDelta),
+        productionArea: data.productionArea,
+        isAvailable: typeof data.isAvailable === 'boolean' ? data.isAvailable : undefined,
+        sortOrder: data.sortOrder == null ? undefined : Number(data.sortOrder),
+      },
+    });
+  }
+
+  deleteModifier(id: string, modifierGroupId: string, _branchId: string) {
+    return this.prisma.modifier.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
+  }
+
+  // --- SIDES LIBRARY ---
+  getSides(branchId: string) {
+    return this.prisma.side.findMany({
+      where: { branchId, deletedAt: null },
+      orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
+    });
+  }
+
+  createSide(branchId: string, data: any) {
+    return this.prisma.side.create({
+      data: {
+        branchId,
+        name: String(data.name || '').trim(),
+        priceDelta: Number(data.priceDelta || 0),
+        productionArea: data.productionArea || 'KITCHEN',
+        isAvailable: data.isAvailable == null ? true : Boolean(data.isAvailable),
+        sortOrder: Number(data.sortOrder || 0),
+      },
+    });
+  }
+
+  updateSide(id: string, _branchId: string, data: any) {
+    return this.prisma.side.update({
+      where: { id },
+      data: {
+        name: data.name,
+        priceDelta: data.priceDelta == null ? undefined : Number(data.priceDelta),
+        productionArea: data.productionArea,
+        isAvailable: typeof data.isAvailable === 'boolean' ? data.isAvailable : undefined,
+        sortOrder: data.sortOrder == null ? undefined : Number(data.sortOrder),
+      },
+    });
+  }
+
+  deleteSide(id: string, _branchId: string) {
+    return this.prisma.side.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }
