@@ -25,8 +25,8 @@ export class MenuService {
       where: { branchId, deletedAt: null },
       include: {
         category: true,
-        productModifierGroups: { include: { modifierGroup: { include: { modifiers: true } } } },
-        productSides: { include: { side: true } },
+        // productModifierGroups: { include: { modifierGroup: { include: { modifiers: true } } } },
+        // productSides: { include: { side: true } },
       },
       orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
     });
