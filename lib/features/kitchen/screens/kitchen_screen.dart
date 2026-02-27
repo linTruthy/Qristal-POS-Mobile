@@ -211,17 +211,66 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                itemData.product.name,
-                                style: const TextStyle(fontSize: 16),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      itemData.product.name,
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  if (itemData.item.routeTo != null &&
+                                      itemData.item.routeTo!.isNotEmpty)
+                                    _RouteBadge(label: itemData.item.routeTo!),
+                                ],
                               ),
+                              if (itemData.modifiers.isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Wrap(
+                                    spacing: 4,
+                                    runSpacing: 4,
+                                    children: itemData.modifiers
+                                        .map(
+                                          (modifier) => _TicketTag(
+                                            label: modifier.name,
+                                            routeTo: modifier.routeTo,
+                                            prefix: '+',
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
+                              if (itemData.sides.isNotEmpty)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Wrap(
+                                    spacing: 4,
+                                    runSpacing: 4,
+                                    children: itemData.sides
+                                        .map(
+                                          (side) => _TicketTag(
+                                            label: side.quantity > 1
+                                                ? '${side.name} x${side.quantity}'
+                                                : side.name,
+                                            routeTo: side.routeTo,
+                                            prefix: 'Side',
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
                               if (itemData.item.notes != null &&
                                   itemData.item.notes!.isNotEmpty)
-                                Text(
-                                  "Note: ${itemData.item.notes}",
-                                  style: const TextStyle(
-                                    color: AppTheme.error,
-                                    fontSize: 12,
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 6),
+                                  child: Text(
+                                    "Note: ${itemData.item.notes}",
+                                    style: const TextStyle(
+                                      color: AppTheme.error,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                             ],
@@ -258,6 +307,62 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+
+class _RouteBadge extends StatelessWidget {
+  final String label;
+
+  const _RouteBadge({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppTheme.qristalBlue.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: AppTheme.qristalBlue,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+}
+
+class _TicketTag extends StatelessWidget {
+  final String label;
+  final String? routeTo;
+  final String prefix;
+
+  const _TicketTag({
+    required this.label,
+    this.routeTo,
+    required this.prefix,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.grey[850],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Text(
+        routeTo != null && routeTo!.isNotEmpty
+            ? '$prefix $label · ${routeTo!}'
+            : '$prefix $label',
+        style: const TextStyle(fontSize: 11, color: Colors.white70),
       ),
     );
   }
