@@ -1,12 +1,11 @@
-[submodule "qristal-api"]
-path = qristal-api
-url = https://github.com/linTruthy/qristal-api.git
 [submodule "qristal_mobile"]
-	path = qristal_mobile
-	url = https://github.com/linTruthy/Qristal-POS-Mobile
+    path = qristal_mobile
+    url = https://github.com/linTruthy/Qristal-POS-Mobile
+
 [submodule "qristal_api"]
-	path = qristal_api
-	url = https://github.com/linTruthy/qristal-api
+    path = qristal_api
+    url = https://github.com/linTruthy/qristal-api
+
 [submodule "qristal_dashboard"]
-	path = qristal_dashboard
-	url = https://github.com/linTruthy/qristal-dashboard
+    path = qristal_dashboard
+    url = https://github.com/linTruthy/qristal-dashboard
