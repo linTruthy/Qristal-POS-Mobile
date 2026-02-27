@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   # Which nixpkgs channel to use.
-  channel = "stable-24.05"; 
+  channel = "unstable"; 
   
   # Use https://search.nixos.org/packages to find packages
   packages = [
