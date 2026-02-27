@@ -19,6 +19,78 @@ export class MenuService {
     return this.prisma.category.delete({ where: { id, branchId } });
   }
 
+  // --- PRODUCTS ---
+  getProducts(branchId: string) {
+    return this.prisma.product.findMany({
+      where: { branchId, deletedAt: null },
+      include: {
+        category: true,
+        productModifierGroups: { include: { modifierGroup: { include: { modifiers: true } } } },
+        productSides: { include: { side: true } },
+      },
+      orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
+    });
+  }
+
+  createProduct(branchId: string, data: any) {
+    const { categoryId, modifierGroupIds, sideIds, ...rest } = data;
+    return this.prisma.product.create({
+      data: {
+        ...rest,
+        branchId,
+        category: { connect: { id: categoryId } },
+        productModifierGroups: {
+          create: modifierGroupIds?.map((id: string, index: number) => ({
+            modifierGroup: { connect: { id } },
+            sortOrder: index,
+          })),
+        },
+        productSides: {
+          create: sideIds?.map((id: string, index: number) => ({
+            side: { connect: { id } },
+            sortOrder: index,
+          })),
+        },
+      },
+    });
+  }
+
+  updateProduct(id: string, branchId: string, data: any) {
+    const { categoryId, modifierGroupIds, sideIds, ...rest } = data;
+    return this.prisma.product.update({
+      where: { id, branchId },
+      data: {
+        ...rest,
+        category: categoryId ? { connect: { id: categoryId } } : undefined,
+        productModifierGroups: modifierGroupIds
+          ? {
+              deleteMany: {},
+              create: modifierGroupIds.map((id: string, index: number) => ({
+                modifierGroup: { connect: { id } },
+                sortOrder: index,
+              })),
+            }
+          : undefined,
+        productSides: sideIds
+          ? {
+              deleteMany: {},
+              create: sideIds.map((id: string, index: number) => ({
+                side: { connect: { id } },
+                sortOrder: index,
+              })),
+            }
+          : undefined,
+      },
+    });
+  }
+
+  deleteProduct(id: string, branchId: string) {
+    return this.prisma.product.update({
+      where: { id, branchId },
+      data: { deletedAt: new Date() },
+    });
+  }
+
   // --- MODIFIER GROUPS ---
   getModifierGroups(branchId: string) {
     return this.prisma.modifierGroup.findMany({
