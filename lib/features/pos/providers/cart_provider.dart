@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
@@ -37,7 +38,8 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     this.ref,
   ) : super([]);
 
-  void addToCart(Product product, {
+  void addToCart(
+    Product product, {
     String? routeTo,
     List<CartModifier> modifiers = const [],
     List<CartSide> sides = const [],
@@ -48,19 +50,30 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       modifiers: modifiers,
       sides: sides,
     );
-    final existingIndex = state.indexWhere((item) => _cartKey(item) == _cartKey(probe));
+    final existingIndex = state.indexWhere(
+      (item) => _cartKey(item) == _cartKey(probe),
+    );
 
     if (existingIndex >= 0) {
       final existingItem = state[existingIndex];
-      final updatedItem =
-          existingItem.copyWith(quantity: existingItem.quantity + 1);
+      final updatedItem = existingItem.copyWith(
+        quantity: existingItem.quantity + 1,
+      );
       state = [
         ...state.sublist(0, existingIndex),
         updatedItem,
         ...state.sublist(existingIndex + 1),
       ];
     } else {
-      state = [...state, CartItem(product: product, routeTo: routeTo, modifiers: modifiers, sides: sides)];
+      state = [
+        ...state,
+        CartItem(
+          product: product,
+          routeTo: routeTo,
+          modifiers: modifiers,
+          sides: sides,
+        ),
+      ];
     }
     _markOrderModified();
   }
@@ -87,12 +100,14 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     }
 
     final existingIndex = state.indexWhere(
-        (i) => i.product.id == item.product.id && i.notes == item.notes);
+      (i) => i.product.id == item.product.id && i.notes == item.notes,
+    );
 
     if (existingIndex != -1) {
       if (state[existingIndex].quantity > 1) {
-        final updatedItem = state[existingIndex]
-            .copyWith(quantity: state[existingIndex].quantity - 1);
+        final updatedItem = state[existingIndex].copyWith(
+          quantity: state[existingIndex].quantity - 1,
+        );
         state = [
           ...state.sublist(0, existingIndex),
           updatedItem,
@@ -122,15 +137,16 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       return;
     }
 
-    final existingOrder = await (db.select(db.orders)
-          ..where(
-            (o) =>
-                o.tableId.equals(tableId) &
-                o.status.isIn(const ['KITCHEN', 'PREPARING']),
-          )
-          ..orderBy([(o) => OrderingTerm.desc(o.createdAt)])
-          ..limit(1))
-        .getSingleOrNull();
+    final existingOrder =
+        await (db.select(db.orders)
+              ..where(
+                (o) =>
+                    o.tableId.equals(tableId) &
+                    o.status.isIn(const ['KITCHEN', 'PREPARING']),
+              )
+              ..orderBy([(o) => OrderingTerm.desc(o.createdAt)])
+              ..limit(1))
+            .getSingleOrNull();
 
     if (existingOrder == null) {
       clearCart();
@@ -146,10 +162,23 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
             notes: row.item.notes ?? '',
             routeTo: row.item.routeTo,
             modifiers: row.modifiers
-                .map((m) => CartModifier(name: m.name, priceDelta: m.priceDelta, routeTo: m.routeTo))
+                .map(
+                  (m) => CartModifier(
+                    name: m.name,
+                    priceDelta: m.priceDelta,
+                    routeTo: m.routeTo,
+                  ),
+                )
                 .toList(),
             sides: row.sides
-                .map((side) => CartSide(name: side.name, quantity: side.quantity, priceDelta: side.priceDelta, routeTo: side.routeTo))
+                .map(
+                  (side) => CartSide(
+                    name: side.name,
+                    quantity: side.quantity,
+                    priceDelta: side.priceDelta,
+                    routeTo: side.routeTo,
+                  ),
+                )
                 .toList(),
           ),
         )
@@ -185,7 +214,8 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     }
 
     final now = DateTime.now();
-    final orderReference = _activeOrderId ??
+    final orderReference =
+        _activeOrderId ??
         _buildOrderNumber(ref.read(activeTableIdProvider), now);
 
     try {
@@ -220,13 +250,15 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     if (_activeOrderId == null) {
       final orderId = const Uuid().v4();
       await db.transaction(() async {
-        await db.into(db.orders).insert(
+        await db
+            .into(db.orders)
+            .insert(
               OrdersCompanion(
                 id: Value(orderId),
                 receiptNumber: Value(_buildOrderNumber(tableId, now)),
                 userId: Value(userId!),
                 tableId: Value(tableId),
-                shiftId: Value(shiftId), 
+                shiftId: Value(shiftId),
                 totalAmount: Value(totalAmount),
                 status: const Value('KITCHEN'),
                 isSynced: const Value(false),
@@ -243,7 +275,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
         for (final cartItem in state) {
           final orderItemId = const Uuid().v4();
-          await db.into(db.orderItems).insert(
+          await db
+              .into(db.orderItems)
+              .insert(
                 OrderItemsCompanion(
                   id: Value(orderItemId),
                   orderId: Value(orderId),
@@ -282,7 +316,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     await db.transaction(() async {
       for (final item in newItems) {
         final orderItemId = const Uuid().v4();
-        await db.into(db.orderItems).insert(
+        await db
+            .into(db.orderItems)
+            .insert(
               OrderItemsCompanion(
                 id: Value(orderItemId),
                 orderId: Value(_activeOrderId!),
@@ -296,8 +332,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
         await _insertOrderItemRelations(item, orderItemId);
       }
 
-      await (db.update(db.orders)..where((o) => o.id.equals(_activeOrderId!)))
-          .write(
+      await (db.update(
+        db.orders,
+      )..where((o) => o.id.equals(_activeOrderId!))).write(
         OrdersCompanion(
           totalAmount: Value(totalAmount),
           updatedAt: Value(now),
@@ -319,7 +356,8 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     final shiftId = ref.read(activeShiftIdProvider);
     if (shiftId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Error: No active shift found.")));
+        const SnackBar(content: Text("Error: No active shift found.")),
+      );
       return;
     }
 
@@ -348,13 +386,15 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     final tableId = ref.read(activeTableIdProvider);
 
     await db.transaction(() async {
-      await db.into(db.orders).insert(
+      await db
+          .into(db.orders)
+          .insert(
             OrdersCompanion(
               id: Value(orderId),
               receiptNumber: Value(orderId.substring(0, 4).toUpperCase()),
               userId: Value(userId!),
               tableId: Value(tableId),
-              shiftId: Value(shiftId), 
+              shiftId: Value(shiftId),
               totalAmount: Value(total),
               status: const Value('CLOSED'),
               isSynced: const Value(false),
@@ -370,7 +410,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
 
       for (var cartItem in state) {
         final orderItemId = const Uuid().v4();
-        await db.into(db.orderItems).insert(
+        await db
+            .into(db.orderItems)
+            .insert(
               OrderItemsCompanion(
                 id: Value(orderItemId),
                 orderId: Value(orderId),
@@ -384,7 +426,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
         await _insertOrderItemRelations(cartItem, orderItemId);
       }
 
-      await db.into(db.payments).insert(
+      await db
+          .into(db.payments)
+          .insert(
             PaymentsCompanion(
               id: Value(const Uuid().v4()),
               orderId: Value(orderId),
@@ -432,14 +476,21 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
         .map((m) => '${m.name}:${m.priceDelta}:${m.routeTo ?? ''}')
         .join('|');
     final sides = item.sides
-        .map((s) => '${s.name}:${s.quantity}:${s.priceDelta}:${s.routeTo ?? ''}')
+        .map(
+          (s) => '${s.name}:${s.quantity}:${s.priceDelta}:${s.routeTo ?? ''}',
+        )
         .join('|');
-    return '${item.product.id}::${item.notes.trim()}::${item.routeTo ?? ''}::${mods}::${sides}';
+    return '${item.product.id}::${item.notes.trim()}::${item.routeTo ?? ''}::$mods::$sides';
   }
 
-  Future<void> _insertOrderItemRelations(CartItem cartItem, String orderItemId) async {
+  Future<void> _insertOrderItemRelations(
+    CartItem cartItem,
+    String orderItemId,
+  ) async {
     for (final modifier in cartItem.modifiers) {
-      await db.into(db.orderItemModifiers).insert(
+      await db
+          .into(db.orderItemModifiers)
+          .insert(
             OrderItemModifiersCompanion(
               id: Value(const Uuid().v4()),
               orderItemId: Value(orderItemId),
@@ -451,7 +502,9 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
     }
 
     for (final side in cartItem.sides) {
-      await db.into(db.orderItemSides).insert(
+      await db
+          .into(db.orderItemSides)
+          .insert(
             OrderItemSidesCompanion(
               id: Value(const Uuid().v4()),
               orderItemId: Value(orderItemId),
@@ -469,12 +522,13 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       return tableId.substring(0, 4).toUpperCase();
     }
 
-    final suffix =
-        (now.millisecondsSinceEpoch % 10000).toString().padLeft(4, '0');
+    final suffix = (now.millisecondsSinceEpoch % 10000).toString().padLeft(
+      4,
+      '0',
+    );
     return 'TK$suffix';
   }
 }
-
 
 final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
   final db = ref.watch(databaseProvider);
@@ -484,7 +538,7 @@ final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
   final notifier = CartNotifier(
     db,
     authState.userId,
-    'Cashier', 
+    'Cashier',
     printerService,
     ref,
   );
@@ -497,11 +551,14 @@ final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
   return notifier;
 });
 
-final orderServiceProvider =
-    Provider((ref) => OrderService(ref.watch(databaseProvider)));
+final orderServiceProvider = Provider(
+  (ref) => OrderService(ref.watch(databaseProvider)),
+);
 
-final checkoutProvider =
-    FutureProvider.family<void, String>((ref, userId) async {
+final checkoutProvider = FutureProvider.family<void, String>((
+  ref,
+  userId,
+) async {
   final cart = ref.read(cartProvider);
   if (cart.isEmpty) return;
 
