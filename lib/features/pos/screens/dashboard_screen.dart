@@ -12,6 +12,7 @@ import '../providers/menu_provider.dart';
 import '../providers/cart_provider.dart';
 import '../models/product_customization.dart';
 import '../models/cart_item.dart';
+import '../../../database/database.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -73,9 +74,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         backgroundColor: AppTheme.surface,
         actions: [
           // Shift Indicator
-          Consumer(builder: (context, ref, _) {
-            final shiftId = ref.watch(activeShiftIdProvider);
-            return Padding(
+          Consumer(
+            builder: (context, ref, _) {
+              final shiftId = ref.watch(activeShiftIdProvider);
+              return Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: Chip(
                   label: Text(shiftId != null ? "SHIFT OPEN" : "NO SHIFT"),
@@ -83,19 +85,22 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       ? Colors.green.withOpacity(0.2)
                       : Colors.red.withOpacity(0.2),
                   labelStyle: TextStyle(
-                      color: shiftId != null ? Colors.green : Colors.red,
-                      fontSize: 10),
-                ));
-          }),
+                    color: shiftId != null ? Colors.green : Colors.red,
+                    fontSize: 10,
+                  ),
+                ),
+              );
+            },
+          ),
 
           if (canManageCash)
             PopupMenuButton<String>(
               onSelected: (value) {
                 if (value == 'close_shift') {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const CloseShiftScreen()));
+                    context,
+                    MaterialPageRoute(builder: (_) => const CloseShiftScreen()),
+                  );
                 }
               },
               itemBuilder: (BuildContext context) {
@@ -106,8 +111,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       children: [
                         Icon(Icons.assignment_turned_in, color: Colors.black),
                         SizedBox(width: 8),
-                        Text('End Shift / Z-Report',
-                            style: TextStyle(color: Colors.black)),
+                        Text(
+                          'End Shift / Z-Report',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ],
                     ),
                   ),
@@ -308,7 +315,9 @@ class ProductGridWidget extends ConsumerWidget {
             child: InkWell(
               onTap: () async {
                 if (customization == null || !customization.hasOptions) {
-                  ref.read(cartProvider.notifier).addToCart(
+                  ref
+                      .read(cartProvider.notifier)
+                      .addToCart(
                         product,
                         routeTo: customization?.productRouteTo,
                       );
@@ -320,7 +329,9 @@ class ProductGridWidget extends ConsumerWidget {
                   isScrollControlled: true,
                   backgroundColor: AppTheme.surface,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
                   ),
                   builder: (_) => _ProductCustomizationSheet(
                     product: product,
@@ -354,7 +365,10 @@ class ProductGridWidget extends ConsumerWidget {
                     const Padding(
                       padding: EdgeInsets.only(top: 6),
                       child: Chip(
-                        label: Text('Customizable', style: TextStyle(fontSize: 11)),
+                        label: Text(
+                          'Customizable',
+                          style: TextStyle(fontSize: 11),
+                        ),
                         visualDensity: VisualDensity.compact,
                       ),
                     ),
@@ -392,12 +406,16 @@ class _ProductCustomizationSheetState
   @override
   Widget build(BuildContext context) {
     final insets = MediaQuery.of(context).viewInsets.bottom;
-    final sideById = {for (final side in widget.customization.sides) side.id: side};
+    final sideById = {
+      for (final side in widget.customization.sides) side.id: side,
+    };
 
     double optionsTotal = 0;
     for (final group in widget.customization.modifierGroups) {
       final selected = _selectedModifierIdsByGroup[group.id] ?? <String>{};
-      for (final modifier in group.modifiers.where((m) => selected.contains(m.id))) {
+      for (final modifier in group.modifiers.where(
+        (m) => selected.contains(m.id),
+      )) {
         optionsTotal += modifier.priceDelta;
       }
     }
@@ -418,7 +436,10 @@ class _ProductCustomizationSheetState
                   Expanded(
                     child: Text(
                       widget.product.name,
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   Text(
@@ -433,7 +454,8 @@ class _ProductCustomizationSheetState
               ),
               const SizedBox(height: 12),
               ...widget.customization.modifierGroups.map((group) {
-                final selected = _selectedModifierIdsByGroup[group.id] ?? <String>{};
+                final selected =
+                    _selectedModifierIdsByGroup[group.id] ?? <String>{};
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -441,13 +463,19 @@ class _ProductCustomizationSheetState
                       children: [
                         Text(
                           group.name,
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         if (group.isRequired)
                           const Padding(
                             padding: EdgeInsets.only(left: 8),
                             child: Chip(
-                              label: Text('Required', style: TextStyle(fontSize: 11)),
+                              label: Text(
+                                'Required',
+                                style: TextStyle(fontSize: 11),
+                              ),
                               visualDensity: VisualDensity.compact,
                             ),
                           ),
@@ -458,7 +486,10 @@ class _ProductCustomizationSheetState
                         padding: const EdgeInsets.only(bottom: 6),
                         child: Text(
                           'Select ${group.minSelect}${group.maxSelect != null ? ' - ${group.maxSelect}' : '+'}',
-                          style: const TextStyle(color: Colors.white70, fontSize: 12),
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     ...group.modifiers.map((modifier) {
@@ -469,7 +500,9 @@ class _ProductCustomizationSheetState
                         dense: true,
                         title: Text(modifier.name),
                         subtitle: modifier.priceDelta != 0
-                            ? Text('UGX ${modifier.priceDelta.toStringAsFixed(0)}')
+                            ? Text(
+                                'UGX ${modifier.priceDelta.toStringAsFixed(0)}',
+                              )
                             : null,
                         onChanged: (value) {
                           final next = {...selected};
@@ -477,7 +510,11 @@ class _ProductCustomizationSheetState
                             final max = group.maxSelect;
                             if (max != null && next.length >= max) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Maximum ${group.maxSelect} selections for ${group.name}.')),
+                                SnackBar(
+                                  content: Text(
+                                    'Maximum ${group.maxSelect} selections for ${group.name}.',
+                                  ),
+                                ),
                               );
                               return;
                             }
@@ -536,16 +573,27 @@ class _ProductCustomizationSheetState
                   ),
                   onPressed: () {
                     for (final group in widget.customization.modifierGroups) {
-                      final count = _selectedModifierIdsByGroup[group.id]?.length ?? 0;
-                      if (group.isRequired && count < (group.minSelect == 0 ? 1 : group.minSelect)) {
+                      final count =
+                          _selectedModifierIdsByGroup[group.id]?.length ?? 0;
+                      if (group.isRequired &&
+                          count <
+                              (group.minSelect == 0 ? 1 : group.minSelect)) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Please choose required options for ${group.name}.')),
+                          SnackBar(
+                            content: Text(
+                              'Please choose required options for ${group.name}.',
+                            ),
+                          ),
                         );
                         return;
                       }
                       if (count < group.minSelect) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Select at least ${group.minSelect} option(s) for ${group.name}.')),
+                          SnackBar(
+                            content: Text(
+                              'Select at least ${group.minSelect} option(s) for ${group.name}.',
+                            ),
+                          ),
                         );
                         return;
                       }
@@ -553,7 +601,9 @@ class _ProductCustomizationSheetState
 
                     final selectedModifiers = <CartModifier>[];
                     for (final group in widget.customization.modifierGroups) {
-                      final selectedIds = _selectedModifierIdsByGroup[group.id] ?? const <String>{};
+                      final selectedIds =
+                          _selectedModifierIdsByGroup[group.id] ??
+                          const <String>{};
                       for (final modifier in group.modifiers) {
                         if (selectedIds.contains(modifier.id)) {
                           selectedModifiers.add(
@@ -580,7 +630,9 @@ class _ProductCustomizationSheetState
                         )
                         .toList();
 
-                    ref.read(cartProvider.notifier).addToCart(
+                    ref
+                        .read(cartProvider.notifier)
+                        .addToCart(
                           widget.product,
                           routeTo: widget.customization.productRouteTo,
                           modifiers: selectedModifiers,
@@ -625,11 +677,14 @@ class CartWidget extends ConsumerWidget {
           width: double.infinity,
           child: Row(
             children: [
-              const Text("Current Order",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
+              const Text(
+                "Current Order",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.delete_sweep, color: Colors.red),
@@ -641,8 +696,11 @@ class CartWidget extends ConsumerWidget {
         Expanded(
           child: cartItems.isEmpty
               ? const Center(
-                  child: Text("Cart is empty",
-                      style: TextStyle(color: Colors.grey)))
+                  child: Text(
+                    "Cart is empty",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
               : ListView.separated(
                   padding: const EdgeInsets.all(8),
                   itemCount: cartItems.length,
@@ -650,8 +708,10 @@ class CartWidget extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final item = cartItems[index];
                     return ListTile(
-                      title: Text(item.product.name,
-                          style: const TextStyle(color: Colors.black87)),
+                      title: Text(
+                        item.product.name,
+                        style: const TextStyle(color: Colors.black87),
+                      ),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -662,25 +722,36 @@ class CartWidget extends ConsumerWidget {
                           if (item.modifiers.isNotEmpty)
                             Text(
                               'Mods: ${item.modifiers.map((m) => m.name).join(', ')}',
-                              style: const TextStyle(color: Colors.black54, fontSize: 12),
+                              style: const TextStyle(
+                                color: Colors.black54,
+                                fontSize: 12,
+                              ),
                             ),
                           if (item.sides.isNotEmpty)
                             Text(
                               'Sides: ${item.sides.map((s) => s.name).join(', ')}',
-                              style: const TextStyle(color: Colors.black54, fontSize: 12),
+                              style: const TextStyle(
+                                color: Colors.black54,
+                                fontSize: 12,
+                              ),
                             ),
                         ],
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("UGX ${item.total.toStringAsFixed(0)}",
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
+                          Text(
+                            "UGX ${item.total.toStringAsFixed(0)}",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           IconButton(
-                            icon: const Icon(Icons.remove_circle_outline,
-                                color: Colors.red),
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              color: Colors.red,
+                            ),
                             onPressed: () =>
                                 cartNotifier.removeFromCart(item.product),
                           ),
@@ -698,16 +769,22 @@ class CartWidget extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("TOTAL",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold)),
-                  Text("UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
-                      style: const TextStyle(
-                          color: AppTheme.emerald,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold)),
+                  const Text(
+                    "TOTAL",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
+                    style: const TextStyle(
+                      color: AppTheme.emerald,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -721,7 +798,8 @@ class CartWidget extends ConsumerWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: cartItems.isEmpty
                             ? null
@@ -729,16 +807,17 @@ class CartWidget extends ConsumerWidget {
                                 await cartNotifier.sendToKitchen();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content:
-                                          Text("Order sent to kitchen! 🍽️")),
+                                    content: Text("Order sent to kitchen! 🍽️"),
+                                  ),
                                 );
                               },
                         child: const Text(
                           "SEND TO KITCHEN",
                           style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -753,13 +832,14 @@ class CartWidget extends ConsumerWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueGrey,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: cartItems.isEmpty
                             ? null
                             : () async {
-                                final message =
-                                    await cartNotifier.printBillCheck();
+                                final message = await cartNotifier
+                                    .printBillCheck();
                                 if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -769,12 +849,15 @@ class CartWidget extends ConsumerWidget {
                                   ),
                                 );
                               },
-                        child: const Text("PRINT BILL",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
+                        child: const Text(
+                          "PRINT BILL",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
@@ -789,23 +872,27 @@ class CartWidget extends ConsumerWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppTheme.emerald,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
                           onPressed: cartItems.isEmpty
                               ? null
                               : () async {
                                   await cartNotifier.checkout(context);
                                 },
-                          child: const Text("PAY & CLOSE",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center),
+                          child: const Text(
+                            "PAY & CLOSE",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),
-                  ]
+                  ],
                 ],
               ),
             ],
