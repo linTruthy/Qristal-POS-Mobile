@@ -1,39 +1,132 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_theme.dart';
+
 import '../../../core/providers/database_provider.dart';
+import '../../../core/theme/app_theme.dart';
 import '../../../database/database.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../auth/screens/login_screen.dart';
 import '../../sync/providers/sync_provider.dart';
 
-class KitchenScreen extends ConsumerWidget {
+const _kdsAreas = <String>['ALL', 'KITCHEN', 'BARISTA', 'BAR', 'RETAIL', 'OTHER'];
+
+class KitchenScreen extends ConsumerStatefulWidget {
   const KitchenScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<KitchenScreen> createState() => _KitchenScreenState();
+}
+
+class _KitchenScreenState extends ConsumerState<KitchenScreen> {
+  late String _selectedArea;
+  Set<String> _knownOrderIds = <String>{};
+
+  @override
+  void initState() {
+    super.initState();
+    final assigned = ref.read(authControllerProvider).kdsProductionAreas;
+    _selectedArea = assigned.isNotEmpty ? assigned.first : 'ALL';
+  }
+
+  Future<List<_OrderTicketData>> _buildTicketData(
+    AppDatabase db,
+    List<Order> orders,
+  ) async {
+    final results = <_OrderTicketData>[];
+
+    for (final order in orders) {
+      final items = await db.getOrderItems(order.id);
+      final area = _selectedArea;
+      final visible = area == 'ALL'
+          ? items
+          : items
+              .where((item) => _itemBelongsToArea(item, area))
+              .toList(growable: false);
+
+      if (visible.isNotEmpty) {
+        results.add(_OrderTicketData(order: order, items: visible));
+      }
+    }
+
+    final currentIds = results.map((entry) => entry.order.id).toSet();
+    final hasIncoming = currentIds.difference(_knownOrderIds).isNotEmpty;
+    _knownOrderIds = currentIds;
+
+    if (hasIncoming) {
+      await SystemSound.play(SystemSoundType.alert);
+    }
+
+    return results;
+  }
+
+  bool _itemBelongsToArea(TypedOrderItem item, String area) {
+    bool matches(String? route) => (route == null || route.isEmpty ? 'KITCHEN' : route) == area;
+
+    if (matches(item.item.routeTo)) return true;
+    if (item.modifiers.any((modifier) => matches(modifier.routeTo))) return true;
+    if (item.sides.any((side) => matches(side.routeTo))) return true;
+    return false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final db = ref.watch(databaseProvider);
+    final assignedAreas = ref.watch(authControllerProvider).kdsProductionAreas;
+    final allowedAreas = assignedAreas.isEmpty
+        ? _kdsAreas
+        : ['ALL', ...assignedAreas.where((area) => _kdsAreas.contains(area))];
+
+    if (!allowedAreas.contains(_selectedArea)) {
+      _selectedArea = allowedAreas.first;
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Kitchen Display System"),
         backgroundColor: AppTheme.surface,
         actions: [
+          if (allowedAreas.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  value: _selectedArea,
+                  dropdownColor: AppTheme.surface,
+                  borderRadius: BorderRadius.circular(8),
+                  items: allowedAreas
+                      .toSet()
+                      .map(
+                        (area) => DropdownMenuItem(
+                          value: area,
+                          child: Text(area, style: const TextStyle(color: Colors.white)),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    if (value == null) return;
+                    setState(() {
+                      _selectedArea = value;
+                      _knownOrderIds = <String>{};
+                    });
+                  },
+                ),
+              ),
+            ),
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: "Force Sync",
             onPressed: () {
               ref.read(syncControllerProvider.notifier).performSync();
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("Syncing...")));
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Syncing...")),
+              );
             },
           ),
           const SizedBox(width: 16),
-          // ADD LOGOUT BUTTON HERE
           TextButton.icon(
             icon: const Icon(Icons.logout, color: AppTheme.error),
-            label:
-                const Text("LOGOUT", style: TextStyle(color: AppTheme.error)),
+            label: const Text("LOGOUT", style: TextStyle(color: AppTheme.error)),
             onPressed: () async {
               await ref.read(authControllerProvider.notifier).logout();
               if (context.mounted) {
@@ -65,32 +158,42 @@ class KitchenScreen extends ConsumerWidget {
 
           final orders = snapshot.data ?? [];
 
-          if (orders.isEmpty) {
-            return const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.check_circle_outline,
-                    size: 80,
-                    color: Colors.green,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "No pending orders. Good job!",
-                    style: TextStyle(color: Colors.grey, fontSize: 24),
-                  ),
-                ],
-              ),
-            );
-          }
+          return FutureBuilder<List<_OrderTicketData>>(
+            future: _buildTicketData(db, orders),
+            builder: (context, filteredSnapshot) {
+              if (!filteredSnapshot.hasData) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-          return ListView.builder(
-            scrollDirection: Axis.horizontal, // KDS usually scrolls sideways
-            itemCount: orders.length,
-            padding: const EdgeInsets.all(16),
-            itemBuilder: (context, index) {
-              return KitchenTicket(order: orders[index]);
+              final tickets = filteredSnapshot.data ?? const [];
+
+              if (tickets.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.check_circle_outline, size: 80, color: Colors.green),
+                      const SizedBox(height: 16),
+                      Text(
+                        "No pending $_selectedArea orders.",
+                        style: const TextStyle(color: Colors.grey, fontSize: 24),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: tickets.length,
+                padding: const EdgeInsets.all(16),
+                itemBuilder: (context, index) {
+                  return KitchenTicket(
+                    order: tickets[index].order,
+                    items: tickets[index].items,
+                  );
+                },
+              );
             },
           );
         },
@@ -99,32 +202,23 @@ class KitchenScreen extends ConsumerWidget {
   }
 }
 
-class KitchenTicket extends ConsumerStatefulWidget {
+class _OrderTicketData {
   final Order order;
-  const KitchenTicket({super.key, required this.order});
+  final List<TypedOrderItem> items;
 
-  @override
-  ConsumerState<KitchenTicket> createState() => _KitchenTicketState();
+  const _OrderTicketData({required this.order, required this.items});
 }
 
-class _KitchenTicketState extends ConsumerState<KitchenTicket> {
-  late Future<List<TypedOrderItem>> _itemsFuture;
+class KitchenTicket extends ConsumerWidget {
+  final Order order;
+  final List<TypedOrderItem> items;
+
+  const KitchenTicket({super.key, required this.order, required this.items});
 
   @override
-  void initState() {
-    super.initState();
-    _loadItems();
-  }
-
-  void _loadItems() {
+  Widget build(BuildContext context, WidgetRef ref) {
     final db = ref.read(databaseProvider);
-    _itemsFuture = db.getOrderItems(widget.order.id);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final db = ref.read(databaseProvider);
-    final isPreparing = widget.order.status == 'PREPARING';
+    final isPreparing = order.status == 'PREPARING';
 
     return Container(
       width: 300,
@@ -147,7 +241,6 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header
           Container(
             padding: const EdgeInsets.all(12),
             color: isPreparing
@@ -157,85 +250,109 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "#${widget.order.receiptNumber}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+                  "#${order.receiptNumber}",
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
                 Text(
-                  widget.order.createdAt
-                      .toLocal()
-                      .toString()
-                      .split(' ')[1]
-                      .substring(0, 5), // Time HH:MM
+                  order.createdAt.toLocal().toString().split(' ')[1].substring(0, 5),
                   style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
           ),
-
-          // Items List
           Expanded(
-            child: FutureBuilder<List<TypedOrderItem>>(
-              future: _itemsFuture,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  return const Center(child: CircularProgressIndicator());
-
-                return ListView.separated(
-                  padding: const EdgeInsets.all(12),
-                  itemCount: snapshot.data!.length,
-                  separatorBuilder: (_, __) => const Divider(),
-                  itemBuilder: (context, index) {
-                    final itemData = snapshot.data![index];
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.grey[800],
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            "${itemData.item.quantity}x",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView.separated(
+              padding: const EdgeInsets.all(12),
+              itemCount: items.length,
+              separatorBuilder: (_, __) => const Divider(),
+              itemBuilder: (context, index) {
+                final itemData = items[index];
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[800],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        "${itemData.item.quantity}x",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
                             children: [
-                              Text(
-                                itemData.product.name,
-                                style: const TextStyle(fontSize: 16),
-                              ),
-                              if (itemData.item.notes != null &&
-                                  itemData.item.notes!.isNotEmpty)
-                                Text(
-                                  "Note: ${itemData.item.notes}",
-                                  style: const TextStyle(
-                                    color: AppTheme.error,
-                                    fontSize: 12,
-                                  ),
+                              Expanded(
+                                child: Text(
+                                  itemData.product.name,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
+                              ),
+                              if (itemData.item.routeTo != null && itemData.item.routeTo!.isNotEmpty)
+                                _RouteBadge(label: itemData.item.routeTo!),
                             ],
                           ),
-                        ),
-                      ],
-                    );
-                  },
+                          if (itemData.modifiers.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Wrap(
+                                spacing: 4,
+                                runSpacing: 4,
+                                children: itemData.modifiers
+                                    .map(
+                                      (modifier) => _TicketTag(
+                                        label: modifier.name,
+                                        routeTo: modifier.routeTo,
+                                        prefix: '+',
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          if (itemData.sides.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: Wrap(
+                                spacing: 4,
+                                runSpacing: 4,
+                                children: itemData.sides
+                                    .map(
+                                      (side) => _TicketTag(
+                                        label:
+                                            side.quantity > 1 ? '${side.name} x${side.quantity}' : side.name,
+                                        routeTo: side.routeTo,
+                                        prefix: 'Side',
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          if (itemData.item.notes != null && itemData.item.notes!.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 6),
+                              child: Text(
+                                "Note: ${itemData.item.notes}",
+                                style: const TextStyle(
+                                  color: AppTheme.error,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
           ),
-
-          // Footer Actions
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
@@ -243,14 +360,11 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
               height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      isPreparing ? AppTheme.emerald : Colors.orange,
+                  backgroundColor: isPreparing ? AppTheme.emerald : Colors.orange,
                 ),
                 onPressed: () async {
-                  String newStatus = isPreparing ? 'READY' : 'PREPARING';
-                  await db.updateOrderStatus(widget.order.id, newStatus);
-
-                  // Trigger sync to let server/cashiers know
+                  final newStatus = isPreparing ? 'READY' : 'PREPARING';
+                  await db.updateOrderStatus(order.id, newStatus);
                   ref.read(syncControllerProvider.notifier).performSync();
                 },
                 child: Text(isPreparing ? "MARK DONE" : "START COOKING"),
@@ -258,6 +372,55 @@ class _KitchenTicketState extends ConsumerState<KitchenTicket> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _RouteBadge extends StatelessWidget {
+  final String label;
+
+  const _RouteBadge({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: AppTheme.qristalBlue.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: AppTheme.qristalBlue,
+          fontSize: 11,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+}
+
+class _TicketTag extends StatelessWidget {
+  final String label;
+  final String? routeTo;
+  final String prefix;
+
+  const _TicketTag({required this.label, this.routeTo, required this.prefix});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.grey[850],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white12),
+      ),
+      child: Text(
+        routeTo != null && routeTo!.isNotEmpty ? '$prefix $label · ${routeTo!}' : '$prefix $label',
+        style: const TextStyle(fontSize: 11, color: Colors.white70),
       ),
     );
   }
