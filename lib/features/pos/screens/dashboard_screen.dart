@@ -98,9 +98,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         backgroundColor: AppTheme.surface,
         actions: [
           // Shift Indicator
-          Consumer(builder: (context, ref, _) {
-            final shiftId = ref.watch(activeShiftIdProvider);
-            return Padding(
+          Consumer(
+            builder: (context, ref, _) {
+              final shiftId = ref.watch(activeShiftIdProvider);
+              return Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: Chip(
                   label: Text(shiftId != null ? "SHIFT OPEN" : "NO SHIFT"),
@@ -108,19 +109,22 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       ? Colors.green.withOpacity(0.2)
                       : Colors.red.withOpacity(0.2),
                   labelStyle: TextStyle(
-                      color: shiftId != null ? Colors.green : Colors.red,
-                      fontSize: 10),
-                ));
-          }),
+                    color: shiftId != null ? Colors.green : Colors.red,
+                    fontSize: 10,
+                  ),
+                ),
+              );
+            },
+          ),
 
           if (canManageCash)
             PopupMenuButton<String>(
               onSelected: (value) {
                 if (value == 'close_shift') {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const CloseShiftScreen()));
+                    context,
+                    MaterialPageRoute(builder: (_) => const CloseShiftScreen()),
+                  );
                 }
               },
               itemBuilder: (BuildContext context) {
@@ -131,8 +135,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                       children: [
                         Icon(Icons.assignment_turned_in, color: Colors.black),
                         SizedBox(width: 8),
-                        Text('End Shift / Z-Report',
-                            style: TextStyle(color: Colors.black)),
+                        Text(
+                          'End Shift / Z-Report',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ],
                     ),
                   ),
@@ -689,8 +695,11 @@ class CartWidget extends ConsumerWidget {
         Expanded(
           child: cartItems.isEmpty
               ? const Center(
-                  child: Text("Cart is empty",
-                      style: TextStyle(color: Colors.grey)))
+                  child: Text(
+                    "Cart is empty",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                )
               : ListView.separated(
                   padding: const EdgeInsets.all(8),
                   itemCount: cartItems.length,
@@ -722,13 +731,18 @@ class CartWidget extends ConsumerWidget {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("UGX ${item.total.toStringAsFixed(0)}",
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold)),
+                          Text(
+                            "UGX ${item.total.toStringAsFixed(0)}",
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           IconButton(
-                            icon: const Icon(Icons.remove_circle_outline,
-                                color: Colors.red),
+                            icon: const Icon(
+                              Icons.remove_circle_outline,
+                              color: Colors.red,
+                            ),
                             onPressed: () =>
                                 cartNotifier.removeFromCart(item.product),
                           ),
@@ -746,16 +760,22 @@ class CartWidget extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("TOTAL",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold)),
-                  Text("UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
-                      style: const TextStyle(
-                          color: AppTheme.emerald,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold)),
+                  const Text(
+                    "TOTAL",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "UGX ${cartNotifier.totalAmount.toStringAsFixed(0)}",
+                    style: const TextStyle(
+                      color: AppTheme.emerald,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -769,7 +789,8 @@ class CartWidget extends ConsumerWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: cartItems.isEmpty
                             ? null
@@ -777,16 +798,17 @@ class CartWidget extends ConsumerWidget {
                                 await cartNotifier.sendToKitchen();
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                      content:
-                                          Text("Order sent to kitchen! 🍽️")),
+                                    content: Text("Order sent to kitchen! 🍽️"),
+                                  ),
                                 );
                               },
                         child: const Text(
                           "SEND TO KITCHEN",
                           style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -801,13 +823,14 @@ class CartWidget extends ConsumerWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueGrey,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: cartItems.isEmpty
                             ? null
                             : () async {
-                                final message =
-                                    await cartNotifier.printBillCheck();
+                                final message = await cartNotifier
+                                    .printBillCheck();
                                 if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -817,12 +840,15 @@ class CartWidget extends ConsumerWidget {
                                   ),
                                 );
                               },
-                        child: const Text("PRINT BILL",
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.center),
+                        child: const Text(
+                          "PRINT BILL",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
@@ -837,23 +863,27 @@ class CartWidget extends ConsumerWidget {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppTheme.emerald,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8)),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
                           onPressed: cartItems.isEmpty
                               ? null
                               : () async {
                                   await cartNotifier.checkout(context);
                                 },
-                          child: const Text("PAY & CLOSE",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center),
+                          child: const Text(
+                            "PAY & CLOSE",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),
-                  ]
+                  ],
                 ],
               ),
             ],

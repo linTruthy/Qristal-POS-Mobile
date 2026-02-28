@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../hardware/services/printer_service.dart';
 import '../../sync/providers/sync_provider.dart';
-import '../../auth/providers/auth_provider.dart';
 import '../../auth/screens/login_screen.dart';
 import '../providers/shift_provider.dart';
 
