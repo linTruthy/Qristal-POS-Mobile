@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/providers/database_provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../database/database.dart';
 import '../../auth/providers/auth_provider.dart';
 import '../../hardware/screens/printer_settings_screen.dart';
 import '../../kitchen/screens/kitchen_screen.dart';
