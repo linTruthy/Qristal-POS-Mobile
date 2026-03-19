@@ -14,6 +14,10 @@ class AuthState {
   final String? role;
   final bool isLoading;
   final String? error;
+<<<<<<< HEAD
+=======
+  final List<String> kdsProductionAreas;
+>>>>>>> origin/main
 
   AuthState({
     required this.isAuthenticated,
@@ -21,6 +25,10 @@ class AuthState {
     this.role,
     this.isLoading = false,
     this.error,
+<<<<<<< HEAD
+=======
+    this.kdsProductionAreas = const ["KITCHEN"],
+>>>>>>> origin/main
   });
 
   AuthState copyWith({
@@ -29,13 +37,22 @@ class AuthState {
     String? role,
     bool? isLoading,
     String? error,
+<<<<<<< HEAD
+=======
+    List<String>? kdsProductionAreas,
+>>>>>>> origin/main
   }) {
     return AuthState(
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
       userId: userId ?? this.userId,
       role: role ?? this.role,
       isLoading: isLoading ?? this.isLoading,
+<<<<<<< HEAD
       error: error, // We allow error to be nullified
+=======
+      error: error,
+      kdsProductionAreas: kdsProductionAreas ?? this.kdsProductionAreas,
+>>>>>>> origin/main
     );
   }
 }
@@ -50,11 +67,24 @@ class AuthController extends StateNotifier<AuthState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       final data = await _authService.login(userId, pin);
+<<<<<<< HEAD
       state = AuthState(
         isAuthenticated: true, 
         userId: data['user']['id'],
         role: data['user']['role'],
         isLoading: false,
+=======
+      final rawAreas = data['user']['kdsProductionAreas'];
+      final areas = rawAreas is List
+          ? rawAreas.map((item) => item.toString()).where((item) => item.isNotEmpty).toList()
+          : <String>[];
+      state = AuthState(
+        isAuthenticated: true,
+        userId: data['user']['id'],
+        role: data['user']['role'],
+        isLoading: false,
+        kdsProductionAreas: areas.isEmpty ? const ["KITCHEN"] : areas,
+>>>>>>> origin/main
       );
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
